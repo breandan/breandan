@@ -1,3 +1,15 @@
+## May 21, 2020
+
+- Mass estimation for deformable objects
+- RMSE and physical parameters in experiments
+- Where does the rendering component come in?
+- Identifying ambiguous graphics/physics scenarios
+  - Can adding differentiable physics / rendering resolve?
+- Rigid body versus deformable physics
+- Unsupervised parameter estimation from video
+- Go / no go for deadline next week
+- Sensitive to parameter initialization
+-
 ## May 19, 2020
 
 - DVC and version control for data pipelines / Fuyuan
