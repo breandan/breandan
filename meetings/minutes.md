@@ -3,13 +3,14 @@
 - Mass estimation for deformable objects
 - RMSE and physical parameters in experiments
 - Where does the rendering component come in?
-- Identifying ambiguous graphics/physics scenarios
+- Identifying ambiguous graphics/physics scenarios / Florian
   - Can adding differentiable physics / rendering resolve?
-- Rigid body versus deformable physics
+- Rigid body versus deformable physics / Derek
 - Unsupervised parameter estimation from video
 - Go / no go for deadline next week
-- Sensitive to parameter initialization
--
+- Pendula sensitive to some parameters (rod length)
+- Runge-Kutta and step size
+
 ## May 19, 2020
 
 - DVC and version control for data pipelines / Fuyuan
