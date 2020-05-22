@@ -1,10 +1,10 @@
 # Research Statement
 
-I am a software engineer at McGill University under the supervision of Jin Guo. During my Ph.D., I want to build a tool to help software engineers find information and reason about software, by learning to read and write code.
+I am a software engineer at McGill University under the supervision of Jin Guo. During my Ph.D., I want to build a tool to help software engineers find information and reason about software, by learning to read and write code. Using program analysis and natural language processing, we can help to discover relevant information. And using tools from machine learning and automated reasoning, we can synthesize meta-programs. Together, humans and computers can work together to understand complex information processing systems.
 
 ## Introduction
 
-Graphs are general purpose data structures which are used to represent many interesting concepts. All of the following things are graphs:
+Graphs are general purpose data structures used to represent many interesting concepts. All the following are examples of graphs:
 
 - Sets: data, multisets, posets, symbols
 - Sequences: Lists, strings, traces, linear function composition
@@ -19,19 +19,19 @@ Today's computers are becoming smarter and more creative. They can perform many 
 
 ## Roadmap
 
-I believe that if we are going to teach machines to write code, they must start by learning very simple programs. According to Noam Chomsky, the simplest type of program is a finite state machine.
+I believe that if we are going to teach machines to read and write code, they must start by learning very simple programs. According to Noam Chomsky, the simplest type of program is a finite state machine.
 
-- Synthesize a finite state machine (NFA/DFA)
+### Program synthesis
+
+Most program synthesis research starts at the top of the Chomsky hierarchy. We start at the bottom, and build our way up.
+
+- Synthesize a finite state automaton (regular)
 - Use Angulin's L* algorithm as an oracle
 - Use the finite state machine to search for relevant programs (i.e. suggest code)
-- Synthesize a Buchi automaton
-- Synthesize a Pushdown automaton
-- Synthesize a Linear bounded automaton
+- Synthesize a Buchi automaton (ω-regular)
+- Synthesize a Pushdown automaton (context free)
+- Synthesize a Linear bounded automaton (context sensitive)
 - ?
-
-## Where are we today?
-
----Describe results of current project---
 
 ## Practical Applications
 
@@ -39,7 +39,7 @@ Besides code completion, program synthesis has three good applications, includin
 
 ### Information retrieval
 
-An essential skill of learning to code is learning to Google. All information retrieval systems support regular language queries.
+An essential skill of learning to code is learning to search. All information retrieval systems support regular language queries.
 
 - Union
 - Concatenation
@@ -48,6 +48,10 @@ An essential skill of learning to code is learning to Google. All information re
 From the query, we can synthesize a program to fetch the results using classical techniques (e.g. Thompson / Glushkov).
 
 What if we do not know the query? Where do queries come from? Context.
+
+Suppose we have a document D and a term T, contained in that document. What does T mean? There is often another document which explains T. Broadly any document which contains T, gives us some information about its meaning. Sometimes, T is polysemous, in which case some documents may be irrelevant. How do we recover all semantic usages of T?
+
+Many documents contain links, which enclose a term, and reference another document. We could attempt to learn the correspondence directly, however this would not generalize well to out-of-vocabulary (OOV) tokens or out-of-sample (OOS) graphs. Instead, we synthesize a query to find the document, by attending over the local context. Queries are simple programs.
 
 ### Program analysis
 
@@ -67,17 +71,21 @@ Learn to parse from examples.
 
 ## Research Agenda
 
+In order to realize these goals, I must take the following concrete steps.
+
 ### The Plan
 
 - Write a query tool
 - Write a notebook tool
 - Write a simple debugger
 - Take qualifying exams (Fall/Winter 2020)
-- Publish papers
+- Publish papers (3-5 papers)
 - Write dissertation
 - Graduate
 
 ## Commitments
+
+During my Ph.D., I am committed to the following activities.
 
 ### Teaching
 
@@ -88,6 +96,7 @@ Learn to parse from examples.
 
 - Participate in research activities at KAST.
 - Help out lab mates.
+- Contribute to open source.
 
 ### Research
 
