@@ -1,6 +1,6 @@
 # Research Statement
 
-I am a software engineer at McGill University under the supervision of Jin Guo. During my Ph.D. studies, I want to build a tool to help software engineers find information and reason about software, by learning to read and write code.
+I am a software engineer at McGill University under the supervision of Jin Guo. During my Ph.D., I want to build a tool to help software engineers find information and reason about software, by learning to read and write code.
 
 ## Introduction
 
@@ -81,7 +81,7 @@ Learn to parse from examples.
 
 ### Teaching
 
-- TA for class on applied ML (Spring 2020).
+- TA for IFT 6759 on applied ML (Spring 2020).
 - TA for class on SE/ML (Fall 2020).
 
 ### Service
@@ -92,6 +92,6 @@ Learn to parse from examples.
 ### Research
 
 - Notebooks
+- Trace links
 - Automata
-
-
+- Graphs
