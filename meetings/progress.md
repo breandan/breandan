@@ -1,7 +1,8 @@
 ## May 25, 2020
 - Reboot progress notes on GitHub
-- Write research statement
+- Write [research statement](../research/statement.md)
 - Finalize IFT 6759 grades
+- Meeting with Krishna et al. about physics
 
 ## Nov. 20th, 2019
 - Tooling [updates](https://github.com/acejump/TraceJump/tree/1bba53bd8b14e5b9717c0d25f9d7b7a72add1fe3) to TraceJump to support native installer
