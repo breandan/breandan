@@ -1,37 +1,41 @@
 # Research Statement
 
-I am a software engineer at McGill University under the supervision of Jin Guo. I am building tools to help software engineers find information and reason about software, by learning to read and write code.
+I am a software engineer in the KAST lab at McGill University, under the supervision of Jin Guo. There, I am building tools to help software engineers find information and reason about software, by learning to read and write code.
 
-Statistical learning is starting to bear fruit for software engineering, showing a number of [practical applications](#practical-applications) for e.g. code completion, static analysis, information retrieval and other tasks. My research seeks to aid humans designing and maintaining programs by helping them locate information more easily.
+Statistical learning is starting to show a number of [practical applications](#practical-applications) for software engineering, e.g. code completion, static analysis, and information retrieval. My research seeks to aid humans designing and maintaining programs by helping them locate information more easily and understand the connectivity of software applications.
 
-As a software engineer, I am particularly excited about knowledge graph completion and assistive programming features. More concretely, my research attempts to give suggestions to programmers. I think there will be demand for such tools, if their output is:
+As a software engineer, I am particularly interested in studying knowledge graph completion and assistive programming features. More concretely, my research attempts to infer relationships between software artifacts using machine learning. I think there will be demand for such tools, if their advice is:
 
 1. Contextually relevant
 2. Sufficiently precise
 3. Transparent / explainable
 
-Recent algorithms in language modeling promise to deliver more specific suggestions to users. My research focuses on translating theory into practice and collecting user feedback. There is a path to putting language models into production, which will be realized in the next few years. Our work seeks to anticipate what software engineering will look like in 5-10 years, and build tools which will be able to utilize those models.
+Recent algorithms in language modeling and graph representation learning promise to deliver more specific suggestions to developers. My research focuses on translating theory into practice and collecting user feedback. There is a path to putting these algorithms into production, and my work seeks to understand how to best apply these tools to aid developers writing software in real world scenarios.
 
 Today's computers are becoming smarter and more creative. They can perform many useful tasks for humans writing software. Using static analysis and natural language processing, we can identify relevant documentation for programmers. Using tools from machine learning and automated reasoning, we can synthesize code to analyze programs. Together, humans and computers can work together to understand and debug complex information processing systems.
 
 ## Introduction
 
-Graphs are general purpose data structures used to represent many interesting concepts. All the following are examples of graphs:
+Graphs are general purpose data structures used to represent many types of data and process-related information. All the following are examples of graphs:
 
 - Sets: data, multisets, posets, symbols
 - Sequences: Lists, strings, traces, linear function composition
 - Trees: Abstract syntax trees, [document object model](https://en.wikipedia.org/wiki/Document_Object_Model), phylogeny
 - DAGs: [Git](https://eagain.net/articles/git-for-computer-scientists/), [control flow](https://en.wikipedia.org/wiki/Control-flow_graph), citation networks
-- Directed graphs: [State machines](https://en.wikipedia.org/wiki/Finite-state_machine), [knowledge graphs](https://en.wikipedia.org/wiki/Knowledge_Graph), [lambda calculus](http://dkeenan.com/Lambda/), web pages, neural networks
+- Directed graphs: [State machines](https://en.wikipedia.org/wiki/Finite-state_machine), [lambda calculus](http://dkeenan.com/Lambda/), web pages, neural networks
 - Hypergraphs: [Zettelkasten](https://zettelkasten.de/), [categories](https://en.wikipedia.org/wiki/Category_theory), [the universe](https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/)
 
-Graphs are often used to represent mathematical notation as I show in [Kotlin∇](https://github.com/breandan/kotlingrad). Graphs are also used to represent more general computer programs, either symbolically, or using other intermediate representations.
+Graphs are often used to represent mathematical notation as I show in [Kotlin∇](https://github.com/breandan/kotlingrad). Graphs can also be used to represent other languages, including source code, other intermediate representations or natural languages.
 
-Modern software development consists of reading and navigating through a variety of file formats, each with varying grammar and implicit or explicit link structure. Building custom pattern matchers for each format and its relatives is simply not practical. However all of these are essentially graphs with different schema and labels.
+Linguists also use graphs to parse natural language, including [constituency and dependency grammars](https://en.wikipedia.org/wiki/Dependency_grammar), [link grammars](https://en.wikipedia.org/wiki/Dependency_grammar) and other grammatical structures from natural language parsing.
+
+[Knowledge graphs](https://arxiv.org/pdf/2003.02320.pdf) are another important type of graph structure used to represent relations between concepts, e.g. on wikis and other web based content management systems.
+
+Our goal is to apply graphs to understand the relationships between natural and formal languages in software repositories. These contain a variety of file formats, each with varying grammar and implicit or explicit link structure. Building custom pattern matchers for each format and its relatives requires a lot of human effort. Yet all of these are essentially graphs with different schema and labels.
 
 ## Roadmap
 
-I believe that if we are going to teach machines to read and write code, they must start by learning very simple programs. According to Noam Chomsky, the simplest type of program is a finite state machine.
+I believe that if we are going to teach machines to read and write code, they must start by learning very simple languages. According to Noam Chomsky, the simplest type of language is a regular language.
 
 ### Program synthesis
 
@@ -45,9 +49,11 @@ Most program synthesis research starts at the top of the Chomsky hierarchy. Inst
 - Graph grammars / Graph rewrite systems
 - Synthesize a Linear bounded automaton (context sensitive)
 
+![](https://graphviz.gitlab.io/_pages/Gallery/directed/fsm.png)
+
 ## Practical Applications
 
-Besides code completion, program synthesis has a number of practical applications, including:
+Program synthesis has a number of practical applications for software engineering. Here are two possible examples:
 
 ### Information retrieval
 
@@ -63,46 +69,41 @@ What if we do not know the query? Where do queries come from? Context.
 
 Suppose we have a document `D` and a term `T`, contained in that document. What does `T` mean? There is often another document which explains `T`. Broadly any document which contains `T`, gives us some information about its meaning. Sometimes, `T` is polysemous, so not all documents which contain `T` may refer to the same entity. How do we recover all semantic occurrences of `T`?
 
-Many documents contain links, which enclose a term, and reference another document. We could attempt to learn the correspondence directly, however this would not generalize well to out-of-vocabulary (OOV) tokens or out-of-sample (OOS) graphs. Instead, we synthesize a query to find the document, by attending over the local context. Queries are simple programs.
+Many documents contain links, which contain a term `T`, and reference another document. We could attempt to learn the target document directly, but such a mapping would not generalize well to out-of-vocabulary (OOV) tokens or out-of-distribution (OOD) graphs. Instead, we synthesize a query to find the document, by attending over the local context. Queries are simple programs.
 
-### Program analysis
+<!--### Program analysis-->
 
---TODO--
+<!----TODO---->
 
 ### Interpretability
 
-Most machine learning algorithms produce matrices as output. Matrices are not very interpretable. Some algorithms produce directed graphs as output (e.g. DARTS). These are also not very interpretable.
+Most machine learning algorithms produce matrices as output. Matrices are not very interpretable. Some algorithms produce directed graphs as output (e.g. DARTS). These are also not very interpretable, but are structurally more similar to classical programs. Considering program transformations, many programs are isomorphic under refactoring. We should prefer those which more closely resemble human-written programs. We can use programs to learn, e.g. [formatting rules](https://dl.acm.org/doi/pdf/10.1145/2997364.2997383) and [code idioms](https://papers.nips.cc/paper/9265-program-synthesis-and-semantic-parsing-with-learned-code-idioms.pdf).
 
-We can use programs to make information processing systems more interpretable.
+What is a convincing way to evaluate a programmer's ability? One way is to ask them to solve a problem by writing down some code. This task is arguably harder than the Turing Test. Many human programmers fail the test every day. Another way, is to write down a program and ask them what a program does when fed a certain input. This task is somewhat easier to solve, and there are early results suggesting the task may be tractable for neural networks to solve.
 
-To learn to program, we need to learn what a program looks like (e.g. idioms and syntax), but also what a program means (denotational and operational semantics).
-
-### Parsing
-
-Learn to parse from examples.
+To learn programming, one must understand what a good program looks like (e.g. idioms and syntax), but also what a program does (denotational and operational semantics). This requires an understanding of how changes to code influences changes to execution. If we can learn to infer the behavior of a program without executing it, many would consider this a good indicator of logical reasoning abilities. Neural networks are increasingly capable of performing simple variations this task.
 
 ## Research Agenda
 
-In order to realize these goals, I must take the following concrete steps.
+In order to realize these goals, I must take the following concrete steps:
 
 ### The Plan
 
-- Write a query tool
-- Write a notebook tool
-- Write a simple debugger
+- Write a query tool (Spring 2020)
+- Write a notebook tool (Summer 2020)
 - Take qualifying exams (Fall/Winter 2020)
 - Publish papers (3-5 papers)
-- Write dissertation
-- Graduate
+- Write dissertation (2021-2023, est.)
+- Graduate (2024, est.)
 
 ## Commitments
 
-During my Ph.D., I am committed to the following activities.
+During my Ph.D., I am committed to pursuing the following activities:
 
 ### Teaching
 
-- TA for IFT 6759 on applied ML (Spring 2020).
-- TA for class on SE/ML (Fall 2020), pending.
+- TA for IFT 6759 on applied ML (Spring 2020)
+- TA for class on SE/ML (Fall 2020), pending
 
 ### Service
 
