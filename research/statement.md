@@ -4,19 +4,19 @@ I am a software engineer in the KAST lab at McGill University, under the supervi
 
 Statistical learning is starting to show a number of [practical applications](#practical-applications) for software engineering, e.g. code completion, static analysis, and information retrieval. My research seeks to aid humans designing and maintaining programs by helping them locate information more easily and understand the connectivity of software applications.
 
-As a software engineer, I am particularly interested in studying knowledge graph completion and assistive programming features. More concretely, my research attempts to infer relationships between software artifacts using machine learning. I think there will be demand for such tools, if their advice is:
+As a software engineer, I am particularly eager for the arrival of knowledge-enhanced and assistive programming tools. More concretely, my research attempts to infer relationships between software artifacts, including natural and formal languages, using machine learning. I believe there will be demand for such tools, if we can demonstrate their output is:
 
 1. Contextually relevant
 2. Sufficiently precise
 3. Transparent / explainable
 
-Recent algorithms in language modeling and graph representation learning promise to deliver more specific suggestions to developers. My research focuses on translating theory into practice and collecting user feedback. There is a path to putting these algorithms into production, and my work seeks to understand how to best apply these tools to aid developers writing software in real world scenarios.
+Recent algorithms in language modeling and graph representation learning promise to deliver more specific suggestions with fewer data points. My research focuses on translating theory into practice and maximizing user adoption, retention and satisfaction. There is a path to putting these algorithms into production, and my work seeks to understand how to best apply these tools to aid developers writing software in real world scenarios.
 
-Today's computers are becoming smarter and more creative. They can perform many useful tasks for humans writing software. Using static analysis and natural language processing, we can identify relevant documentation for programmers. Using tools from machine learning and automated reasoning, we can synthesize code to analyze programs. Together, humans and computers can work together to understand and debug complex information processing systems.
+Today's programming environments are becoming smarter and more creative. They can perform many useful tasks for humans writing software. Using static analysis and natural language processing, we can identify relevant documentation for programmers. Using tools from machine learning and automated reasoning, we can analyze programs and identify potential conflicts. And using automated bug fixing and program repair, we can synthesize code to correct logical errors. Together, humans and computers can work together to understand and debug complex information processing systems.
 
 ## Introduction
 
-Graphs are general purpose data structures used to represent many types of data and process-related information. All the following are examples of graphs:
+Graphs are general purpose data structures used to represent many types of data structures and process-related phenomena. All the following are examples of graphs, with increasing structure:
 
 - Sets: data, multisets, posets, symbols
 - Sequences: Lists, strings, traces, linear function composition
@@ -31,15 +31,15 @@ Linguists also use graphs to parse natural language, including [constituency and
 
 [Knowledge graphs](https://arxiv.org/pdf/2003.02320.pdf) are another important type of graph structure used to represent relations between concepts, e.g. on wikis and other web based content management systems.
 
-Our goal is to apply graphs to understand the relationships between natural and formal languages in software repositories. These contain a variety of file formats, each with varying grammar and implicit or explicit link structure. Building custom pattern matchers for each format and its relatives requires a lot of human effort. Yet all of these are essentially graphs with different schema and labels.
+Our goal is to apply graphs to understand the relationships between natural and formal languages in software repositories. Software repositories contain a variety of file formats, each with varying grammar and implicit or explicit link structure. All of these documents are essentially graphs with different schema and labels.
 
 ## Roadmap
 
-I believe that if we are going to teach machines to read and write code, they must start by learning very simple languages. According to Noam Chomsky, the simplest type of language is a regular language.
+I believe that if we are going to teach machines to read and write code, we must start by learning very simple languages. According to Noam Chomsky, the simplest type of language is a regular language.
 
 ### Program synthesis
 
-Most program synthesis research starts at the top of the Chomsky hierarchy. Instead, we start at the bottom, and build our way up.
+Most program synthesis attempts to synthesize Turing Complete languages at the top of the Chomsky hierarchy. Instead, we start at the bottom, and build our way up.
 
 - Synthesize a finite state automaton (regular)
 - Use Angulin's L* algorithm as an oracle
@@ -57,7 +57,7 @@ Program synthesis has a number of practical applications for software engineerin
 
 ### Information retrieval
 
-An essential skill of learning to code is learning to search. All information retrieval systems support regular language queries.
+An invaluable skill of learning to code is learning to use Google and StackOverflow. These and most other information retrieval systems support regular language queries.
 
 - Union
 - Concatenation
@@ -83,11 +83,11 @@ What is a convincing way to evaluate a programmer's ability? One way is to ask t
 
 To learn programming, one must understand what a good program looks like (e.g. idioms and syntax), but also what a program does (denotational and operational semantics). This requires an understanding of how changes to code influences changes to execution. If we can learn to infer the behavior of a program without executing it, many would consider this a good indicator of logical reasoning abilities. Neural networks are increasingly capable of performing simple variations this task.
 
-## Research Agenda
+## Agenda
 
 In order to realize these goals, I must take the following concrete steps:
 
-### The Plan
+### Plan
 
 - Write a query tool (Spring 2020)
 - Write a notebook tool (Summer 2020)
@@ -110,10 +110,3 @@ During my Ph.D., I am committed to pursuing the following activities:
 - Participate in research activities at KAST.
 - Help out colleagues and lab mates.
 - Contribute to open source.
-
-### Research
-
-- Notebooks
-- Trace links
-- Automata
-- Graphs
