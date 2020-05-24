@@ -20,9 +20,9 @@ Graphs are general purpose data structures used to represent many types of data 
 
 - Sets: data, multisets, posets, symbols
 - Sequences: Lists, strings, traces, linear function composition
-- Trees: Abstract syntax trees, [document object model](https://en.wikipedia.org/wiki/Document_Object_Model), phylogeny
-- DAGs: [Git](https://eagain.net/articles/git-for-computer-scientists/), [control flow](https://en.wikipedia.org/wiki/Control-flow_graph), citation networks
-- Directed graphs: [State machines](https://en.wikipedia.org/wiki/Finite-state_machine), [lambda calculus](http://dkeenan.com/Lambda/), web pages, neural networks
+- Trees: [Abstract syntax trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree), [document object model](https://en.wikipedia.org/wiki/Document_Object_Model), [phylogenic trees](https://en.wikipedia.org/wiki/Phylogenetic_tree), [decision trees](https://en.wikipedia.org/wiki/Decision_tree)
+- DAGs: [Git](https://eagain.net/articles/git-for-computer-scientists/), [control flow](https://en.wikipedia.org/wiki/Control-flow_graph), [citation networks](https://en.wikipedia.org/wiki/Citation_network)
+- Directed graphs: [State machines](https://en.wikipedia.org/wiki/Finite-state_machine), [lambda calculus](http://dkeenan.com/Lambda/), [web pages](https://computersciencewiki.org/index.php/The_web_as_a_directed_graph), neural networks
 - Hypergraphs: [Zettelkasten](https://zettelkasten.de/), [categories](https://en.wikipedia.org/wiki/Category_theory), [the universe](https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/)
 
 Graphs are often used to represent mathematical notation as I show in [Kotlin∇](https://github.com/breandan/kotlingrad). Graphs can also be used to represent other languages, including source code, other intermediate representations or natural languages.
@@ -110,3 +110,7 @@ During my Ph.D., I am committed to pursuing the following activities:
 - Participate in research activities at KAST.
 - Help out colleagues and lab mates.
 - Contribute to open source.
+
+## References
+
+
