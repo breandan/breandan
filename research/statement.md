@@ -2,7 +2,7 @@
 
 I am a software engineer in the KAST lab at McGill University, under the supervision of Jin Guo. There, I am building tools to help software engineers find information and reason about software, by learning to read and write code.
 
-Statistical learning is starting to show a number of [practical applications](#practical-applications) for software engineering, e.g. code completion, static analysis, and information retrieval. My research seeks to aid humans designing and maintaining programs by helping them to locate information and manipulate the structure of connected software applications.
+Statistical learning is starting to show a number of [practical applications](#practical-applications) for software engineering, e.g. code completion, static analysis, and information retrieval. My research seeks to aid humans designing and maintaining programs by helping them locate information and manipulate the structure of connected software applications.
 
 As a software engineer, I am particularly eager for the arrival of knowledge-enhanced and assistive programming tools. More concretely, my research attempts to infer relationships between software artifacts, including natural and formal languages, using machine learning. I believe there will be demand for such tools, if we can demonstrate their output is:
 
@@ -10,13 +10,13 @@ As a software engineer, I am particularly eager for the arrival of knowledge-enh
 2. Sufficiently precise
 3. Transparent / explainable
 
-Recent algorithms in language modeling and graph representation learning promise to deliver more specific suggestions with fewer data points. My research focuses on translating theory into practice and maximizing user adoption, retention and satisfaction. There is a path to putting these algorithms into production, and my work seeks to understand how to best apply these tools to aid developers writing software in real world scenarios.
+Recent algorithms in language modeling and graph representation learning promise to deliver more specific suggestions while requiring fewer examples. My research focuses on translating theory into practice and maximizing user adoption, retention and satisfaction. There is a path to putting these algorithms into production, and my work studies how to best apply them to aid developers writing software in real world scenarios.
 
 Today's programming environments are becoming smarter and more creative. They can perform many useful tasks for humans writing software. Using static analysis and natural language processing, we can identify relevant documentation for programmers. Using tools from machine learning and automated reasoning, we can analyze programs and identify potential conflicts. And using automated bug fixing and program repair, we can synthesize code to correct logical errors. Together, humans and computers can work together to understand and debug complex information processing systems.
 
 ## Introduction
 
-Graphs are general purpose data structures used to represent many types of data structures and process-related phenomena. All the following are examples of graphs, with increasing generality:
+Graphs are general-purpose data structures used to represent many data types and procedural phenomena. All the following are examples of graphs, with increasing generality:
 
 - **Sets**: data, multisets, posets, symbols
 - **Sequences**: Lists, strings, traces, linear function composition
@@ -25,9 +25,9 @@ Graphs are general purpose data structures used to represent many types of data 
 - **Directed graphs**: [State machines](https://en.wikipedia.org/wiki/Finite-state_machine), [lambda calculus](http://dkeenan.com/Lambda/), [web pages](https://computersciencewiki.org/index.php/The_web_as_a_directed_graph), neural networks
 - **Hypergraphs**: [Zettelkasten](https://zettelkasten.de/), [categories](https://en.wikipedia.org/wiki/Category_theory), [the universe](https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/)
 
-Graphs are often used to represent mathematical notation as I show in [Kotlin∇](https://github.com/breandan/kotlingrad). Graphs can also be used to represent other languages, including source code, other intermediate representations or natural languages.
+Graphs are often used to represent mathematical notation as I show in [Kotlin∇](https://github.com/breandan/kotlingrad). Graphs can also be used to represent other programming languages, including source code, intermediate representations and markup languages.
 
-Linguists also use graphs to parse natural language, including [constituency](https://en.wikipedia.org/wiki/Phrase_structure_grammar) and [dependency grammars](https://en.wikipedia.org/wiki/Dependency_grammar), [link grammars](https://en.wikipedia.org/wiki/Dependency_grammar) and other grammatical structures from natural language parsing.
+Graphs are also used to model natural language, including [constituency](https://en.wikipedia.org/wiki/Phrase_structure_grammar) and [dependency grammars](https://en.wikipedia.org/wiki/Dependency_grammar), [link grammars](https://en.wikipedia.org/wiki/Dependency_grammar) and other syntactic and semantic relationships between natural language entities.
 
 ![](https://upload.wikimedia.org/wikipedia/commons/8/8e/Thistreeisillustratingtherelation%28PSG%29.png)
 
@@ -41,7 +41,7 @@ I believe that if we are going to teach machines to read and write code, we must
 
 ### Program synthesis
 
-Program synthesis often attempts to synthesize languages at the top of the Chomsky hierarchy. While this has the benefit of being immediately usable in source code, it is often possible to realize attainable developer goals using less expressive languages for certain tasks. Instead, we start at the bottom, and build our way up.
+Much attention in program synthesis concentrates at the top of the [Chomsky hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy). While this approach directly translates into applied settings, there are many practical applications for less powerful languages. Instead, we start at the bottom, and work our way up.
 
 - Synthesize a finite state automaton (regular)
 - Use Angulin's L* algorithm as an oracle
@@ -54,7 +54,17 @@ Program synthesis often attempts to synthesize languages at the top of the Choms
 
 ![](https://graphviz.gitlab.io/_pages/Gallery/directed/fsm.png)
 
-There are a few criteria for selecting applications which has a high chance of yielding progress to program synthesis. One of those criteria is selecting applications with have classical solutions which are prohibitively expensive due to time and space complexity.
+There are a few strategies for selecting program synthesis tasks which have a good chance of yielding progress to learning methods. One strategy is to gather a human-labeled dataset (e.g. on GitHub), and perform supervised or semi-supervised or unsupervised learning on the source code using language modeling techniques.
+
+Another strategy is selecting problems known to have exact solutions, but which are prohibitively expensive to deploy due to their computational complexity. This allows us to construct an oracle to verify the correctness of synthesized programs. Procedurally generating random instances provides an effectively unlimited training and validation set.
+
+We propose a synthesis of the two strategies: in many cases, there are equivalent correct solutions with varying [descriptive complexity](https://en.wikipedia.org/wiki/Kolmogorov_complexity), in which case, we can use term rewriting to prioritize candidate solutions for [readability](https://web.eecs.umich.edu/~weimerw/p/weimer-issta2008-readability.pdf), [understandability](http://www.cs.kent.edu/~jmaletic/cs63902/Papers/Scalabrino17.pdf) or other soft metrics.
+
+It is our belief that successful applications of program synthesis must balance the following criteria:
+
+* Optimality
+* Efficiency
+* Readability
 
 ## Practical Applications
 
@@ -72,7 +82,7 @@ From the query, we can synthesize a program to fetch the results using classical
 
 What if we do not know the query? Where do queries come from? Context.
 
-Suppose we have a document `D` and a term `T`, contained in that document. What does `T` mean? There is often another document which explains `T`. Broadly any document which contains `T`, gives us some information about its meaning. Sometimes, `T` is polysemous, so not all documents which contain `T` may refer to the same entity. How do we recover all semantic occurrences of `T`?
+Suppose we have a document `D` and a term `T`, contained in that document. What does `T` mean? There are often other documents which explain `T`. Broadly, any document which explains `T` must contain `T`, and any document which contains `T`, tells us some information about its meaning. Sometimes, `T` is [polysemous](https://en.wikipedia.org/wiki/Polysemy), so not all documents which contain `T` may refer to the same entity. How do we recover all semantic occurrences of `T`?
 
 Many documents contain links, which contain a term `T`, and reference another document. We could attempt to learn the target document directly, but such a mapping would not generalize well to out-of-vocabulary (OOV) tokens or out-of-distribution (OOD) graphs. Instead, we synthesize a query to find the document, by attending over the local context. Queries are simple programs.
 
@@ -117,5 +127,4 @@ During my Ph.D., I am committed to pursuing the following activities:
 - Contribute to open source.
 
 ## References
-
 
