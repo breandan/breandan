@@ -2,7 +2,7 @@
 
 I am a software engineer in the KAST lab at McGill University, under the supervision of Jin Guo. There, I am building tools to help software engineers find information and reason about software, by learning to read and write code.
 
-Statistical learning is starting to show a number of [practical applications](#practical-applications) for software engineering, e.g. code completion, static analysis, and information retrieval. My research seeks to aid humans designing and maintaining programs by helping them locate information more easily and understand the connectivity of software applications.
+Statistical learning is starting to show a number of [practical applications](#practical-applications) for software engineering, e.g. code completion, static analysis, and information retrieval. My research seeks to aid humans designing and maintaining programs by helping them to locate information and manipulate the structure of connected software applications.
 
 As a software engineer, I am particularly eager for the arrival of knowledge-enhanced and assistive programming tools. More concretely, my research attempts to infer relationships between software artifacts, including natural and formal languages, using machine learning. I believe there will be demand for such tools, if we can demonstrate their output is:
 
@@ -16,18 +16,20 @@ Today's programming environments are becoming smarter and more creative. They ca
 
 ## Introduction
 
-Graphs are general purpose data structures used to represent many types of data structures and process-related phenomena. All the following are examples of graphs, with increasing structure:
+Graphs are general purpose data structures used to represent many types of data structures and process-related phenomena. All the following are examples of graphs, with increasing generality:
 
-- Sets: data, multisets, posets, symbols
-- Sequences: Lists, strings, traces, linear function composition
-- Trees: [Abstract syntax trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree), [document object model](https://en.wikipedia.org/wiki/Document_Object_Model), [phylogenic trees](https://en.wikipedia.org/wiki/Phylogenetic_tree), [decision trees](https://en.wikipedia.org/wiki/Decision_tree)
-- DAGs: [Git](https://eagain.net/articles/git-for-computer-scientists/), [control flow](https://en.wikipedia.org/wiki/Control-flow_graph), [citation networks](https://en.wikipedia.org/wiki/Citation_network)
-- Directed graphs: [State machines](https://en.wikipedia.org/wiki/Finite-state_machine), [lambda calculus](http://dkeenan.com/Lambda/), [web pages](https://computersciencewiki.org/index.php/The_web_as_a_directed_graph), neural networks
-- Hypergraphs: [Zettelkasten](https://zettelkasten.de/), [categories](https://en.wikipedia.org/wiki/Category_theory), [the universe](https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/)
+- **Sets**: data, multisets, posets, symbols
+- **Sequences**: Lists, strings, traces, linear function composition
+- **Trees**: [Abstract syntax trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree), [document object model](https://en.wikipedia.org/wiki/Document_Object_Model), [phylogenic trees](https://en.wikipedia.org/wiki/Phylogenetic_tree), [decision trees](https://en.wikipedia.org/wiki/Decision_tree)
+- **DAGs**: [Git](https://eagain.net/articles/git-for-computer-scientists/), [control flow](https://en.wikipedia.org/wiki/Control-flow_graph), [citation networks](https://en.wikipedia.org/wiki/Citation_network)
+- **Directed graphs**: [State machines](https://en.wikipedia.org/wiki/Finite-state_machine), [lambda calculus](http://dkeenan.com/Lambda/), [web pages](https://computersciencewiki.org/index.php/The_web_as_a_directed_graph), neural networks
+- **Hypergraphs**: [Zettelkasten](https://zettelkasten.de/), [categories](https://en.wikipedia.org/wiki/Category_theory), [the universe](https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/)
 
 Graphs are often used to represent mathematical notation as I show in [Kotlin∇](https://github.com/breandan/kotlingrad). Graphs can also be used to represent other languages, including source code, other intermediate representations or natural languages.
 
-Linguists also use graphs to parse natural language, including [constituency and dependency grammars](https://en.wikipedia.org/wiki/Dependency_grammar), [link grammars](https://en.wikipedia.org/wiki/Dependency_grammar) and other grammatical structures from natural language parsing.
+Linguists also use graphs to parse natural language, including [constituency](https://en.wikipedia.org/wiki/Phrase_structure_grammar) and [dependency grammars](https://en.wikipedia.org/wiki/Dependency_grammar), [link grammars](https://en.wikipedia.org/wiki/Dependency_grammar) and other grammatical structures from natural language parsing.
+
+![](https://upload.wikimedia.org/wikipedia/commons/8/8e/Thistreeisillustratingtherelation%28PSG%29.png)
 
 [Knowledge graphs](https://arxiv.org/pdf/2003.02320.pdf) are another important type of graph structure used to represent relations between concepts, e.g. on wikis and other web based content management systems.
 
@@ -39,17 +41,20 @@ I believe that if we are going to teach machines to read and write code, we must
 
 ### Program synthesis
 
-Most program synthesis attempts to synthesize Turing Complete languages at the top of the Chomsky hierarchy. Instead, we start at the bottom, and build our way up.
+Program synthesis often attempts to synthesize languages at the top of the Chomsky hierarchy. While this has the benefit of being immediately usable in source code, it is often possible to realize attainable developer goals using less expressive languages for certain tasks. Instead, we start at the bottom, and build our way up.
 
 - Synthesize a finite state automaton (regular)
 - Use Angulin's L* algorithm as an oracle
 - Use the finite state machine to search for relevant programs (i.e. suggest code)
 - Synthesize a Buchi automaton (ω-regular)
 - Synthesize a Pushdown automaton (context free)
+- Synthesize an EPDA (tree-adjoining)
 - Graph grammars / Graph rewrite systems
 - Synthesize a Linear bounded automaton (context sensitive)
 
 ![](https://graphviz.gitlab.io/_pages/Gallery/directed/fsm.png)
+
+There are a few criteria for selecting applications which has a high chance of yielding progress to program synthesis. One of those criteria is selecting applications with have classical solutions which are prohibitively expensive due to time and space complexity.
 
 ## Practical Applications
 
