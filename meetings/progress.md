@@ -1,8 +1,10 @@
-## May 25, 2020
+## May 27, 2020
 - Reboot progress notes on GitHub
 - Write [research statement](../research/statement.md)
 - Finalize IFT 6759 grades
 - Meeting with Krishna et al. about physics
+- [Registered](https://regmaster.com/2020conf/PLDI20/register.php) for PLDI (June 15-20)
+- Looked into program slicing techniques
 
 ## Nov. 20th, 2019
 - Tooling [updates](https://github.com/acejump/TraceJump/tree/1bba53bd8b14e5b9717c0d25f9d7b7a72add1fe3) to TraceJump to support native installer
