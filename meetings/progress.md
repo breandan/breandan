@@ -5,6 +5,13 @@
 - Meeting with Krishna et al. about physics
 - [Registered](https://regmaster.com/2020conf/PLDI20/register.php) for PLDI (June 15-20)
 - Looked into program slicing techniques
+- Reading list
+  - Program slicing techniques
+  - Dawson Engler / KLEE / Coverity
+  - symbolic execution / concolic testing
+  - Z3 / SMT solving, Lean
+  - rewriting systems (normalization, confluence)
+  - [nbformat](https://nbformat.readthedocs.io/en/latest/)
 
 ## Nov. 20th, 2019
 - Tooling [updates](https://github.com/acejump/TraceJump/tree/1bba53bd8b14e5b9717c0d25f9d7b7a72add1fe3) to TraceJump to support native installer
