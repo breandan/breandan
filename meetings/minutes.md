@@ -1,3 +1,12 @@
+## May 26, 2020
+
+- Meeting tomorrow with ISR folks
+- Program slicing, rewriting & refactoring / Breandan
+    - Skeleton and fit refactoring into the thesis
+- [Jupyter notebook extensions](https://jupyterlab.readthedocs.io/en/stable/developer/extension_tutorial.html#extension-tutorial) / Grace
+- [MLV-Tools](https://github.com/peopledoc/mlvtools-tutorial) / Fuyuan
+- [Quality and Reproducibility of Jupyter Notebooks](http://www2.ic.uff.br/~leomurta/papers/pimentel2019a.pdf) / Fluminense
+
 ## May 21, 2020
 
 - Mass estimation for deformable objects
