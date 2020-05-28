@@ -1,3 +1,31 @@
+## May 27, 2020
+
+### ISR Meeting / Christian + Jin
+
+- Ready made tool for DVC hyperparameters + versioning /  Fuyuan
+- Guessing libraries, modules and reproducibility [Burrito](https://dash.harvard.edu/bitstream/handle/1/9938866/Guo_BURRITOWrapping.pdf)? / Isabel
+- Generating model cards for notebooks / Grace
+- Pyre and type checking, dead code, constant propagation / Cindy
+- Out of order notebooks. Transform to SSA form = CPS? / Jerry
+- Fingerprinting and common refactoring patterns / Breandan
+  - Incremental computation, cell segmentation, data flow, info flow
+  - Splicing compatible snippets and slicing techniques
+  - Identifying clean and dirty pairs: what are people doing?
+  - Possible applications: clone detection / similarity search
+  - Look into literature: Kate Stole? Crista Lopez
+  - Connect with Mark about refactoring
+
+### Qualifying exam planning / Jin
+
+- Contextually relevant information retrieval
+- Explainability and interpretability
+- Incorporate prior experience into thesis proposal
+- What do we want to understand about the user? Who is the audience?
+- Methods oriented vs. solution oriented research
+- Put together concrete plan with specific contributions
+- Select two papers from HCI/SE to anchor discussion
+- Mini-proposal / skeleton for qualifying exam
+
 ## May 26, 2020
 
 - Meeting tomorrow with ISR folks
