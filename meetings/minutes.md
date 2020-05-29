@@ -1,3 +1,13 @@
+## May 28, 2020
+
+- Triangles vs. tetrahedra
+- Reducing the number of triangles
+- IoU: intersection over union / Sanja
+- Amortized inference using neural nets
+- How does rendering gradients help?
+- Introduction needs more attention
+- Finite difference pybullet?
+
 ## May 27, 2020
 
 ### ISR Meeting / Christian + Jin
@@ -14,6 +24,7 @@
   - Possible applications: clone detection / similarity search
   - Look into literature: Kate Stole? Crista Lopez
   - Connect with Mark about refactoring
+- Meeting Tuesday 12-1pm (Isabel, Helen) / Friday 3-4pm (group temp)
 
 ### Qualifying exam planning / Jin
 
