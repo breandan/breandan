@@ -1,3 +1,32 @@
+## May 29, 2020
+
+- [python-program-analysis](https://github.com/microsoft/python-program-analysis) => [nbgather](https://github.com/Microsoft/gather) / Jerry
+- [noworkflow](https://github.com/gems-uff/noworkflow) / Grace
+- Flow sensitive and context sensitive analysis, test cases:
+
+```python
+x[1] = b
+x[2] = c
+print(x[1])
+
+x.a=b
+x.b=c
+print(x.a)
+
+def first(a,b): return a
+x = first(a, b)
+print(x)
+
+x = first(a, b)
+y = first(c, d)
+print(x)
+
+if (random() < 0.00001) x = a else x = b
+print(x)
+```
+
+- Meeting again Tuesday, 11:15am
+
 ## May 28, 2020
 
 - Triangles vs. tetrahedra
