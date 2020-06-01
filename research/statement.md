@@ -14,6 +14,10 @@ Recent algorithms in language modeling and graph representation learning promise
 
 Today's programming environments are becoming smarter and more creative. They can perform many useful tasks for humans writing software. Using static analysis and natural language processing, we can identify relevant documentation for programmers. Using tools from machine learning and automated reasoning, we can analyze programs and identify potential conflicts. And using automated bug fixing and program repair, we can synthesize code to correct logical errors. Together, humans and computers can work together to understand and debug complex information processing systems.
 
+![](http://www.naur.com/comp/triangle.gif)
+![](https://3qeqpr26caki16dnhd19sv6by6v-wpengine.netdna-ssl.com/wp-content/uploads/2017/08/Relationship-between-Induction-Deduction-and-Transduction.png)
+[![Cardon et al., 2018](../program_synthesis.png)](https://hal.archives-ouvertes.fr/hal-02190026/document#page=5)
+
 ## Introduction
 
 Graphs are general-purpose data structures used to represent many data types and procedural phenomena. All the following are examples of graphs, with increasing generality:

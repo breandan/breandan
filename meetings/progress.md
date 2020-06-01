@@ -1,3 +1,11 @@
+## June 2, 2020
+- Reading List
+  - [FaCoY – A Code-to-Code Search Engine](https://dl.acm.org/doi/pdf/10.1145/3180155.3180187)
+  - [DéjàVu: A Map of Code Duplicates on GitHub](https://dl.acm.org/doi/pdf/10.1145/3133908)
+  - [Programming Languages, Natural Languages and Mathematics](https://doi.org/10.1145/361227.361229)
+  - [Programming As Theory Building (1985)](http://pages.cs.wisc.edu/~remzi/Naur.pdf)
+  - [Computing Versus Human Thinking](https://dl.acm.org/doi/pdf/10.1145/1188913.1188922)
+
 ## May 27, 2020
 - Reboot progress notes on GitHub
 - Write [research statement](../research/statement.md)
