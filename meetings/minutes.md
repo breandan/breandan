@@ -1,3 +1,21 @@
+## June 4, 2020
+
+### KAST meeting
+
+## June 2, 2020
+
+- Analysis of notebooks: adapting type inference and other tools / Jerry
+- Empirical studies: best practices and notebook analysis? / Isabel
+
+### TODOs
+
+- Obtain UdeM diploma from registrar & update McGill about M.Sc. graduation
+- Submit advisor co-signed MOU from Ann's email (July 6th)
+- Follow up on doctoral progress committee formation
+- Submit qualifying exam syllabus to department
+- Update Jin on planned contributions to notebook project (Fri)
+- Submit final IFT6759 TA invoice to Joumana
+
 ## May 29, 2020
 
 - [python-program-analysis](https://github.com/microsoft/python-program-analysis) => [nbgather](https://github.com/Microsoft/gather) / Jerry

@@ -1,10 +1,24 @@
-## June 2, 2020
+## June 3, 2020
+
+- Physics experiments: comparing LNN with GS
+- Looked into TF4J/TVM4J and [multiplatform builds](https://github.com/apache/incubator-tvm/issues/5707#issuecomment-636966615)
+- Looked into [dynamic slicing](https://dl.acm.org/doi/pdf/10.1145/93548.93576).
+  - [Def-use and use-def chains](https://en.wikipedia.org/wiki/Use-define_chain)
+  - Normally, dynamic slicing only records paths taken, but is there a way to recover statics?
+  - Is the Python interpreter IR translation invertible? [Sort of](https://github.com/rocky/python-decompile3).
+  - [Sometimes](https://bugs.python.org/issue33826) possible to [recover source code programmatically](https://pymotw.com/2/sys/tracing.html)
+  - Possible to expand runtime paths to include alternate paths from source code.
+  - This would allow us to "search" through the space of graphs at runtime
+  - What are the differences between PDG/DFG/CFG/computation graphs
+- Looked into discretionary/essential US/CA [border crossing scenarios](http://s3.documentcloud.org/documents/6935230/CBSA-Directives.pdf)
+- Medical records release and transfer paperwork US/Canada
 - Reading List
-  - [FaCoY – A Code-to-Code Search Engine](https://dl.acm.org/doi/pdf/10.1145/3180155.3180187)
-  - [DéjàVu: A Map of Code Duplicates on GitHub](https://dl.acm.org/doi/pdf/10.1145/3133908)
-  - [Programming Languages, Natural Languages and Mathematics](https://doi.org/10.1145/361227.361229)
-  - [Programming As Theory Building (1985)](http://pages.cs.wisc.edu/~remzi/Naur.pdf)
-  - [Computing Versus Human Thinking](https://dl.acm.org/doi/pdf/10.1145/1188913.1188922)
+  - [FaCoY – A Code-to-Code Search Engine](https://dl.acm.org/doi/pdf/10.1145/3180155.3180187) - Query expansion techniques for similar source code snippets.
+  - [DéjàVu: A Map of Code Duplicates on GitHub](https://dl.acm.org/doi/pdf/10.1145/3133908) - Descriptive study on the incidence and prevelance of code duplication on GitHub.
+  - [Understanding programs using graphs](https://engineering.shopify.com/blogs/engineering/understanding-programs-using-graphs) - Seaton advocates for the benefits of graph-based representation for program understanding.
+  - [Programming As Theory Building (1985)](http://pages.cs.wisc.edu/~remzi/Naur.pdf) - Source code isn't the model. Human knowledge is the model. Naur makes the case for human-centered computing.
+  - [Programming Languages, Natural Languages and Mathematics](https://doi.org/10.1145/361227.361229) - Naur on the poetry and science of language construction. Interesting discussion on descriptive vs. prescriptive linguistics.
+  - [Computing Versus Human Thinking](https://dl.acm.org/doi/pdf/10.1145/1188913.1188922) - Naur's quasi-philosophical musings about cognition and computation. Seems a bit nebulous in hindsight.
 
 ## May 27, 2020
 - Reboot progress notes on GitHub
