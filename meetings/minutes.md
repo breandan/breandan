@@ -1,6 +1,29 @@
+## June 5, 2020
+
+### Advisor meeting
+
+- Adgenda: Comprehensive exam, progress committee, notebook deliverables
+
+### Physics meeting
+
+
+
 ## June 4, 2020
 
+### Physics meeting
+
+- Visual MPC experiments need to be higher resolution / Krishna + Vikram
+- LaTeX compression to fit in 8 pages / Sanja
+- Last 3.5-4 pages should be results / Krishna
+- Describe why the results are important / Derek
+- Add pendula experiments to supplementary material (due Jun. 11, 1pm) / Breandan
+
 ### KAST meeting
+
+- GraphViz + NoWorkflow now works / Grace
+- [DAGsHub](https://dagshub.com/) / Fuyuan
+- Source preserving IR transformations / Breandan
+- Put together concrete goals document / Jin
 
 ## June 2, 2020
 
