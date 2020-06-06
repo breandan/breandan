@@ -92,7 +92,7 @@ print(x)
   - Splicing compatible snippets and slicing techniques
   - Identifying clean and dirty pairs: what are people doing?
   - Possible applications: clone detection / similarity search
-  - Look into literature: Kate Stole? Crista Lopez
+  - Look into literature: [Katie Stolee](https://scholar.google.ca/citations?user=dmcgQDQAAAAJ&hl=en&oi=sra), [Crista Lopes](https://scholar.google.com/citations?user=FaY_RgsAAAAJ&hl=en)
   - Connect with Mark about refactoring
 - Meeting Tuesday 12-1pm (Isabel, Helen) / Friday 3-4pm (group temp)
 
