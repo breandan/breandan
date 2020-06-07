@@ -1,12 +1,15 @@
+## June 8, 2020
+
+- [Hypermodern Python](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/)
+      - [typing](https://cjolowicz.github.io/posts/hypermodern-python-04-typing/) - mypy, pyre, pyright, pytype
+  - [CI/CD](https://cjolowicz.github.io/posts/hypermodern-python-06-ci-cd/) - poetry
+  - [documentation](https://cjolowicz.github.io/posts/hypermodern-python-05-documentation/) - sphinx, rst
+
 ## June 5, 2020
 
 ### Advisor meeting
 
 - Adgenda: Comprehensive exam, progress committee, notebook deliverables
-
-### Physics meeting
-
-
 
 ## June 4, 2020
 
