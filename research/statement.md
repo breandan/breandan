@@ -132,7 +132,7 @@ During my Ph.D., I am committed to pursuing the following activities:
 
 ## References
 
-- [DéjàVu: A Map of Code Duplicates on GitHub](https://dl.acm.org/doi/pdf/10.1145/3133908) - Descriptive study on the incidence and prevelance of code duplication on GitHub.
+- [DéjàVu: A Map of Code Duplicates on GitHub](https://dl.acm.org/doi/pdf/10.1145/3133908) - Descriptive study on the incidence and prevalence of code duplication on GitHub.
 - [Solving the Search for Source Code](https://kstolee.github.io/papers/TOSEM2014.pdf) / Katie Stolee
 - [Code search with input/output queries: Generalizing, ranking, and assessment](https://doi.org/10.1016/j.jss.2015.04.081)
 - [When Deep Learning Met Code Search](https://dl.acm.org/doi/pdf/10.1145/3338906.3340458)
