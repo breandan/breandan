@@ -139,7 +139,6 @@ During my Ph.D., I am committed to pursuing the following activities:
 - [FaCoY – A Code-to-Code Search Engine](https://dl.acm.org/doi/pdf/10.1145/3180155.3180187) - Query expansion techniques for similar source code snippets.
 - [srcQL: A Syntax-Aware  Query Language for Source Code](http://www.cs.kent.edu/~jmaletic/papers/SANER17-srcQL.pdf)
 - [CRAQL: A Composable Language for Querying Source Code](https://arxiv.org/pdf/1901.09409.pdf)
-- [Enriched Weisfeiler-Lehman Kernel for Improved Graph Clustering of Source Code](https://link.springer.com/chapter/10.1007/978-3-030-44584-3_20)
-- [Detecting Similar Programs via the Weisfeiler-Leman Graph Kernel](https://www.martinschaef.de/papers/icsr2016.pdf)
 - [Towards a Framework for Generating Program Dependence Graphs from Source Code](https://dl.acm.org/doi/pdf/10.1145/3278142.3278144)
 - [Towards Summarizing Program Statements in Source Code Search](https://dl.acm.org/doi/pdf/10.1145/3341105.3374055)
+- [Multi-Modal Attention Network Learning for Semantic Source Code Retrieval](https://arxiv.org/pdf/1909.13516.pdf)
