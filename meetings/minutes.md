@@ -1,3 +1,27 @@
+## June 9, 2020
+
+### Notebooks meeting
+
+- Why doesn't the noworkflow tracer output dot graph?
+
+### Advisor meeting
+
+- Systematic literature review
+  - Queries
+  - Snowball sampling
+  - Data analysis (raw data)
+- Create an Overleaf project about comp exam
+  - Write about rough research questions
+  - Define each term and cite
+  - Focus and granularity and length
+  - Ask Mathieu about required amount of literature
+      - source code analysis
+      - 6 papers related to field
+      - program comprehension
+- "program synthesis and applications for programming tools to support search"?
+- notebooks, interpretability, work on the initial list
+- Send progress committee draft invitation letter
+
 ## June 8, 2020
 
 - [Hypermodern Python](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/)
