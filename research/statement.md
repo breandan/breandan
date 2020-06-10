@@ -142,4 +142,5 @@ During my Ph.D., I am committed to pursuing the following activities:
 - [Towards a Framework for Generating Program Dependence Graphs from Source Code](https://dl.acm.org/doi/pdf/10.1145/3278142.3278144)
 - [Towards Summarizing Program Statements in Source Code Search](https://dl.acm.org/doi/pdf/10.1145/3341105.3374055)
 - [Multi-Modal Attention Network Learning for Semantic Source Code Retrieval](https://arxiv.org/pdf/1909.13516.pdf)
+- Kleene, 1951. [Representation of Events in Nerve Nets and Finite Automata](https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf)
 - [Regular expression matching on billion-nodes graphs](https://arxiv.org/pdf/1904.11653.pdf)
