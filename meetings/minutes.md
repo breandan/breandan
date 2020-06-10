@@ -1,3 +1,11 @@
+## June 20, 2020
+
+- Proposed three tools
+  - https://github.com/coetaur0/staticfg
+  - https://github.com/ChrisCummins/ProGraML
+  - https://github.com/JetBrains-Research/astminer
+- Using [nbgather](https://github.com/Microsoft/gather)
+
 ## June 9, 2020
 
 ### Notebooks meeting
