@@ -1,4 +1,10 @@
-## June 20, 2020
+## June 11, 2020
+
+- Integration with existing tools (e.g. Docker) / Breandan
+- What is each version doing? (add cell, some semantic change) / Fuyuan
+    - [A gallery of interesting Jupyter Notebooks](https://github.com/jupyter/jupyter/wiki/A-gallery-of-interesting-Jupyter-Notebooks)
+
+## June 10, 2020
 
 - Proposed three tools
   - https://github.com/coetaur0/staticfg
