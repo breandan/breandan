@@ -110,7 +110,7 @@ In order to realize these goals, I must take the following concrete steps:
 
 - Write a query tool (Spring 2020)
 - Write a notebook tool (Summer 2020)
-- Take qualifying exams (Fall/Winter 2020)
+- Take qualifying exams (Winter 2021)
 - Publish papers (3-5 papers)
 - Write dissertation (2021-2023, est.)
 - Graduate (2024, est.)

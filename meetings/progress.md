@@ -1,6 +1,8 @@
-## June 9, 2020
+## June 11, 2020
 
 - Wrote [notebooks outline](../research/notebooks.md)
+- noworkflow debugging
+- Did some research into provenance and workflow
 - Comprehensive exam logistics (registering, syllabus, MoU, progress committee)
 - PEQ reform / UdeM paperwork (due Wed.)
 - Root canal on Thursday
