@@ -33,18 +33,24 @@ There are many types of [graphical representations](https://engineering.shopify.
 * [Call graphs](https://en.wikipedia.org/wiki/Call_graph)
 * [Def/use chains](https://en.wikipedia.org/wiki/Use-define_chain)
 
-There are also many projects which support the construction of these graphs:
+There are many software engineering projects which support the construction of these graphs for various purposes:
 
 * [noworkflow](https://github.com/gems-uff/noworkflow)
 * [astminer](https://github.com/JetBrains-Research/astminer)
 * [yesworkflow](https://github.com/yesworkflow-org/yw-prototypes)
 * [burrito](https://github.com/pgbovine/burrito)
 
-It would be convenient for debugging and reproducibility if it were possible for users to inspect the computation graph of a given notebook. These graphs can also be used to perform further analysis, e.g. graph embedding.
+Graphs also have important applications in compiler pipelines. One well-studied graph, known as the program dependence graph, allows us to visualize which statements in source code have a causal effect on subsequent statements during execution. A number of papers the use of program dependence graphs in compilers and software engineering:
 
-## Notebooks and reproducibility
+* [Intraprocedural Slicing Using Dependence Graphs](https://dl.acm.org/doi/pdf/10.1145/53990.53994)
+* [Towards a Framework for Generating Program Dependence Graphs from Source Code](https://dl.acm.org/doi/pdf/10.1145/3278142.3278144)
+* [Visualization of Program Dependence Graphs](http://ssw.jku.at/Research/Papers/Wuerthinger07Master/Wuerthinger07Master.pdf)
 
-One of issue which has troubled machine learning is the [reproducibility crisis](https://towardsdatascience.com/why-git-and-git-lfs-is-not-enough-to-solve-the-machine-learning-reproducibility-crisis-f733b49e96e8). We are primarily concerned with software reproducibility, i.e. What was the series of steps used to execute a given program and how can we reproduce those steps?
+It would be convenient for debugging and reproducibility if it were possible for users to inspect the computation graph of a given notebook. These graphs can also be used to perform further analysis, e.g. graph embedding and program analysis tasks.
+
+## Notebooks and workflows
+
+One issue which has troubled machine learning is the [reproducibility crisis](https://towardsdatascience.com/why-git-and-git-lfs-is-not-enough-to-solve-the-machine-learning-reproducibility-crisis-f733b49e96e8). We are primarily concerned with software reproducibility, i.e. What was the series of steps used to execute a given program and how can we reproduce those steps?
 
 Many machine learning projects have difficulty managing this knowledge during the project lifecycle. It would be convenient if those steps were automatically recorded, without the user needing to think about them very much.
 
@@ -55,7 +61,11 @@ Many workflow engines have recently emerged in attempt to solve this problem, na
 * [TensorFlow Extended](https://www.tensorflow.org/tfx)
 * [GitHub workflow](https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow)
 
-These all require the user to explicitly define a pipeline using a description language, graphical or command line interface.
+These all require the user to explicitly define a pipeline using a description language, graphical or command line interface. There are also early attempts to merge notebooks with dataflow tools:
+
+* [Dataflow Notebooks: Encoding and Tracking Dependencies of Cells](https://www.usenix.org/system/files/conference/tapp2017/tapp17_paper_koop.pdf)
+* [NiW: Converting Notebooks into Workflows to Capture Dataflow and Provenance](http://dgarijo.com/papers/carvalho_niw.pdfhttp://dgarijo.com/papers/carvalho_niw.pdf)
+* [ProvBook: Provenance-based Semantic Enrichment of Interactive Notebooks for Reproducibility](http://ceur-ws.org/Vol-2180/paper-57.pdf)
 
 Notebooks are essentially a form of data pipelining. One way to think of a notebook is as a pure function, which accepts some input, and produces some output. All data is captured as input and all side effects are captured as output. Each step performs some transformation over the input, producing a new output.
 
@@ -73,6 +83,12 @@ Notebooks contain at least three languages:
 * [Raw cell](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html?highlight=raw%20cell#raw-cells)
 
 These grammars can be combined into a single language, using a [parser combinator](https://en.wikipedia.org/wiki/Parser_combinator).
+
+There is a famous paper by [Futamara, (1983)](https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/103401/1/0482-14.pdf) establishing a curious correspondence between interpreters and compilers, known as the [partial evaluation](https://en.wikipedia.org/wiki/Partial_evaluation). Futamura shows us how to translate between interpreters, and compilers. This is based on the following observation:
+
+```
+program: I_static x I_dynamic -> O
+```
 
 ## Notebooks and metaprogramming
 
