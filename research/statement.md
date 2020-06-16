@@ -159,6 +159,8 @@ During my Ph.D., I am committed to pursuing the following activities:
 
 ## References
 
+### Code search
+
 - [DéjàVu: A Map of Code Duplicates on GitHub](https://dl.acm.org/doi/pdf/10.1145/3133908) - Descriptive study on the incidence and prevalence of code duplication on GitHub.
 - [Solving the Search for Source Code](https://kstolee.github.io/papers/TOSEM2014.pdf) / Katie Stolee
 - [Code search with input/output queries: Generalizing, ranking, and assessment](https://doi.org/10.1016/j.jss.2015.04.081)
@@ -171,4 +173,14 @@ During my Ph.D., I am committed to pursuing the following activities:
 - [Towards Summarizing Program Statements in Source Code Search](https://dl.acm.org/doi/pdf/10.1145/3341105.3374055)
 - [Multi-Modal Attention Network Learning for Semantic Source Code Retrieval](https://arxiv.org/pdf/1909.13516.pdf)
 - Kleene, 1951. [Representation of Events in Nerve Nets and Finite Automata](https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf)
+
+### Traceability
+
+- [Improving Automated Documentation to Code Traceability by Combining Retrieval Techniques](https://doi.org/10.1109/ASE.2011.6100057)
+
+### Graphs
+
 - [Regular expression matching on billion-nodes graphs](https://arxiv.org/pdf/1904.11653.pdf)
+
+
+- [Inverse compiling for program documentation](https://dl.acm.org/doi/pdf/10.1145/1408800.1408928)
