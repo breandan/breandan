@@ -1,3 +1,12 @@
+## June 18, 2020
+
+- Migrate notebook survey to Overleaf
+- Reading list
+  - [Staging notebook](http://ocamllabs.io/iocamljs/staging.html) -
+  - [Implicit Staging of EDSL Expressions: A Bridge between Shallow and Deep Embedding](https://doi.org/10.1007/978-3-662-44202-9_16)
+  - [Automata-Based Regex Matcher](https://scala-lms.github.io/tutorials/automata.html)
+  - [Penrose: From Mathematical Notation to Beautiful Diagrams](https://penrose.ink/media/Penrose_SIGGRAPH2020.pdf)
+
 ## June 11, 2020
 
 - Wrote [notebooks outline](../research/notebooks.md)

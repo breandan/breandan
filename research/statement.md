@@ -64,11 +64,38 @@ Another strategy is selecting problems known to have exact solutions, but which 
 
 We propose a synthesis of the two strategies: in many cases, there are equivalent correct solutions with varying [descriptive complexity](https://en.wikipedia.org/wiki/Kolmogorov_complexity), in which case, we can use term rewriting to prioritize candidate solutions for [readability](https://web.eecs.umich.edu/~weimerw/p/weimer-issta2008-readability.pdf), [understandability](http://www.cs.kent.edu/~jmaletic/cs63902/Papers/Scalabrino17.pdf) or other soft metrics.
 
-It is our belief that successful applications of program synthesis must balance the following criteria:
+Program synthesizers must trade off the following criteria:
 
-* Optimality
-* Efficiency
-* Readability
+* Optimality: How accurate is the program / synthesizer?
+* Efficiency: How efficient is the program / synthesizer?
+* Readability: How readable is the program?
+
+#### Optimality
+
+We can imagine various metrics for measuring optimality:
+
+* Test / Meta test error
+* Bugs / Meta bugs rate
+* Meta Precision / Recall
+
+#### Efficiency
+
+When comparing efficiency of two algorithms, we could use the following criteria:
+
+* Wall clock time
+* CPU temperature
+* Profiler statistics (e.g. sampling- or instrumentation- based)
+* Trace number of operations
+
+#### Readability
+
+Although there are not many good metrics for code readability, it may be possible to quantify this metric using, e.g.:
+
+* Cyclomatic / Halstead / McCabe complexity
+* Checkstyle / pylint / pychecker
+* Code smell detection
+* Graph statistics on program dependence graph (e.g. degree/betweenness centrality
+* Learned models?
 
 ## Practical Applications
 
@@ -109,7 +136,7 @@ In order to realize these goals, I must take the following concrete steps:
 ### Plan
 
 - Write a query tool (Spring 2020)
-- Write a notebook tool (Summer 2020)
+- Write a notebook tool/survey (Summer 2020)
 - Take qualifying exams (Winter 2021)
 - Publish papers (3-5 papers)
 - Write dissertation (2021-2023, est.)
@@ -137,6 +164,7 @@ During my Ph.D., I am committed to pursuing the following activities:
 - [Code search with input/output queries: Generalizing, ranking, and assessment](https://doi.org/10.1016/j.jss.2015.04.081)
 - [When Deep Learning Met Code Search](https://dl.acm.org/doi/pdf/10.1145/3338906.3340458)
 - [FaCoY – A Code-to-Code Search Engine](https://dl.acm.org/doi/pdf/10.1145/3180155.3180187) - Query expansion techniques for similar source code snippets.
+- [Neural Network-based Graph Embedding for Cross-Platform Binary Code Similarity Detection](https://arxiv.org/abs/1708.06525)
 - [srcQL: A Syntax-Aware  Query Language for Source Code](http://www.cs.kent.edu/~jmaletic/papers/SANER17-srcQL.pdf)
 - [CRAQL: A Composable Language for Querying Source Code](https://arxiv.org/pdf/1901.09409.pdf)
 - [Towards a Framework for Generating Program Dependence Graphs from Source Code](https://dl.acm.org/doi/pdf/10.1145/3278142.3278144)

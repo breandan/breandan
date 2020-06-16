@@ -48,9 +48,13 @@ Graphs also have important applications in compiler pipelines. One well-studied 
 
 It would be convenient for debugging and reproducibility if it were possible for users to inspect the computation graph of a given notebook. These graphs can also be used to perform further analysis, e.g. graph embedding and program analysis tasks.
 
+### Tools
+* [pydeps](https://github.com/thebjorn/pydeps): Python module dependence graphs
+* [Beniget](https://github.com/serge-sans-paille/beniget#gast-beniget)
+
 ## Notebooks and workflows
 
-One issue which has troubled machine learning is the [reproducibility crisis](https://towardsdatascience.com/why-git-and-git-lfs-is-not-enough-to-solve-the-machine-learning-reproducibility-crisis-f733b49e96e8). We are primarily concerned with software reproducibility, i.e. What was the series of steps used to execute a given program and how can we reproduce those steps?
+One issue which has troubled machine learning is the [reproducibility crisis](https://towardsdatascience.com/why-git-and-git-lfs-is-not-enough-to-solve-the-machine-learning-reproducibility-crisis-f733b49e96e8). We are primarily concerned with software reproducibility, i.e. What was the series of steps used to execute a given program  and how can we reproduce those steps?
 
 Many machine learning projects have difficulty managing this knowledge during the project lifecycle. It would be convenient if those steps were automatically recorded, without the user needing to think about them very much.
 
@@ -106,3 +110,9 @@ Prior work has explored source code retrieval from graphical representations usi
 - [Detecting Similar Programs via the Weisfeiler-Leman Graph Kernel](https://www.martinschaef.de/papers/icsr2016.pdf)
 
 While semantic similarity is undecidable in general, it would be helpful to identify similar cells in notebooks from a corpus of other notebooks. This either requires translating all documents to graphs, or synthesizing a regex query to retrieve plaintext documents.
+
+Prior work has explored graph querying and information retrieval techniques:
+
+* [Techniques for Efficiently Querying Scientific Workflow
+Provenance Graphs](https://web.cs.ucdavis.edu/~ludaesch/pubs/Efficiently-querying-provenance-EDBT-2010.pdf)
+
