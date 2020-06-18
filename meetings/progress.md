@@ -1,11 +1,18 @@
 ## June 18, 2020
 
-- Migrate notebook survey to Overleaf
-- Reading list
-  - [Staging notebook](http://ocamllabs.io/iocamljs/staging.html) -
-  - [Implicit Staging of EDSL Expressions: A Bridge between Shallow and Deep Embedding](https://doi.org/10.1007/978-3-662-44202-9_16)
-  - [Automata-Based Regex Matcher](https://scala-lms.github.io/tutorials/automata.html)
-  - [Penrose: From Mathematical Notation to Beautiful Diagrams](https://penrose.ink/media/Penrose_SIGGRAPH2020.pdf)
+-   Migrated notebook survey to Overleaf
+-   Published [slicing demo](https://slack-redir.net/link?url=https%3A%2F%2Fgithub.com%2Fbreandan%2Fpantograph&v=3) to GitHub
+-   PLDI virtual conference
+-   Shopify presents [ShipIt! Presents: Understanding Programs Using Graphs in TruffleRuby](https://slack-redir.net/link?url=https%3A%2F%2Fengineering.shopify.com%2Fblogs%2Fengineering%2Funderstanding-programs-using-graphs%23Register&v=3)
+-   Clean up Pantograph a bit more
+-   Tidy up the notebook surveyebook survey to Overleaf
+-   Reading list:
+    - [Fortress Language Specification](https://www.ccs.neu.edu/home/samth/fortress-spec.pdf&v=3) - Fortress is a notebook-friendly language for pseudocode-looking LaTeX. Interesting take on Documentation as code / Code as documentation
+    - [Integrating Prose as First-Class Citizens with Models and Code](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.403.3869&rep=rep1&type=pdf) - Voelter brainstorming different approaches to literate programming.
+    - [Staging notebook](https://ocamllabs.io/iocamljs/staging.html&v=3) - Introduces staged metaprogramming for runtime analysis (OCaml)
+    - [Implicit Staging of EDSL Expressions](https://slack-redir.net/link?url=https%3A//doi.org/10.1007/978-3-662-44202-9_16&v=3) - Interesting comparison between shallow and deep staging techniques.
+    - [Penrose: From Mathematical Notation to Beautiful Diagrams](https://penrose.ink/media/Penrose_SIGGRAPH2020.pdf&v=3) - An interesting take on declarative programming and projectional editing
+    - [Automata-Based Regex Matcher](https://scala-lms.github.io/tutorials/automata.html)
 
 ## June 11, 2020
 

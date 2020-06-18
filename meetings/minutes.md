@@ -1,3 +1,10 @@
+## June 16, 2020
+
+-   Provenance, classifying notebook structure and user process
+-   Static analysis, clarifying intended use case and audience
+-   Dead code, program dependence, use-def/def-use relations
+-   Identifying "stale" notebook cells and gathering up code
+
 ## June 11, 2020
 
 - Integration with existing tools (e.g. Docker) / Breandan

@@ -181,6 +181,4 @@ During my Ph.D., I am committed to pursuing the following activities:
 ### Graphs
 
 - [Regular expression matching on billion-nodes graphs](https://arxiv.org/pdf/1904.11653.pdf)
-
-
 - [Inverse compiling for program documentation](https://dl.acm.org/doi/pdf/10.1145/1408800.1408928)
