@@ -1,9 +1,54 @@
+## June 24, 2020
+
+- Categorizing sklearn API methods / Grace
+- Stages: collection cleaning labeling training evaluation deployment / Cindy
+- Color coding of cells and execution order of cells
+- Sampling strategies, does GitHub always sort by popularity? / Breandan
+- Jupyter NB extension / [Dataflow Kernel](https://github.com/dataflownb/dfkernel) / Jerry
+
+## June 23, 2020
+
+- One-on-one as needed
+- Missing progress on survey
+- PEQ paperwork and McGill registrar update
+- Attended three talks at AKBC conference
+  - Luke Zettlemoyer - Denoising seq2seq pretraining / MARGE
+  - Ndapa Nakashole - natual language to charts: [ChartDialog](https://github.com/sythello/ChartDialog)
+  - Emma Strubel - SOTA in NLP, interesting digression on model efficiency and benchmarks
+    - Wall clock time is too variable
+    - FLOPs can be meaningless on different hardware
+    - Maybe kWh consumed?
+
+## June 19, 2020
+
+- [codenames](https://github.com/jbowens/codenames) with Kast
+
+## PLDI 2020
+
+- [MAPL workshop](https://pldi20.sigplan.org/home/mapl-2020) ([on YouTube](https://www.youtube.com/watch?v=rwBbYhOAnPo))
+  - Hoppity: Learning Graph Transformations to Detect and Fix Bugs in Programs
+  - LambdaNet: Probabilistic Type Inference using Graph Neural Networks
+  - Semi-static Type, Shape and Symbolic Shape Inference for Dynamic Computation Graphs
+  - Program Optimization for Machine Learning
+  - Learned Garbage Collection
+  - Neurosymbolic Reasoning and the Third Wave of Program Synthesis
+- [PMLW](https://www.youtube.com/watch?v=MqUcMIlKk8Y)
+  - Eran Yahav - Program representation intro / paths / ASTs / Code2Vec
+  - Ali Donaldson - How to compensate for lack of novelty in PL
+- [Ask Me Anything](https://www.youtube.com/watch?v=wESqGFzek-Y)
+  - Margaret Martonosi - National Science Foundation
+  - Michelle Strout - Embedded Domain Specific Languages!
+  - Alex Aiken - Machine learning / PL
+  - Kathleen Fischer - Government, industry and academia + DSLs
+  - Chris Lattner - Compiler stuff
+  - Guy L. Steele - Fortress and parallelism, soft skills, anecdotes
+
 ## June 16, 2020
 
--   Provenance, classifying notebook structure and user process
--   Static analysis, clarifying intended use case and audience
--   Dead code, program dependence, use-def/def-use relations
--   Identifying "stale" notebook cells and gathering up code
+- Provenance, classifying notebook structure and user process
+- Static analysis, clarifying intended use case and audience
+- Dead code, program dependence, use-def/def-use relations
+- Identifying "stale" notebook cells and gathering up code
 
 ## June 11, 2020
 
