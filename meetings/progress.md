@@ -13,6 +13,7 @@
     - [Context-Free Path Querying by Matrix Multiplication](https://slack-redir.net/link?url=https%3A%2F%2Fdl.acm.org%2Fdoi%2Fpdf%2F10.1145%2F3210259.3210264&v=3) - Use matmuls to query a graph (also: subgraph matching is hard)
     - [Meta-modelling and graph grammars for multi-paradigm modelling in AToM3](https://slack-redir.net/link?url=https%3A%2F%2Fidp.springer.com%2Fauthorize%2Fcasa%3Fredirect_uri%3Dhttps%3A%2F%2Flink.springer.com%2Fcontent%2Fpdf%2F10.1007%2Fs10270-003-0047-5.pdf%26casa_token%3DOU5DshcJECAAAAAA%3AhAbA6vAf98vRwqMttp29GUeqjZtQ4HPT7dPCuzecHmeHq3_FjB1sMT5VLXif4vVzl9sH1Pp4iIOl1tY1OA&v=3) (also: McGill had a [modeling lab](https://slack-redir.net/link?url=http%3A%2F%2Fmsdl.cs.mcgill.ca%2F&v=3)!? where did they all go?)
     - [Describing the syntax of programming languages using conjunctive and Boolean grammars](https://slack-redir.net/link?url=http%3A%2F%2Fusers.utu.fi%2Faleokh%2Fpapers%2Fconj_bool_programming.pdf&v=3) - Trees as an algebraic abstraction for modeling code
+    - [Parsing with zippers](https://github.com/pdarragh/parsing-with-zippers-paper-artifact) - like [PwD](https://arxiv.org/abs/1604.04695) but 15,600 times faster!
 - Dentist meeting Friday
 
 ## June 18, 2020
