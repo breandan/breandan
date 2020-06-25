@@ -1,11 +1,31 @@
+## June 25
+
+- PEQ/CSQ bureaucracy
+-   Added [notebook support](https://slack-redir.net/link?url=https%3A%2F%2Fgithub.com%2Fbreandan%2Fkotlingrad%2Fblob%2Fmaster%2Fsamples%2Fnotebooks%2Fhello_kotlingrad.ipynb&v=3) for Kotlingrad
+-   Minor revisions to survey
+- Challenges
+    -   Is there a way to combine dynamic and static analysis techniques? [https://miasm.re/blog/2017/10/05/playing_with_dynamic_symbolic_execution.html](https://slack-redir.net/link?url=https%3A%2F%2Fmiasm.re%2Fblog%2F2017%2F10%2F05%2Fplaying_with_dynamic_symbolic_execution.html&v=3)
+    -   Try to integrate with existing symbolic execution frameworks. Maybe Z3? [https://ericpony.github.io/z3py-tutorial/strategies-examples.htm](https://slack-redir.net/link?url=https%3A%2F%2Fericpony.github.io%2Fz3py-tutorial%2Fstrategies-examples.htm&v=3)
+- Reading/watchlist
+    - Virtual PLDI - [links](https://slack-redir.net/link?url=https%3A%2F%2Fgithub.com%2Fbreandan%2Fdossier%2Fblob%2Fmaster%2Fmeetings%2Fminutes.md%23pldi-2020&v=3) to some talks and short summary
+    - AKBC conference - saw an [interesting talk](https://slack-redir.net/link?url=https%3A%2F%2Fyoutu.be%2FfY4wAphy56w%3Ft%3D2426&v=3) about [ChartDialog](https://slack-redir.net/link?url=http%3A%2F%2Fnakashole.com%2Fpapers%2F2020-acl-charts.pdf&v=3)
+    - Code generation for [typed dataframes](https://slack-redir.net/link?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DYFtiDqYVhWY&v=3) with Kotlin notebooks
+    - [Context-Free Path Querying by Matrix Multiplication](https://slack-redir.net/link?url=https%3A%2F%2Fdl.acm.org%2Fdoi%2Fpdf%2F10.1145%2F3210259.3210264&v=3) - Use matmuls to query a graph (also: subgraph matching is hard)
+    - [Meta-modelling and graph grammars for multi-paradigm modelling in AToM3](https://slack-redir.net/link?url=https%3A%2F%2Fidp.springer.com%2Fauthorize%2Fcasa%3Fredirect_uri%3Dhttps%3A%2F%2Flink.springer.com%2Fcontent%2Fpdf%2F10.1007%2Fs10270-003-0047-5.pdf%26casa_token%3DOU5DshcJECAAAAAA%3AhAbA6vAf98vRwqMttp29GUeqjZtQ4HPT7dPCuzecHmeHq3_FjB1sMT5VLXif4vVzl9sH1Pp4iIOl1tY1OA&v=3) (also: McGill had a [modeling lab](https://slack-redir.net/link?url=http%3A%2F%2Fmsdl.cs.mcgill.ca%2F&v=3)!? where did they all go?)
+    - [Describing the syntax of programming languages using conjunctive and Boolean grammars](https://slack-redir.net/link?url=http%3A%2F%2Fusers.utu.fi%2Faleokh%2Fpapers%2Fconj_bool_programming.pdf&v=3) - Trees as an algebraic abstraction for modeling code
+- Dentist meeting Friday
+
 ## June 18, 2020
 
 -   Migrated notebook survey to Overleaf
--   Published [slicing demo](https://slack-redir.net/link?url=https%3A%2F%2Fgithub.com%2Fbreandan%2Fpantograph&v=3) to GitHub
+-   Published [slicing demo](https://github.com/breandan/pantograph) to GitHub
 -   PLDI virtual conference
 -   Shopify presents [ShipIt! Presents: Understanding Programs Using Graphs in TruffleRuby](https://slack-redir.net/link?url=https%3A%2F%2Fengineering.shopify.com%2Fblogs%2Fengineering%2Funderstanding-programs-using-graphs%23Register&v=3)
 -   Clean up Pantograph a bit more
 -   Tidy up the notebook surveyebook survey to Overleaf
+-   Challenges/questions
+    - Identifying and documenting the edge cases for static analysis in Python. Could be useful to collect.
+    - Python seems pretty dynamic. Hard to cover all the cases. May be simplifying assumptions?
 -   Reading list:
     - [Fortress Language Specification](https://www.ccs.neu.edu/home/samth/fortress-spec.pdf&v=3) - Fortress is a notebook-friendly language for pseudocode-looking LaTeX. Interesting take on Documentation as code / Code as documentation
     - [Integrating Prose as First-Class Citizens with Models and Code](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.403.3869&rep=rep1&type=pdf) - Voelter brainstorming different approaches to literate programming.
@@ -22,6 +42,16 @@
 - Comprehensive exam logistics (registering, syllabus, MoU, progress committee)
 - PEQ reform / UdeM paperwork (due Wed.)
 - Root canal on Thursday
+- Challenges/questions
+    -Is it possible to design a language-agnostic graph?
+    -What is the downstream task we trying to support?
+    -How do we identify semantically similar graphs?
+- Reading list
+    - [Hypermodern Python](https://slack-redir.net/link?url=https%3A%2F%2Fcjolowicz.github.io%2Fposts%2Fhypermodern-python-01-setup%2F&v=3): Nice overview of modern Python development tools and techniques.
+        -   [typing](https://slack-redir.net/link?url=https%3A%2F%2Fcjolowicz.github.io%2Fposts%2Fhypermodern-python-04-typing%2F&v=3) - mypy, pyre, pyright, pytype
+        -   [CI/CD](https://slack-redir.net/link?url=https%3A%2F%2Fcjolowicz.github.io%2Fposts%2Fhypermodern-python-06-ci-cd%2F&v=3) - poetry
+        -   [documentation](https://slack-redir.net/link?url=https%3A%2F%2Fcjolowicz.github.io%2Fposts%2Fhypermodern-python-05-documentation%2F&v=3) - sphinx, rst
+    - [Towards a Framework for Generating Program Dependence Graphs from Source Code](https://slack-redir.net/link?url=https%3A%2F%2Fdl.acm.org%2Fdoi%2Fpdf%2F10.1145%2F3278142.3278144&v=3): PDGs are often used for provenance and workflow applications. Possible to construct using compiler IR.
 
 ## June 3, 2020
 
@@ -37,6 +67,10 @@
   - What are the differences between PDG/DFG/CFG/computation graphs
 - Looked into discretionary/essential US/CA [border crossing scenarios](http://s3.documentcloud.org/documents/6935230/CBSA-Directives.pdf)
 - Medical records release and transfer paperwork US/Canada
+- Challenges/questions
+    - Connecting information retrieval with notebook analysis
+    - What are the similarities/differences between PDG/DFG/CFG/computation graphs?
+    - How to formulate target as learning objective
 - Reading List
   - [FaCoY – A Code-to-Code Search Engine](https://dl.acm.org/doi/pdf/10.1145/3180155.3180187) - Query expansion techniques for similar source code snippets.
   - [DéjàVu: A Map of Code Duplicates on GitHub](https://dl.acm.org/doi/pdf/10.1145/3133908) - Descriptive study on the incidence and prevelance of code duplication on GitHub.
