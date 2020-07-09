@@ -1,3 +1,15 @@
+## July 7, 2020
+
+- Notebook webpage, delta debugging / Jerry
+- Generating documentation (e.g. types, distributions) / Chenyang
+- Daikon and invariant detection (Michael Earnst) / Christian
+- DVC and workflow, invertible computation / Mark
+
+## June 25, 2020
+
+- Semantic code search, subgraph isomorphism, Z3 / Breandan
+- Code statistics
+
 ## June 24, 2020
 
 - Categorizing sklearn API methods / Grace
