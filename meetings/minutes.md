@@ -1,3 +1,9 @@
+## July 14, 2020
+
+- Two more weeks, start writing up results
+- Shape, type, mean, range, variance documentation
+- Brainstorming what tasks can these documentation tools be good for?
+
 ## July 7, 2020
 
 - Notebook webpage, delta debugging / Jerry
