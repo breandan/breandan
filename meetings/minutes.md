@@ -1,3 +1,12 @@
+## July, 18, 2020
+
+- Focus on task evaluation
+- What task are we going to use?
+
+## July 16, 2020
+
+- Automated model card generation
+
 ## July 14, 2020
 
 - Two more weeks, start writing up results
