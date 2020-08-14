@@ -1,3 +1,26 @@
+## August 14, 2020
+
+- **Last meeting**
+  - Showed an eDSL with support for [notebook graphs](https://github.com/breandan/kaliningraph/blob/6fc7ca2e029b8a04c03993e77f3d41bd132654eb/notebooks/Program%20Graphs.ipynb)
+- **Progress**
+  - Read about logic/relational programming with [MiniKanren](http://minikanren.org/)
+  - Met with [Torsten](http://tscholak.github.io/) about SQL question answering (guest lecture for [COMP 598](https://github.com/jin-guo/COMP598_Fall2020)?)
+  - JuliaCon 2020 / [Reactive Notebooks](https://www.youtube.com/watch?v=IAF8DjrQSSk) + [Pluto.jl](https://github.com/fonsp/Pluto.jl)
+- **Challenges**
+  - Debugging the GNN implementation
+- **Reading**
+  - [Algebra and Machine Representation of Statistical Models](https://arxiv.org/abs/2006.08945)
+  - [Autocompletion graphs](https://anvaka.github.io/vs/?query=)
+- **Misc**
+  - Confirmed TAship for COMP 698 / SE for Building Intelligent Systems
+  - [LING 645: Computational Linguistics](https://foundations-computational-linguistics.github.io/)
+  - Reviewed a [PR for sparse matrices](https://github.com/lessthanoptimal/ejml/pull/75)
+  - Wrote a [roadmap](https://github.com/breandan/kotlingrad/issues/11#issuecomment-668345508) for differentiable SE
+
+## August 7, 2020
+
+Vacation.
+
 ## July 30, 2020
 
 - **Last Week**
