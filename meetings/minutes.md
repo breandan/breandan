@@ -1,3 +1,13 @@
+## August 14, 2020
+
+- Reasoning about program changes and semantic representations
+- Incremental rebuilding and fast/reactive notebooks
+- Developing the research question, taking steps towards concrete topic
+  - Focus on the process, need to work on these skills
+- Connecting AutoML and SE for IoT
+- Friday meetings, continue to meet with Christian
+- Comprehensive exam prep, BBQ and classes
+
 ## July, 18, 2020
 
 - Focus on task evaluation
