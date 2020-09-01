@@ -5,11 +5,12 @@
 - Preparing for comprehensive examination at the end of the year
 - Registered for Foundations of Computational Linguistics / LING 645
 - Failed one class, another failure will result in expulsion from Ph.D. program
-- Will sent invitation to progress committee with proposal abstract
+- Will send invitation to progress committee with proposal abstract
 - Complete annual progress report summarizing research progress
 - Registered for SOCS TA training for COMP 598 on Sept. 9th
 - Preparing infrastructure for COMP 598, meeting on Monday Sept. 7 at 2:30pm
-- Will attend the first few classes and help if needed
+- Will attend the first few classes and help as needed
+- Opportunity to give guest lecture with advance notice (e.g. infra/testing)
 - Need to respect others time and honor our commitments (e.g. weekly updates)
 - Failed to show up for the CMU meeting on Aug. 25th, 2020
 - CMU meetings rescheduled to Fridays, tread lightly
