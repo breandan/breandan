@@ -1,3 +1,18 @@
+## September 9, 2020
+SUMMARY OF LAST MEETING
+- **Last meeting**
+  - Summarize progress on [approximating source code semantics](https://docs.google.com/presentation/d/1KTUUwj7CsUhMANoNTzyDWaV02JLuBXqI9xFKNjAamM4/edit?usp=sharing)
+- **Progress**
+  - Implement [distribution matching](https://github.com/breandan/katholic/blob/master/src/main/kotlin/DSL.kt) for simple algebraic expressions
+- **Challenges**
+  - Learning GNN parameters with backprop
+  - Sample expressions with greater diversity
+- **Next Week**
+  - Reach out to Xujie for early feedback
+  - Progress committee formation
+- **Reading**
+  - [Syntax-Directed Variational Autoencoder for Structured Data](https://arxiv.org/pdf/1802.08786.pdf) (Dai et al., 2018)
+
 ## August 14, 2020
 
 - **Last meeting**

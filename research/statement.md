@@ -202,6 +202,10 @@ During my Ph.D., I am committed to pursuing the following activities:
 - [Unsupervised Translation of Programming Languages](https://arxiv.org/pdf/2006.03511.pdf)
 - [Learning to Generate Pseudo-code from SourceCode using Statistical Machine Translation](http://www.phontron.com/paper/oda15ase.pdf)
 
+### Structured Prediction
+
+- [Syntax-Directed Variational Autoencoder for Structured Data](https://arxiv.org/pdf/1802.08786.pdf) (Dai et al., 2018)
+
 ## Automata Learning
 
 - [Learning Regular Sets from Queries and Counterexamples](https://omereingold.files.wordpress.com/2017/06/angluin87.pdf), Angluin
