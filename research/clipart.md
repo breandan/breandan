@@ -1,4 +1,6 @@
-# Menagerie
+# Clip Art
+
+Inspiring figures from various places.
 
 ## Software engineering
 

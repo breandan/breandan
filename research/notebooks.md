@@ -40,15 +40,16 @@ There are many software engineering projects which support the construction of t
 * [yesworkflow](https://github.com/yesworkflow-org/yw-prototypes)
 * [burrito](https://github.com/pgbovine/burrito)
 
-Graphs also have important applications in compiler pipelines. One well-studied graph, known as the program dependence graph, allows us to visualize which statements in source code have a causal effect on subsequent statements during execution. A number of papers the use of program dependence graphs in compilers and software engineering:
+Graphs also have important applications in compiler pipelines. One well-studied graph, known as the program dependence graph, allows us to visualize which statements in source code have a causal effect on subsequent statements during execution. A number of papers study the use of program dependence graphs in compilers and software engineering:
 
 * [Intraprocedural Slicing Using Dependence Graphs](https://dl.acm.org/doi/pdf/10.1145/53990.53994)
 * [Towards a Framework for Generating Program Dependence Graphs from Source Code](https://dl.acm.org/doi/pdf/10.1145/3278142.3278144)
 * [Visualization of Program Dependence Graphs](http://ssw.jku.at/Research/Papers/Wuerthinger07Master/Wuerthinger07Master.pdf)
 
-It would be convenient for debugging and reproducibility if it were possible for users to inspect the computation graph of a given notebook. These graphs can also be used to perform further analysis, e.g. graph embedding and program analysis tasks.
+It would be convenient for debugging and reproducibility were it possible for users to inspect the computation graph of a given notebook. These graphs can also be used to perform further analysis, e.g. graph embedding and program analysis tasks.
 
 ### Tools
+
 * [pydeps](https://github.com/thebjorn/pydeps): Python module dependence graphs
 * [Beniget](https://github.com/serge-sans-paille/beniget#gast-beniget)
 
@@ -88,7 +89,7 @@ Notebooks contain at least three languages:
 
 These grammars can be combined into a single language, using a [parser combinator](https://en.wikipedia.org/wiki/Parser_combinator).
 
-There is a famous paper by [Futamara, (1983)](https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/103401/1/0482-14.pdf) establishing a curious correspondence between interpreters and compilers, known as the [partial evaluation](https://en.wikipedia.org/wiki/Partial_evaluation). Futamura shows us how to translate between interpreters, and compilers. This is based on the following observation:
+There is a famous paper by [Futamara, (1983)](https://repository.kulib.kyoto-u.ac.jp/dspace/bitstream/2433/103401/1/0482-14.pdf) establishing a correspondence between interpreters and compilers, known as the [partial evaluation](https://en.wikipedia.org/wiki/Partial_evaluation). Futamura shows us how to translate between interpreters, and compilers. This is based on the following observation:
 
 ```
 program: I_static x I_dynamic -> O
@@ -100,7 +101,9 @@ program: I_static x I_dynamic -> O
 
 Most [program translators](https://en.wikipedia.org/wiki/Translator_(computing)) are intended to support execution, and hence destroy source code during the translation process. This is unfortunate, as source code files are [structured documents](https://doi.org/10.1109/WPC.2002.1021351) which contain rich semantic information that describes the program's behavior.
 
-It should be possible to fully reify the entire notebook (including comments, log statements, output figures, etc.) during compilation/interpretation. This information is available through the [notebook magic](https://ipython.readthedocs.io/en/stable/interactive/reference.html#input-caching-system), but could be programmatically available for introspection within the program runtime. This would allow notebook users to analyze the structure of the notebook, extract workflows and evaluate the
+It should be possible to fully reify the entire notebook (including comments, log statements, output figures, etc.) during compilation/interpretation. This information is available through the [notebook magic](https://ipython.readthedocs.io/en/stable/interactive/reference.html#input-caching-system), but could be programmatically available for introspection within the program runtime. This would allow notebook users to analyze the structure of the notebook, extract workflows and record the state of a program at any given point during execution.
+
+[Pantograph](https://github.com/breandan/pantograph) is our first attempt to show how this can be done.
 
 ## Notebooks and information retrieval
 
@@ -115,4 +118,3 @@ Prior work has explored graph querying and information retrieval techniques:
 
 * [Techniques for Efficiently Querying Scientific Workflow
 Provenance Graphs](https://web.cs.ucdavis.edu/~ludaesch/pubs/Efficiently-querying-provenance-EDBT-2010.pdf)
-

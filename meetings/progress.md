@@ -1,5 +1,5 @@
 ## September 9, 2020
-SUMMARY OF LAST MEETING
+
 - **Last meeting**
   - Summarize progress on [approximating source code semantics](https://docs.google.com/presentation/d/1KTUUwj7CsUhMANoNTzyDWaV02JLuBXqI9xFKNjAamM4/edit?usp=sharing)
 - **Progress**
@@ -39,133 +39,133 @@ Vacation.
 ## July 30, 2020
 
 - **Last Week**
-    -   Demonstrated a Python-like eDSL + notebook interpreter
-    -   Graph computation proof-of-concept via integer matrix powering
-    -   Researching the [complexity](https://github.com/breandan/kotlingrad/issues/11#issuecomment-663378779) of subgraph matching and rewriting schemes for trees/DAGs/DGs
+  - Demonstrated a Python-like eDSL + notebook interpreter
+  - Graph computation proof-of-concept via integer matrix powering
+  - Researching the [complexity](https://github.com/breandan/kotlingrad/issues/11#issuecomment-663378779) of subgraph matching and rewriting schemes for trees/DAGs/DGs
 - **Progress**
-    -   Ported the [notebook eDSL](https://github.com/breandan/kaliningraph#computation-graph) into a [real notebook](https://github.com/breandan/kaliningraph/blob/master/notebooks/Hello%20Kaliningraph.ipynb)
-    -   Removed boundaries in order to support [inter-cell graphs](https://github.com/breandan/kotlingrad/blob/master/samples/notebooks/hello_kotlingrad.ipynb)
-    -   [Benchmark](https://github.com/breandan/kotlingrad/blob/master/core/src/test/kotlin/edu/umontreal/kotlingrad/perf/SparseTest.kt#L42) matrix powering to test graph-based execution scheme
-    -   Lowered the DSL onto a common graph-based intermediate representation
+  - Ported the [notebook eDSL](https://github.com/breandan/kaliningraph#computation-graph) into a [real notebook](https://github.com/breandan/kaliningraph/blob/master/notebooks/Hello%20Kaliningraph.ipynb)
+  - Removed boundaries in order to support [inter-cell graphs](https://github.com/breandan/kotlingrad/blob/master/samples/notebooks/hello_kotlingrad.ipynb)
+  - [Benchmark](https://github.com/breandan/kotlingrad/blob/master/core/src/test/kotlin/edu/umontreal/kotlingrad/perf/SparseTest.kt#L42) matrix powering to test graph-based execution scheme
+  - Lowered the DSL onto a common graph-based intermediate representation
 - **Challenges**
-    -   Expression simplification and subgraph pattern-matching is NP-hard in general
-    -   Identifying the novel contribution to our work. Staging to graph execution for imperative code?
-    -   No really good GPU-accelerated libraries for sparse graph representation right now. Build one?
-    -   Trying to avoid excessive yak-shaving, can optimize the runtime later
+  - Expression simplification and subgraph pattern-matching is NP-hard in general
+  - Identifying the novel contribution to our work. Staging to graph execution for imperative code?
+  - No really good GPU-accelerated libraries for sparse graph representation right now. Build one?
+  - Trying to avoid excessive yak-shaving, can optimize the runtime later
 - **Next Week**
-    -   Demonstrate semantic similarity via graph embedding - similar code snippets should produce similar vectors
-    -   Plot similarity between similar code snippets on organic / synthetic code base
-    -   Finish writing up the summer summary and future research plans
+  - Demonstrate semantic similarity via graph embedding - similar code snippets should produce similar vectors
+  - Plot similarity between similar code snippets on organic / synthetic code base
+  - Finish writing up the summer summary and future research plans
 - **Reading**
-    -   [Frequent Subgraph Analysis and its Software Engineering Applications](https://etd.ohiolink.edu/!etd.send_file?accession=case1496835753068605) - Wow! This is a real goldmine of graphs for software engineering applications.
-    -   [Relevant subgraph extraction from random walks in a graph](https://www.info.ucl.ac.be/~yde/Papers/kwalks_2006.pdf) - Efficient pattern matching would allow us to retrieve subgraphs in larger databases
-    -   [ScaNN: Efficient Vector Similarity Search](https://ai.googleblog.com/2020/07/announcing-scann-efficient-vector.html) - Nice demo of "locality-sensitive" hashing / retrieval - this fixes our TraceLink search problem (too slow to do KNN over entire dataset)
-    -   [Lambda Calculus and the Four Colour Theorem](http://noamz.org/talks/oasis-lam4ct.2018.06.22.pdf) - Some interesting connections between LC and topology
+  - [Frequent Subgraph Analysis and its Software Engineering Applications](https://etd.ohiolink.edu/!etd.send_file?accession=case1496835753068605) - Wow! This is a real goldmine of graphs for software engineering applications.
+  - [Relevant subgraph extraction from random walks in a graph](https://www.info.ucl.ac.be/~yde/Papers/kwalks_2006.pdf) - Efficient pattern matching would allow us to retrieve subgraphs in larger databases
+  - [ScaNN: Efficient Vector Similarity Search](https://ai.googleblog.com/2020/07/announcing-scann-efficient-vector.html) - Nice demo of "locality-sensitive" hashing / retrieval - this fixes our TraceLink search problem (too slow to do KNN over entire dataset)
+  - [Lambda Calculus and the Four Colour Theorem](http://noamz.org/talks/oasis-lam4ct.2018.06.22.pdf) - Some interesting connections between LC and topology
 
 ## July 23, 2020
 
 - **Last Week**
-    -   Invariant analysis, model cards & notebook provenance
-    -   Selecting a use case to showcase the value of abstract interpretation
-    -   Getting a feel for how the algorithm works on real notebooks
+  - Invariant analysis, model cards & notebook provenance
+  - Selecting a use case to showcase the value of abstract interpretation
+  - Getting a feel for how the algorithm works on real notebooks
 - **Progress**
-    -   Built a proof-of-concept [notebook interpreter](https://github.com/breandan/kaliningraph#computation-graph)
-    -   Collected [developer feedback](https://news.ycombinator.com/item?id=23878381) on graph draft and research plans
-    -   Read about lambda calculus reductions
-    -   Implemented polymorphic inductive graph
+  - Built a proof-of-concept [notebook interpreter](https://github.com/breandan/kaliningraph#computation-graph)
+  - Collected [developer feedback](https://news.ycombinator.com/item?id=23878381) on graph draft and research plans
+  - Read about lambda calculus reductions
+  - Implemented polymorphic inductive graph
 - **Challenges**
-    -   Working out the execution model using matrix representation
-    -   Mapping invariants to symbolic values (e.g. Reps-style [propagation](https://youtu.be/wiYfS1aoAAg?t=1400))
-    -   Finding a stable linear algebra library for sparse graph representations
-    -   Identifying the right audience and feature prioritization
+  - Working out the execution model using matrix representation
+  - Mapping invariants to symbolic values (e.g. Reps-style [propagation](https://youtu.be/wiYfS1aoAAg?t=1400))
+  - Finding a stable linear algebra library for sparse graph representations
+  - Identifying the right audience and feature prioritization
 - **Next Week**
-    -   Evaluate notebook interpreter on real inputs using [Miller's evaluator](http://www.cs.cmu.edu/~glmiller/Publications/MRK86b.pdf)
-    -   Write up summer progress in a summary document for posterity
-    -   Prepare a JS demo for website to showcase the idea
+  - Evaluate notebook interpreter on real inputs using [Miller's evaluator](http://www.cs.cmu.edu/~glmiller/Publications/MRK86b.pdf)
+  - Write up summer progress in a summary document for posterity
+  - Prepare a JS demo for website to showcase the idea
 - **Reading**
-    -   [The Program Dependence Graph and its Use for Optimization](https://www.cs.utexas.edu/~pingali/CS395T/2009fa/papers/ferrante87.pdf)
-    -   [The Symmetric Interaction Calculus](https://medium.com/@maiavictor/the-abstract-calculus-fe8c46bcf39c)
-    -   [Conversion of Units of Measurement](https://www.cs.utexas.edu/users/novak/units95.html)
-    -   [Semantic Grep: Lightweight static analysis](https://github.com/returntocorp/semgrep)
-    -   [Learning Graph Structure With A Finite-State Automaton Layer](https://arxiv.org/abs/2007.04929)
+  - [The Program Dependence Graph and its Use for Optimization](https://www.cs.utexas.edu/~pingali/CS395T/2009fa/papers/ferrante87.pdf)
+  - [The Symmetric Interaction Calculus](https://medium.com/@maiavictor/the-abstract-calculus-fe8c46bcf39c)
+  - [Conversion of Units of Measurement](https://www.cs.utexas.edu/users/novak/units95.html)
+  - [Semantic Grep: Lightweight static analysis](https://github.com/returntocorp/semgrep)
+  - [Learning Graph Structure With A Finite-State Automaton Layer](https://arxiv.org/abs/2007.04929)
 
 ## July 16, 2020
 
 - **Last Week**
-    -   [ICML](https://icml.cc/virtual/2020) and [RSS](https://roboticsconference.org/)
-    -   Feedback from notebooks meeting and research planning
-    -   Read about arithmetic circuit evaluation ([Miller, 1987](http://www.cs.cmu.edu/~glmiller/Publications/MRK86b.pdf)) and dataflow analysis ([Reps, 2017](https://research.cs.wisc.edu/wpis/papers/TOPLAS-00005-2016.R1.pdf))
+  - [ICML](https://icml.cc/virtual/2020) and [RSS](https://roboticsconference.org/)
+  - Feedback from notebooks meeting and research planning
+  - Read about arithmetic circuit evaluation ([Miller, 1987](http://www.cs.cmu.edu/~glmiller/Publications/MRK86b.pdf)) and dataflow analysis ([Reps, 2017](https://research.cs.wisc.edu/wpis/papers/TOPLAS-00005-2016.R1.pdf))
 - **Progress**
-    -   Built an [interactive debugger](https://github.com/breandan/kaliningraph#visualization) for labeled transition systems
-    -   Implemented some different algebraic graph algorithms
-    -   More [writing](http://breandan.net/2020/06/30/graph-computation/#graphs-computationally) and fleshing out research topics
+  - Built an [interactive debugger](https://github.com/breandan/kaliningraph#visualization) for labeled transition systems
+  - Implemented some different algebraic graph algorithms
+  - More [writing](http://breandan.net/2020/06/30/graph-computation/#graphs-computationally) and fleshing out research topics
 - **Challenges**
-    -   Parsing Python into a common graph representation
-    -   What is the best way to handle variable sharing?
-    -   How does this align with common notebook use cases?
+  - Parsing Python into a common graph representation
+  - What is the best way to handle variable sharing?
+  - How does this align with common notebook use cases?
 - **Next Week**
-    -   Try to incorporate some examples from the notebooks dataset
-    -   Implement WL embedding using our graph representation
-    -   Work on the notebooks survey a bit more, tie in the GRL stuff
+  - Try to incorporate some examples from the notebooks dataset
+  - Implement WL embedding using our graph representation
+  - Work on the notebooks survey a bit more, tie in the GRL stuff
 
 ## July 9, 2020
 
 - **Last week**
-    -   MSR/ICSE/ML4SE/[MDS2020](https://github.com/johnrgilbert/MDS2020-linear-algebraic-graph-tools)
-    -   [GraphBlas](https://github.com/DrTimothyAldenDavis/GraphBLAS) pen source tools for graph computing
-    -   Looked into [Daikon](https://plse.cs.washington.edu/daikon/pubs/) / invariant detection
+  - MSR/ICSE/ML4SE/[MDS2020](https://github.com/johnrgilbert/MDS2020-linear-algebraic-graph-tools)
+  - [GraphBlas](https://github.com/DrTimothyAldenDavis/GraphBLAS) pen source tools for graph computing
+  - Looked into [Daikon](https://plse.cs.washington.edu/daikon/pubs/) / invariant detection
 - **Progress**
-    -   Wrote a [blog post on graph computation](http://breandan.net/)
-    -   Implemented some visualizations for graphs
+  - Wrote a [blog post on graph computation](http://breandan.net/)
+  - Implemented some visualizations for graphs
 - **Challenges**
-    -   How to execute notebooks reliably
-    -   How to encode notebook graph as a matrix
+  - How to execute notebooks reliably
+  - How to encode notebook graph as a matrix
 - **Next Week**
-    -   Try to retrofit Pantograph into an existing notebook
-    -   Try graph embedding approach on some real notebooks
+  - Try to retrofit Pantograph into an existing notebook
+  - Try graph embedding approach on some real notebooks
 - **Reading**
-    -   [Sosed: a tool for finding similar software projects](https://arxiv.org/pdf/2007.02599.pdf) - Sub-token based project similarity detection on GitHub
-    -   [AI Feynman 2.0: Pareto-optimal symbolic regression exploiting graph modularity](https://arxiv.org/abs/2006.10782) - Tegmark's new symbolic regression work
-    -   [Graph-based, Self-Supervised Program Repair from Diagnostic Feedback -](https://arxiv.org/pdf/2005.10636.pdf) Nice idea for using compiler error messages to localize syntax errors
-    -   [Graph Algorithms in the Language of Linear Algebra](https://epubs.siam.org/doi/book/10.1137/1.9780898719918?mobileUi=0) - Most graph algorithms can be rewritten in LA
+  - [Sosed: a tool for finding similar software projects](https://arxiv.org/pdf/2007.02599.pdf) - Sub-token based project similarity detection on GitHub
+  - [AI Feynman 2.0: Pareto-optimal symbolic regression exploiting graph modularity](https://arxiv.org/abs/2006.10782) - Tegmark's new symbolic regression work
+  - [Graph-based, Self-Supervised Program Repair from Diagnostic Feedback -](https://arxiv.org/pdf/2005.10636.pdf) Nice idea for using compiler error messages to localize syntax errors
+  - [Graph Algorithms in the Language of Linear Algebra](https://epubs.siam.org/doi/book/10.1137/1.9780898719918?mobileUi=0) - Most graph algorithms can be rewritten in LA
 
 
 ## June 25, 2020
 
 - PEQ/CSQ bureaucracy
--   Added [notebook support](https://github.com/breandan/kotlingrad/blob/master/samples/notebooks/hello_kotlingrad.ipynb) for Kotlingrad
--   Minor revisions to survey
+- Added [notebook support](https://github.com/breandan/kotlingrad/blob/master/samples/notebooks/hello_kotlingrad.ipynb) for Kotlingrad
+- Minor revisions to survey
 - Challenges
-    -   Is there a way to combine dynamic and static analysis techniques? [https://miasm.re/blog/2017/10/05/playing_with_dynamic_symbolic_execution.html](https://miasm.re/blog/2017/10/05/playing_with_dynamic_symbolic_execution.html)
-    -   Try to integrate with existing symbolic execution frameworks. Maybe Z3? [https://ericpony.github.io/z3py-tutorial/strategies-examples.htm](https://ericpony.github.io/z3py-tutorial/strategies-examples.htm)
+  - Is there a way to combine dynamic and static analysis techniques? [https://miasm.re/blog/2017/10/05/playing_with_dynamic_symbolic_execution.html](https://miasm.re/blog/2017/10/05/playing_with_dynamic_symbolic_execution.html)
+  - Try to integrate with existing symbolic execution frameworks. Maybe Z3? [https://ericpony.github.io/z3py-tutorial/strategies-examples.htm](https://ericpony.github.io/z3py-tutorial/strategies-examples.htm)
 - Reading/watchlist
-    - Virtual PLDI - [links](https://github.com/breandan/dossier/blob/master/meetings/minutes.md#pldi-2020) to some talks and short summary
-    - AKBC conference - saw an [interesting talk](https://youtu.be/fY4wAphy56w?t=2426) about [ChartDialog](http://nakashole.com/papers/2020-acl-charts.pdf)
-    - Code generation for [typed dataframes](https://www.youtube.com/watch?v=YFtiDqYVhWY) with Kotlin notebooks
-    - [Context-Free Path Querying by Matrix Multiplication](https://dl.acm.org/doi/pdf/10.1145/3210259.3210264) - Use matmuls to query a graph (also: subgraph matching is hard)
-    - [Meta-modelling and graph grammars for multi-paradigm modelling in AToM3](https://idp.springer.com/authorize/casa?redirect_uri=https://link.springer.com/content/pdf/10.1007/s10270-003-0047-5.pdf%26casa_token=OU5DshcJECAAAAAA:hAbA6vAf98vRwqMttp29GUeqjZtQ4HPT7dPCuzecHmeHq3_FjB1sMT5VLXif4vVzl9sH1Pp4iIOl1tY1OA) (also: McGill had a [modeling lab](http://msdl.cs.mcgill.ca/)!? where did they all go?)
-    - [Describing the syntax of programming languages using conjunctive and Boolean grammars](http://users.utu.fi/aleokh/papers/conj_bool_programming.pdf) - Trees as an algebraic abstraction for modeling code
-    - [Parsing with zippers](https://github.com/pdarragh/parsing-with-zippers-paper-artifact) - like [PwD](https://arxiv.org/abs/1604.04695) but 15,600 times faster!
+  - Virtual PLDI - [links](https://github.com/breandan/dossier/blob/master/meetings/minutes.md#pldi-2020) to some talks and short summary
+  - AKBC conference - saw an [interesting talk](https://youtu.be/fY4wAphy56w?t=2426) about [ChartDialog](http://nakashole.com/papers/2020-acl-charts.pdf)
+  - Code generation for [typed dataframes](https://www.youtube.com/watch?v=YFtiDqYVhWY) with Kotlin notebooks
+  - [Context-Free Path Querying by Matrix Multiplication](https://dl.acm.org/doi/pdf/10.1145/3210259.3210264) - Use matmuls to query a graph (also: subgraph matching is hard)
+  - [Meta-modelling and graph grammars for multi-paradigm modelling in AToM3](https://idp.springer.com/authorize/casa?redirect_uri=https://link.springer.com/content/pdf/10.1007/s10270-003-0047-5.pdf%26casa_token=OU5DshcJECAAAAAA:hAbA6vAf98vRwqMttp29GUeqjZtQ4HPT7dPCuzecHmeHq3_FjB1sMT5VLXif4vVzl9sH1Pp4iIOl1tY1OA) (also: McGill had a [modeling lab](http://msdl.cs.mcgill.ca/)!? where did they all go?)
+  - [Describing the syntax of programming languages using conjunctive and Boolean grammars](http://users.utu.fi/aleokh/papers/conj_bool_programming.pdf) - Trees as an algebraic abstraction for modeling code
+  - [Parsing with zippers](https://github.com/pdarragh/parsing-with-zippers-paper-artifact) - like [PwD](https://arxiv.org/abs/1604.04695) but 15,600 times faster!
 - Dentist meeting Friday
 
 ## June 18, 2020
 
--   Migrated notebook survey to Overleaf
--   Published [slicing demo](https://github.com/breandan/pantograph) to GitHub
--   PLDI virtual conference
--   Shopify presents [ShipIt! Presents: Understanding Programs Using Graphs in TruffleRuby](https://engineering.shopify.com/blogs/engineering/understanding-programs-using-graphs#Register)
--   Clean up Pantograph a bit more
--   Tidy up the notebook surveyebook survey to Overleaf
--   Challenges/questions
-    - Identifying and documenting the edge cases for static analysis in Python. Could be useful to collect.
-    - Python seems pretty dynamic. Hard to cover all the cases. May be simplifying assumptions?
--   Reading list:
-    - [Fortress Language Specification](https://www.ccs.neu.edu/home/samth/fortress-spec.pdf) - Fortress is a notebook-friendly language for pseudocode-looking LaTeX. Interesting take on Documentation as code / Code as documentation
-    - [Integrating Prose as First-Class Citizens with Models and Code](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.403.3869&rep=rep1&type=pdf) - Voelter brainstorming different approaches to literate programming.
-    - [Staging notebook](https://ocamllabs.io/iocamljs/staging.html) - Introduces staged metaprogramming for runtime analysis (OCaml)
-    - [Implicit Staging of EDSL Expressions](https://doi.org/10.1007/978-3-662-44202-9_16) - Interesting comparison between shallow and deep staging techniques.
-    - [Penrose: From Mathematical Notation to Beautiful Diagrams](https://penrose.ink/media/Penrose_SIGGRAPH2020.pdf) - An interesting take on declarative programming and projectional editing
-    - [Automata-Based Regex Matcher](https://scala-lms.github.io/tutorials/automata.html)
+- Migrated notebook survey to Overleaf
+- Published [slicing demo](https://github.com/breandan/pantograph) to GitHub
+- PLDI virtual conference
+- Shopify presents [ShipIt! Presents: Understanding Programs Using Graphs in TruffleRuby](https://engineering.shopify.com/blogs/engineering/understanding-programs-using-graphs#Register)
+- Clean up Pantograph a bit more
+- Tidy up the notebook surveyebook survey to Overleaf
+- Challenges/questions
+  - Identifying and documenting the edge cases for static analysis in Python. Could be useful to collect.
+  - Python seems pretty dynamic. Hard to cover all the cases. May be simplifying assumptions?
+- Reading list:
+  - [Fortress Language Specification](https://www.ccs.neu.edu/home/samth/fortress-spec.pdf) - Fortress is a notebook-friendly language for pseudocode-looking LaTeX. Interesting take on Documentation as code / Code as documentation
+  - [Integrating Prose as First-Class Citizens with Models and Code](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.403.3869&rep=rep1&type=pdf) - Voelter brainstorming different approaches to literate programming.
+  - [Staging notebook](https://ocamllabs.io/iocamljs/staging.html) - Introduces staged metaprogramming for runtime analysis (OCaml)
+  - [Implicit Staging of EDSL Expressions](https://doi.org/10.1007/978-3-662-44202-9_16) - Interesting comparison between shallow and deep staging techniques.
+  - [Penrose: From Mathematical Notation to Beautiful Diagrams](https://penrose.ink/media/Penrose_SIGGRAPH2020.pdf) - An interesting take on declarative programming and projectional editing
+  - [Automata-Based Regex Matcher](https://scala-lms.github.io/tutorials/automata.html)
 
 ## June 11, 2020
 
@@ -176,15 +176,15 @@ Vacation.
 - PEQ reform / UdeM paperwork (due Wed.)
 - Root canal on Thursday
 - Challenges/questions
-    -Is it possible to design a language-agnostic graph?
-    -What is the downstream task we trying to support?
-    -How do we identify semantically similar graphs?
+  -Is it possible to design a language-agnostic graph?
+  -What is the downstream task we trying to support?
+  -How do we identify semantically similar graphs?
 - Reading list
-    - [Hypermodern Python](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/): Nice overview of modern Python development tools and techniques.
-        -   [typing](https://cjolowicz.github.io/posts/hypermodern-python-04-typing/) - mypy, pyre, pyright, pytype
-        -   [CI/CD](https://cjolowicz.github.io/posts/hypermodern-python-06-ci-cd/) - poetry
-        -   [documentation](https://cjolowicz.github.io/posts/hypermodern-python-05-documentation/) - sphinx, rst
-    - [Towards a Framework for Generating Program Dependence Graphs from Source Code](https://dl.acm.org/doi/pdf/10.1145/3278142.3278144): PDGs are often used for provenance and workflow applications. Possible to construct using compiler IR.
+  - [Hypermodern Python](https://cjolowicz.github.io/posts/hypermodern-python-01-setup/): Nice overview of modern Python development tools and techniques.
+    - [typing](https://cjolowicz.github.io/posts/hypermodern-python-04-typing/) - mypy, pyre, pyright, pytype
+    - [CI/CD](https://cjolowicz.github.io/posts/hypermodern-python-06-ci-cd/) - poetry
+    - [documentation](https://cjolowicz.github.io/posts/hypermodern-python-05-documentation/) - sphinx, rst
+  - [Towards a Framework for Generating Program Dependence Graphs from Source Code](https://dl.acm.org/doi/pdf/10.1145/3278142.3278144): PDGs are often used for provenance and workflow applications. Possible to construct using compiler IR.
 
 ## June 3, 2020
 
@@ -201,9 +201,9 @@ Vacation.
 - Looked into discretionary/essential US/CA [border crossing scenarios](http://s3.documentcloud.org/documents/6935230/CBSA-Directives.pdf)
 - Medical records release and transfer paperwork US/Canada
 - Challenges/questions
-    - Connecting information retrieval with notebook analysis
-    - What are the similarities/differences between PDG/DFG/CFG/computation graphs?
-    - How to formulate target as learning objective
+  - Connecting information retrieval with notebook analysis
+  - What are the similarities/differences between PDG/DFG/CFG/computation graphs?
+  - How to formulate target as learning objective
 - Reading List
   - [FaCoY – A Code-to-Code Search Engine](https://dl.acm.org/doi/pdf/10.1145/3180155.3180187) - Query expansion techniques for similar source code snippets.
   - [DéjàVu: A Map of Code Duplicates on GitHub](https://dl.acm.org/doi/pdf/10.1145/3133908) - Descriptive study on the incidence and prevelance of code duplication on GitHub.

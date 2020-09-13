@@ -1,3 +1,7 @@
+## September 4th, 2020
+
+- Reductions
+
 ## August 31, 2020
 
 - Working in Montreal (quarantine for 14 days)
