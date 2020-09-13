@@ -1,0 +1,1 @@
+I am a software engineer in the Software Technology Lab at McGill University, under the supervision of Jin Guo. There, I am building tools to help software engineers find information and reason about software, by learning to read and write code.
