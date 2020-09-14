@@ -16,6 +16,13 @@
 - Kleene, 1951. [Representation of Events in Nerve Nets and Finite Automata](https://www.rand.org/content/dam/rand/pubs/research_memoranda/2008/RM704.pdf)
 - [Neural Code Search Revisited: Enhancing CodeSnippet Retrieval through Natural Language Intent](https://arxiv.org/pdf/2008.12193.pdf)
 
+## Code Similarity Detection
+
+- [MISIM: An End-to-End Neural Code Similarity System](https://arxiv.org/pdf/2006.05265.pdf)
+- [funcGNN: A Graph Neural Network Approach to Program Similarity](https://arxiv.org/abs/2007.13239)
+- [Learning Semantic Program Embeddings with Graph Interval Neural Network](https://arxiv.org/pdf/2005.09997.pdf)
+- [Detecting Code Clones with Graph Neural Network and Flow-Augmented Abstract Syntax Tree](https://arxiv.org/pdf/2002.08653.pdf)
+
 ## Code Representation
 
 - [Unsupervised Translation of Programming Languages](https://arxiv.org/pdf/2006.03511.pdf)
@@ -24,6 +31,7 @@
 ## Structured Prediction
 
 - [Syntax-Directed Variational Autoencoder for Structured Data](https://arxiv.org/pdf/1802.08786.pdf) (Dai et al., 2018)
+- [Structural Language Models of Code](https://arxiv.org/pdf/1910.00577.pdf) (Alon et al., 2020)
 
 ## Automata Learning
 
@@ -38,6 +46,7 @@
 
 - [Regular expression matching on billion-nodes graphs](https://arxiv.org/pdf/1904.11653.pdf)
 - [Inverse compiling for program documentation](https://dl.acm.org/doi/pdf/10.1145/1408800.1408928)
+- [Neural Execution of Graph Algorithms](https://arxiv.org/abs/1910.10593)
 
 ## Graph Reduction
 

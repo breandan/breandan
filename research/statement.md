@@ -28,7 +28,7 @@ Program synthesis has a number of practical applications for knowledge systems. 
 
 ### Query language
 
- First, is the query languages -- designing a language that supports efficient and expressive queries over a large dataset.
+First, is the query languages -- designing a language that supports efficient and expressive queries over a large dataset.
 
 An invaluable skill of learning to code is learning to use Google and StackOverflow. These and most information retrieval systems which support a limited form of regular expression queries:
 
@@ -156,4 +156,3 @@ During my Ph.D., I am committed to pursuing the following activities:
 - Participate in research activities at KAST.
 - Help out colleagues and lab mates.
 - Contribute to open source.
-

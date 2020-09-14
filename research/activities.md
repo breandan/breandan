@@ -17,9 +17,9 @@
 ## Summer 2020
 
 - [Approximate Semantics for Source Code in the Wild](https://docs.google.com/presentation/d/1KTUUwj7CsUhMANoNTzyDWaV02JLuBXqI9xFKNjAamM4/edit#slide=id.g953048d1ac_0_69)
-- [Computation graphs and graph computation](http://breandan.net/2020/06/30/graph-computation/) - graphs as a model of computation
+- [Computation Graphs and Graph Computation](http://breandan.net/2020/06/30/graph-computation/) - Using graphs as a model of computation
 - [Kaliningraph](https://github.com/breandan/kaliningraph) - Graph neural networks and visualizing the behavior of graph algorithms
-- [pantograph](https://github.com/breandan/pantograph) - runtime accessible intermediate representation for reified computation graphs
+- [Pantograph](https://github.com/breandan/pantograph) - Runtime accessible intermediate representation for reified computation graphs
 - [Notebook](https://github.com/breandan/kotlingrad/blob/master/samples/notebooks/hello_kotlingrad.ipynb) [support](https://github.com/breandan/kaliningraph/blob/master/notebooks/Program%20Graphs.ipynb) - adding notebook support for notebook-based analysis
 
 ## Fall 2020
