@@ -1,3 +1,27 @@
+## September 16, 2020
+
+- **Last meeting**
+  - Structured encoding/decoding
+  - Are notebooks still a good fit?
+  - Reaching out for feedback
+- **Progress**
+  - Thought about evaluation
+  - Functional testing of code snippets
+  - Setup infra for COMP 598
+  - Looked into SMT solvers and MiniKanren
+- **Challenges**
+  - Formally defining equality and semantic similarity
+  - Overlap with prior work (see below)
+- **Next Week**
+  - Work on IFT 6269 homework
+  - Progress committee formation
+- **Reading**
+  - MISIM: An End-to-End Neural Code Similarity System (2020)
+  - funcGNN: A Graph Neural Network Approach to Program Similarity (2020)
+  - Learning Semantic Program Embeddings with Graph Interval Neural Network (2020)
+  - Detecting Code Clones with Graph Neural Network and Flow-Augmented Abstract Syntax Tree (2020)
+  - Algebraic Graphs with Class (Functional Pearl) (2017)
+
 ## September 9, 2020
 
 - **Last meeting**

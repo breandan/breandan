@@ -52,7 +52,7 @@
 
 - [LEAN: An intermediate language based on graph rewriting](https://doi.org/10.1016/0167-8191(89)90126-9), Barendregt
 - [An Algorithm for Optimal Lambda Calculus Reduction](https://dl.acm.org/doi/pdf/10.1145/96709.96711), Lamping
-- [A New  Implementation Technique for Applicative Languages](https://doi.org/10.1002/spe.4380090105), Turner
+- [A New Implementation Technique for Applicative Languages](https://doi.org/10.1002/spe.4380090105), Turner
 - [An Algebraic Theory of Graph Reduction](https://dl.acm.org/doi/pdf/10.1145/174147.169807#page=19), Arnborg
 - [A Reformulation of Matrix Graph Grammars with Boolean Complexes](https://www.emis.de/journals/EJC/ojs/index.php/eljc/article/view/v16i1r73/pdf) Velasco, Juan de Lara
 - [Towards a GPU-based implementation of interaction nets](https://arxiv.org/pdf/1404.0076.pdf), Jiresch
