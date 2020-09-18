@@ -64,3 +64,11 @@
 - [Can Neural Networks Learn Symbolic Rewriting?](https://arxiv.org/pdf/1911.04873.pdf) Piotrowski et al., 2020
 - [Tree Neural Networks in HOL4](https://arxiv.org/pdf/2009.01827.pdf) Gauthier, 2020
 - [Modelling High-Level Mathematical Reasoning in Mechanised Declarative Proofs](https://arxiv.org/pdf/2006.09265.pdf) Li et al., 2020
+- [Equivalence of Dataflow Graphs via Rewrite Rules Using a Graph-to-Sequence Neural Model](https://arxiv.org/pdf/2002.06799.pdf)
+
+## Equivalence Checking
+
+- [Semantic Program Alignment for Equivalence Checking](https://dl.acm.org/doi/pdf/10.1145/3314221.3314596)
+- [Verification of Source Code Transformations by Program Equivalence Checking](https://link.springer.com/content/pdf/10.1007/978-3-540-31985-6_15.pdf)
+- [Program Synthesis with Equivalence Reduction](http://pages.cs.wisc.edu/~aws/papers/vmcai19.pdf)
+- [Evaluation of Generalizability of Neural Program Analyzersunder Semantic-Preserving Transformations](https://arxiv.org/pdf/2004.07313.pdf)
