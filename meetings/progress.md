@@ -1,3 +1,22 @@
+## September 23, 2020
+
+- **Last meeting**
+  - Chat with Xujie. Ok for the progress committee
+  - Exact equality is hard to define, maybe relax constraints
+- **Progress**
+  - Drafted an [architectural diagram](https://drive.google.com/file/d/1xfiI4fuCYdbXjSmm70fXxLxH3rGspQCd/view?usp=sharing) to visualize dataflow
+  - Worked on the [probabilistic sampler](https://github.com/breandan/katholic)
+- **Challenges and questions**
+  - Identifying what (e.g. end-user) applications we want to support
+- **Plan for next week**
+  - Work on IFT 6269 homework #2
+  - Invite progress committee members
+  - Cataloging papers for the comprehensive exam
+- **Reading**
+  - [Learning to Solve SMT Formulas (2018)](http://papers.nips.cc/paper/8233-learning-to-solve-smt-formulas.pdf)
+  - [Equivalence of Dataflow Graphs via Rewrite Rules: Using a Graph-to-Sequence Neural Model (2020)](https://arxiv.org/pdf/2002.06799.pdf)
+  - [Extensibility for the Masses: Practical Extensibility with Object Algebras (2012)](http://www.cs.utexas.edu/~wcook/Drafts/2012/ecoop2012.pdf)
+
 ## September 16, 2020
 
 - **Last meeting**
