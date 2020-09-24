@@ -1,3 +1,11 @@
+## September 24, 2020
+
+- Rework intro to emphasize
+    - Contribution w.r.t. 2d-supervision (videos)
+    - Compare with (less) interpretable neural/implicit parameterization
+- Describe generalization to real videos from motion capture
+- Filtering out halos
+
 ## September 4th, 2020
 
 - Reductions
