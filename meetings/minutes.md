@@ -1,3 +1,8 @@
+## September 30, 2020
+
+- Discuss COMP 598 lab / recitation
+- Standups resuming next Mon/Wed
+
 ## September 24, 2020
 
 - Rework intro to emphasize
@@ -5,6 +10,11 @@
     - Compare with (less) interpretable neural/implicit parameterization
 - Describe generalization to real videos from motion capture
 - Filtering out halos
+
+## September 21, 2020
+
+- Research summary and updates w/XJ
+- OK for progress committee
 
 ## September 4th, 2020
 
