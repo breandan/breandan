@@ -1,3 +1,52 @@
+## October 21, 2020
+
+- Bidirectional model card editing / Sixian
+- Duplicate detection is called many things in many communities
+  - Common subexpression detection/elimination
+  - Code clone detection
+  - Semantic similarity detection
+  - Bisimulation...
+- Code clone/duplicate detection is maybe not the right direction
+- We want to find code that was independently written, but same semantics
+- Look into example-based programming / programming by example
+- Feasibility of using rewriting techniques for end user applications
+- Rewriting as either a query expansion or data augmentation technique?
+- System-level design (motivate the design using an end-user application)
+- How do you identify the rewrite rules / semantics?
+- Compiler literature forces strict equivalence between rewrites
+    - Possible to relax rewrites to include near matches
+    - Might want to discard certain specifics, e.g. literal values
+- How to apply the transformations to the model?
+    - Chicken-and-egg problem of how to discover rewrites
+    - Which rewrites you can perform affects expressivity of grammar
+- Levels of understanding / granularity of rewriting
+    - Method level
+    - Cell level
+    - Expression level...
+- Application motives the design choices we make
+- Co-design of the application and the tool
+- Relaxing the rewrite semantics to maybe discard information
+- Confirm the timing of the syllabus and exam proposal with the department
+- Gap between primitive methods and end user scope
+- How to break up the roadmap from research to adoption?
+- Who is the appropriate audience?
+- How to tailor the deliverables to target the audience?
+    - i.e. how to "sell" to SE/PL/ML/HCI community
+- Bridging examples from these communities in literature review
+    - Should reflect the research you aspire to publish
+- What is the long term goal here?
+    - Living thesis, turn research into a real project
+    - Build a tool to suggest similar code snippets in realtime?
+
+- COMP 598: SE for Intelligent Systems
+    - Grading M1 submissions
+    - Check the logs for errors?
+    - Does the service run / stability / QoS
+    - Recitation for M2 next Wednesday
+        - CI/CD, testing, testing methods, coverage
+    - Check the slides from testing lecture
+    - Do we need to add/provide any additional features on server?
+
 ## September 30, 2020
 
 - Discuss COMP 598 lab / recitation
