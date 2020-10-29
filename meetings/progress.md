@@ -1,3 +1,50 @@
+## October 28, 2020
+
+- Last meeting
+  - Try to broaden scope to include programming by example
+  - Thinking about the concrete application will help keep us on track
+  - How to adapt the deliverables to fit the audience
+- Progress
+  - Prepared recitation #2, [Concepts in Statistical and Software Testing](https://github.com/breandan/kotlingrad/blob/master/latex/testing/testing.pdf)
+  - Thought about how to model user edits on a codebase as a Markov chain
+  - Probabilities of editing a specific file based on the edge connections between entity references
+  - Could use this to recommend a list of files missed in a commit (e.g. unlinked string references)
+- Reading
+  - [Subgraphs in the trace of a random walk](https://arxiv.org/abs/1605.04585)
+  - [Factor graph grammars](https://arxiv.org/abs/2010.12048)
+  - [Aleatoric and Epistemic Uncertainty in Machine Learning](https://arxiv.org/abs/1910.09457)
+- Plan for next week
+  - Finish up the exam syllabus and send draft for review
+
+## October 7, 2020
+
+- **Last meeting**
+  - Equivalence in the context of computational notebooks
+- **Progress**
+  - Started evaluating [SMT solver](https://github.com/breandan/kaliningraph/blob/master/src/main/kotlin/edu/mcgill/kaliningraph/smt/TestSMT.kt) for graph canonicalization
+  - Developed [research questions](https://github.com/breandan/kaliningraph#research-questions) for Kaliningraph
+  - Read about theories for [graph rewriting in Grez](http://www.ti.inf.uni-due.de/fileadmin/public/tools/grez/grez-manual.pdf#chapter.5)
+- **Challenges and questions**
+  - In general, checking rewrites for termination is [undecidable](https://www.researchgate.net/profile/Detlef_Plump/publication/37923776_Termination_of_Graph_Rewriting_is_Undecidable/links/0046351a879627f6e2000000.pdf)
+  - Need to identify a decidable fragment of language and rewrites
+- **Plan for next week**
+  - Visualize graph/snippet rewrite system in a notebook setting
+  - Define/implement reduction semantics for canonicalization
+  - Finish writing DSL for graph reduction definitions
+
+## September 30, 2020
+
+- **Last meeting**
+    Discussed architecture and research plans
+    Develop project in the context of PGM class
+- **Progress**
+    Formalized definition of equivalence
+- **Challenges and questions**
+    Finding a killer application
+- **Plan for next week**
+    Submit project proposal for feedback
+    Put together outline for comprehensive exam
+
 ## September 23, 2020
 
 - **Last meeting**

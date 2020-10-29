@@ -1,3 +1,13 @@
+## Minutes
+
+* Connecting with prior work
+* How to relate with rewriting?
+* Plan experimental design / small experiment demonstrating potential
+* Acceptance testing and user story
+* Problem scenarios we can address
+* Scope for matching procedure
+* Code-code / NL-code. Choose!
+
 ## October 21, 2020
 
 - Bidirectional model card editing / Sixian
