@@ -1,12 +1,38 @@
 ## Minutes
 
-* Connecting with prior work
-* How to relate with rewriting?
-* Plan experimental design / small experiment demonstrating potential
-* Acceptance testing and user story
-* Problem scenarios we can address
-* Scope for matching procedure
-* Code-code / NL-code. Choose!
+## Todo
+
+- Prioritize
+- [ ] Proofread ICLR workshop submission
+- [ ] Form a team for the PGM project
+- Research
+- [ ] Send an exam syllabus with papers
+- [ ] Look into programming by example literature
+- [ ] Design experiment to test graph matching
+- [ ] Implement random walk rewriter on real data
+- [ ] Inductive biases and inductive definitions
+- [ ] Unification and disunification
+- [ ] Dependent type theory talk
+- COMP 598
+- [ ] Give feedback for COMP 598 / M1
+- [ ] Simulate fake user / reactive system
+- Other bets
+- [ ] Describe Kotlin∇ invocation semantics
+- [ ] Describe higher order/rank derivatives
+- [ ] Describe automatic vs. symbolic difference
+- [ ] Describe code generation / macro approach
+- [ ] Implement term rewriting in Kaliningraph
+- [ ] Compile arithmetic circuit to a matrix
+
+## October 28th, 2020
+
+- Connecting with prior work
+- How to relate with rewriting?
+- Plan experimental design / small experiment demonstrating potential
+- Acceptance testing and user story
+- Problem scenarios we can address
+- Scope for matching procedure
+- Code-code / NL-code. Choose!
 
 ## October 21, 2020
 
