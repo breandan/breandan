@@ -3,26 +3,26 @@
 ## Todo
 
 - Prioritize
-- [ ] Proofread ICLR workshop submission
-- [ ] Form a team for the PGM project
+  - [ ] Proofread ICLR workshop submission
+  - [ ] Form a team for the PGM project
 - Research
-- [ ] Send an exam syllabus with papers
-- [ ] Look into programming by example literature
-- [ ] Design experiment to test graph matching
-- [ ] Implement random walk rewriter on real data
-- [ ] Inductive biases and inductive definitions
-- [ ] Unification and disunification
-- [ ] Dependent type theory talk
+  - [ ] Send an exam syllabus with papers
+  - [ ] Look into programming by example literature
+  - [ ] Design experiment to test graph matching
+  - [ ] Implement random walk rewriter on real data
+  - [ ] Inductive biases and inductive definitions
+  - [ ] Unification and disunification
+  - [ ] Dependent type theory talk
 - COMP 598
-- [ ] Give feedback for COMP 598 / M1
-- [ ] Simulate fake user / reactive system
+  - [ ] Give feedback for COMP 598 / M1
+  - [ ] Simulate fake user / reactive system
 - Other bets
-- [ ] Describe Kotlin∇ invocation semantics
-- [ ] Describe higher order/rank derivatives
-- [ ] Describe automatic vs. symbolic difference
-- [ ] Describe code generation / macro approach
-- [ ] Implement term rewriting in Kaliningraph
-- [ ] Compile arithmetic circuit to a matrix
+  - [ ] Describe Kotlin∇ invocation semantics
+  - [ ] Describe higher order/rank derivatives
+  - [ ] Describe automatic vs. symbolic difference
+  - [ ] Describe code generation / macro approach
+  - [ ] Implement term rewriting in Kaliningraph
+  - [ ] Compile arithmetic circuit to a matrix
 
 ## October 28th, 2020
 
