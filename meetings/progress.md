@@ -1,3 +1,21 @@
+## November 4, 2020
+
+- Last meeting
+  - Graph matching in SLAM/computer vision
+  - Compressed sensing in signal processing
+  - Representations which capture invariance
+  - Put together a concrete experiment
+- Progress
+  - Program repair / programming by example
+  - Fixing compiler errors using SO as a KB?
+  - Extract context from sources and stacktrace
+- Reading
+  - [Hoppity: Learning Graph Transformations to Detect and Fix Bugs in Programs](https://openreview.net/pdf?id=SJeqs6EFvB), Dinella et al. (2020)
+  - [Learning Lenient Parsing & Typing via Indirect Supervision](https://arxiv.org/pdf/1910.05879.pdf), Ahmed et al. (2020)
+  - [Can We Use Stack Overflow as a Source of Explainable Bug-fix Data?](https://arxiv.org/pdf/2004.08378.pdf), Tang and Nadi (2020)
+  - [Optimising the Fit of Stack Overflow Code Snippets into Existing Code](https://arxiv.org/pdf/2004.07663.pdf), Reid et al. (2020)
+  - [From Query to Usable Code: An Analysis of StackOverflow Code Snippets](https://dl.acm.org/doi/pdf/10.1145/2901739.2901767), Yang et al. (2016)
+
 ## October 28, 2020
 
 - Last meeting
