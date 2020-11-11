@@ -1,3 +1,30 @@
+## November 11, 2020
+
+- Last meeting
+  - Described experimental setup: SO queries
+  - Treating embedded code snippets as IDE text
+  - Can we recover the e.g. "garbled" text somehow?
+- This meeting
+  - Approximate string matching / sequence alignment
+  - Query string (e.g. whole stacktrace + code)
+  - What SO questions match the query most closely?
+  - Possible to model sequence as a HMM production
+  - Similarities to pattern matching on genetic data
+  - Possible to leverage byte pair encoding (BPE)
+- Challenges
+  - Need an online algorithm that is fast + efficient
+  - Compare and contrast with vector space encoding
+  - Depending on complexity, may not be tractable to search entire database
+- Reading:
+  - [Learning to Fix Programs from Error Messages](https://ai.stanford.edu/blog/DrRepair/)
+  - [Approximate Online Pattern Matching in Sub-linear Time](https://arxiv.org/pdf/1810.03551.pdf), Chakraborty et al. (2018)
+  - [Improved online algorithms for jumbled matching](https://doi.org/10.1016/j.dam.2018.05.028), Ghuman et al. (2018)
+  - [Parallelizing Exact and Approximate String Matching via Inclusive Scan on a GPU](http://www-hagi.ist.osaka-u.ac.jp/research/papers/201707_mitani_ieeetpds.pdf), Mitani et al. (2017)
+  - [A Novel Algorithm for Online Inexact String Matching and its FPGA Implementation](https://doi.org/10.1007/s12559-019-09646-y), Cinti et al. (2019)
+  - [Context-Free Path Querying by Matrix Multiplication](https://doi.org/10.1145/3210259.3210264), Azimov and Grigorev (2018)
+
+
+
 ## November 4, 2020
 
 - Last meeting
