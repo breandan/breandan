@@ -1,0 +1,105 @@
+%! Author = breandan
+%! Date = 11/16/20
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{prooftrees}
+
+% Document
+\begin{document}
+
+    TODO: think of a good title
+
+    \begin{enumerate}
+    \item Pattern recognition in structured documents?
+    \item Towards a notion of sameness in software artifacts
+    \item Computer-Aided Programming...
+    \item Knowledge-driven development
+    \item Content recommendation for programming tools
+    \item Reasoning and relating software artifacts
+    \item Traceable documentation retrieval
+    \item Entity matching for programming recommendations
+    \end{enumerate}
+
+    Table of contents
+    \begin{enumerate}
+    \item Efficiently searching corpus for a pattern
+    \item Identifying alignment and matching results
+    \item Incorporating information into user's context
+    \end{enumerate}
+
+        The notion of equivalence has been studied across many logical disciplines. Broadly speaking, there are various kinds of equality: intensional, extensional, observational, approximate, and semantic equality.
+
+    \section{Formal Equality}
+
+    \subsection{Richardson's Theorem}
+
+    In general, determining equality between two mathematical formulas is undecidable.
+
+    \subsection{Rice's theorem}
+
+    More generally, any nontrivial property is undecidable.
+
+    \subsection{Word problem}
+
+    Knuth-Bendix completion is a semialgorithm...
+
+    Suppose we have two functions $f_1: \mathcal{I} \rightarrow \mathcal{O}$ and $f_2: \mathcal{I}\rightarrow \mathcal{O}$.
+
+    \subsection{Intensional equivalence}
+
+    Let $\mathbb{R}: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation between functions which is closed under composition. We say that $f_1$ and $f_2$ are intensionally equal if $R_n(f_1)=R_m(f_2)$ for some $m,n \in \mathbb{Z}$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x, y, z)=xz + xy$ and $f_2(x, y, z)=x(y + z)$, and $\mathcal{R}={a + b := b + a, a(b + c) := ab + ac}$ is our rewrite system. If we apply $R$ twice to $f_2$, we obtain $R_2(f_2)=x(y + z):=xy + xz:=xz + xy=R_0(f_1)$ and thus $f_1$ and $f_2$ are both intensionally equal.
+
+    \subsection{Extensional equivalence}
+
+    We say $f_1$ and $f_2$ are extensionally equivalent if $\forall i \in \mathcal{I}, f_1(i)=f_2(i)$, or in other words, "Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x)=-x^3$ and $f_2(x)=|x|^3$. If we test $\hat i \in {-2, -1, 0, 1, \ldots}$, we have $f_1(-2)=f_2(-2)$, $f_1(-1)=f_2(-1)$, $f_1(0)=f_2(0)$, $f_1(1) \neq f_2(1)$. Once we detect an $f_1(\hat i) \neq f_2(\hat i)$, we can halt immediately.
+
+    \subsection{Observational Equivalence}
+
+    Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid and halts, $\textt{C[N]}$ is also valid and halts.
+
+    \section{Structural Equality}
+
+    \subsection{Isomorphism}
+
+    [Sub]graph isomorphism
+
+    \subsection{Metamorphism}
+
+    Metamorphic testing
+
+    \section{Approximate Equality}
+
+    We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them extensionally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
+
+    \section{Software equality}
+
+    \subsection{Code clone detection}
+
+    \subsection{Knowledge alignment}
+
+    Knowledge alignment, entity matching, ...
+
+    \subsection{Graph rewriting}
+
+    \subsection{Graph edit distance}
+
+    model fragments of code and natural language as a graphs and learn a distance metric which captures the notion of similarity. Some graphs will be incomplete, or missing some features, others will have extra information that is unnecessary.
+
+    Given a piece of code and the surrounding context (e.g. in an IDE or compiler), search a database for the most similar graphs, then to recommend them to the user (e.g. fixes or repairs for compiler error messages), or suggest some relevant examples to help the user write some incomplete piece of code.It is similar to a string edit distance, but for graph structured objects. There are a few pieces to this:
+
+    \begin{enumerate}
+    \item Semantic segmentation (what granularity to slice?)
+    \item Graph matching (how to measure similarity?)
+    \item Graph search (how to search efficiently?)
+    \item Recommendation (how to integrate into user's code)
+    \end{enumerate}
+
+    The rewriting mechanism is similar to a string edit distance, but for graphs. One way of measuring distance could be measuring the shortest number of steps for rewriting a graph A to graph B, ie. the more "similar" these two graphs are the fewer rewriting steps it should take.
+
+    \section{Future work}
+\end{document}

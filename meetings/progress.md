@@ -1,3 +1,51 @@
+## Todo
+
+- Prioritize
+  - [ ] Exam syllabus
+  - [ ] PGM project
+- Research
+  - [ ] Send an exam syllabus with papers
+  - [ ] Look into programming by example literature
+  - [ ] Design experiment to test graph matching
+  - [ ] Implement random walk rewriter on real data
+  - [ ] Inductive biases and inductive definitions
+  - [ ] Unification and disunification
+  - [ ] Dependent type theory talk
+- COMP 598
+  - [ ] Simulate fake user / reactive system
+  - [ ] M2 feedback
+- Other bets
+  - [ ] Describe Kotlin∇ invocation semantics
+  - [ ] Describe higher order/rank derivatives
+  - [ ] Describe automatic vs. symbolic difference
+  - [ ] Describe code generation / macro approach
+  - [ ] Implement term rewriting in Kaliningraph
+  - [ ] Implement doubly-linked graph API
+  - [ ] Compile arithmetic circuit to a matrix
+  - [ ] [ISSAC](http://issac-conference.org/2021/) with Alex
+
+## November 18, 2020
+
+- Last meeting
+    - Lit review
+    - ICML reviews
+    - ICLR workshop submission
+    - Feedback for COMP 598 / M1
+- This week
+    - Writing PGM final project
+    - Writing comprehensive exam
+    - Writing code / graph prop
+    - Link stack traces to GitHub
+    - Link IDE context to StackOverflow
+- Challenges
+    - Need to be more focused
+- Reading
+    - [Probabilistic Circuits](http://starai.cs.ucla.edu/papers/ProbCirc20.pdf), Choi et al. (2020)
+    - [Lancer: Your Code Tell Me What You Need](http://www.cs.sjtu.edu.cn/~zhonghao/paper/Lancer.pdf), Zhou et al. (2019) [[source code](https://github.com/sfzhou5678/Lancer)]
+    - [TraceSim: A Method for Calculating Stack Trace Similarity](https://arxiv.org/pdf/2009.12590.pdf), Vasiliev et al. (2020)
+    - [Exploiting Code Knowledge Graph for Bug Localization via Bi-directional Attention](https://doi.org/10.1145/3387904.3389281), Zhang et al. (2020)
+    - ...
+
 ## November 11, 2020
 
 - Last meeting
@@ -22,8 +70,6 @@
   - [Parallelizing Exact and Approximate String Matching via Inclusive Scan on a GPU](http://www-hagi.ist.osaka-u.ac.jp/research/papers/201707_mitani_ieeetpds.pdf), Mitani et al. (2017)
   - [A Novel Algorithm for Online Inexact String Matching and its FPGA Implementation](https://doi.org/10.1007/s12559-019-09646-y), Cinti et al. (2019)
   - [Context-Free Path Querying by Matrix Multiplication](https://doi.org/10.1145/3210259.3210264), Azimov and Grigorev (2018)
-
-
 
 ## November 4, 2020
 
@@ -80,15 +126,15 @@
 ## September 30, 2020
 
 - **Last meeting**
-    Discussed architecture and research plans
-    Develop project in the context of PGM class
+  -  Discussed architecture and research plans
+  -  Develop project in the context of PGM class
 - **Progress**
-    Formalized definition of equivalence
+  -  Formalized definition of equivalence
 - **Challenges and questions**
-    Finding a killer application
+  -  Finding a killer application
 - **Plan for next week**
-    Submit project proposal for feedback
-    Put together outline for comprehensive exam
+  -  Submit project proposal for feedback
+  -  Put together outline for comprehensive exam
 
 ## September 23, 2020
 
