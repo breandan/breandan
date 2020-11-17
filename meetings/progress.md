@@ -19,6 +19,7 @@
   - [ ] Describe higher order/rank derivatives
   - [ ] Describe automatic vs. symbolic difference
   - [ ] Describe code generation / macro approach
+  - [ ] Binary matrix API and other semirings
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
   - [ ] Compile arithmetic circuit to a matrix
