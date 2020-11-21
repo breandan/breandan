@@ -29,62 +29,107 @@
     TODO: think of a good title
 
     \begin{enumerate}
-    \item Pattern recognition in structured documents?
-    \item Towards a notion of sameness in software artifacts
-    \item Computer-Aided Programming...
-    \item Knowledge-driven development
-    \item Content recommendation for programming tools
-    \item Reasoning and relating software artifacts
-    \item Traceable documentation retrieval
-    \item Entity matching for programming recommendations
+      \item Pattern recognition in structured documents?
+      \item Towards a notion of sameness in software artifacts
+      \item Computer-Aided Programming...
+      \item Knowledge-driven development
+      \item Content recommendation for programming tools
+      \item Reasoning and relating software artifacts
+      \item Traceable documentation retrieval
+      \item Entity matching for programming recommendations
     \end{enumerate}
 
-    Table of contents
-    \begin{enumerate}
-    \item Efficiently searching corpus for a pattern
-    \item Identifying alignment and matching results
-    \item Incorporating information into user's context
-    \end{enumerate}
+    Prior work~\citep{considine2019kotlingrad,considine2019programming} explored differentiation. The notion of differentiation is very important for optimization. But ultimately it gives us an incomplete picture. In this work, we attempt to establish the connection between probabilistic reasoning and relational reasoning using antidifferentiation.
 
-    Prior work~\citep{considine2019kotlingrad,considine2019programming} explored the connection between reasoning and differentiable programming. The notion of differentiation is very important for optimization. But ultimately it gives an incomplete picture. In this work, we explore the application integration towards probabilistic reasoning, and specifically equivalence testing.
+    The notion of equivalence has been studied across many logical disciplines. Broadly speaking, there are various properties we can use to determine whether two objects are equal. We can probe at their features, rewrite them, etc.
 
-    The notion of equivalence has been studied across many logical disciplines. Broadly speaking, there are various properties we can use to determine whether two or more objects are equal.
+    But why do we care about equivalence? By identifying equivalent objects, we can find objects in a database to increase code sharing and reduce duplication. We can also reason about functions and relations between those objects.
 
-    Why do we care about equivalence? By identifying equivalent objects, we can increase code sharing and reduce duplication.
-
-    This has many applications in knowledge graphs. Identifying when two entities are the same is called the entity matching or alignment.
+    This has many applications in knowledge systems. Identifying when two entities are the same is called entity matching or alignment. We can identify and discover related concepts.
 
     Probabilistically, we care about distribution matching and distance metrics (e.g. earthmover, Kantorovich-Rubinstein, Prokhorov et al.)
 
-    We want to search through a software knowledge base for a stack trace. Then use the KB to repair our bug.
 
     Basically, we want to reason about probabilistic objects. Natural languages are imprecise. Unclear semantics. Can we still do inference?
 
-    This is all related to probabilistic [logic] programming. Need a formal language to describe probabilistic relations between entities and do MAR, MAP, EVI inference.
+    This is all related to probabilistic [logic] programming. We want to ask MAR, MAP, EVI queries. We need a formal language to describe probabilistic relations on natural languages.
 
-    Equivalence requires reducing an object to a normal form (canonicalization) and then doing some kind of comparison.
 
-    Can we perform rewriting / unification in the probabilistic / NLP setting?
+    In the following sections, we will define exact and approximate equality in the discrete and continuous domain, how to decide it exactly and approximately, then describe a few applications for software engineering.
 
-    How do we define semantic equality in our setting? Using word embedding?
+    \section{Equality, Formally}
 
-        intensional, extensional, observational, approximate, and semantic equality.
+    In mathematical equality, two expressions are considered equal if, loosely speaking, they represent the same concept. The problem is, mathematical equality is not differentiable.
 
-    \section{Formal Equality}
+    It has the following logical properties:
 
-    \subsection{Richardson's Theorem}
+    \begin{enumerate}
+        \item $\implies a = a$
+        \item $a = b \implies b = a$
+        \item $a = b$ and $b = c \implies a = c$
+        \item $\forall F, a = b \implies F(a) = F(b)$
+    \end{enumerate}
 
-    In general, determining equality between two mathematical formulas is undecidable.
+    Consider the Kronecker delta function $\delta_k: \mathcal{T}$, where $\mathcal{T} \in \mathbb{Z, Q, B}$:
 
-    \subsection{Rice's theorem}
+    $$
+    \delta_k(i, j) :=
+    \begin{cases}
+        1 \text{ if } i = j, \\
+        0 \text{ otherwise }\\
+    \end{cases}
+    $$
 
-    More generally, any nontrivial property is undecidable.
+    However it is not a continuous function: the preimage of an open set is not open. Thus, it is not differentiable.
 
-    \subsection{Word problem}
+    Now consider the Dirac delta function, $\delta_d$. Although it cannot be written down directly, it can be described indirectly:
 
-    Knuth-Bendix completion is a semialgorithm...
+    $$
+    \delta_d(i, j) :=
+    \begin{cases}
+        \infty \text{ if } i = j, \\
+        0 \text{ otherwise }\\
+    \end{cases}
 
-    Suppose we have two functions $f_1: \mathcal{I} \rightarrow \mathcal{O}$ and $f_2: \mathcal{I}\rightarrow \mathcal{O}$.
+    \text{ where } \int \delta_d (x)dx = 1
+    $$
+
+    What is the difference between mathematical functions and software? Software implements $\delta_k$, while mathematical functions implement $\delta_d$.
+
+    Both of these are idealized concepts which do not exist in the real world. Unknowable whether the universe is discrete or continuous. All we can do is approximate and compare empirically.
+
+    However the fact that many humans have converged on these definitions, captures an aspect of the human brain that we would expect a synthetic reasoner to also possess.
+
+    To allow a more realistic version the $=$ operator, we require a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$.
+
+    \subsection{Incompleteness}
+
+    Mathematics is often a useful approximation of reality, but the trouble is, many mathematical concepts are impossible to realize in the real world.
+
+    This is due to two problems:
+
+    \begin{enumerate}
+        \item intrinsic: the mechanics of the system we have written down are fundamentally unsound and do not admit mechanization.
+        \item extrinsic: all descriptions (epistemic) and observations (alleoteric) are imprecise and this imprecision can compound quickly.
+    \end{enumerate}
+
+    Even very simple formulas containing arithmetic are undecidable. (Peano)
+
+    No complete and consistent formal systems: we cannot construct a machine implementing a program of mathematics. (Godel)
+
+    In general, determining equality between two mathematical formulas is undecidable, even very simple formulas containing arithmetic. (Richardson)
+
+    More generally, any nontrivial property is undecidable. (Rice)
+
+    But can we organize mathematical knowledge as a rule based decision tree? (Rich)
+
+    Mathematics seems to be obsessed with completeness, much to its detriment. Completeness invades every definition. Definitions must hold over all cases, including the adversarial ones. This is good, because it encourages rigor in a highly adversarial field.
+
+    But most people prefer useful abstractions to complete specifications. Most people just want to write dependable software.
+
+    To be more inclusive of our audience, we should optimize our definitions for consistency, at the expense of completeness.
+
+    In fact, we can answer many questions exactly. If we restrict the reasoning system to incomplete queries, we can be consistient. In Section~\ref{sec:structural}, we will show some nice algorithms for doing so.
 
     \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
@@ -102,11 +147,32 @@
 
     $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
-    \section{Structural Equality}
+    We can define semantic equality in our setting using word embeddings.
+
+    \section{Structural Equality}\label{sec:structural}
+
+    So far, we have described the properties of equality, but we still need an algorithm for how to establish it. We need a decision algorithm.
+
+    It is seldom the case that two equal things are trivially equal. We need to do some computation to put them into a form that makes their equality plain to see.
+
+    To establish equality, we need some notion of a "transformation", or "rewrite".
+
+    Equivalence requires:
+
+    1. reducing an object into a normal form (canonicalization),
+
+    2. doing some kind of comparison. At this point, equality should be trivial (e.g. using string comparison)
+
+
+    Knuth-Bendix completion is a semialgorithm...
+
+    Suppose we have two functions $f_1: \mathcal{I} \rightarrow \mathcal{O}$ and $f_2: \mathcal{I}\rightarrow \mathcal{O}$.
+
 
     \subsection{Isomorphism}
 
     [Sub]graph isomorphism
+
 
     \subsection{Metamorphism}
 
@@ -117,6 +183,15 @@
     We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them extensionally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
     \section{Software equality}
+
+    We want to search through a software knowledge base for an error and stack trace, then use the information in the KB to repair our bug.
+
+    \begin{enumerate}
+        \item Efficiently searching corpus for a pattern
+        \item Identifying alignment and matching results
+        \item Incorporating information into user's context
+    \end{enumerate}
+
 
     \subsection{Code clone detection}
 
