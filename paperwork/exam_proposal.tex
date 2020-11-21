@@ -8,6 +8,12 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{prooftrees}
+\usepackage{natbib}
+
+\usepackage{xcolor}
+\pagecolor[rgb]{0.1,0.1,0.1} %black
+\color[rgb]{0.7,0.7,0.7} %grey
+
 
 
 \title{Comprehensive Exam Syllabus}
@@ -40,8 +46,27 @@
     \item Incorporating information into user's context
     \end{enumerate}
 
+    Prior work~\citep{considine2019kotlingrad,considine2019programming} explored the connection between reasoning and differentiable programming. The notion of differentiation is very important for optimization. But ultimately it gives an incomplete picture. In this work, we explore the application integration towards probabilistic reasoning, and specifically equivalence testing.
 
-The notion of equivalence has been studied across many logical disciplines. Broadly speaking, there are various properties we can use to determine whether two or more objects are equal.
+    The notion of equivalence has been studied across many logical disciplines. Broadly speaking, there are various properties we can use to determine whether two or more objects are equal.
+
+    Why do we care about equivalence? By identifying equivalent objects, we can increase code sharing and reduce duplication.
+
+    This has many applications in knowledge graphs. Identifying when two entities are the same is called the entity matching or alignment.
+
+    Probabilistically, we care about distribution matching and distance metrics (e.g. earthmover, Kantorovich-Rubinstein, Prokhorov et al.)
+
+    We want to search through a software knowledge base for a stack trace. Then use the KB to repair our bug.
+
+    Basically, we want to reason about probabilistic objects. Natural languages are imprecise. Unclear semantics. Can we still do inference?
+
+    This is all related to probabilistic [logic] programming. Need a formal language to describe probabilistic relations between entities and do MAR, MAP, EVI inference.
+
+    Equivalence requires reducing an object to a normal form (canonicalization) and then doing some kind of comparison.
+
+    Can we perform rewriting / unification in the probabilistic / NLP setting?
+
+    How do we define semantic equality in our setting? Using word embedding?
 
         intensional, extensional, observational, approximate, and semantic equality.
 
@@ -61,17 +86,21 @@ The notion of equivalence has been studied across many logical disciplines. Broa
 
     Suppose we have two functions $f_1: \mathcal{I} \rightarrow \mathcal{O}$ and $f_2: \mathcal{I}\rightarrow \mathcal{O}$.
 
-    \subsection{Intensional equivalence}
+    \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
-    Let $\mathbb{R}: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation between functions which is closed under composition. We say that $f_1$ and $f_2$ are intensionally equal if $R_n(f_1)=R_m(f_2)$ for some $m,n \in \mathbb{Z}$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x, y, z)=xz + xy$ and $f_2(x, y, z)=x(y + z)$, and $\mathcal{R}={a + b := b + a, a(b + c) := ab + ac}$ is our rewrite system. If we apply $R$ twice to $f_2$, we obtain $R_2(f_2)=x(y + z):=xy + xz:=xz + xy=R_0(f_1)$ and thus $f_1$ and $f_2$ are both intensionally equal.
+    Let $R: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation between functions which is closed under composition. We say that $f_1$ and $f_2$ are intensionally equal if $R_n(f_1)=R_m(f_2)$ for some $m,n \in \mathbb{Z}$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x, y, z)=xz + xy$ and $f_2(x, y, z)=x(y + z)$, and $\mathcal{R}={a + b := b + a, a(b + c) := ab + ac}$ is our rewrite system. If we apply $R$ twice to $f_2$, we obtain $R_2(f_2)=x(y + z):=xy + xz:=xz + xy=R_0(f_1)$ and thus $f_1$ and $f_2$ are both intensionally equal.
 
-    \subsection{Extensional equivalence}
+    \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
 
     We say $f_1$ and $f_2$ are extensionally equivalent if $\forall i \in \mathcal{I}, f_1(i)=f_2(i)$, or in other words, "Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x)=-x^3$ and $f_2(x)=|x|^3$. If we test $\hat i \in {-2, -1, 0, 1, \ldots}$, we have $f_1(-2)=f_2(-2)$, $f_1(-1)=f_2(-1)$, $f_1(0)=f_2(0)$, $f_1(1) \neq f_2(1)$. Once we detect an $f_1(\hat i) \neq f_2(\hat i)$, we can halt immediately.
 
     \subsection{Observational Equivalence}
 
     Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid and halts, $\textt{C[N]}$ is also valid and halts.
+
+    This is kind of like word embeddings.
+
+    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
     \section{Structural Equality}
 
@@ -113,4 +142,14 @@ The notion of equivalence has been studied across many logical disciplines. Broa
     The rewriting mechanism is similar to a string edit distance, but for graphs. One way of measuring distance could be measuring the shortest number of steps for rewriting a graph A to graph B, ie. the more "similar" these two graphs are the fewer rewriting steps it should take.
 
     \section{Future work}
+
+    Semirings arise in strange and marvelous places. (min, +), (max, \times)
+
+    \begin{enumerate}
+    \item https://people.cs.kuleuven.be/~luc.deraedt/Francqui4ab.pdf#page=71
+    \item http://www.mit.edu/~kepner/GraphBLAS/GraphBLAS-Math-release.pdf#page=11
+    \end{enumerate}
+
+    \bibliography{exam_proposal}
+    \bibliographystyle{plain}
 \end{document}
