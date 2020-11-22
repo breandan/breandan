@@ -7,7 +7,8 @@
 % Packages
 \usepackage{amsmath}
 \usepackage{amsfonts}
-\usepackage{prooftrees}
+%\usepackage{prooftrees}
+\usepackage{bussproofs}
 \usepackage{natbib}
 
 \usepackage{xcolor}
@@ -25,52 +26,59 @@
     \maketitle
 
     \tableofcontents
+    \pagebreak
 
-    TODO: think of a good title
+%    TODO: think of a good title
+%
+%    \begin{enumerate}
+%      \item Pattern recognition in structured documents?
+%      \item Towards a notion of sameness in software artifacts
+%      \item Computer-Aided Programming...
+%      \item Knowledge-driven development
+%      \item Content recommendation for programming tools
+%      \item Reasoning and relating software artifacts
+%      \item Traceable documentation retrieval
+%      \item Entity matching for programming recommendations
+%    \end{enumerate}
 
-    \begin{enumerate}
-      \item Pattern recognition in structured documents?
-      \item Towards a notion of sameness in software artifacts
-      \item Computer-Aided Programming...
-      \item Knowledge-driven development
-      \item Content recommendation for programming tools
-      \item Reasoning and relating software artifacts
-      \item Traceable documentation retrieval
-      \item Entity matching for programming recommendations
-    \end{enumerate}
+    Most human knowledge is encoded as natural language. A substantial and growing portion is encoded as software. Software shares many qualities of natural language but has more regularity. For example, it posesses many statistical properties and can be studied using statistical methods. But most software is also regular language and can be described analytically. It has a precise grammar and a well-defined denotational and natural semantics.
 
-    Prior work~\citep{considine2019kotlingrad,considine2019programming} explored differentiation. The notion of differentiation is very important for optimization. But ultimately it gives us an incomplete picture. In this work, we attempt to establish the connection between probabilistic reasoning and relational reasoning using antidifferentiation.
+    Prior work~\citep{considine2019kotlingrad,considine2019programming} explored differentiable software. The notion of differentiation is very important for optimization. But it does not capture statistical variation or allow us to describe uncertainty, a fundamental limitation of expressivity if we ever hope to interface with the real world. In this work, we attempt to establish the connection between reasoning and antidifferentiation for analyzing software. To be able to reason, we need to understand what is meant for two entities to be considered equal.
 
-    The notion of equivalence has been studied across many logical disciplines. Broadly speaking, there are various properties we can use to determine whether two objects are equal. We can probe at their features, rewrite them, etc.
+    The notion of equivalence has been studied across many logical disciplines. Various algorithms have been proposed to determine whether two objects are ``equal'', for some definition of equality and with respect to some set of axioms. We can poke and prod them, compare their features, rewrite them, and apply them in various contexts to ascertain their equality.
 
-    But why do we care about equivalence? By identifying equivalent objects, we can find objects in a database to increase code sharing and reduce duplication. We can also reason about functions and relations between those objects.
+    The notion of equality is often too rigid and does not generalize well in the real world. We would like a definition of approximate equivalence which admits naturally-occuring phenomena. Basically, we seek an abstraction for probabilistic reasoning: given some evidence, how should we update our beliefs? We want to compare distributions for approximate equality . To encode human knowledge, it must be compositional. It must be tractable to compute. This falls under the domain of probabilistic [logic] programming.
 
-    This has many applications in knowledge systems. Identifying when two entities are the same is called entity matching or alignment. We can identify and discover related concepts.
+    But why do we care about equivalence? This has many applications in knowledge systems. Identifying when two entities are the same is called entity matching or alignment. We can identify and discover related concepts. We can retrieve examples in a database to increase code sharing and reduce duplication. We can compose functions and relations over those those objects, in order to synthesize new objects with similar properties.
 
-    Probabilistically, we care about distribution matching and distance metrics (e.g. earthmover, Kantorovich-Rubinstein, Prokhorov et al.)
+    In the following sections, we will define exact and approximate equality in the discrete and continuous domain, how to decide it exactly and approximately using rewriting and equivalence testing, then describe a few applications for software engineering.
 
+    \pagebreak
 
-    Basically, we want to reason about probabilistic objects. Natural languages are imprecise. Unclear semantics. Can we still do inference?
+    \section{Defining Equality}
 
-    This is all related to probabilistic [logic] programming. We want to ask MAR, MAP, EVI queries. We need a formal language to describe probabilistic relations on natural languages.
+    Two expressions are considered equal if, loosely speaking, they represent the same value. It has the following logical properties:
 
+    \begin{prooftree}
+        \AxiomC{}
+        \UnaryInfC{$a = a$}
+        \DisplayProof
+        \hskip 1.5em
+        \AxiomC{$a = b$}
+        \UnaryInfC{$b = a$}
+        \DisplayProof
+        \hskip 1.5em
+        \AxiomC{$a = b$}
+        \AxiomC{$b = c$}
+        \BinaryInfC{$a = c$}
+        \DisplayProof
+        \hskip 1.5em
+        \AxiomC{$a = b$}
+        \AxiomC{$F: A \rightarrow *$}
+        \BinaryInfC{$F(a) = F(b)$}
+    \end{prooftree}
 
-    In the following sections, we will define exact and approximate equality in the discrete and continuous domain, how to decide it exactly and approximately, then describe a few applications for software engineering.
-
-    \section{Equality, Formally}
-
-    In mathematical equality, two expressions are considered equal if, loosely speaking, they represent the same concept. The problem is, mathematical equality is not differentiable.
-
-    It has the following logical properties:
-
-    \begin{enumerate}
-        \item $\implies a = a$
-        \item $a = b \implies b = a$
-        \item $a = b$ and $b = c \implies a = c$
-        \item $\forall F, a = b \implies F(a) = F(b)$
-    \end{enumerate}
-
-    Consider the Kronecker delta function $\delta_k: \mathcal{T}$, where $\mathcal{T} \in \mathbb{Z, Q, B}$:
+    The problem is, mathematical equality is a not differentiable operator. Consider the Kronecker delta function $\delta_k: \mathbb{T}$, where $\mathbb{T} \in \{\mathbb{Z, Q, B}\}$:
 
     $$
     \delta_k(i, j) :=
@@ -80,60 +88,32 @@
     \end{cases}
     $$
 
-    However it is not a continuous function: the preimage of an open set is not open. Thus, it is not differentiable.
+    This is not a continuous function: the preimage of an open set is not open. Thus, it is not differentiable. Maybe a way to fix it, e.g. CADLAG.
 
-    Now consider the Dirac delta function, $\delta_d$. Although it cannot be written down directly, it can be described indirectly:
+    Now consider the Dirac delta function, $\delta_d: \mathbb{R} \rightarrow \mathbb{R}$. Although it cannot be written down directly, it can be described indirectly:
 
     $$
-    \delta_d(i, j) :=
+    \int_{-\infty}^{\infty} \delta_d (x)dx = 1 \text{ and } \delta_d(i, j) :=
     \begin{cases}
         \infty \text{ if } i = j, \\
         0 \text{ otherwise }\\
     \end{cases}
-
-    \text{ where } \int \delta_d (x)dx = 1
     $$
+
+    Do we really need to use $\infty$ just describe equality? This is a huge hack.
 
     What is the difference between mathematical functions and software? Software implements $\delta_k$, while mathematical functions implement $\delta_d$.
 
-    Both of these are idealized concepts which do not exist in the real world. Unknowable whether the universe is discrete or continuous. All we can do is approximate and compare empirically.
+    Both of these are idealized concepts which do not exist in the real world. Unknowable whether the universe is discrete or continuous. Most software is discrete. All we can do is approximate and compare empirically.
 
-    However the fact that many humans have converged on these definitions, captures an aspect of the human brain that we would expect a synthetic reasoner to also possess.
+    The fact that many humans have converged on these definitions, captures an aspect of the human brain that we would expect a synthetic reasoner to also possess. To allow a more flexible version the $=$ operator, we require a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. (We need a metric.)
 
-    To allow a more realistic version the $=$ operator, we require a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$.
-
-    \subsection{Incompleteness}
-
-    Mathematics is often a useful approximation of reality, but the trouble is, many mathematical concepts are impossible to realize in the real world.
-
-    This is due to two problems:
-
-    \begin{enumerate}
-        \item intrinsic: the mechanics of the system we have written down are fundamentally unsound and do not admit mechanization.
-        \item extrinsic: all descriptions (epistemic) and observations (alleoteric) are imprecise and this imprecision can compound quickly.
-    \end{enumerate}
-
-    Even very simple formulas containing arithmetic are undecidable. (Peano)
-
-    No complete and consistent formal systems: we cannot construct a machine implementing a program of mathematics. (Godel)
-
-    In general, determining equality between two mathematical formulas is undecidable, even very simple formulas containing arithmetic. (Richardson)
-
-    More generally, any nontrivial property is undecidable. (Rice)
-
-    But can we organize mathematical knowledge as a rule based decision tree? (Rich)
-
-    Mathematics seems to be obsessed with completeness, much to its detriment. Completeness invades every definition. Definitions must hold over all cases, including the adversarial ones. This is good, because it encourages rigor in a highly adversarial field.
-
-    But most people prefer useful abstractions to complete specifications. Most people just want to write dependable software.
-
-    To be more inclusive of our audience, we should optimize our definitions for consistency, at the expense of completeness.
-
-    In fact, we can answer many questions exactly. If we restrict the reasoning system to incomplete queries, we can be consistient. In Section~\ref{sec:structural}, we will show some nice algorithms for doing so.
+    % (e.g. earthmover, Kantorovich-Rubinstein, Prokhorov et al.)
 
     \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
     Let $R: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation between functions which is closed under composition. We say that $f_1$ and $f_2$ are intensionally equal if $R_n(f_1)=R_m(f_2)$ for some $m,n \in \mathbb{Z}$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x, y, z)=xz + xy$ and $f_2(x, y, z)=x(y + z)$, and $\mathcal{R}={a + b := b + a, a(b + c) := ab + ac}$ is our rewrite system. If we apply $R$ twice to $f_2$, we obtain $R_2(f_2)=x(y + z):=xy + xz:=xz + xy=R_0(f_1)$ and thus $f_1$ and $f_2$ are both intensionally equal.
+
 
     \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
 
@@ -141,15 +121,15 @@
 
     \subsection{Observational Equivalence}
 
-    Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid and halts, $\textt{C[N]}$ is also valid and halts.
-
-    This is kind of like word embeddings.
+    Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid and halts, $\textt{C[N]}$ is also valid and halts. This is kind of like word embeddings.
 
     $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
     We can define semantic equality in our setting using word embeddings.
 
-    \section{Structural Equality}\label{sec:structural}
+    \section{Deciding Equality}\label{sec:structural}
+
+
 
     So far, we have described the properties of equality, but we still need an algorithm for how to establish it. We need a decision algorithm.
 
@@ -164,25 +144,60 @@
     2. doing some kind of comparison. At this point, equality should be trivial (e.g. using string comparison)
 
 
+    \subsection{Equality is undecidable}
+
+    Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
+
+    \begin{enumerate}
+        \item intrinsic: the mechanics of the system are fundamentally unsound and do not admit mechanization. How do we encode $\lim_{x \rightarrow \infty}$?
+        \item extrinsic: all descriptions (epistemic) and observations (alleoteric) are imprecise and this imprecision can compound quickly.
+    \end{enumerate}
+
+    Even very simple formulas containing arithmetic are undecidable. (Peano)
+
+    No complete and consistent formal systems: we cannot construct a machine implementing the program of mathematics. (Godel)
+
+    Determining equality between two mathematical formulas is undecidable. (Richardson)
+
+    More generally, any nontrivial property is undecidable. (Rice)
+
+    But there is hope! (Felleisen)
+
+%    But can we organize mathematical knowledge as a decision tree? (Rich)
+
+    Still, we can answer many questions exactly. If we restrict the reasoning system to incomplete queries, we can be consistient. In Section~\ref{sec:structural}, we will show some nice algorithms for doing so.
+
+    Mathematics seems to be obsessed with completeness, much to its detriment. Completeness invades every definition. Definitions must hold over all cases, including the adversarial ones. This is good, because it encourages rigor in a highly adversarial field. But we must not confuse rigor with truth.
+
+    The truth is, most people prefer useful abstractions to complete specifications. Most people just want to write dependable software.
+
+    To be more inclusive of our audience, we should optimize our definitions for consistency, at the expense of completeness.
+
+    \subsection{Rewriting approaches}
+
+    We can rewrite stuff using rewrite systems.
+
     Knuth-Bendix completion is a semialgorithm...
 
     Suppose we have two functions $f_1: \mathcal{I} \rightarrow \mathcal{O}$ and $f_2: \mathcal{I}\rightarrow \mathcal{O}$.
 
 
-    \subsection{Isomorphism}
+    \subsection{Testing approaches}
 
-    [Sub]graph isomorphism
+    We can test using property-based / metamorphic testing. Some strategies:
 
-
-    \subsection{Metamorphism}
-
+    Isomorphism testing
     Metamorphic testing
 
-    \section{Approximate Equality}
+    \subsection{Similarity based approaches}
+
+    How do we know we are getting close to equality?
+
+    TODO: Define probability distributions, integration, kernel functions and metrics.
 
     We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them extensionally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
-    \section{Software equality}
+    \section{Applications to Software}
 
     We want to search through a software knowledge base for an error and stack trace, then use the information in the KB to repair our bug.
 
@@ -216,7 +231,7 @@
 
     The rewriting mechanism is similar to a string edit distance, but for graphs. One way of measuring distance could be measuring the shortest number of steps for rewriting a graph A to graph B, ie. the more "similar" these two graphs are the fewer rewriting steps it should take.
 
-    \section{Future work}
+    \subsection{Future work}
 
     Semirings arise in strange and marvelous places. (min, +), (max, \times)
 
