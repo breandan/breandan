@@ -10,7 +10,7 @@
 %\usepackage{prooftrees}
 \usepackage{bussproofs}
 \usepackage{natbib}
-
+\usepackage{float}
 \usepackage{xcolor}
 \pagecolor[rgb]{0.1,0.1,0.1} %black
 \color[rgb]{0.7,0.7,0.7} %grey
@@ -41,23 +41,25 @@
 %      \item Entity matching for programming recommendations
 %    \end{enumerate}
 
-    Most human knowledge is encoded as natural language. A substantial and growing portion is encoded as software. Software shares many qualities of natural language but has more regularity. For example, it posesses many statistical properties and can be studied using statistical methods. But most software is also regular language and can be described analytically. It has a precise grammar and a well-defined denotational and natural semantics.
+    \section{Introduction}
 
-    Prior work~\citep{considine2019kotlingrad,considine2019programming} explored differentiable software. The notion of differentiation is very important for optimization. But it does not capture statistical variation or allow us to describe uncertainty, a fundamental limitation of expressivity if we ever hope to interface with the real world. In this work, we attempt to establish the connection between reasoning and antidifferentiation for analyzing software. To be able to reason, we need to understand what is meant for two entities to be considered equal.
+    Historically, most knowledge was encoded as natural language. A growing fraction is now software~\citep{allamanis2018survey}. Software shares many statistical properties in common with natural language~\citep{hindle2012naturalness}. But software is also a regular language which can be described analytically. Unlike natural language, software has a deterministic grammar with explicit natural and denotational semantics~\citep{pierce2010software}.
 
-    The notion of equivalence has been studied across many logical disciplines. Various algorithms have been proposed to determine whether two objects are ``equal'', for some definition of equality and with respect to some set of axioms. We can poke and prod them, compare their features, rewrite them, and apply them in various contexts to ascertain their equality.
+    Prior work~\citep{considine2019kotlingrad,considine2019programming} explored differentiable software. Differentiability was a key insight for the development of learning systems. But it does not provide the vocabulary to describe uncertainty, a prerequisite for expressing human knowledge. In order to reason as humans do, software must be able to integrate human knowledge in the form of software. In this work, we propose a set of tools to help humans reason about software.
 
-    The notion of equality is often too rigid and does not generalize well in the real world. We would like a definition of approximate equivalence which admits naturally-occuring phenomena. Basically, we seek an abstraction for probabilistic reasoning: given some evidence, how should we update our beliefs? We want to compare distributions for approximate equality . To encode human knowledge, it must be compositional. It must be tractable to compute. This falls under the domain of probabilistic [logic] programming.
+    In order to reason about software, we need to define what it means for two software artifacts to be equal. The notion of equivalence has been studied in many logical disciplines. Various algorithms have been proposed to determine whether two objects are ``equal'', for some definition of equality and with respect to some set of axioms. We can poke and prod them, rewrite them, and compare them in various contexts to ascertain their equivalence.
 
-    But why do we care about equivalence? This has many applications in knowledge systems. Identifying when two entities are the same is called entity matching or alignment. We can identify and discover related concepts. We can retrieve examples in a database to increase code sharing and reduce duplication. We can compose functions and relations over those those objects, in order to synthesize new objects with similar properties.
+    Ultimately, strict equivalence is too rigid to work in practice. A more robust definition would allow us to compare two objects in the presence of naturally-occurring stochasticity. What is the likelihood they came from the same distribution? How important are their differences? To answer these questions, we need a language capable of describing uncertainty. This work falls under the umbrella of probabilistic programming and reasoning.
 
-    In the following sections, we will define exact and approximate equality in the discrete and continuous domain, how to decide it exactly and approximately using rewriting and equivalence testing, then describe a few applications for software engineering.
+    Identifying sameness is an important problem in knowledge systems known as entity alignment. For example, we can recycle software in a large codebase to improve code sharing. We can retrieve code samples and documentation to assist developers writing and debugging code. We can compose functions over data to synthesize programs with some desired properties. As we will see, all these require a foundation for probabilistic reasoning.
+
+    In the following document, we will define exact and approximate equality in the deterministic and probabilistic setting, how to decide it exactly and approximately using rewriting and equivalence testing, then describe some applications for software engineering, code search and program repair.
 
     \pagebreak
 
     \section{Defining Equality}
 
-    Two expressions are considered equal if, loosely speaking, they represent the same value. It has the following logical properties:
+    The $=$ notation is highly overloaded in mathematics and computer science. Roughly, it tells us when we can replace, or are replacing one thing with another. Two expressions are considered equal if, loosely speaking, they represent the same value. It has the following logical properties:
 
     \begin{prooftree}
         \AxiomC{}
@@ -78,7 +80,8 @@
         \BinaryInfC{$F(a) = F(b)$}
     \end{prooftree}
 
-    The problem is, mathematical equality is a not differentiable operator. Consider the Kronecker delta function $\delta_k: \mathbb{T}$, where $\mathbb{T} \in \{\mathbb{Z, Q, B}\}$:
+    The problem is, mathematical equality is not a differentiable operator.
+    If we wanted to write a differentiable program using the expression $\texttt{if(i = j)}$, we are forced to use a definition which is not entirely sound. Consider the Kronecker delta function $\delta_k: \mathbb{T}$, where $\mathbb{T} \in \{\mathbb{Z, Q, B}\}$:
 
     $$
     \delta_k(i, j) :=
@@ -88,9 +91,7 @@
     \end{cases}
     $$
 
-    This is not a continuous function: the preimage of an open set is not open. Thus, it is not differentiable. Maybe a way to fix it, e.g. CADLAG.
-
-    Now consider the Dirac delta function, $\delta_d: \mathbb{R} \rightarrow \mathbb{R}$. Although it cannot be written down directly, it can be described indirectly:
+    This is not a continuous function: the preimage of an open set is not open. Thus, it is not differentiable. Maybe a way to fix it, e.g. CADLAG. Now consider the Dirac delta function, $\delta_d: \mathbb{R} \rightarrow \mathbb{R}$. Although it cannot be written down directly, it can be described indirectly:
 
     $$
     \int_{-\infty}^{\infty} \delta_d (x)dx = 1 \text{ and } \delta_d(i, j) :=
@@ -100,28 +101,23 @@
     \end{cases}
     $$
 
-    Do we really need to use $\infty$ just describe equality? This is a huge hack.
-
-    What is the difference between mathematical functions and software? Software implements $\delta_k$, while mathematical functions implement $\delta_d$.
+    Do we really need to use $\infty$ just to describe equality? This is a hack.
 
     Both of these are idealized concepts which do not exist in the real world. Unknowable whether the universe is discrete or continuous. Most software is discrete. All we can do is approximate and compare empirically.
 
-    The fact that many humans have converged on these definitions, captures an aspect of the human brain that we would expect a synthetic reasoner to also possess. To allow a more flexible version the $=$ operator, we require a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. (We need a metric.)
-
-    % (e.g. earthmover, Kantorovich-Rubinstein, Prokhorov et al.)
+    The fact that many humans have converged to these definitions captures an aspect of the human brain that we would expect a synthetic reasoner to also possess. To allow a more flexible version of the $=$ operator, we require a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. (Basically, we need a metric, e.g. earthmover, Kantorovich-Rubinstein, Prokhorov et al.)
 
     \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
     Let $R: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation between functions which is closed under composition. We say that $f_1$ and $f_2$ are intensionally equal if $R_n(f_1)=R_m(f_2)$ for some $m,n \in \mathbb{Z}$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x, y, z)=xz + xy$ and $f_2(x, y, z)=x(y + z)$, and $\mathcal{R}={a + b := b + a, a(b + c) := ab + ac}$ is our rewrite system. If we apply $R$ twice to $f_2$, we obtain $R_2(f_2)=x(y + z):=xy + xz:=xz + xy=R_0(f_1)$ and thus $f_1$ and $f_2$ are both intensionally equal.
 
-
     \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
 
-    We say $f_1$ and $f_2$ are extensionally equivalent if $\forall i \in \mathcal{I}, f_1(i)=f_2(i)$, or in other words, "Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x)=-x^3$ and $f_2(x)=|x|^3$. If we test $\hat i \in {-2, -1, 0, 1, \ldots}$, we have $f_1(-2)=f_2(-2)$, $f_1(-1)=f_2(-1)$, $f_1(0)=f_2(0)$, $f_1(1) \neq f_2(1)$. Once we detect an $f_1(\hat i) \neq f_2(\hat i)$, we can halt immediately.
+    We say $f_1$ and $f_2$ are extensionally equivalent if $\forall i \in \mathcal{I}, f_1(i)=f_2(i)$, or in other words, ``Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x)=-x^3$ and $f_2(x)=|x|^3$. If we test $\hat i \in {-2, -1, 0, 1, \ldots}$, we have $f_1(-2)=f_2(-2)$, $f_1(-1)=f_2(-1)$, $f_1(0)=f_2(0)$, $f_1(1) \neq f_2(1)$. Once we detect an $f_1(\hat i) \neq f_2(\hat i)$, we can halt immediately.
 
-    \subsection{Observational Equivalence}
+    \subsection{Observational equivalence}
 
-    Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid and halts, $\textt{C[N]}$ is also valid and halts. This is kind of like word embeddings.
+    Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts. This is kind of like word embeddings.
 
     $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
@@ -129,28 +125,37 @@
 
     \section{Deciding Equality}\label{sec:structural}
 
+    Various methods have been proposed to decide exact and approximate equality in the deterministic and probabilistic setting.
 
+    {\centering
+    \begin{table}[H]
+        \begin{tabular}{c|c|c|}
+            \cline{2-3} & Deterministic & Probabilistic \\ \hline
+            \multicolumn{1}{|l|}{Exact}       & \begin{tabular}[c]{@{}l@{}}Types\\ Rewriting\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Probabilistic circuits\\ Variable elimination\end{tabular} \\ \hline
+            \multicolumn{1}{|l|}{Approximate} & \begin{tabular}[c]{@{}l@{}}Testing\\ Debugging\end{tabular} & \begin{tabular}[c]{@{}l@{}}Sampling\\ Simulation\end{tabular}                         \\ \hline
+        \end{tabular}
+    \end{table}
+    }
 
     So far, we have described the properties of equality, but we still need an algorithm for how to establish it. We need a decision algorithm.
 
     It is seldom the case that two equal things are trivially equal. We need to do some computation to put them into a form that makes their equality plain to see.
 
-    To establish equality, we need some notion of a "transformation", or "rewrite".
+    For exact equality, we need some notion of a transformation or rewrite. Equivalence requires:
 
-    Equivalence requires:
+    1. reducing an object into a normal form (canonicalization), then
 
-    1. reducing an object into a normal form (canonicalization),
+    2. doing some kind of trivial comparison (e.g. string comparison)
 
-    2. doing some kind of comparison. At this point, equality should be trivial (e.g. using string comparison)
-
+    For approximate equality, we can just generate some representative data and test away.
 
     \subsection{Equality is undecidable}
 
     Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
 
     \begin{enumerate}
-        \item intrinsic: the mechanics of the system are fundamentally unsound and do not admit mechanization. How do we encode $\lim_{x \rightarrow \infty}$?
-        \item extrinsic: all descriptions (epistemic) and observations (alleoteric) are imprecise and this imprecision can compound quickly.
+        \item intrinsic: the mechanics of the system are intrinsically unsound or impossible to mechanize. How do we encode $\lim_{x \rightarrow \infty}$?
+        \item extrinsic: all descriptions (epistemic) and observations (alleoteric) are approximate and this error can compound quickly.
     \end{enumerate}
 
     Even very simple formulas containing arithmetic are undecidable. (Peano)
@@ -191,13 +196,13 @@
 
     \subsection{Similarity based approaches}
 
-    How do we know we are getting close to equality?
+    How do we know when we are approaching equality? We can use a distance metric.
 
     TODO: Define probability distributions, integration, kernel functions and metrics.
 
     We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them extensionally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
-    \section{Applications to Software}
+    \section{Developing Software}
 
     We want to search through a software knowledge base for an error and stack trace, then use the information in the KB to repair our bug.
 
@@ -208,7 +213,9 @@
     \end{enumerate}
 
 
-    \subsection{Code clone detection}
+    \subsection{Code search}
+
+    We can search for code using various strategies...
 
     \subsection{Knowledge alignment}
 
