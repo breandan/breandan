@@ -9,6 +9,9 @@
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
 \usepackage{bussproofs}
+\usepackage{hyperref}
+\renewcommand{\sectionautorefname}{\S}
+\renewcommand{\subsectionautorefname}{\S}
 \usepackage{natbib}
 \usepackage{float}
 \usepackage{xcolor}
@@ -43,21 +46,21 @@
 
     \section{Introduction}
 
-    Historically, most knowledge was encoded as natural language. A growing portion is now software~\citep{allamanis2018survey}. Software is procedural knowledge intended for execution on a computer. While it shares many statistical properties in common with natural language~\citep{hindle2012naturalness}, software is also a formal language with a deterministic grammar and explicit natural and denotational semantics~\citep{pierce2010software}.
+    Historically, most knowledge was encoded as natural language. A growing portion is now software~\citep{allamanis2018survey}. Software is procedural knowledge intended for execution on a computer. While sharing many statistical properties in common with natural language~\citep{hindle2012naturalness}, software is also a formal language with a deterministic grammar and explicit natural and denotational semantics~\citep{pierce2010software}.
 
     Prior work~\citep{considine2019kotlingrad,considine2019programming} explored differentiable software. Differentiability plays a key role in the development of learning systems. But it does not provide the vocabulary necessary to describe human knowledge. In order to capture human knowledge and begin to reason as humans do, software must be able to express the notion of \textit{uncertainty}. In this work, we propose a set of tools for reasoning about uncertainty in procedural knowledge systems.
 
-    In order to reason about software, we must define what is meant for software artifacts to be \textit{same} or \textit{different}. This notion has been studied in many logical disciplines. Various algorithms have been proposed to determine whether two artifacts are equal with respect to some definition of equality and set of axioms. For example, one might run them, rewrite them, or compare them in various contexts to ascertain their equivalence.
+    In order to reason about software, one must define what is meant for two software artifacts to be \textit{same} or \textit{different}. This notion has been studied in many logical disciplines. Various algorithms have been proposed to determine whether two artifacts are equal with respect to some language or set of axioms. For example, one might run them, rewrite them, or compare them in various contexts to ascertain their equivalence.
 
     In practice, strict equivalence is too rigid to operationalize. A more useful theory would allow us to compare objects in the presence of naturally-occurring stochasticity. What is the likelihood they come from the same distribution? How much do they vary across a dataset? To answer these questions, we need a language capable of expressing approximate equality. These ideas fall under the umbrella of probabilistic programming.
 
     In knowledge systems, equality is known as the \textit{alignment} or \textit{matching} problem. With a good alignment algorithm, we could detect duplicates in a large codebase. We could retrieve code samples and software documentation to assist developers writing and debugging code, or search for novel programs with desired properties from a large solution space. As we will see in Section~\ref{sec:applications}, all these tasks require probabilistic reasoning.
 
-    In the following document, we will define exact and approximate equality in the deterministic and probabilistic setting, how to decide it exactly and approximately using rewriting and equivalence testing, then describe some applications for software engineering, code search and program repair.
+    In the following document, we will define exact and approximate equality in the deterministic and probabilistic setting (~\ref{sec:definitions}). We will then present some general strategies for how to decide equivalence exactly and approximately using rewriting and equivalence testing (~\ref{sec:algorithms}). Finally, we will describe some applications for software engineering, code search and program repair.
 
     \pagebreak
 
-    \section{Defining Equality}
+    \section{Defining Equality}\label{sec:definitions}
 
     The $=$ notation is highly overloaded in mathematics and computer science. Roughly, it indicates when we can replace, or are replacing one thing with another. Two things are considered equal if, loosely speaking, they evaluate to the same result. It has the following logical properties:
 
@@ -80,7 +83,7 @@
         \BinaryInfC{$F(a) = F(b)$}
     \end{prooftree}
 
-    The problem is, mathematical equality is not a differentiable operator. If two things are not equal, gradient alone cannot tell us how to make them so. When implementing a differentiable program using the expression $\texttt{if(i = j)}$, we are forced to use a definition which is not entirely sound. Consider the Kronecker delta function $\delta_k: \mathbb{T}$, where $\mathbb{T} \in \{\mathbb{Z, Q, B}\}$:
+    The problem is, mathematical equality is not a differentiable operator. If two things are not equal, the derivative cannot tell us how to make them so. When implementing a differentiable program using the expression $\texttt{if(i == j)}$, we are forced to use one of two definitions, neither of which is completely satisfactory. Consider the Kronecker delta function $\delta_k: \mathbb{T}$, where $\mathbb{T} \in \{\mathbb{Z, Q, B}\}$:
 
     $$
     \delta_k(i, j) :=
@@ -100,11 +103,11 @@
     \end{cases}
     $$
 
-    Neither of these definitions is particularly appealing. Do we really need $\infty$ just to describe equality? Without knowing $i$ or $j$, how do we optimize such a function using gradient based techniques?
+    Neither of these definitions is particularly appealing. Do we really need $\infty$ just to describe equality? Without knowing $i$ or $j$ a priori, how do we optimize such a function using gradient based techniques?
 
 %    Both of these are idealized concepts which do not exist in the real world. Unknowable whether the universe is discrete or continuous. Most software is discrete. All we can do is approximate and compare empirically.
 
-    The fact that many humans have converged to these definitions captures an aspect of the human brain that we would expect a synthetic reasoner to also possess. To allow a more flexible version of the $=$ operator, we require a probability distribution: a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. (Basically, we need a metric, e.g. earthmover, Kantorovich-Rubinstein, Prokhorov et al.)
+    The fact that many humans have converged to these definitions captures an aspect of the human brain that we would expect a synthetic reasoner to also possess. To allow a more flexible version of the $=$ operator, we require a probability distribution: a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$.
 
     \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
@@ -122,7 +125,7 @@
 
     We can define semantic equality in our setting using word embeddings.
 
-    \section{Deciding Equality}\label{sec:structural}
+    \section{Deciding Equality}\label{sec:algorithms}
 
     Various methods have been proposed to decide exact and approximate equality in the deterministic and probabilistic setting.
 
@@ -196,6 +199,12 @@
     \subsection{Probabilistic approaches}
 
     How do we know when we are approaching equality? We can use a distance metric.
+
+    Kolmogorov-Smirnov
+
+    Kantorovich-Rubinstein
+
+    L\'evy-Prokhorov
 
     TODO: Define probability distributions, integration, kernel functions and metrics.
 
