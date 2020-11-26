@@ -83,25 +83,25 @@
 
 %    Both of these are idealized concepts which do not exist in the real world. Unknowable whether the universe is discrete or continuous. Most software is discrete. All we can do is approximate and compare empirically.
 
-    A more general notion is the notion of an \textit{equivalence relation}. An equivalence relation is a binary relation $\sim$, which has the following logical properties:
+    A more general notion is the notion of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
 
     \begin{prooftree}
         \AxiomC{}
-        \UnaryInfC{$a = a$}
+        \UnaryInfC{$a \sim a$}
         \DisplayProof
         \hskip 1.5em
-        \AxiomC{$a = b$}
-        \UnaryInfC{$b = a$}
+        \AxiomC{$a \sim b$}
+        \UnaryInfC{$b \sim a$}
         \DisplayProof
         \hskip 1.5em
-        \AxiomC{$a = b$}
-        \AxiomC{$b = c$}
-        \BinaryInfC{$a = c$}
+        \AxiomC{$a \sim b$}
+        \AxiomC{$b \sim c$}
+        \BinaryInfC{$a \sim c$}
         \DisplayProof
         \hskip 1.5em
-        \AxiomC{$a = b$}
+        \AxiomC{$a \sim b$}
         \AxiomC{$F: A \rightarrow *$}
-        \BinaryInfC{$F(a) = F(b)$}
+        \BinaryInfC{$F(a) \sim F(b)$}
     \end{prooftree}
 
     The fact that many humans have converged to these definitions captures an aspect of the human brain that we would expect a synthetic reasoner to also possess. To allow a more flexible version of the $=$ operator, we require a probability distribution: a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$.
