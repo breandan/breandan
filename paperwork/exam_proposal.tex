@@ -73,55 +73,61 @@
     A more general notion is the notion of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
 
     \begin{prooftree}
+        \bottomAlignProof
         \AxiomC{}
         \UnaryInfC{$a \sim a$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Reflexivity}}
         \DisplayProof
         \hskip 1.5em
+        \bottomAlignProof
         \AxiomC{$a \sim b$}
         \UnaryInfC{$b \sim a$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Symmetry}}
         \DisplayProof
         \hskip 1.5em
+        \bottomAlignProof
         \AxiomC{$a \sim b$}
         \AxiomC{$b \sim c$}
         \BinaryInfC{$a \sim c$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Transitivity}}
         \DisplayProof
         \hskip 1.5em
+        \bottomAlignProof
         \AxiomC{$a \sim b$}
-        \AxiomC{$F: A \rightarrow *$}
-        \BinaryInfC{$F(a) \sim F(b)$}
+        \UnaryInfC{$f(a) \sim f(b)$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Congruence}}
     \end{prooftree}
 
-    The fact that many humans have converged to these definitions captures an aspect of the human brain that we would expect a synthetic reasoner to also possess. To allow a more flexible version of the $=$ operator, we require a probability distribution: a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$.
+    To allow a more flexible version of the $=$ operator, we require a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. We require a metric~\ref{sec:probabilistic}.
 
-    \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
+    First we will describe exact equality, then progressively relax our definition of equivalence to obtain a more useful definition.
 
-    Let $R: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation between functions which is closed under composition. We say that $f_1$ and $f_2$ are intensionally equal if $R_n(f_1)=R_m(f_2)$ for some $m,n \in \mathbb{Z}$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x, y, z)=xz + xy$ and $f_2(x, y, z)=x(y + z)$, and $\mathcal{R}={a + b := b + a, a(b + c) := ab + ac}$ is our rewrite system. If we apply $R$ twice to $f_2$, we obtain $R_2(f_2)=x(y + z):=xy + xz:=xz + xy=R_0(f_1)$ and thus $f_1$ and $f_2$ are both intensionally equal.
-
-    \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
-
-    We say $f_1$ and $f_2$ are extensionally equivalent if $\forall i \in \mathcal{I}, f_1(i)=f_2(i)$, or in other words, ``Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x)=-x^3$ and $f_2(x)=|x|^3$. If we test $\hat i \in {-2, -1, 0, 1, \ldots}$, we have $f_1(-2)=f_2(-2)$, $f_1(-1)=f_2(-1)$, $f_1(0)=f_2(0)$, $f_1(1) \neq f_2(1)$. Once we detect an $f_1(\hat i) \neq f_2(\hat i)$, we can halt immediately.
-
-    \subsection{Observational equivalence}
-
-    Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts. This is kind of like word embeddings.
-
-    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
-
-    We can define semantic equality in our setting using word embeddings.
 
     \subsection{Decidability}\label{sec:algorithms}
 
     Various methods have been proposed to decide exact and approximate equality in the deterministic and probabilistic setting.
 
-    {\centering
+
     \begin{table}[H]
+        \centering
         \begin{tabular}{c|c|c|}
             \cline{2-3} & \textbf{Deterministic} & \textbf{Probabilistic} \\ \hline
             \multicolumn{1}{|l|}{\textbf{Exact}}       & \begin{tabular}[c]{@{}l@{}}Types\\ Rewriting\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Probabilistic circuits\\ Variable elimination\end{tabular} \\ \hline
             \multicolumn{1}{|l|}{\textbf{Approximate}} & \begin{tabular}[c]{@{}l@{}}Testing\\ Debugging\end{tabular} & \begin{tabular}[c]{@{}l@{}}Sampling\\ Simulation\end{tabular}                         \\ \hline
         \end{tabular}
     \end{table}
-    }
 
     So far, we have described the properties of equality, but we still need an algorithm for how to establish it. We need a decision algorithm.
 
@@ -154,7 +160,23 @@
 
 %    But can we organize mathematical knowledge as a decision tree? (Rich)
 
-    Still, we can answer many questions exactly. If we restrict the reasoning system to incomplete queries, we can be consistient. In Section~\ref{sec:structural}, we will show some nice algorithms for doing so.
+    Still, we can answer many questions exactly. If we restrict the reasoning system to incomplete queries, we can be consistent. In Section~\ref{sec:structural}, we will show some nice algorithms for doing so.
+
+    \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
+
+    Let $R: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation between functions which is closed under composition. We say that $f_1$ and $f_2$ are intensionally equal if $R_n(f_1)=R_m(f_2)$ for some $m,n \in \mathbb{Z}$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x, y, z)=xz + xy$ and $f_2(x, y, z)=x(y + z)$, and $\mathcal{R}={a + b := b + a, a(b + c) := ab + ac}$ is our rewrite system. If we apply $R$ twice to $f_2$, we obtain $R_2(f_2)=x(y + z):=xy + xz:=xz + xy=R_0(f_1)$ and thus $f_1$ and $f_2$ are both intensionally equal.
+
+    \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
+
+    We say $f_1$ and $f_2$ are extensionally equivalent if $\forall i \in \mathcal{I}, f_1(i)=f_2(i)$, or in other words, ``Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$. For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x)=-x^3$ and $f_2(x)=|x|^3$. If we test $\hat i \in {-2, -1, 0, 1, \ldots}$, we have $f_1(-2)=f_2(-2)$, $f_1(-1)=f_2(-1)$, $f_1(0)=f_2(0)$, $f_1(1) \neq f_2(1)$. Once we detect an $f_1(\hat i) \neq f_2(\hat i)$, we can halt immediately.
+
+    \subsection{Observational equivalence}
+
+    Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts. This is kind of like word embeddings.
+
+    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
+
+    We can define semantic equality in our setting using word embeddings.
 
 %    Mathematics seems to be obsessed with completeness, much to its detriment. Completeness invades every definition. Definitions must hold over all cases, including the adversarial ones. This is good, because it encourages rigor in a highly adversarial field. But we must not confuse rigor with truth.
 %
@@ -179,7 +201,7 @@
 
     Metamorphic testing
 
-    \subsection{Probabilistic approaches}
+    \subsection{Probabilistic approaches}\label{sec:probabilistic}
 
     How do we know when we are approaching equality? We can use a distance metric.
 
@@ -218,14 +240,19 @@
         \item http://www.mit.edu/~kepner/GraphBLAS/GraphBLAS-Math-release.pdf#page=11
     \end{enumerate}
 
-    \subsection{Programs are graphs}
+    \subsection{Programs are graphs}\label{sec:program-graphs}
 
-    Computation graphs...
+    computation graphs~\citep{breuleux2017automatic} in machine learning
 
-    \subsection{Probabilistic graphical models}
+    e-Graphs~\citep{willsey2020egg} in reasoning systems
 
-    Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is NP-hard.~\citep{dagum1993approximating} We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
+    arithmetic circuits~\citep{miller1988efficient} in numerical computing
 
+    probabilistic circuits~\citep{choi2020probabilistic} in probabilistic modeling community
+
+    \subsection{Probabilistic graphical models}\label{sec:pgms}
+
+    Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is NP-hard~\citep{dagum1993approximating} We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
 
     \subsection{Message passing algorithms}
 
