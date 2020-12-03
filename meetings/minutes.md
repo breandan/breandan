@@ -1,5 +1,14 @@
 ## Minutes
 
+## December 2nd, 2020
+
+- Book a meeting with Xujie before he gets too busy
+- Look into Miryun Kim's work on probabilistic code search
+- Send formal invitations to supervisory committee
+- Finalize countersigned letter of understanding with Jin
+- Jan Vitek / Fitzcarraldo discussion with KAST on Friday
+- Make a decision about MILA TAship this Spring
+
 ## November 12th, 2020
 
 - Breandan: Code search / recommendation (SO, GH)

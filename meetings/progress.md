@@ -1,19 +1,13 @@
 ## Todo
 
-- Prioritize
-  - [ ] Exam syllabus
-  - [ ] PGM project
 - Research
-  - [ ] Send an exam syllabus with papers
-  - [ ] Look into programming by example literature
   - [ ] Design experiment to test graph matching
   - [ ] Implement random walk rewriter on real data
   - [ ] Inductive biases and inductive definitions
   - [ ] Unification and disunification
   - [ ] Dependent type theory talk
 - COMP 598
-  - [ ] Simulate fake user / reactive system
-  - [ ] M2 feedback
+  - [ ] M3 / final project feedback
 - Other bets
   - [ ] Describe Kotlin∇ invocation semantics
   - [ ] Describe higher order/rank derivatives
@@ -24,6 +18,21 @@
   - [ ] Implement doubly-linked graph API
   - [ ] Compile arithmetic circuit to a matrix
   - [ ] [ISSAC](http://issac-conference.org/2021/) with Alex
+
+## December 2nd, 2020
+
+- Finished up grading COMP 598 M2
+- Submitted exam proposal / SOCS paperwork
+- Submitted PGM progress report
+  - from BNs to PCs
+  - PCs and PCFGs
+- Reasoning about uncertainty experiments
+- Software release engineering lecture
+- Feedback to Kian
+- Reading
+  - [Propagator networks](https://dspace.mit.edu/bitstream/handle/1721.1/54635/603543210-MIT.pdf)
+  - [Graph Kernels](https://arxiv.org/pdf/2011.03854.pdf)
+  - [Semantic Code Search via Equational Reasoning](http://www.jameskoppel.com/files/papers/yogo-preprint.pdf)
 
 ## November 18, 2020
 
