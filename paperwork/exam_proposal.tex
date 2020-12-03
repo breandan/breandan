@@ -176,6 +176,7 @@
     We can test using property-based / metamorphic testing. Some strategies:
 
     Isomorphism testing
+
     Metamorphic testing
 
     \subsection{Probabilistic approaches}
@@ -188,16 +189,27 @@
 
     L\'evy-Prokhorov
 
+    Gromov-Hausdorff
+
+    Weisfeiler-Lehman
+
     TODO: Define probability distributions, integration, kernel functions and metrics.
 
     We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them extensionally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
     \section{Graph Representation}\label{sec:graphs}
 
+    \subsection{Graph edit distance}
+
+    % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
+
+    Various graph distance metrics have been proposed~\citet{sanfeliu1983distance}.
+
     \subsection{Algebraic graphs}
 
-    Graphs are algebraic structures...
+    Graphs can be modeled algebraically~\citep{weisfeiler1968reduction}  also as algebraic data types \citep{mokhov2017algebraic}.
 
+    Graphs are algebraic structures...
 
     Semirings arise in strange and marvelous places. (min, +), (max, \times)
 
