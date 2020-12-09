@@ -42,7 +42,7 @@
 
     In this work, we will define exact and approximate equality and cover some deterministic and probabilistic algorithms for deciding it. We will then describe a few graph representations for encoding approximate procedural knowledge. Finally, we will discuss some opportunities for applying these ideas to search-based software engineering, in particular code search, vulnerability detection, fault localization and program repair.
 
-    \section{Equational Reasoning}\label{sec:definitions}
+    \section{From exact to approximate equality}\label{sec:definitions}
 
     Equality is a highly overloaded notation in mathematics and computer science. Roughly, $i = j$ denotes when we can replace, or are replacing one expression $i$, with another, $j$. Two expressions are considered equal if, loosely speaking, they evaluate to the same result.
 
@@ -216,12 +216,13 @@
 %
 %    To be more inclusive of our audience, we should optimize our definitions for consistency, at the expense of completeness.
 
-
-    \subsection{Software approaches}
-
-    \subsection{Probabilistic approaches}\label{sec:probabilistic}
+    \subsection{Metrics}\label{sec:probabilistic}
 
     How do we know when we are approaching equality? We can use a distance metric.
+
+    % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
+
+    Various graph distance metrics have been proposed~\citet{sanfeliu1983distance}.
 
     Hypothesis testing
 
@@ -239,7 +240,7 @@
 
     We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them extensionally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
-    \pagebreak\section{Graph Representation}\label{sec:graphs}
+    \pagebreak\section{From computation to knowledge graphs}\label{sec:graphs}
 
    % https://en.wikipedia.org/wiki/Duality_(optimization)
 
@@ -276,26 +277,27 @@
 
     Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is NP-hard~\citep{dagum1993approximating} We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
 
-    \subsection{Graph edit distance}
+    \subsection{Knowledge graphs}
 
-    % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
+    Knowledge graphs~\citep{hogan2020knowledge} are multi-relational graphs whose nodes and edges possess a type. Two entities can be related by multiple types, and each type can relate many pairs of entities. We can index an entity based on its type for knowledge retrieval, and use types to reason about compound queries, e.g. ``Which company has a direct flight from a port city to a capital city?''
 
-    Various graph distance metrics have been proposed~\citet{sanfeliu1983distance}.
+%    \subsection{Message passing algorithms}
+%
+%    Many algorithms can be implemented as message passing on graphs...
 
+    \pagebreak\section{From procedural knowledge to code}\label{sec:applications}
 
-    \subsection{Message passing algorithms}
+    Experts typically encode their knowledge using pen and paper and leave the rest of us mere mortals to decipher it. It is somewhat tedious, but generally possible for skilled programmers to translate textual information into computer programs. Unfortunately, there are many equivalent ways to translate text into code -- the same algorithm implemented in the same language by different authors is seldom written the same way. Usually we end up reinventing the wheel. So we need some mechanism to detect exact or approximate equality in procedural knowledge.
 
-    Many algorithms can be implemented as message passing on graphs...
+    Instead of the Sisyphean task of forever translating these ideas from scratch, coders need to step back and think: Is it possible to just encode the axioms and enough knowledge to derive a family of algorithms, then let the compiler derive the most appropriate procedure for computing some desired quantity? A good compiler might be able to use those facts to optimize computation graphs, e.g. for latency or numerical stability. This has been the holy grail of declarative programming.
 
-    \pagebreak\section{Search-Based Software Engineering}\label{sec:applications}
+    Short of that, can we have some kind of \textit{bibliotheca universalis} containing many human-written code examples, which a human could select from manually (a la Hoogle~\citep{james2020digging}) -- or even better -- which could be linked to during compilation. We can think of big code as a kind of procedural knowledge system, describing common data transformations. We would like a way to extract common snippets and reason about those transformations, for example to detect similar procedures or optimize an existing procedure.
 
-    Knowledge systems are a collection of facts which have been verified by human beings. For example, we can treat mathematics as a knowledge base of rewrite rules~\citep{rich2009knowledge}. This has been successfully operationalized in the Theano~\citep{bergstra2010theano} system. Mathematicians encode their knowledge as a set of facts, and the compiler uses those facts to optimize computation graphs, e.g. for numerical stability.
-
-    More generally, we can think of code as a procedural knowledge system, describing data transformations. We would like a way to reason about those transformations, for example to detect similar procedures. However the same algorithm implemented by two developers is seldom written the same way (citation needed). So we need some mechanism to detect exact or approximate equality in source code.
+    Knowledge systems or \textit{ontologies} are a collection of related facts which have been established by human beings. For example, we can treat mathematics as a knowledge base of rewrite rules. This has been successfully operationalized in Theano~\citep{bergstra2010theano}, Kotlin$\nabla$~\citep{considine2019kotlingrad} and other DSLs. More broadly, we can also think of constructive mathematics libraries like Metamath~\citep{megill2006metamath},  Rubi~\citep{rich2009knowledge}, Probonto~\citep{swat2016probonto} and KMath~\citep{nozik2019kotlin} as working towards this same goal.
 
     In knowledge graphs, approximate equality is known as entity \textit{alignment} or \textit{matching}. With a probabilistic matching algorithm, we could accurately detect near duplicates in a codebase. We could retrieve code samples to assist developers writing unfamiliar code. And we could search for bugs in code or fixes from a knowledge base to repair them. Probabilistic reasoning can be gainfully employed on these and many related tasks.
 
-    We want to search through a software knowledge base for an error and stack trace, then use the information in the KB to repair our bug.
+    Suppose we want to search through a software knowledge base for an error and stack trace, then use the information in the KB to repair our bug.
 
     \begin{enumerate}
         \item Efficiently searching corpus for a pattern
@@ -324,7 +326,11 @@
 
     \subsection{Program repair}
 
-    adapt solution to match user's context
+    adapt some knowledge to match user's context
+
+    \subsection{eDSL generation}
+
+    Take a procedural knowledge base, generate a DSL from it.
 
     \pagebreak
     \bibliography{exam_proposal}
