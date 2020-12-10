@@ -1,5 +1,13 @@
 ## Minutes
 
+## December 9th, 2020
+
+- Clarify Reseach goals / evidence for ideas rules are learnable
+- Can we learn the ontology from code?
+- Deriving the rules from code?
+- Which domain are we targeting?
+- Well-defined ontologies?
+
 ## December 2nd, 2020
 
 - Book a meeting with Xujie before he gets too busy
