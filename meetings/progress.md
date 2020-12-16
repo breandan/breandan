@@ -19,6 +19,43 @@
   - [ ] Compile arithmetic circuit to a matrix
   - [ ] [ISSAC](http://issac-conference.org/2021/) with Alex
 
+## December 16th, 2020
+
+- Last week
+  - Probabilistic knowledge graphs
+  - Ontological graph representations
+  - NeurIPS / [CAP](https://capworkshop.github.io/) / DiffCV workshops
+- This week
+  - Prepared for PGM poster session
+  - Writing final report for IFT-6269
+  - Finish grading COMP 598 final projects
+  - ICML workshop organization planning
+  - Planning for speech recognition course
+- Reading
+  - [Every Model Learned by Gradient Descent Is Approximately a Kernel Machine](https://arxiv.org/pdf/2012.00152.pdf)
+  - [Implementing the Giry Monad](https://jtobin.io/giry-monad-implementation)
+  - [Factor Graph Grammars](https://proceedings.neurips.cc/paper/2020/file/49ca03822497d26a3943d5084ed59130-Paper.pdf)
+  - [miniKanren as a Tool for Symbolic Computation in Python](https://arxiv.org/pdf/2005.11644.pdf)
+  - [What You Always Wanted to Know About Datalog](https://personal.utdallas.edu/~gupta/courses/acl/papers/datalog-paper.pdf)
+
+## December 9th, 2020
+
+- Last meeting
+  - Probabilistic reasoning and inference
+  - Presented prototype DSL for ProbProg
+  - Toy implementation of GMM/SPN
+- This week
+  - Ontologies and graph representations
+  - Big code as a procedural knowledge base
+  - Translating expert knowledge to code
+  - Knowledge-based code generation
+- Reading
+  - [Relationships between probability distributions](https://en.wikipedia.org/wiki/Relationships_among_probability_distributions)
+  - [ProbOnto 2.5: Ontology and Knowledge Base of Probability Distributions](https://sites.google.com/site/probonto/home)
+  - [Empirical Metamaths](https://writings.stephenwolfram.com/2020/09/the-empirical-metamathematics-of-euclid-and-beyond/)
+  - [Semantic Code Search via Equational Reasoning](http://www.jameskoppel.com/files/papers/yogo-preprint.pdf)
+  - [Active ILP for Code Search](http://starai.cs.ucla.edu/papers/SivaramanICSE19.pdf)
+
 ## December 2nd, 2020
 
 - Finished up grading COMP 598 M2

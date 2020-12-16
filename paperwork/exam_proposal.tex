@@ -202,9 +202,12 @@
 
     Metamorphic testing
 
-    \subsection{Observational equivalence}
+    \subsection{Contextual Equivalence}
 
-    Two terms $\textt{M}$ and $\textt{N}$ are observationally equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts. This is kind of like word embeddings.
+%    http://www.cs.ox.ac.uk/people/samuel.staton/papers/fossacs-2019.pdf
+%    http://users.ox.ac.uk/~scro3229/documents/birmingham-talk.pdf
+
+    Two terms $\textt{M}$ and $\textt{N}$ are contextually equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts. This is kind of like word embeddings.
 
     $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
