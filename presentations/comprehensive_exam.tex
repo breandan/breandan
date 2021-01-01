@@ -297,10 +297,45 @@ McGill University \\
     \end{frame}
 
     \begin{frame}
-        \frametitle{Pattern recognition}
+        \frametitle{The trouble with pattern recognition}
         \begin{itemize}
-            \item Two programs may implement the same function, share nothing in common
-            \item How do we recognize a common pattern which shares no common features?
+            \item P1: Two objects may have the same meaning, but different forms
+            \item e.g. programs may be semantically identical, but share no text in common
+            \item How do we recognize dissimilar structures which share hidden meaning?
+            \item Two objects may have the same form, but different meanings
+            \item e.g. programs may share many tokens, but represent different dataflows
+            \item How do we disambiguate superficially similar structures?
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Induction, Deduction, Abduction, and Transduction}
+        \begin{itemize}
+            \item Induction: specific observations to general rules
+            \item Deduction: general rules to specific predictions
+            \item Abduction: knowledge to theory
+            \item Transduction: specific observations to specific predictions
+        \end{itemize}
+        % http://web.cecs.pdx.edu/~harry/discrete/slides/Section3.1.pdf
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Induction in Computer Science}
+        \begin{itemize}
+            \item Inductive data types: $\texttt{data Nat = Zero | Succ Nat}$
+            \item Inductive/recursive definitions: basis, induction, closure, e.g.
+            \item a simple distribution is an SPN (base case). \\If a, b are SPNs, $a \oplus b$ is an SPN and $a \otimes b$ is an SPN (induction).\\ Nothing else is an SPN. (closure)
+        \end{itemize}
+        % https://shmorhay.wordpress.com/2017/10/20/machine-learning-abduction-and-transduction/
+        % http://www.jfsowa.com/talks/iccs03.htm
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Induction in Machine Learning}
+        \begin{itemize}
+            \item Empirical risk minimization induction principle (Vapnik)
+            \item Inductive bias: how do we "fill in" gaps between training data
+            \item How do we draw general conclusions from specific observations?
         \end{itemize}
     \end{frame}
 
