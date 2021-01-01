@@ -23,6 +23,7 @@
 \usepackage{ocr}
 \usepackage[T1]{fontenc}
 
+\usepackage{epigraph}
 \usepackage{accsupp}
 \usepackage{bussproofs}
 \newcommand{\noncopyable}[1]{%
@@ -257,18 +258,50 @@ McGill University \\
         \end{figure}
     \end{frame}
 
-
     \begin{frame}
         \frametitle{Relations among probability distributions}
         \begin{itemize}
             \item Knowledge is accumulated across generations of research
             \item Patterns have specific names, e.g. ``Gaussian'', ``Dirichlet''...
-            \item Can we infer these relations from first principles?
+            \item Can we recover these relations from first principles?
         \end{itemize}
         \begin{figure}[H]
             \centering
             \includegraphics[width=0.7\textwidth]{../clipart/distribution_relations.jpeg}
         \end{figure}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Valid and invalid procedures}
+        \begin{itemize}
+            \item Not all procedural text is source code
+            \item Not all source code is syntactically valid / well-formed
+            \item Not all well-formed programs are semantically valid
+            \item Not all semantically valid programs are error-free
+            \item Not all error-free programs terminate
+            \item Not all terminating programs yield the correct answer
+            \item Not only "not all", but uncountably many counterexamples
+            \item Unconstrained sampling is doomed to fail
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Necessary assumptions}
+        \setlength{\epigraphwidth}{0.5\textwidth}
+        \epigraph{The expressive power of a programming language arises from its strictures and not from its affordances.}{Robert Harper}
+        \begin{itemize}
+            \item Bounded depth circuits
+            \item Finite sample space
+            \item All programs terminate
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Pattern recognition}
+        \begin{itemize}
+            \item Two programs may implement the same function, share nothing in common
+            \item How do we recognize a common pattern which shares no common features?
+        \end{itemize}
     \end{frame}
 
 \end{document}
