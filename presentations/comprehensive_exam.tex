@@ -148,195 +148,228 @@ McGill University \\
 
 
 \begin{document}
-    \begin{frame}
-        \titlepage
-    \end{frame}
+  \begin{frame}
+    \titlepage
+  \end{frame}
 
-    \begin{frame}
+  \begin{frame}
     \frametitle{Knowledge is lost in translation}
-        \begin{itemize}
-            \item First a customer describes the problem they need to solve
-            \item Then a specialist models the domain with pen and paper
-            \item Then a programmer builds the algorithm and gathers feedback
-        \end{itemize}
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=0.6\textwidth]{../clipart/tincan.jpg}
-        \end{figure}
-    \end{frame}
+    \begin{itemize}
+      \item An end user describes some problem they are having
+      \item Then a theorist models the domain with pen and paper
+      \item Then an engineer implements the model in a language
+      \item Code is not the model, just an implementation of the model
+      \item The domain model is just an approximation of the real world
+      \item System identification is hard, most abstractions are leaky
+    \end{itemize}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{../clipart/tincan.jpg}
+    \end{figure}
+  \end{frame}
 
-    \begin{frame}
-        \frametitle{Knowledge is difficult to comprehend}
-        \begin{itemize}
-        \item Knowledge is like feeling an elephant
-        \item The human brain has a finite capacity working memory
-        \item Many solutions cannot be grasped in their entirety
-        \end{itemize}
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=0.5\textwidth]{../clipart/elephant.png}
-        \end{figure}
-    \end{frame}
+  \begin{frame}
+    \frametitle{Knowledge is difficult to comprehend}
+    \begin{itemize}
+      \item The human brain has a finite capacity working memory
+      \item Codebases are enormous bodies of collective knowledge
+      \item Many cannot be grasped entirely by a single human being
+      \item Programs are not code, programs are mental constructs
+      \item Code is simply a byproduct or \textit{artifact} of programming
+      \item Learning to code by reading trillions of lines of code \\is like learning to drive by reading traffic laws.
+    \end{itemize}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth]{../clipart/elephant.png}
+    \end{figure}
+  \end{frame}
 
-    \begin{frame}
-        \frametitle{Knowledge does not compose}
-        \begin{itemize}
-            \item Knowledge is not inherently compositional
-            \item In order to make progress, we need programs to compose
-            \item Impossible to do engineering by cobbling together spare parts
-        \end{itemize}
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=0.5\textwidth]{../clipart/compositionality.jpeg}
-        \end{figure}
-    \end{frame}
+  \begin{frame}
+    \frametitle{Knowledge does not compose}
+    \begin{itemize}
+      \item Scaling up knowledge requires enabling more people to contribute
+      \item Need more stakeholders involved in knowledge creation/curation
+      \item In order to scale up participation, we need programs to compose
+      \item Impossible to build complex systems by cobbling together spare parts
+    \end{itemize}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth]{../clipart/compositionality.jpeg}
+    \end{figure}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{The trouble with pattern recognition: Part I}
+    \begin{itemize}
+      \item Similar functions, dissimilar forms
+      \item P1: Two functions may share the same meaning, but different forms
+      \item E1: two programs may implement the exact same function, but share almost no syntax in common
+      \item Q1: How do we recognize superficially dissimilar structures which share hidden meaning?
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{The trouble with pattern recognition: Part II}
+    \begin{itemize}
+      \item Similar forms, dissimilar functions
+      \item P2: Two objects may have a common form, but have vastly different meanings
+      \item E2: two programs may differ by only a few tokens, but have drastically different meanings
+      \item Q2: How do we disambiguate superficially similar structures?
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Reason is a ladder to higher knowledge}
+    \begin{itemize}
+      \item To build understanding, we must have better tools
+      \item Tools should complement human learning and reasoning
+      \item Augmented intelligence through automated reasoning
+      \item Reason is a tool to access higher order knowledge
+    \end{itemize}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth]{../clipart/astronomers.png}
+    \end{figure}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Reason is a ladder to higher knowledge}
+    \begin{itemize}
+      \item To build understanding, we must have better tools
+      \item Tools should complement human learning and reasoning
+      \item Augmented intelligence through automated reasoning
+      \item Reason is a tool to access higher order knowledge
+    \end{itemize}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth]{../clipart/astronomers.png}
+    \end{figure}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Reasoning from first principles}
+    \begin{itemize}
+      \item To learn programs, cannot imitate knowledge
+      \item Too fragile, too many brittle assumptions
+      \item Seek to understand process, not outcome
+      \item Most software starts with pen and paper...
+    \end{itemize}
+    \begin{figure}[H]
+      \centering
+
+      \begin{prooftree}
+        \bottomAlignProof
+        \AxiomC{}
+        \UnaryInfC{$a \sim a$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Reflexivity}}
+        \DisplayProof
+        \hskip 1.5em
+        \bottomAlignProof
+        \AxiomC{$a \sim b$}
+        \UnaryInfC{$b \sim a$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Symmetry}}
+        \DisplayProof
+        \hskip 1.5em
+        \bottomAlignProof
+        \AxiomC{$a \sim b$}
+        \AxiomC{$b \sim c$}
+        \BinaryInfC{$a \sim c$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Transitivity}}
+        \DisplayProof
+        \hskip 1.5em
+        \bottomAlignProof
+        \AxiomC{$a \sim b$}
+        \UnaryInfC{$f(a) \sim f(b)$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Congruence}}
+      \end{prooftree}
+
+    \end{figure}
+  \end{frame}
 
 
-    \begin{frame}
-        \frametitle{Reason is a ladder to higher knowledge}
-        \begin{itemize}
-            \item To build understanding, we must have better tools
-            \item Tools should complement human learning and reasoning
-            \item Augmented intelligence through automated reasoning
-            \item Reason is a tool to access higher order knowledge
-        \end{itemize}
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=0.5\textwidth]{../clipart/astronomers.png}
-        \end{figure}
-    \end{frame}
+  \begin{frame}
+    \frametitle{Induction, Deduction, Abduction, and Transduction}
+    \begin{itemize}
+      \item *duction: from Latin ductio, ductionem, meaning to lead [away]
+      \item Induction: infer general rules from specific observations
+      \item Deduction: infer specific predictions from general rules
+      \item Abduction: infer higher knowledge (theory) from specific facts
+      \item Transduction: infer specific predictions from specific observations
+      \item Production: Rewrite rule, or substitution in a formal grammar
+      \item Reduction: simplify a compound expression into normal form
+    \end{itemize}
+    % http://web.cecs.pdx.edu/~harry/discrete/slides/Section3.1.pdf
+  \end{frame}
 
-    \begin{frame}
-        \frametitle{Reasoning from first principles}
-        \begin{itemize}
-            \item To learn programs, cannot imitate knowledge
-            \item Too fragile, too many brittle assumptions
-            \item Seek to understand process, not outcome
-            \item Most software starts with pen and paper...
-        \end{itemize}
-        \begin{figure}[H]
-            \centering
+  \begin{frame}
+    \frametitle{Induction in Computer Science}
+    \begin{itemize}
+      \item Inductive data types: $\texttt{data Nat = Zero | Succ Nat}$
+      \item Inductive/recursive definitions: basis, induction, closure, e.g.
+      \item a simple distribution is an SPN (base case). \\If a, b are SPNs, $a \oplus b$ is an SPN and $a \otimes b$ is an SPN (induction).\\ Nothing else is an SPN. (closure)
+    \end{itemize}
+    % https://shmorhay.wordpress.com/2017/10/20/machine-learning-abduction-and-transduction/
+    % http://www.jfsowa.com/talks/iccs03.htm
+  \end{frame}
 
-            \begin{prooftree}
-                \bottomAlignProof
-                \AxiomC{}
-                \UnaryInfC{$a \sim a$}
-                \noLine
-                \UnaryInfC{}
-                \noLine
-                \UnaryInfC{\textit{Reflexivity}}
-                \DisplayProof
-                \hskip 1.5em
-                \bottomAlignProof
-                \AxiomC{$a \sim b$}
-                \UnaryInfC{$b \sim a$}
-                \noLine
-                \UnaryInfC{}
-                \noLine
-                \UnaryInfC{\textit{Symmetry}}
-                \DisplayProof
-                \hskip 1.5em
-                \bottomAlignProof
-                \AxiomC{$a \sim b$}
-                \AxiomC{$b \sim c$}
-                \BinaryInfC{$a \sim c$}
-                \noLine
-                \UnaryInfC{}
-                \noLine
-                \UnaryInfC{\textit{Transitivity}}
-                \DisplayProof
-                \hskip 1.5em
-                \bottomAlignProof
-                \AxiomC{$a \sim b$}
-                \UnaryInfC{$f(a) \sim f(b)$}
-                \noLine
-                \UnaryInfC{}
-                \noLine
-                \UnaryInfC{\textit{Congruence}}
-            \end{prooftree}
+  \begin{frame}
+    \frametitle{Induction in Machine Learning}
+    \begin{itemize}
+      \item Empirical risk minimization induction principle (Vapnik)
+      \item Inductive bias: how do we "fill in" gaps between training data
+      \item How do we draw general conclusions from specific observations?
+    \end{itemize}
+  \end{frame}
 
-        \end{figure}
-    \end{frame}
 
-    \begin{frame}
-        \frametitle{Relations among probability distributions}
-        \begin{itemize}
-            \item Knowledge is accumulated across generations of research
-            \item Patterns have specific names, e.g. ``Gaussian'', ``Dirichlet''...
-            \item Can we recover these relations from first principles?
-        \end{itemize}
-        \begin{figure}[H]
-            \centering
-            \includegraphics[width=0.7\textwidth]{../clipart/distribution_relations.jpeg}
-        \end{figure}
-    \end{frame}
+  \begin{frame}
+    \frametitle{Valid and invalid procedures}
+    \begin{itemize}
+      \item Not all procedural text is source code
+      \item Not all source code is syntactically valid / well-formed
+      \item Not all well-formed programs are semantically valid
+      \item Not all semantically valid programs are error-free
+      \item Not all error-free programs terminate
+      \item Not all terminating programs yield the correct answer
+      \item Not only "not all", but uncountably many counterexamples
+      \item Unconstrained sampling is doomed to fail
+    \end{itemize}
+  \end{frame}
 
-    \begin{frame}
-        \frametitle{Valid and invalid procedures}
-        \begin{itemize}
-            \item Not all procedural text is source code
-            \item Not all source code is syntactically valid / well-formed
-            \item Not all well-formed programs are semantically valid
-            \item Not all semantically valid programs are error-free
-            \item Not all error-free programs terminate
-            \item Not all terminating programs yield the correct answer
-            \item Not only "not all", but uncountably many counterexamples
-            \item Unconstrained sampling is doomed to fail
-        \end{itemize}
-    \end{frame}
+  \begin{frame}
+    \frametitle{Necessary assumptions}
+    \setlength{\epigraphwidth}{0.5\textwidth}
+    \epigraph{The expressive power of a programming language arises from its strictures and not from its affordances.}{Robert Harper}
+    \begin{itemize}
+      \item Bounded depth circuits
+      \item Finite sample space
+      \item All programs terminate
+    \end{itemize}
+  \end{frame}
 
-    \begin{frame}
-        \frametitle{Necessary assumptions}
-        \setlength{\epigraphwidth}{0.5\textwidth}
-        \epigraph{The expressive power of a programming language arises from its strictures and not from its affordances.}{Robert Harper}
-        \begin{itemize}
-            \item Bounded depth circuits
-            \item Finite sample space
-            \item All programs terminate
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}
-        \frametitle{The trouble with pattern recognition}
-        \begin{itemize}
-            \item P1: Two objects may have the same meaning, but different forms
-            \item e.g. programs may be semantically identical, but share no text in common
-            \item How do we recognize dissimilar structures which share hidden meaning?
-            \item Two objects may have the same form, but different meanings
-            \item e.g. programs may share many tokens, but represent different dataflows
-            \item How do we disambiguate superficially similar structures?
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}
-        \frametitle{Induction, Deduction, Abduction, and Transduction}
-        \begin{itemize}
-            \item Induction: specific observations to general rules
-            \item Deduction: general rules to specific predictions
-            \item Abduction: knowledge to theory
-            \item Transduction: specific observations to specific predictions
-        \end{itemize}
-        % http://web.cecs.pdx.edu/~harry/discrete/slides/Section3.1.pdf
-    \end{frame}
-
-    \begin{frame}
-        \frametitle{Induction in Computer Science}
-        \begin{itemize}
-            \item Inductive data types: $\texttt{data Nat = Zero | Succ Nat}$
-            \item Inductive/recursive definitions: basis, induction, closure, e.g.
-            \item a simple distribution is an SPN (base case). \\If a, b are SPNs, $a \oplus b$ is an SPN and $a \otimes b$ is an SPN (induction).\\ Nothing else is an SPN. (closure)
-        \end{itemize}
-        % https://shmorhay.wordpress.com/2017/10/20/machine-learning-abduction-and-transduction/
-        % http://www.jfsowa.com/talks/iccs03.htm
-    \end{frame}
-
-    \begin{frame}
-        \frametitle{Induction in Machine Learning}
-        \begin{itemize}
-            \item Empirical risk minimization induction principle (Vapnik)
-            \item Inductive bias: how do we "fill in" gaps between training data
-            \item How do we draw general conclusions from specific observations?
-        \end{itemize}
-    \end{frame}
+  \begin{frame}
+    \frametitle{Relations among probability distributions}
+    \begin{itemize}
+      \item Knowledge is accumulated across generations of research
+      \item Patterns have specific names, e.g. ``Gaussian'', ``Dirichlet''...
+      \item Can we recover these relations from first principles?
+    \end{itemize}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{../clipart/distribution_relations.jpeg}
+    \end{figure}
+  \end{frame}
 
 \end{document}
