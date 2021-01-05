@@ -44,9 +44,9 @@
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
-    Equality is a highly overloaded notation in mathematics and computer science. Roughly, $i = j$ denotes when we can replace, or are replacing one expression $i$, with another, $j$. Two expressions are considered equal if, loosely speaking, they evaluate to the same result.
+    Equality is a highly overloaded notation in mathematics and computer science. Loosely speaking, $i = j$ denotes when we can replace, or are replacing one expression $i$, with another, $j$. Typically, we consider two expressions to be equal if there is no algorithm which can tell them apart.
 
-    The problem is, equality is not a differentiable operator. If two expressions are unequal, the derivative alone cannot tell us how to bring them closer to each other. When we encounter a differentiable program using the expression $\texttt{if(i == j)}$, how should we compute its derivative? Consider the Kronecker delta function $\delta_k: \mathbb{T}$, where $\mathbb{T} \in \{\mathbb{Z, Q, B}\}$:
+    The trouble is, equality is not a differentiable operator. If two expressions are unequal, the derivative alone cannot tell us how to adjust one in order to bring them closer together. When we encounter a differentiable program containing the expression $\texttt{if(i == j)}$, how should we compute its derivative? Consider the Kronecker $\delta$-function, $\delta_k: \mathbb{T}^2\rightarrow \mathbb{B}$:
 
     $$
     \delta_k(i, j) :=
@@ -56,21 +56,19 @@
     \end{cases}
     $$
 
-    This is not a continuous function: the preimage of an open set is not open. Thus, it is not differentiable. Maybe a way to fix it, e.g. CADLAG. Now consider the Dirac delta function, $\delta_d: \mathbb{R} \rightarrow \mathbb{R}$. Although it cannot be written down directly, it can be described indirectly:
+    Since $\mathbb{B}$ has no open sets, $\delta_d^{-1}(B\subset \mathbb{B})$ is not open, thus $\delta_d$ is not a continuous function and its derivative $\delta_k'$ is undefined. Now consider the Dirac $\delta$ function, $\delta_d: \mathbb{R}^2 \rightarrow \mathbb{R}$. It can be defined by its integral:
 
     $$
-    \int_{-\infty}^{\infty} \delta_d (x)dx = 1 \text{ and } \delta_d(i, j) :=
+    \int_{-\infty}^{\infty} \delta_d (x)dx := 1 \text{ and } \delta_d(i, j) :=
     \begin{cases}
         \infty \text{ if } i = j, \\
         0 \text{ otherwise }\\
     \end{cases}
     $$
 
-    Neither of these definitions is amenable to implementation. Do we really need $\infty$ just to encode equality? Without knowing $i$ or $j$ a priori, how do we optimize such a function using gradient based techniques?
+    Unlike $\delta_k$, it can be shown that $\delta_d'$ is well-defined everywhere on $\mathbb{R}$. Here we encounter an important distinction between intensional and extensional equality. Unlike symbolic expressions, there are many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution on $\mathbb{R}$. Nevertheless, they represent convenient abstractions for explaining many empirical phenomena.
 
-%    Both of these are idealized concepts which do not exist in the real world. Unknowable whether the universe is discrete or continuous. Most software is discrete. All we can do is approximate and compare empirically.
-
-    A more general notion is the notion of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
+    Neither $\delta_d$ nor $\delta_d$ are possible to implement on a computer without loss of generality. How does one compute gradient across $\delta_k$ without knowing $i$ or $j$ a priori? What value of $\infty$ is sufficient to define $\delta_d$? To allow a more flexible definition of the $=$ operator, we require a gadget which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -110,56 +108,55 @@
         \UnaryInfC{\textit{Congruence}}
     \end{prooftree}
 
-    To allow a more flexible version of the $=$ operator, we require a notion of equality which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. We require a metric~\ref{sec:probabilistic}.
+%    First we will describe exact equality, then progressively relax our definition of equivalence to obtain a more useful definition.
 
-    First we will describe exact equality, then progressively relax our definition of equivalence to obtain a more useful definition.
-
+%    We require a metric~\ref{sec:probabilistic}.
 
     \subsection{Decidability}\label{sec:algorithms}
 
-    Various methods have been proposed to decide exact and approximate equality in the deterministic and probabilistic setting.
+    Various approaches have been taken to decide exact and approximate equality in the deterministic and probabilistic setting. We list a few below.
 
     \begin{table}[H]
         \centering
-        \begin{tabular}{c|c|c|}
+        \begin{tabular}{c|l|l|}
             \cline{2-3} & \textbf{Deterministic} & \textbf{Probabilistic} \\ \hline
-            \multicolumn{1}{|c|}{\textbf{Exact}}       & \begin{tabular}[c]{@{}l@{}}Types\\ Rewriting\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Probabilistic circuits\\ Variable elimination\end{tabular} \\ \hline
-            \multicolumn{1}{|c|}{\textbf{Approximate}} & \begin{tabular}[c]{@{}l@{}}Testing\\ Debugging\end{tabular} & \begin{tabular}[c]{@{}l@{}}Sampling\\ Simulation\end{tabular}                         \\ \hline
+            \multicolumn{1}{|c|}{\textbf{Exact}}       & \begin{tabular}[c]{@{}l@{}}Type Checking\\ Model Checking\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Variable Elimination\\Probabilistic Circuits \end{tabular} \\ \hline
+            \multicolumn{1}{|c|}{\textbf{Approximate}} & \begin{tabular}[c]{@{}l@{}}Software Testing\\Dynamic Analysis\end{tabular} & \begin{tabular}[c]{@{}l@{}}Monte Carlo Methods\\Bayesian Networks\end{tabular}                         \\ \hline
         \end{tabular}
     \end{table}
 
-    So far, we have described the properties of equality, but we still need an algorithm for how to establish it. We need a decision algorithm.
-
-    It is seldom the case that two equal things are trivially equal. We need to do some computation to put them into a form that makes their equality trivial to check, e.g. $\mathcal{O}(n)$.
-
-    For exact equality, we need some notion of a transformation or rewrite. Equivalence requires:
-
-    1. reducing an object into a normal form (canonicalization), then
-
-    2. doing some kind of trivial comparison (e.g. string comparison)
-
-    For approximate equality, we can just generate some representative data and test away.
-
-    Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
+    In order to determine whether two expressions are equal, we require a decision procedure. It is seldom the case that two equal expressions are trivially equal: we must first perform some computation in order to establish their equality. For the case of exact equality, this usually entails a symbol manipulation procedure, which might be summarized as follows:
 
     \begin{enumerate}
-        \item intrinsic: the mechanics of the system are intrinsically unsound or impossible to mechanize. How do we encode $\lim_{x \rightarrow \infty}$?
-        \item extrinsic: all descriptions (epistemic) and observations (alleoteric) are approximate and this error can compound quickly.
+    \item Rewrite: Either transform the proposition into normal form if possible, or enumerate valid rewrites using enumerative search, then
+    \item Compare: Perform some trivial (e.g. $\mathcal{O}(n)$) comparison.
     \end{enumerate}
 
-    Even very simple formulas containing arithmetic are undecidable. (Peano)
+    Unfortunately, exact equality is undecidable in general (G\"odel). We now know no there there is no way to construct a procedure which enumerates every true statement and no untrue statements in a universal language. Determining equality between two mathematical formulas is undecidable. (Richardson) Even equality in first-order logic is undecidable. Furthermore any nontrivial property is undecidable. (Rice)
 
-    No complete and consistent formal systems: we cannot construct a machine implementing the program of mathematics. (Godel)
+    %Is there any left hope? Yes! (Felleisen)
 
-    Determining equality between two mathematical formulas is undecidable. (Richardson)
+    Decidability may be empirically related to tractability but is often orthogonal. When decidable, equality may be intractable in practice, and languages where equality is undecidable may have decidable fragments. Even when exact equality is intractable, we may be able to construct a statistical decision theory, or semidecision procedure which may or may not terminate. We categorize these methods into two broad categories:
 
-    More generally, any nontrivial property is undecidable. (Rice)
+    \begin{enumerate}
+        \item Execute: Evaluate the program by running it on a small set of inputs
+        \item Sample: Build a probabilistic model and sample from its distribution
+    \end{enumerate}
 
-    Is there any left hope? Yes! (Felleisen)
+   First we will describe intensional and extensional equality, then progressively relax our definition to consider probabilistic equivalence.
+
+
+%    Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
+%
+%    \begin{enumerate}
+%        \item intrinsic: the mechanics of the system are intrinsically unsound or impossible to mechanize. How do we encode $\lim_{x \rightarrow \infty}$?
+%        \item extrinsic: all descriptions (epistemic) and observations (alleoteric) are approximate and this error can compound quickly.
+%    \end{enumerate}
+
 
 %    But can we organize mathematical knowledge as a decision tree? (Rich)
 
-    Still, we can answer many questions exactly. If we restrict the reasoning system to incomplete queries, we can be consistent.
+%    Still, we can answer many questions exactly. If we restrict the reasoning system to incomplete queries, we can be consistent.
 
     \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
