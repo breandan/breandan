@@ -6,6 +6,7 @@
 
 % Packages
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
 \usepackage{bussproofs}
@@ -44,31 +45,31 @@
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
-    Equality is a highly overloaded notation in mathematics and computer science. Loosely speaking, $i = j$ denotes when we can replace, or are replacing one expression $i$, with another, $j$. Typically, we consider two expressions to be equal if there is no algorithm which can tell them apart.
+    Equality is a highly overloaded notation in mathematics and computer science. Loosely speaking, $x = y$ denotes when we can replace, or are replacing one expression $x$, with another, $y$. Typically, we consider two expressions to be equal if there is no deterministic procedure which can tell them apart.
 
-    The trouble is, equality is not a differentiable operator. If two expressions are unequal, the derivative alone cannot tell us how to adjust one in order to bring them closer together. When we encounter a differentiable program containing the expression $\texttt{if(i == j)}$, how should we compute its derivative? Consider the Kronecker $\delta$-function, $\delta_k: \mathbb{T}^2\rightarrow \mathbb{B}$:
+    The trouble is, equality is not a differentiable operator. If two expressions are unequal, the derivative alone cannot tell us how to adjust one in order to bring them closer together. Consider the Kronecker $\delta$-function, $\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
 
     $$
-    \delta_k(i, j) :=
+    \delta_k(x, y) :=
     \begin{cases}
-        1 \text{ if } i = j, \\
+        1 \text{ if } x = y, \\
         0 \text{ otherwise }\\
     \end{cases}
     $$
 
-    Since $\mathbb{B}$ has no open sets, $\delta_d^{-1}(B\subset \mathbb{B})$ is not open, thus $\delta_d$ is not a continuous function and its derivative $\delta_k'$ is undefined. Now consider the Dirac $\delta$ function, $\delta_d: \mathbb{R}^2 \rightarrow \mathbb{R}$. It can be defined by its integral:
+    When we encounter a differentiable program containing $\delta_k$, how do we compute its derivative? Since $\mathbb{B}$ is not open, $\delta_d^{-1}(B\subset \mathbb{B})$ is not open, thus $\delta_d$ is not a continuous function and its gradient $\nabla\delta_k$ is undefined. Now consider the Dirac $\delta$ function, $\delta_d: \mathbb{R}^2 \rightarrow \mathbb{R}$, a probability distribution on $\mathbb{R}$:
 
     $$
-    \int_{-\infty}^{\infty} \delta_d (x)dx := 1 \text{ and } \delta_d(i, j) :=
+    \iint_{-\infty}^{\infty} \delta_d d(x, y) := 1 \text{ and } \delta_d(x, y) :=
     \begin{cases}
-        \infty \text{ if } i = j, \\
+        \infty \text{ if } x = y, \\
         0 \text{ otherwise }\\
     \end{cases}
     $$
 
-    Unlike $\delta_k$, it can be shown that $\delta_d'$ is well-defined everywhere on $\mathbb{R}$. Here we encounter an important distinction between intensional and extensional equality. Unlike symbolic expressions, there are many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution on $\mathbb{R}$. Nevertheless, they represent convenient abstractions for explaining many empirical phenomena.
+    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-defined everywhere on $\mathbb{R}^2$. Here we encounter an important distinction between intensional and extensional equality. Unlike symbolic expressions, humans have invented many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution with mass concentrated in an infinitesimally small region. Nevertheless, they represent convenient abstractions for modeling many empirically observable phenomena.
 
-    Neither $\delta_d$ nor $\delta_d$ are possible to implement on a computer without loss of generality. How does one compute gradient across $\delta_k$ without knowing $i$ or $j$ a priori? What value of $\infty$ is sufficient to define $\delta_d$? To allow a more flexible definition of the $=$ operator, we require a gadget which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
+    Neither $\nabla\delta_k$ nor $\delta_d$ are possible to implement on a computer without loss of generality. How does one compute $\nabla\delta_k$ without knowing $x$ or $y$ a priori? What value of $\infty$ is sufficient to define $\delta_d$? To allow a more flexible definition of the $=$ operator, we require a function which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -114,7 +115,7 @@
 
     \subsection{Decidability}\label{sec:algorithms}
 
-    Various approaches have been taken to decide exact and approximate equality in the deterministic and probabilistic setting. We list a few below.
+    To determine whether two expressions are equal, we need a decision procedure. Various approaches have been taken to decide exact and approximate equality in the deterministic and probabilistic setting. We list a few below.
 
     \begin{table}[H]
         \centering
@@ -125,23 +126,23 @@
         \end{tabular}
     \end{table}
 
-    In order to determine whether two expressions are equal, we require a decision procedure. It is seldom the case that two equal expressions are trivially equal: we must first perform some computation in order to establish their equality. For the case of exact equality, this usually entails a symbol manipulation procedure, which might be summarized as follows:
+    It is seldom the case that two semantically equal expressions are trivially equal: we must first perform some computation in order to establish their equality. In the exact setting, this usually requires a symbol manipulation procedure which might be summarized as follows:
 
     \begin{enumerate}
     \item Rewrite: Either transform the proposition into normal form if possible, or enumerate valid rewrites using enumerative search, then
     \item Compare: Perform some trivial (e.g. $\mathcal{O}(n)$) comparison.
     \end{enumerate}
 
-    Unfortunately, exact equality is undecidable in general (G\"odel). We now know no there there is no way to construct a procedure which enumerates every true statement and no untrue statements in a universal language. Determining equality between two mathematical formulas is undecidable. (Richardson) Even equality in first-order logic is undecidable. Furthermore any nontrivial property is undecidable. (Rice)
+    Unfortunately, exact equality is known to be undecidable in general (G\"odel). From Turing, we know there is no way to construct a halting machine which accepts every equality and rejects every disequality in a universal language. Equality between two mathematical formulas is undecidable. (Richardson) Even equality in first-order logic is undecidable. Furthermore any nontrivial property is undecidable. (Rice)
 
     %Is there any left hope? Yes! (Felleisen)
 
-    Decidability may be empirically related to tractability but is often orthogonal. When decidable, equality may be intractable in practice, and languages where equality is undecidable may have decidable fragments. Even when exact equality is intractable, we may be able to construct a statistical decision theory, or semidecision procedure which may or may not terminate. We categorize these methods into two broad categories:
+    Tractability may be related to, but is not contingent upon decidability. When decidable, equality may be intractable in practice, and languages where equality is undecidable may have decidable fragments. Even when exact equality is intractable, we may be able to construct a probabilistic decision algorithm, or semidecision procedure which terminates for all or most practical purposes. The latter approaches fall into two broad categories:
 
-    \begin{enumerate}
+    \begin{itemize}
         \item Execute: Evaluate the program by running it on a small set of inputs
         \item Sample: Build a probabilistic model and sample from its distribution
-    \end{enumerate}
+    \end{itemize}
 
    First we will describe intensional and extensional equality, then progressively relax our definition to consider probabilistic equivalence.
 
@@ -160,30 +161,59 @@
 
     \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
-    Let $R: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation between functions which is closed under composition. We say that $f_1$ and $f_2$ are intensionally equal if $R^n(f_1)=R^m(f_2)$ for some $m,n \in \mathbb{Z}$.
-
-
-    For example, suppose we have two functions $f_1, f_2: \mathbb{Z}^3 \rightarrow \mathbb{Z}$ where $f_1(x, y, z)=xz + xy$ and $f_2(x, y, z)=x(y + z)$, and we have the following rewrite system.
+    Let $\Gamma_{f}: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation on a family of functions which are closed under composition. We say that two functions $f, f': \mathcal{I} \rightarrow \mathcal{O}$ are intensionally equal under $\Gamma_f$ if $f' \in \Gamma^n_{f}$ for some $n \in \mathbb{Z}$.
 
     \begin{prooftree}
-        \AxiomC{$a + b$}
-        \UnaryInfC{$b + a$}
-        \noLine
-        \UnaryInfC{}
-        \noLine
-        \UnaryInfC{\textit{Commutivity}}
+        \AxiomC{$f: \mathcal{I} \rightarrow \mathcal{O}$}
+        \RightLabel{Init}
+        \UnaryInfC{$\Gamma^0_{f} \vdash \{f\}$}
+%        \UnaryInfC{\textit{Commutivity}}
         \DisplayProof
-        \AxiomC{$a(b + c)$}
-        \UnaryInfC{$ab + ac$}
-        \noLine
-        \UnaryInfC{}
-        \noLine
-        \UnaryInfC{\textit{Distributivity}}
+        \hskip 1em
+        \AxiomC{$\Gamma^{n}_{f} \vdash E$}
+        \RightLabel{Sub}
+        \UnaryInfC{$\Gamma^{n+1}_{f} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in \Sigma}}e[\sigma_1\rightarrow\sigma_2]$}
+        \DisplayProof
+        \vskip 1em
+        \AxiomC{$\Gamma^n_{f} \vdash E$}
+        \AxiomC{$f' \in E$}
+        \RightLabel{Eq}
+        \BinaryInfC{$\Gamma^n_{f} \vdash f = f'$}
+        \DisplayProof
+        \hskip 1em
+        \AxiomC{$\Gamma^n_{f}\vdash E$}
+        \AxiomC{$\Gamma^{n+1}_{f}\vdash E$}
+        \AxiomC{$f'\notin E$}
+        \RightLabel{Neq}
+        \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \neq f'$}
     \end{prooftree}
 
-    If we apply $R$ twice to $f_2$, we obtain $R_2(f_2)=x(y + z):=xy + xz:=xz + xy=R_0(f_1)$ and thus $f_1$ and $f_2$ are both intensionally equal.
+    For example, suppose we are given $f \vdash x  y  z, f' \vdash z  y  x$ and the rewrite system $\Sigma := \{(a, a), (ab, ba)\}$. We can show $f = f'$ as follows:
 
-    We can decide equivalence axiomatically using rewrite systems. Knuth-Bendix completion is a semialgorithm...
+    \begin{prooftree}
+        \def\fCenter{\ \vdash\ }
+        \Axiom$f \fCenter x  y  z$
+        \RightLabel{$R_1$}
+        \UnaryInf$\Gamma^0_{f} \fCenter \{xyz\}$
+        \RightLabel{$R_2$}
+        \UnaryInf$\Gamma^1_{f} \fCenter \{xyz, yxz, xzy\}$
+        \RightLabel{$R_2$}
+        \UnaryInf$\Gamma^2_{f} \fCenter \{xyz, yxz, xzy, yzx, zxy\}$
+        \RightLabel{$R_2$}
+        \UnaryInf$\Gamma^3_{f} \fCenter \{xyz, yxz, xzy, yzx, zxy, \mathbf{zyx}\}$
+        \RightLabel{$R_3$}
+        \UnaryInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash zyx \in E$
+        \RightLabel{$R_3$}
+        \UnaryInf$\Gamma^3_{f} \fCenter f=f'$
+    \end{prooftree}
+
+    Let us consider the complexity of checking $g\overset{?}{=}g'$ for arbitrary $g, g' \in \mathbb{Z}^k$ as $k$ grows. It is possible to show that $\Sigma$ terminates in
+
+    $$\mathcal{O}(g, g', k) = \underset{g' \in \mathbb{Z}^k}{\text{min }}\{n \mid \Gamma_g^n(g, g') = \Gamma_g^{n+1}(g, g')\}$$
+
+    Now let us consider the modification $\Sigma' := \Sigma \cup \{(a, 1a)\}$. It is possible to show that $\Sigma'$ no longer terminates for arbitrary $g, g' \in \mathbb{Z}^k$.
+
+%    We can decide equivalence axiomatically using rewrite systems. Knuth-Bendix completion is a semialgorithm...
 
     \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
 
