@@ -161,24 +161,24 @@
 
     \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
-    Let $\Gamma_{f}: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation on a family of functions which are closed under composition. We say that two functions $f, f': \mathcal{I} \rightarrow \mathcal{O}$ are intensionally equal under $\Gamma_f$ if $f' \in \Gamma^n_{f}$ for some $n \in \mathbb{Z}$.
+    Let $\Sigma: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation on a family of functions which are closed under composition. We say that two functions $f, f': \mathcal{I} \rightarrow \mathcal{O}$ are intensionally equal or disequal under $\Sigma$ if we can establish $f \overset{?}{=} f'$ w.r.t.:
 
     \begin{prooftree}
         \AxiomC{$f: \mathcal{I} \rightarrow \mathcal{O}$}
         \RightLabel{Init}
-        \UnaryInfC{$\Gamma^0_{f} \vdash \{f\}$}
+        \UnaryInfC{$\Gamma^0_{f} \vdash \{f\}, \{(f, f)\}$}
 %        \UnaryInfC{\textit{Commutivity}}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma^{n}_{f} \vdash E$}
+        \AxiomC{$\Gamma^{n}_{f} \vdash E \subseteq (\mathcal{I} \rightarrow \mathcal{O})^n, G \subseteq E \times E$}
         \RightLabel{Sub}
-        \UnaryInfC{$\Gamma^{n+1}_{f} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in \Sigma}}e[\sigma_1\rightarrow\sigma_2]$}
+        \UnaryInfC{$\Gamma^{n+1}_{f} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in \Sigma}}e'\leftarrow e[\sigma_1\rightarrow\sigma_2], (e, e')$}
         \DisplayProof
         \vskip 1em
-        \AxiomC{$\Gamma^n_{f} \vdash E$}
+        \AxiomC{$\Gamma^n_{f} \vdash E, G$}
         \AxiomC{$f' \in E$}
         \RightLabel{Eq}
-        \BinaryInfC{$\Gamma^n_{f} \vdash f = f'$}
+        \BinaryInfC{$\Gamma^n_{f} \vdash f = f'$ by $G^{-n}(f')$}
         \DisplayProof
         \hskip 1em
         \AxiomC{$\Gamma^n_{f}\vdash E$}
@@ -193,25 +193,25 @@
     \begin{prooftree}
         \def\fCenter{\ \vdash\ }
         \Axiom$f \fCenter x  y  z$
-        \RightLabel{$R_1$}
-        \UnaryInf$\Gamma^0_{f} \fCenter \{xyz\}$
-        \RightLabel{$R_2$}
-        \UnaryInf$\Gamma^1_{f} \fCenter \{xyz, yxz, xzy\}$
-        \RightLabel{$R_2$}
-        \UnaryInf$\Gamma^2_{f} \fCenter \{xyz, yxz, xzy, yzx, zxy\}$
-        \RightLabel{$R_2$}
-        \UnaryInf$\Gamma^3_{f} \fCenter \{xyz, yxz, xzy, yzx, zxy, \mathbf{zyx}\}$
-        \RightLabel{$R_3$}
-        \UnaryInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash zyx \in E$
-        \RightLabel{$R_3$}
-        \UnaryInf$\Gamma^3_{f} \fCenter f=f'$
+        \RightLabel{Init}
+        \UnaryInf$\Gamma^0_{f} \fCenter \{xyz\}, \{(xyz, xyz)\}$
+        \RightLabel{Sub}
+        \UnaryInf$\Gamma^1_{f} \fCenter \{xyz, yxz, xzy\}, \{(xyz, xyz), (xyz, yxz), (xyz, xzy)\}$
+        \RightLabel{Sub}
+        \UnaryInf$\Gamma^2_{f} \fCenter \{xyz, \ldots, yzx, zxy\}, \{(xyz, xyz), \ldots, (yxz, yzx), (xzy, zxy)\}$
+        \RightLabel{Sub}
+        \UnaryInf$\Gamma^3_{f} \fCenter \{xyz, \ldots, zxy, \mathbf{zyx}\}, \{(xyz, xyz), \ldots, (yxz, yzx), (zxy,zyx)\}$
+%        \RightLabel{Eq}
+%        \UnaryInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash zyx \in E$
+        \RightLabel{Eq}
+        \UnaryInf$\Gamma^3_{f} \fCenter f=f'\text{ by }f' \subseteq G(zyx) \subseteq G^{2}(zxy) \subseteq G^{3}(xzy) \subseteq xyz = f$
     \end{prooftree}
 
-    Let us consider the complexity of checking $g\overset{?}{=}g'$ for arbitrary $g, g' \in \mathbb{Z}^k$ as $k$ grows. It is possible to show that $\Sigma$ terminates in
+    Let us consider the complexity of checking $g\overset{?}{=}g'$ for arbitrary $g, g' \in \mathbb{Z}^k$ with respect to $k$. It is possible to show that $\Sigma$ will terminate in
 
-    $$\mathcal{O}(g, g', k) = \underset{g' \in \mathbb{Z}^k}{\text{min }}\{n \mid \Gamma_g^n(g, g') = \Gamma_g^{n+1}(g, g')\}$$
+    $$\underset{g' \in \mathbb{Z}^k}{\text{max }}\{|E| \dashv \Gamma_g^n(g, g') = \Gamma_g^{n+1}(g, g')\} = \mathcal{O}(k!)$$
 
-    Now let us consider the modification $\Sigma' := \Sigma \cup \{(a, 1a)\}$. It is possible to show that $\Sigma'$ no longer terminates for arbitrary $g, g' \in \mathbb{Z}^k$.
+    Now let us consider the modification $\Sigma' := \Sigma \cup \{(a, 1a)\}$. It is possible to show that $\Sigma'$ no longer terminates for any $g, g' \in \mathbb{Z}^k$.
 
 %    We can decide equivalence axiomatically using rewrite systems. Knuth-Bendix completion is a semialgorithm...
 
