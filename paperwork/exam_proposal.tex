@@ -6,6 +6,7 @@
 
 % Packages
 \usepackage{amsmath}
+\usepackage[pdf]{graphviz}
 \usepackage{amssymb}
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
@@ -29,6 +30,7 @@
     \tableofcontents
     \pagebreak
 
+
     \section{Introduction}
 
     Historically, most knowledge was stored as natural language. A growing portion is now \textit{code}~\citep{allamanis2018survey}. Code is procedural knowledge intended for execution by a machine. Though it shares many statistical properties in common with natural language~\citep{hindle2012naturalness}, code is written in a formal language with a deterministic grammar and denotational semantics~\citep{pierce2010software}. We can use this specification to precisely reason about operational or procedural correctness.
@@ -42,6 +44,7 @@
     Graphs are a natural representation for both procedural knowledge~\citep{allamanis2017learning} and probabilistic reasoning~\citep{pearl2014probabilistic}. The language of linear algebra provides a unifying framework for many graph algorithms and program analysis tasks~\citep{kepner2011graph}. Recent evidence suggests probabilistic inference is tractable for a large class of graphical models~\citep{choi2020probabilistic}. And sparse matrix representations enable efficient processing of large graphs on modern graphics processors~\citep{kepner2016mathematical}.
 
     In this work, we will define exact and approximate equality and cover some deterministic and probabilistic algorithms for deciding it. We will then describe a few graph representations for encoding approximate procedural knowledge. Finally, we will discuss some opportunities for applying these ideas to search-based software engineering, in particular code search, vulnerability detection, fault localization and program repair.
+
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
@@ -121,16 +124,24 @@
         \centering
         \begin{tabular}{c|l|l|}
             \cline{2-3} & \textbf{Deterministic} & \textbf{Probabilistic} \\ \hline
-            \multicolumn{1}{|c|}{\textbf{Exact}}       & \begin{tabular}[c]{@{}l@{}}Type Checking\\ Model Checking\end{tabular}   & \begin{tabular}[c]{@{}l@{}}Variable Elimination\\Probabilistic Circuits \end{tabular} \\ \hline
-            \multicolumn{1}{|c|}{\textbf{Approximate}} & \begin{tabular}[c]{@{}l@{}}Software Testing\\Dynamic Analysis\end{tabular} & \begin{tabular}[c]{@{}l@{}}Monte Carlo Methods\\Bayesian Networks\end{tabular}                         \\ \hline
+            \multicolumn{1}{|c|}{\textbf{Exact}} & \begin{tabular}[c]{@{}l@{}}
+                                                       Type Checking\\ Model Checking
+            \end{tabular} & \begin{tabular}[c]{@{}l@{}}
+                                Variable Elimination\\Probabilistic Circuits
+            \end{tabular} \\ \hline
+            \multicolumn{1}{|c|}{\textbf{Approximate}} & \begin{tabular}[c]{@{}l@{}}
+                                                             Software Testing\\Dynamic Analysis
+            \end{tabular} & \begin{tabular}[c]{@{}l@{}}
+                                Monte Carlo Methods\\Bayesian Networks
+            \end{tabular} \\ \hline
         \end{tabular}
     \end{table}
 
     It is seldom the case that two semantically equal expressions are trivially equal: we must first perform some computation in order to establish their equality. In the exact setting, this usually requires a symbol manipulation procedure which might be summarized as follows:
 
     \begin{enumerate}
-    \item Rewrite: Either transform the proposition into normal form if possible, or enumerate valid rewrites using enumerative search, then
-    \item Compare: Perform some trivial (e.g. $\mathcal{O}(n)$) comparison.
+        \item Rewrite: Either transform the proposition into normal form if possible, or enumerate valid rewrites using enumerative search, then
+        \item Compare: Perform some trivial (e.g. $\mathcal{O}(n)$) comparison.
     \end{enumerate}
 
     Unfortunately, exact equality is known to be undecidable in general (G\"odel). From Turing, we know there is no way to construct a halting machine which accepts every equality and rejects every disequality in a universal language. Equality between two mathematical formulas is undecidable. (Richardson) Even equality in first-order logic is undecidable. Furthermore any nontrivial property is undecidable. (Rice)
@@ -144,7 +155,7 @@
         \item Sample: Build a probabilistic model and sample from its distribution
     \end{itemize}
 
-   First we will describe intensional and extensional equality, then progressively relax our definition to consider probabilistic equivalence.
+    First we will describe intensional and extensional equality, then progressively relax our definition to consider probabilistic equivalence.
 
 
 %    Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
@@ -188,32 +199,56 @@
         \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \neq f'$}
     \end{prooftree}
 
-    For example, suppose we are given $f \vdash x  y  z, f' \vdash z  y  x$ and the rewrite system $\Sigma := \{(a, a), (ab, ba)\}$. We can show $f = f'$ as follows:
+    \noindent For example, suppose we are given $f := x y z, f' := z y x$ and the rewrite system $\Sigma := \{(a, a), (ab, ba)\}$. We can verify that $f = f'$ under $\Sigma$ as follows:
 
     \begin{prooftree}
+        \def\fCenter{\ :=\ }
+        \Axiom$f \fCenter x y z$
         \def\fCenter{\ \vdash\ }
-        \Axiom$f \fCenter x  y  z$
         \RightLabel{Init}
         \UnaryInf$\Gamma^0_{f} \fCenter \{xyz\}, \{(xyz, xyz)\}$
         \RightLabel{Sub}
-        \UnaryInf$\Gamma^1_{f} \fCenter \{xyz, yxz, xzy\}, \{(xyz, xyz), (xyz, yxz), (xyz, xzy)\}$
+        \UnaryInf$\Gamma^1_{f} \fCenter \{\ldots, yxz, xzy\}, \{\ldots, (xyz, yxz), (xyz, xzy)\}$
         \RightLabel{Sub}
-        \UnaryInf$\Gamma^2_{f} \fCenter \{xyz, \ldots, yzx, zxy\}, \{(xyz, xyz), \ldots, (yxz, yzx), (xzy, zxy)\}$
+        \UnaryInf$\Gamma^2_{f} \fCenter \{\ldots, yzx, zxy\}, \{\ldots, (yxz, yxz), (xzy, xzy), (yxz, yzx), (xzy, zxy)\}$
         \RightLabel{Sub}
-        \UnaryInf$\Gamma^3_{f} \fCenter \{xyz, \ldots, zxy, \mathbf{zyx}\}, \{(xyz, xyz), \ldots, (yxz, yzx), (zxy,zyx)\}$
+        \UnaryInf$\Gamma^3_{f} \fCenter \{\ldots, \mathbf{zyx}\}, \{\ldots, (yzx, yzx), (zxy, zxy), (zxy,\textbf{zyx})\}$
 %        \RightLabel{Eq}
 %        \UnaryInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash zyx \in E$
         \RightLabel{Eq}
-        \UnaryInf$\Gamma^3_{f} \fCenter f=f'\text{ by }f' \subseteq G(zyx) \subseteq G^{2}(zxy) \subseteq G^{3}(xzy) \subseteq xyz = f$
+        \UnaryInf$\Gamma^3_{f} \fCenter f=f'\text{ by } G^{-3}(f':=zyx) \supseteq G^{-2}(zxy) \supset G^{-1}(xzy) \supset \{f := xyz\}$
     \end{prooftree}
 
-    Let us consider the complexity of checking $g\overset{?}{=}g'$ for arbitrary $g, g' \in \mathbb{Z}^k$ with respect to $k$. It is possible to show that $\Sigma$ will terminate in
+    \noindent We can visualize $G$ as a directed graph, omitting all loops. Note how each trajectory converges to the same term, a property known as $\textit{strong confluence}$.
 
-    $$\underset{g' \in \mathbb{Z}^k}{\text{max }}\{|E| \dashv \Gamma_g^n(g, g') = \Gamma_g^{n+1}(g, g')\} = \mathcal{O}(k!)$$
+    \hspace{12pt}\digraph[scale=0.5, center=true]{abc}{
+    rankdir=LR;
+    len=3;
+    node [shape=Mrecord];
 
-    Now let us consider the modification $\Sigma' := \Sigma \cup \{(a, 1a)\}$. It is possible to show that $\Sigma'$ no longer terminates for any $g, g' \in \mathbb{Z}^k$.
+    a [ label="xyz"; ]
+    b [ label="yxz"; ]
+    c [ label="xzy"; ]
+    d [ label="yzx"; ]
+    e [ label="zxy"; ]
+    f [ label="zyx"; ]
 
-%    We can decide equivalence axiomatically using rewrite systems. Knuth-Bendix completion is a semialgorithm...
+%    a -> a [label="Σ₀"]
+    a -> b [label="σ₁" minlen=2]
+    a -> c [label="σ₁" minlen=2]
+    b -> d [label="σ₁" minlen=2]
+    c -> e [label="σ₁" minlen=2]
+    e -> f [label="σ₁" minlen=2]
+    d -> f [label="σ₁" minlen=2]
+    }
+
+
+    \noindent Consider the runtime complexity of checking $g\overset{?}{=}g'$ under $\Sigma$ for arbitrary $k \in \mathbb{N}, g, g' \in \mathbb{Z}^k$. It can be shown the above procedure requires at most
+
+    $$\underset{g \in \mathbb{Z}^k}{\text{max}}\{n \mid \Gamma_g^n = \Gamma_g^{n+1}\} = \mathcal{O}(k) \text{ time and } \underset{i \in [0, n]}{\text{max}}\{ \Gamma_g^n \vdash |E| \} = \mathcal{O}(k!) \text{ space}$$
+
+    \noindent Termination is not guaranteed for arbitrary $\Sigma$. Consider $\Sigma' := \Sigma \cup \{(1a, a)\}$. While $\Sigma'$ is terminating, it is trivial to show that $\Sigma'':=\Sigma \cup \{(a, 1a)\}$ is not.
+
 
     \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
 
@@ -270,9 +305,12 @@
 
     We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them extensionally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
-    \pagebreak\section{From computation to knowledge graphs}\label{sec:graphs}
+    \pagebreak
 
-   % https://en.wikipedia.org/wiki/Duality_(optimization)
+
+    \section{From computation to knowledge graphs}\label{sec:graphs}
+
+    % https://en.wikipedia.org/wiki/Duality_(optimization)
 
     Duality is an important concept in mathematical optimization. Many optimization problems can be seen as dual to each other: KKT and SVM duality. Duality occurs in automatic differentiation with dual number arithmetic.
 
@@ -315,7 +353,10 @@
 %
 %    Many algorithms can be implemented as message passing on graphs...
 
-    \pagebreak\section{From procedural knowledge to code}\label{sec:applications}
+    \pagebreak
+
+
+    \section{From procedural knowledge to code}\label{sec:applications}
 
     Experts typically encode their knowledge using pen and paper and leave the rest of us mere mortals to decipher it. It is somewhat tedious, but generally possible for skilled programmers to translate textual information into computer programs. Unfortunately, there are many equivalent ways to translate text into code -- the same algorithm implemented in the same language by different authors is seldom written the same way. Usually we end up reinventing the wheel. So we need some mechanism to detect exact or approximate equality in procedural knowledge.
 
@@ -323,7 +364,7 @@
 
     Short of that, can we have some kind of \textit{bibliotheca universalis} containing many human-written code examples, which a human could select from manually (a la Hoogle~\citep{james2020digging}) -- or even better -- which could be linked to during compilation. We can think of big code as a kind of procedural knowledge system, describing common data transformations. We would like a way to extract common snippets and reason about those transformations, for example to detect similar procedures or optimize an existing procedure.
 
-    Knowledge systems or \textit{ontologies} are a collection of related facts which have been established by human beings. For example, we can treat mathematics as a knowledge base of rewrite rules. This has been successfully operationalized in Theano~\citep{bergstra2010theano}, Kotlin$\nabla$~\citep{considine2019kotlingrad} and other DSLs. More broadly, we can also think of constructive mathematics libraries like Metamath~\citep{megill2006metamath},  Rubi~\citep{rich2009knowledge}, Probonto~\citep{swat2016probonto} and KMath~\citep{nozik2019kotlin} as working towards this same goal.
+    Knowledge systems or \textit{ontologies} are a collection of related facts which have been established by human beings. For example, we can treat mathematics as a knowledge base of rewrite rules. This has been successfully operationalized in Theano~\citep{bergstra2010theano}, Kotlin$\nabla$~\citep{considine2019kotlingrad} and other DSLs. More broadly, we can also think of constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Probonto~\citep{swat2016probonto} and KMath~\citep{nozik2019kotlin} as working towards this same goal.
 
     In knowledge graphs, approximate equality is known as entity \textit{alignment} or \textit{matching}. With a probabilistic matching algorithm, we could accurately detect near duplicates in a codebase. We could retrieve code samples to assist developers writing unfamiliar code. And we could search for bugs in code or fixes from a knowledge base to repair them. Probabilistic reasoning can be gainfully employed on these and many related tasks.
 
@@ -342,10 +383,10 @@
     Given a piece of code and the surrounding context (e.g. in an IDE or compiler), search a database for the most similar graphs, then to recommend them to the user (e.g. fixes or repairs for compiler error messages), or suggest some relevant examples to help the user write some incomplete piece of code.It is similar to a string edit distance, but for graph structured objects. There are a few pieces to this:
 
     \begin{enumerate}
-    \item Semantic segmentation (what granularity to slice?)
-    \item Graph matching (how to measure similarity?)
-    \item Graph search (how to search efficiently?)
-    \item Recommendation (how to integrate into user's code)
+        \item Semantic segmentation (what granularity to slice?)
+        \item Graph matching (how to measure similarity?)
+        \item Graph search (how to search efficiently?)
+        \item Recommendation (how to integrate into user's code)
     \end{enumerate}
 
     The rewriting mechanism is similar to a string edit distance, but for graphs. One way of measuring distance could be measuring the shortest number of steps for rewriting a graph A to graph B, i.e. the more "similar" these two graphs are the fewer rewriting steps it should take.
