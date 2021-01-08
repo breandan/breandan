@@ -70,7 +70,7 @@
     \end{cases}
     $$
 
-    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-defined everywhere on $\mathbb{R}^2$. Here we encounter an important distinction between intensional and extensional equality. Unlike symbolic expressions, humans have invented many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution with mass concentrated in an infinitesimally small region. Nevertheless, they represent convenient abstractions for modeling many empirically observable phenomena.
+    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-defined everywhere on $\mathbb{R}^2$. Here we encounter an important distinction between intensional and extensional equality. Unlike symbolic expressions, humans have invented many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution with mass concentrated in an infinitesimally small region. Nevertheless, they represent convenient abstractions for modeling many physical and computational processes.
 
     Neither $\nabla\delta_k$ nor $\delta_d$ are possible to implement on a computer without loss of generality. How does one compute $\nabla\delta_k$ without knowing $x$ or $y$ a priori? What value of $\infty$ is sufficient to define $\delta_d$? To allow a more flexible definition of the $=$ operator, we require a function which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
 
@@ -137,10 +137,10 @@
         \end{tabular}
     \end{table}
 
-    It is seldom the case that two semantically equal expressions are trivially equal: we must first perform some computation in order to establish their equality. In the exact setting, this usually requires a symbol manipulation procedure which might be summarized as follows:
+    It is seldom the case that two semantically equal expressions are trivially equal: we must first perform some computation to establish their equality. In the exact setting, this procedure might be summarized as follows:
 
     \begin{enumerate}
-        \item Rewrite: Either transform the proposition into normal form if possible, or enumerate valid rewrites using enumerative search, then
+        \item Rewrite: Either transform the proposition into normal form if one exists, or enumerate valid rewrites using an enumerative search, then
         \item Compare: Perform some trivial (e.g. $\mathcal{O}(n)$) comparison.
     \end{enumerate}
 
@@ -148,14 +148,14 @@
 
     %Is there any left hope? Yes! (Felleisen)
 
-    Tractability may be related to, but is not contingent upon decidability. When decidable, equality may be intractable in practice, and languages where equality is undecidable may have decidable fragments. Even when exact equality is intractable, we may be able to construct a probabilistic decision algorithm, or semidecision procedure which terminates for all or most practical purposes. The latter approaches fall into two broad categories:
+    Tractability may be related to, but is not contingent upon decidability. When decidable, equality may be intractable in practice, and languages where equality is undecidable may have decidable fragments. But even when exact equality is intractable, we may be able to construct a probabilistic decision algorithm, or semidecision procedure which terminates for all or most practical purposes. The latter approaches fall into two broad categories:
 
     \begin{itemize}
         \item Execute: Evaluate the program by running it on a small set of inputs
         \item Sample: Build a probabilistic model and sample from its distribution
     \end{itemize}
 
-    First we will describe intensional and extensional equality, then progressively relax our definition to consider probabilistic equivalence.
+    First we will describe our notion of intensional and extensional equality, then progressively relax our definition to consider probabilistic equivalence.
 
 
 %    Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
@@ -172,87 +172,115 @@
 
     \subsection{Intensional equivalence}\label{subsec:intensional-equivalence}
 
-    Let $\Sigma: (\mathcal{I} \rightarrow \mathcal{O}) \times (\mathcal{I}\rightarrow \mathcal{O})$ be a relation on a family of functions which are closed under composition. We say that two functions $f, f': \mathcal{I} \rightarrow \mathcal{O}$ are intensionally equal or disequal under $\Sigma$ if we can establish $f \overset{?}{=} f'$ w.r.t.:
+    Let $\Sigma: (\mathcal{I} \rightarrow \mathcal{R}) \times (\mathcal{I}\rightarrow \mathcal{R})$ be a binary relation on functions which are closed under composition. We say that two functions $f, f' \in \mathcal{I} \rightarrow \mathcal{R}$ are intensionally equal or disequal under $\Sigma$ if we can establish $(f,f') \in \Sigma^*$ via:
 
     \begin{prooftree}
-        \AxiomC{$f: \mathcal{I} \rightarrow \mathcal{O}$}
-        \RightLabel{Init}
+        \AxiomC{$f: \mathcal{I} \rightarrow \mathcal{R}$}
+        \RightLabel{\textsc{Init}}
         \UnaryInfC{$\Gamma^0_{f} \vdash \{f\}, \{(f, f)\}$}
 %        \UnaryInfC{\textit{Commutivity}}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma^{n}_{f} \vdash E \subseteq (\mathcal{I} \rightarrow \mathcal{O})^n, G \subseteq E \times E$}
-        \RightLabel{Sub}
+        \AxiomC{$\Gamma^{n}_{f} \vdash E \subseteq (\mathcal{I} \rightarrow \mathcal{R})^n, G \subseteq E \times E$}
+        \RightLabel{\textsc{Sub}}
         \UnaryInfC{$\Gamma^{n+1}_{f} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in \Sigma}}e'\leftarrow e[\sigma_1\rightarrow\sigma_2], (e, e')$}
         \DisplayProof
         \vskip 1em
         \AxiomC{$\Gamma^n_{f} \vdash E, G$}
         \AxiomC{$f' \in E$}
-        \RightLabel{Eq}
+        \RightLabel{\textsc{Eq}}
         \BinaryInfC{$\Gamma^n_{f} \vdash f = f'$ by $G^{-n}(f')$}
         \DisplayProof
         \hskip 1em
         \AxiomC{$\Gamma^n_{f}\vdash E$}
         \AxiomC{$\Gamma^{n+1}_{f}\vdash E$}
         \AxiomC{$f'\notin E$}
-        \RightLabel{Neq}
+        \RightLabel{\textsc{Neq}}
         \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \neq f'$}
     \end{prooftree}
 
-    \noindent For example, suppose we are given $f := x y z, f' := z y x$ and the rewrite system $\Sigma := \{(a, a), (ab, ba)\}$. We can verify that $f = f'$ under $\Sigma$ as follows:
+    \noindent For example, suppose we are given $f := a b c, f' := c b a$ and the rewrite system $\Sigma := \{(a, a), (ab, ba)\}$. Indeed, we can establish $\textsc{Eq}[f, f']$ as follows:
 
     \begin{prooftree}
         \def\fCenter{\ :=\ }
-        \Axiom$f \fCenter x y z$
+        \Axiom$f \fCenter a b c$
         \def\fCenter{\ \vdash\ }
-        \RightLabel{Init}
-        \UnaryInf$\Gamma^0_{f} \fCenter \{xyz\}, \{(xyz, xyz)\}$
-        \RightLabel{Sub}
-        \UnaryInf$\Gamma^1_{f} \fCenter \{\ldots, yxz, xzy\}, \{\ldots, (xyz, yxz), (xyz, xzy)\}$
-        \RightLabel{Sub}
-        \UnaryInf$\Gamma^2_{f} \fCenter \{\ldots, yzx, zxy\}, \{\ldots, (yxz, yxz), (xzy, xzy), (yxz, yzx), (xzy, zxy)\}$
-        \RightLabel{Sub}
-        \UnaryInf$\Gamma^3_{f} \fCenter \{\ldots, \mathbf{zyx}\}, \{\ldots, (yzx, yzx), (zxy, zxy), (zxy,\textbf{zyx})\}$
+        \RightLabel{\textsc{Init}}
+        \UnaryInf$\Gamma^0_{f} \fCenter \{abc\}, \{(abc, abc)\}$
+        \RightLabel{\textsc{Sub}}
+        \UnaryInf$\Gamma^1_{f} \fCenter \{\ldots, bac, acb\}, \{\ldots, (abc, bac), (abc, acb)\}$
+        \RightLabel{\textsc{Sub}}
+        \UnaryInf$\Gamma^2_{f} \fCenter \{\ldots, bca, cab\}, \{\ldots, (bac, bac), (acb, acb), (bac, bca), (acb, cab)\}$
+        \RightLabel{\textsc{Sub}}
+        \UnaryInf$\Gamma^3_{f} \fCenter \{\ldots, \mathbf{cba}\}, \{\ldots, (bca, bca), (cab, cab), (cab,\textbf{cba})\}$
 %        \RightLabel{Eq}
-%        \UnaryInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash zyx \in E$
-        \RightLabel{Eq}
-        \UnaryInf$\Gamma^3_{f} \fCenter f=f'\text{ by } G^{-3}(f':=zyx) \supseteq G^{-2}(zxy) \supset G^{-1}(xzy) \supset \{f := xyz\}$
+%        \UnarbInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash cba \in E$
+        \RightLabel{\textsc{Eq}}
+        \UnaryInf$\Gamma^3_{f} \fCenter f=f'\text{ bb } G^{-3}(f':=cba) = \{f := abc\}$
     \end{prooftree}
 
-    \noindent We can visualize $G$ as a directed graph, omitting all loops. Note how each trajectory converges to the same term, a property known as $\textit{strong confluence}$.
+    \noindent We can visualize $G$ as a directed graph, omitting all loops. Notice how each path converges to the same term, a property known as $\textit{strong confluence}$.
 
     \hspace{12pt}\digraph[scale=0.5, center=true]{abc}{
     rankdir=LR;
     len=3;
     node [shape=Mrecord];
 
-    a [ label="xyz"; ]
-    b [ label="yxz"; ]
-    c [ label="xzy"; ]
-    d [ label="yzx"; ]
-    e [ label="zxy"; ]
-    f [ label="zyx"; ]
+    a [ label="abc"; ]
+    b [ label="bac"; ]
+    c [ label="acb"; ]
+    d [ label="bca"; ]
+    e [ label="cab"; ]
+    f [ label="cba"; ]
 
 %    a -> a [label="Σ₀"]
-    a -> b [label="σ₁" minlen=2]
-    a -> c [label="σ₁" minlen=2]
-    b -> d [label="σ₁" minlen=2]
-    c -> e [label="σ₁" minlen=2]
-    e -> f [label="σ₁" minlen=2]
-    d -> f [label="σ₁" minlen=2]
+    a -> b [label="Σ₁" minlen=2]
+    a -> c [label="Σ₁" minlen=2]
+    b -> d [label="Σ₁" minlen=2]
+    c -> e [label="Σ₁" minlen=2]
+    e -> f [label="Σ₁" minlen=2]
+    d -> f [label="Σ₁" minlen=2]
     }
 
+    \noindent Let $|\mathcal{I}|, |\Sigma^*| \in \mathbb{N}$ and consider the complexity of $\textsc{Neq}[g, g'], \forall g\neq g' \in \mathcal{I} \rightarrow \mathcal{R}$. Supposing $\mathcal{O}_{\textsc{Sub}}(1)$, it can be shown the above procedure will terminate in
 
-    \noindent Consider the runtime complexity of checking $g\overset{?}{=}g'$ under $\Sigma$ for arbitrary $k \in \mathbb{N}, g, g' \in \mathbb{Z}^k$. It can be shown the above procedure requires at most
+    $$\underset{|\mathcal{I}|}{\text{min}}\{n \mid \Gamma_g^n = \Gamma_g^{n+1}\} = \Theta(|\mathcal{I}|) \text{ time, } \underset{i \in [0, n]}{\text{max}}\{|E| \mid \Gamma_g^i \vdash E\} = \Theta(|\mathcal{I}|!) \text{ space}$$
 
-    $$\underset{g \in \mathbb{Z}^k}{\text{max}}\{n \mid \Gamma_g^n = \Gamma_g^{n+1}\} = \mathcal{O}(k) \text{ time and } \underset{i \in [0, n]}{\text{max}}\{ \Gamma_g^n \vdash |E| \} = \mathcal{O}(k!) \text{ space}$$
-
-    \noindent Termination is not guaranteed for arbitrary $\Sigma$. Consider $\Sigma' := \Sigma \cup \{(1a, a)\}$. While $\Sigma'$ is terminating, it is trivial to show that $\Sigma'':=\Sigma \cup \{(a, 1a)\}$ is not.
-
+    \noindent Termination is not always guaranteed, e.g. $\Sigma' := \Sigma \cup \{(a, 1a)\}$. While trivial to show for $\Sigma'$, termination under arbitrary $\Sigma$ is known to be undecidable.
 
     \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
 
-    We say $f_1$ and $f_2$ are extensionally equivalent if $\forall i \in \mathcal{I}, f_1(i)=f_2(i)$, or in other words, ``Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$.
+    As we have seen, the procedure described in Section ~\ref{subsec:intensional-equivalence} is limited by $|\mathcal{I}|$. For intensional equivalence $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}_{g=g'}[\Theta_\textsc{Eq}]$ is tractable. For extensional equivalence we will see the opposite holds, ceteris paribus.
+
+    \begin{prooftree}
+        \AxiomC{$\Gamma \vdash f: \mathcal{I} \rightarrow \mathcal{R}$}
+        \AxiomC{$\Gamma \vdash r, r' \in \mathcal{R}$}
+        \AxiomC{$|\mathcal{R}| \in \mathbb{N}$}
+        \RightLabel{\textsc{Call}}
+        \BinaryInfC{$\Gamma \vdash f(i): \mathcal{R}$}
+%        \UnaryInfC{\textit{Commutivity}}
+        \DisplayProof
+        \hskip 1em
+        \RightLabel{\textsc{Sub}}
+        \AxiomC{$\Gamma \vdash f: \mathcal{I} \rightarrow \mathcal{R}$}
+        \AxiomC{$f(i)\leadsto r$}
+%        \AxiomC{$i: \mathcal{I}$}
+        \BinaryInfC{$\Gamma \vdash f'\leftarrow f[e(i)\rightarrow r], (e, e')$}
+        \DisplayProof
+        \vskip 1em
+        \AxiomC{$\Gamma \vdash \forall i \in \mathcal{I}, \textsc{Eq}(f(i), f'(i)) $}
+        \RightLabel{\textsc{Eq}}
+        \UnaryInfC{$\Gamma \vdash f = f'$}
+        \DisplayProof
+        \hskip 1em
+        \AxiomC{$\Gamma \vdash \exists i \in \mathcal{I}, \textsc{Neq}(f(i), f'(i)) $}
+        \RightLabel{\textsc{Neq}}
+        \UnaryInfC{$\Gamma \vdash f \neq f'$}
+    \end{prooftree}
+
+    Suppose $\mathcal{R}$ has a normal form such that $\mathcal{O}(r_1\overset{?}{=}r_2) = \mathcal{O}(1), \forall r_1, r_2 \in \mathcal{R}$.
+
+    ``Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$.
 
     % big step semantics
 
