@@ -48,7 +48,7 @@
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
-    Equality is a highly overloaded notation in mathematics and computer science. Loosely speaking, $x = y$ denotes when we can replace, or are replacing one expression $x$, with another, $y$. Typically, we consider two expressions to be equal if there is no deterministic procedure which can tell them apart.
+    Equality is a highly overloaded notation in mathematics and computer science. Loosely speaking, $x = y$ denotes when we can replace, or are replacing one expression $x$, with another, $y$. Typically, we consider two expressions to be equal if there is no decision procedure which can tell them apart.
 
     The trouble is, equality is not a differentiable operator. If two expressions are unequal, the derivative alone cannot tell us how to adjust one in order to bring them closer together. Consider the Kronecker $\delta$-function, $\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
 
@@ -70,7 +70,7 @@
     \end{cases}
     $$
 
-    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-defined everywhere on $\mathbb{R}^2$. Here we encounter an important distinction between intensional and extensional equality. Unlike symbolic expressions, humans have invented many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution with mass concentrated in an infinitesimally small region. Nevertheless, they represent convenient abstractions for modeling many physical and computational processes.
+    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-behaved everywhere on $\mathbb{R}^2$. Here we encounter an important distinction between intensional and extensional equality. Unlike symbolic expressions, humans have invented many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution with mass concentrated in an infinitesimally small region. Nevertheless, they represent convenient abstractions for modeling many physical and computational processes.
 
     Neither $\nabla\delta_k$ nor $\delta_d$ are possible to implement on a computer without loss of generality. How does one compute $\nabla\delta_k$ without knowing $x$ or $y$ a priori? What value of $\infty$ is sufficient to define $\delta_d$? To allow a more flexible definition of the $=$ operator, we require a function which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
 
@@ -199,7 +199,7 @@
         \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \neq f'$}
     \end{prooftree}
 
-    \noindent For example, suppose we are given $f := a b c, f' := c b a$ and the rewrite system $\Sigma := \{(a, a), (ab, ba)\}$. Indeed, we can establish $\textsc{Eq}[f, f']$ as follows:
+    \noindent For example, suppose we are given $f := a b c, f' := c b a$ and the rewrite system $\Sigma := \{(a, a), (ab, ba)\}$. Indeed, $\textsc{Eq}[f, f']$ can be established as follows:
 
     \begin{prooftree}
         \def\fCenter{\ :=\ }
@@ -216,7 +216,7 @@
 %        \RightLabel{Eq}
 %        \UnarbInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash cba \in E$
         \RightLabel{\textsc{Eq}}
-        \UnaryInf$\Gamma^3_{f} \fCenter f=f'\text{ bb } G^{-3}(f':=cba) = \{f := abc\}$
+        \UnaryInf$\Gamma^3_{f} \fCenter f=f'\text{ by } G^{-3}(f':=cba) = \{f := abc\}$
     \end{prooftree}
 
     \noindent We can visualize $G$ as a directed graph, omitting all loops. Notice how each path converges to the same term, a property known as $\textit{strong confluence}$.
@@ -242,15 +242,15 @@
     d -> f [label="Σ₁" minlen=2]
     }
 
-    \noindent Let $|\mathcal{I}|, |\Sigma^*| \in \mathbb{N}$ and consider the complexity of $\textsc{Neq}[g, g'], \forall g\neq g' \in \mathcal{I} \rightarrow \mathcal{R}$. Supposing $\mathcal{O}_{\textsc{Sub}}(1)$, it can be shown the above procedure will terminate in
+    \noindent Let us suppose $|\mathcal{I}|, |\Sigma^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[g, g'], \forall g = g' \in \mathcal{I} \rightarrow \mathcal{R}$. It can be shown the above procedure requires:
 
-    $$\underset{|\mathcal{I}|}{\text{min}}\{n \mid \Gamma_g^n = \Gamma_g^{n+1}\} = \Theta(|\mathcal{I}|) \text{ time, } \underset{i \in [0, n]}{\text{max}}\{|E| \mid \Gamma_g^i \vdash E\} = \Theta(|\mathcal{I}|!) \text{ space}$$
+    $$\mathcal{O}_{\textsc{Eq}}(\underset{i \leq n}{\text{max }}\underset{n}{\text{min}}\{|E| \mid \Gamma^i_g \vdash E, \Gamma_g^n = \Gamma_g^{n+1}\})$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{I}|!) \text{ for } \Sigma.$$
 
-    \noindent Termination is not always guaranteed, e.g. $\Sigma' := \Sigma \cup \{(a, 1a)\}$. While trivial to show for $\Sigma'$, termination under arbitrary $\Sigma$ is known to be undecidable.
+    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}_{g=g'}[\Theta_\textsc{Eq}]$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Sigma' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Sigma$ are known to be undecidable~\citep{baader1999term}.
 
     \subsection{Extensional equivalence}\label{subsec:extensional-equivalence}
 
-    As we have seen, the procedure described in Section ~\ref{subsec:intensional-equivalence} is limited by $|\mathcal{I}|$. For intensional equivalence $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}_{g=g'}[\Theta_\textsc{Eq}]$ is tractable. For extensional equivalence we will see the opposite holds, ceteris paribus.
+    Clearly, the procedure defined in \S~\ref{subsec:intensional-equivalence} is severely limited by $|\mathcal{I}|$ and $|\Sigma^*|$. While equality may be tractable to establish, disequality remains a challenge. For extensional equivalence, we will see the opposite holds, ceteris paribus.
 
     \begin{prooftree}
         \AxiomC{$\Gamma \vdash f: \mathcal{I} \rightarrow \mathcal{R}$}
@@ -280,7 +280,7 @@
 
     Suppose $\mathcal{R}$ has a normal form such that $\mathcal{O}(r_1\overset{?}{=}r_2) = \mathcal{O}(1), \forall r_1, r_2 \in \mathcal{R}$.
 
-    ``Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively easy: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$.
+    ``Do $f_1$ and $f_2$ behave in the same way over all inputs?" While extensional equality is difficult to show if $|\mathcal{I}|$ is large, detecting inequality for pairs of random functions is relatively straightforward: we can simply search for $\hat i \in \mathcal{I}$ such that $f_1(\hat i) \neq f_2(\hat i)$.
 
     % big step semantics
 
