@@ -48,7 +48,7 @@
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
-    Equality is a highly overloaded notation in mathematics and computer science. Loosely speaking, $x = y$ denotes when we can replace, or are replacing one expression $x$, with another, $y$. Typically, we consider two expressions to be equal if there is no decision procedure which can tell them apart.
+    Equality is a highly overloaded notation in mathematics and computer science. Loosely speaking, $x = y$ denotes that we may replace, or are replacing one expression $x$, with another, $y$. Typically, we consider two expressions to be equal if there is no decision procedure which can tell them apart.
 
     The trouble is, equality is not a differentiable operator. If two expressions are unequal, the derivative alone cannot tell us how to adjust one in order to bring them closer together. Consider the Kronecker $\delta$-function, $\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
 
@@ -66,9 +66,9 @@
     \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)\delta(x-a,y-b)d(x, y) = f(a,b)
     $$
 
-    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-behaved everywhere on $\mathbb{R}^2$. Here we encounter an important distinction between intensional and extensional equality. Unlike symbolic expressions, humans have invented many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution with mass concentrated in an infinitesimally small region. Nevertheless, they represent convenient abstractions for modeling many physical and computational processes.
+    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-behaved everywhere on $\mathbb{R}^2$. Here we encounter an important distinction between intensional and computational equality. Unlike symbolic expressions, humans have invented many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution concentrated on a set of measure zero. Nevertheless, they represent convenient abstractions for modeling many physical and computational processes.
 
-    Neither $\nabla\delta_k$ nor $\delta_d$ are possible to implement on a computer without loss of generality. How does one compute $\nabla\delta_k$ without knowing $x$ or $y$ a priori? What value of $\infty$ is sufficient to define $\delta_d$? To allow a more flexible definition of the $=$ operator, we require a function which approximates the logical properties of $\delta_k$, but which can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
+    Neither $\nabla\delta_k$ nor $\delta_d$ are possible to construct explicitly. How does one compute $\nabla\delta_k$ without knowing $x$ or $y$, or $\delta_d$ without knowing $f$ a priori? To allow a more flexible definition of the $=$ operator, we require a function which approximates the logical properties of $\delta_k$, but can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -136,8 +136,8 @@
     It is seldom the case that two semantically equal expressions are trivially equal: we must first perform some computation to establish their equality. In the exact setting, this procedure might be summarized as follows:
 
     \begin{enumerate}
-        \item Rewrite: Either transform the proposition into normal form if one exists, or enumerate valid rewrites using an enumerative search, then
-        \item Compare: Perform some trivial (e.g. $\mathcal{O}(n)$) comparison.
+        \item Rewrite: Either enumerate valid rewrites using enumerative search or reduce the proposition into normal form if possible, then,
+        \item Compare: Perform a computationally trivial (e.g. $\mathcal{O}(n)$) comparison.
     \end{enumerate}
 
     Unfortunately, exact equality is known to be undecidable in general (G\"odel). From Turing, we know there is no way to construct a halting machine which accepts every equality and rejects every disequality in a universal language. Equality between two mathematical formulas is undecidable. (Richardson) Even equality in first-order logic is undecidable. Furthermore any nontrivial property is undecidable. (Rice)
@@ -151,8 +151,7 @@
         \item Sample: Build a probabilistic model and sample from its distribution
     \end{itemize}
 
-    First we will describe our notion of intensional and extensional equality, then progressively relax our definition to consider probabilistic equivalence.
-
+    In the following section, we will introduce two compatible theories corresponding to intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equality, then expand our definition to include approximate or probabilistic equivalence. In so doing, we will see the tradeoff between complexity and exactness.
 
 %    Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
 %
@@ -246,9 +245,9 @@
 
     \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}_{g=g'}[\Theta_\textsc{Eq}]$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Sigma' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Sigma$ are known to be undecidable~\citep{baader1999term}.
 
-    \subsection{Extensional equivalence}\label{subsec:ex-eq}
+    \subsection{Computational equivalence}\label{subsec:comp-eq}
 
-    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is severely limited by $|\mathcal{I}|$ and $\Sigma$. While equality may be tractable to establish, disequality is certainly an obstacle. For extensional equivalence, we will see the opposite holds, ceteris paribus.
+    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is severely limited by $|\mathcal{I}|$ and $\Sigma$. While equality may be tractable to establish, disequality remains an obstacle. For computational equivalence, we will see the opposite holds, ceteris paribus.
 
     \begin{prooftree}
         \AxiomC{$\Gamma \vdash fg: \mathcal{I} \rightarrow \mathcal{R}$}
@@ -340,7 +339,7 @@
     c -> d [label="𝓡"]
     }
 
-    \noindent Suppose that $\mathcal{O}_{\textsc{Eq}}(r_1, i_2) = \mathcal{O}(1), \forall i_1, i_2 \in \mathcal{I}$...
+    \noindent Suppose that $\mathcal{O}_{\textsc{Inv}}(i) = \mathcal{O}(1)$ for all $i \in \mathcal{I}$.
 
     We can test using property-based / metamorphic testing. Some strategies:
 
@@ -348,30 +347,26 @@
 
     Metamorphic testing
 
-    \subsection{Contextual Equivalence}
-
-    As defined, both intensional (\S~\ref{subsec:in-eq}) and extensional (\S~\ref{subsec:ex-eq}) definitions are implicitly circular. Is there any way to fix this problem, avoiding all reference to inclusion? What if we had a way to observe certain intermediate effects?
+%    \subsection{Contextual Equivalence}
+%
+%    As defined, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) computational are implicitly circular. Is there any way to fix this problem, avoiding all reference to inclusion? What if we had a way to observe certain intermediate effects?
 
 %    http://www.cs.ox.ac.uk/people/samuel.staton/papers/fossacs-2019.pdf
 %    http://users.ox.ac.uk/~scro3229/documents/birmingham-talk.pdf
 
-    Two terms $\textt{M}$ and $\textt{N}$ are contextually equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts.
+%    Two terms $\textt{M}$ and $\textt{N}$ are contextually equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts.
 
-    This is kinda like word embeddings.
+%    This is kinda like word embeddings.
 
-    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
+%    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
-    We can define semantic equality in our setting using word embeddings.
-
-%    Mathematics seems to be obsessed with completeness, much to its detriment. Completeness invades every definition. Definitions must hold over all cases, including the adversarial ones. This is good, because it encourages rigor in a highly adversarial field. But we must not confuse rigor with truth.
-%
-%    The truth is, most people prefer useful abstractions to complete specifications. Most people just want to write dependable software.
-%
-%    To be more inclusive of our audience, we should optimize our definitions for consistency, at the expense of completeness.
+%    We can define semantic equality in our setting using word embeddings.
 
     \subsection{Probabilistic Equivalence}\label{sec:probabilistic}
 
-    How do we know when we are approaching equality? We can use a distance metric.
+    While precise, the prior definitions of equality are far too rigid in practice. The spaces involved are either intractably large or lack formal semantics. We now turn to a language for reasoning about probabilistic equivalence.
+
+%    How do we know when we are approaching equality? We can use a distance metric.
 
     % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
 
@@ -391,7 +386,7 @@
 
     TODO: Define probability distributions, integration, kernel functions and metrics.
 
-    We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them extensionally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
+    We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
     \pagebreak
 
