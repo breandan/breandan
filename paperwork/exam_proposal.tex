@@ -167,10 +167,10 @@
 
     \subsection{Intensional equivalence}\label{subsec:in-eq}
 
-    Let $\Sigma \subseteq \mathcal{F} \times \mathcal{F}$ be an equivalence relation on representable functions which are closed under composition. We say two representations $f, f' \in \mathcal{I} \rightarrow \mathcal{R}$ are intensionally equal or disequal under $\Sigma$ if we can establish $(f,f') \in \Sigma^*$.
+    Let $\Omega \subseteq \mathcal{F} \times \mathcal{F}$ be an equivalence relation on representable functions which are closed under composition. We say two representations $f, f' \in \mathcal{I} \rightarrow \mathcal{R}$ are intensionally equal or disequal under $\Omega$ if we can establish $(f,f') \in \Omega^*$.
 
     \begin{prooftree}
-        \AxiomC{$f: \mathcal{I \rightarrow R}$}
+        \AxiomC{$f: \mathcal{I \rightarrow R} \in \Gamma^0$}
         \RightLabel{\textsc{Init}}
         \UnaryInfC{$\Gamma^0_{f} \vdash \{f\}, \{(f, f)\}$}
 %        \UnaryInfC{\textit{Commutivity}}
@@ -178,7 +178,7 @@
         \hskip 1em
         \AxiomC{$\Gamma^{n}_{f} \vdash E \subseteq \mathcal{F}, G \subseteq E \times E$}
         \RightLabel{\textsc{Sub}}
-        \UnaryInfC{$\Gamma^{n+1}_{f} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in \Sigma}}e'\leftarrow e[\sigma_1\rightarrow\sigma_2], (e, e')$}
+        \UnaryInfC{$\Gamma^{n+1}_{f} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in \Omega}}e'\leftarrow e[\sigma_1\rightarrow\sigma_2], (e, e')$}
         \DisplayProof
         \vskip 1em
         \AxiomC{$\Gamma^n_{f} \vdash E, G$}
@@ -187,18 +187,18 @@
         \BinaryInfC{$\Gamma^n_{f} \vdash f = f'$ by $G^{-n}(f')$}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma^n_{f}\vdash E$}
+        \AxiomC{$\Gamma^n_{f} \vdash E$}
         \AxiomC{$\Gamma^{n+1}_{f}\vdash E$}
         \AxiomC{$f'\notin E$}
         \RightLabel{\textsc{Neq}}
         \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \neq f'$}
     \end{prooftree}
 
-    \noindent For example, suppose we are given $f: \{a, b, c\} \mapsto a b c, f': \{a, b, c\} \mapsto c b a$ and $\Sigma := \{(a, a), (ab, ba)\}$. Indeed, $\textsc{Eq}[f, f']$ can be established as follows:
+    \noindent For example, suppose we are given $f: \{a, b, c\} \mapsto a b c, f': \{a, b, c\} \mapsto c b a$ and $\Omega := \{(a, a), (ab, ba)\}$. Indeed, $\textsc{Eq}[f, f']$ can be established as follows:
 
-    \begin{prooftree}
+    \vspace{-10pt}\begin{prooftree}
         \def\fCenter{\ := \ }
-        \Axiom$f \fCenter a b c$
+        \Axiom$f \fCenter a b c \in \Gamma^0$
         \def\fCenter{\ \vdash\ }
         \RightLabel{\textsc{Init}}
         \UnaryInf$\Gamma^0_{f} \fCenter \{abc\}, \{(abc, abc)\}$
@@ -231,79 +231,82 @@
     f [ label="cba"; ]
 
 %    a -> a [label="Σ₀"]
-    a -> b [label=<Σ<SUB>1</SUB>> minlen=2]
-    a -> c [label=<Σ<SUB>1</SUB>> minlen=2]
-    b -> d [label=<Σ<SUB>1</SUB>> minlen=2]
-    c -> e [label=<Σ<SUB>1</SUB>> minlen=2]
-    e -> f [label=<Σ<SUB>1</SUB>> minlen=2]
-    d -> f [label=<Σ<SUB>1</SUB>> minlen=2]
+    a -> b [label=<Ω<SUB>1</SUB>> minlen=2]
+    a -> c [label=<Ω<SUB>1</SUB>> minlen=2]
+    b -> d [label=<Ω<SUB>1</SUB>> minlen=2]
+    c -> e [label=<Ω<SUB>1</SUB>> minlen=2]
+    e -> f [label=<Ω<SUB>1</SUB>> minlen=2]
+    d -> f [label=<Ω<SUB>1</SUB>> minlen=2]
     }
 
-    \noindent Let us suppose $|\mathcal{I}|, |\Sigma^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[g, g'], \forall g = g' \in \mathcal{I} \rightarrow \mathcal{R}$. It can be shown the above procedure requires:
+    \noindent Let us suppose $|\mathcal{I}|, |\Omega^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[g, g'], \forall g = g' \in \mathcal{I} \rightarrow \mathcal{R}$. It can be shown the above procedure requires:
 
-    $$\mathcal{O}_{\textsc{Eq}}(\underset{i \leq n}{\text{max }}\underset{n}{\text{min}}\{|G| \mid \Gamma^i_g \vdash G, \Gamma_g^n = \Gamma_g^{n+1}\})$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{I}|!) \text{ for } \Sigma.$$
+    $$\mathcal{O}_{\textsc{Eq}}(\underset{i \leq n}{\text{max }}\underset{n}{\text{min}}\{|G| \mid \Gamma^i_g \vdash G, \Gamma_g^n = \Gamma_g^{n+1}\})$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{I}|!) \text{ for } \Omega.$$
 
-    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}_{g=g'}[\Theta_\textsc{Eq}]$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Sigma' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Sigma$ are known to be undecidable~\citep{baader1999term}.
+    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|g = g']$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Omega' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Omega$ are known to be undecidable~\citep{baader1999term}.
 
     \subsection{Computational equivalence}\label{subsec:comp-eq}
 
-    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is severely limited by $|\mathcal{I}|$ and $\Sigma$. While equality may be tractable to establish, disequality remains an obstacle. For computational equivalence, we will see the opposite holds, ceteris paribus.
+    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is highly sensitive to $|\mathcal{I}|$ and $\Omega$. While equality may be tractable, disequality is definitely an obstacle. In the computational setting, we will see the opposite holds, ceteris paribus. %Two values $r, r': \mathcal{R}$ share a normal form in which equality is trivial.
 
     \begin{prooftree}
-        \AxiomC{$\Gamma \vdash fg: \mathcal{I} \rightarrow \mathcal{R}$}
-        \AxiomC{$\Sigma: \{\mathcal{I}\rightarrow \mathcal{R}\}\rightarrow \mathcal{R}$}
+        \AxiomC{$\Gamma \vdash fg: \mathcal{I} \rightarrow \mathcal{R}, \Omega: \{\mathcal{I}\rightarrow \mathcal{R}\}\rightarrow \mathcal{R}$}
         \RightLabel{\textsc{Inv}}
-        \BinaryInfC{$\Gamma \vdash fg(\Sigma) \Downarrow f(\Sigma) \cdot g(\Sigma)$}
+        \UnaryInfC{$\Gamma \vdash fg(\Omega) \Downarrow f(\Omega) \cdot g(\Omega)$}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma \vdash f \in \Sigma$}
+        \AxiomC{$\Gamma \vdash f$}
+        \AxiomC{$\Gamma \vdash \Omega$}
         \RightLabel{\textsc{Sub}}
 %        \AxiomC{$i: \mathcal{I}$}
-        \UnaryInfC{$\Gamma \vdash f(\Sigma) \Downarrow \Sigma[f]$}
+        \BinaryInfC{$\Gamma \vdash f(\Omega) \Downarrow \Omega[f]$}
         \DisplayProof
         \vskip 1em
-        \AxiomC{$\Gamma, \Gamma' \vdash f(\Sigma) \Downarrow f'(\Sigma) \text{ } \forall \Sigma$}
+        \AxiomC{$\Gamma, \Gamma' \vdash f(\Omega) \Downarrow f'(\Omega) \text{ } \forall \Omega$}
         \RightLabel{\textsc{Eq}}
         \UnaryInfC{$\Gamma \vdash f = f'$}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma, \Gamma' \vdash \exists \Sigma \mid f(\Sigma) \not\Downarrow f'(\Sigma) $}
+        \AxiomC{$\Gamma, \Gamma' \vdash \exists \Omega \mid f(\Omega) \not\Downarrow f'(\Omega) $}
         \RightLabel{\textsc{Neq}}
-        \UnaryInfC{$\Gamma \vdash f \neq f'$}
+        \UnaryInfC{$\Gamma \vdash f \neq f'$ by $\Omega$}
     \end{prooftree}
 
     % big step semantics
 %    Extensional equality asks``Do $f_1$ and $f_2$ behave in the same way over all inputs?''
-    \noindent A single $i \in \mathcal{I}, f(i) \neq f'(i)$ is sufficient to establish inequality. For example, consider $f: \{a, b, c\}\mapsto abc$ and $f': \{a, b, c\} \mapsto ac$ at $\Sigma:=\{(a, 1), (b, 2), (c, 2)\}$.
+    \noindent \textsc{Sub} loosely corresponds to $\eta$-reduction in the untyped $\lambda$-calculus, however $f \notin \Omega$ is disallowed and we assume all variables are bound by \textsc{Inv}. Let us consider $f: \{a, b, c\}\mapsto abc, f': \{a, b, c\} \mapsto ac$ under $\Omega:=\{(a, 1), (b, 2), (c, 2)\}$:
 
     %If we test $\hat i \in {-2, -1, 0, 1, \ldots}$, we have $f_1(-2)=f_2(-2)$, $f_1(-1)=f_2(-1)$, $f_1(0)=f_2(0)$, $f_1(1) \neq f_2(1)$. Once we detect an $f_1(\hat i) \neq f_2(\hat i)$, we can halt immediately.
 
-    \begin{prooftree}
-        \def\fCenter{\ \vdash\ }
+    \vspace{-10pt}\begin{prooftree}
+        \def\fCenter{\ :=}
         \def\defaultHypSeparation{\hskip -1.1in}
-        \Axiom$\Gamma \fCenter f:=abc, \Sigma:=\{(a, 1), (b, 2), (c, 2)\}$
+        \Axiom$f\fCenter abc, \Omega:=\{(a, 1), (b, 2), (c, 2)\} \in \Gamma$
+        \def\fCenter{\ \vdash\ }
         \RightLabel{\textsc{Inv}}
-        \UnaryInf$\Gamma \fCenter a(\Sigma)\cdot bc(\Sigma)$
+        \UnaryInf$\Gamma \fCenter a(\Omega)\cdot bc(\Omega)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma \fCenter 1\cdot bc(\Sigma)$
+        \UnaryInf$\Gamma \fCenter 1\cdot bc(\Omega)$
         \RightLabel{\textsc{Inv}}
-        \UnaryInf$\Gamma \fCenter 1\cdot b(\Sigma)\cdot c(\Sigma)$
+        \UnaryInf$\Gamma \fCenter 1\cdot b(\Omega)\cdot c(\Omega)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma \fCenter 2\cdot c(\Sigma)$
+        \UnaryInf$\Gamma \fCenter 2\cdot c(\Omega)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma \fCenter f(\Sigma) \Downarrow 4$
-        \Axiom$\Gamma' \fCenter f':=ac, \Sigma:=\{(a, 1), (b, 2), (c, 2)\}$
+        \UnaryInf$\Gamma \fCenter f(\Omega) \Downarrow 4$
+        \def\fCenter{\ :=}
+        \Axiom$f\fCenter ac, \Omega:=\{(a, 1), (b, 2), (c, 2)\} \in \Gamma'$
+        \def\fCenter{\ \vdash\ }
         \RightLabel{\textsc{Inv}}
-        \UnaryInf$\Gamma' \fCenter a(\Sigma)\cdot c(\Sigma)$
+        \UnaryInf$\Gamma' \fCenter a(\Omega)\cdot c(\Omega)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma' \fCenter 1\cdot c(\Sigma)$
+        \UnaryInf$\Gamma' \fCenter 1\cdot c(\Omega)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma' \fCenter f'(\Sigma) \Downarrow 2$
+        \UnaryInf$\Gamma' \fCenter f'(\Omega) \Downarrow 2$
         \RightLabel{\textsc{Neq}}
-        \BinaryInfC{$\Gamma, \Gamma' \vdash f \neq f'$}
+        \BinaryInfC{$\Gamma, \Gamma' \vdash f \neq f'$ by $\{(a, 1), (b, 2), (c, 2)\}$}
     \end{prooftree}
 
-    \noindent We can view this process as acting on a dataflow graph, where \textsc{Inv} backpropagates variable bindings, and \textsc{Sub} forward-propagates concrete values:
+    \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $\Omega$, and \textsc{Sub} returns concrete values $\mathcal{R}$, here depicted on $f'$:
 
     \hspace{-30pt}\digraph[scale=0.5, center=true]{abcext0}{
     node[ fontname="CMU Classical Serif" fontsize=20 ];
@@ -318,9 +321,9 @@
     d [ label="·"; ]
 
 %    a -> a [label="Σ₀"]
-    f -> d [label="Σ"]
-    d -> a [label="Σ"]
-    d -> c [label="Σ"]
+    f -> d [label="Ω"]
+    d -> a [label="Ω"]
+    d -> c [label="Ω"]
     }\hspace{-20pt}\digraph[scale=0.5, center=true]{abcext1}{
     node[ fontname="CMU Classical Serif" fontsize=20 ];
     edge[ fontname="CMU Classical Serif" fontsize=18 ];
@@ -339,32 +342,43 @@
     c -> d [label="𝓡"]
     }
 
-    \noindent Suppose that $\mathcal{O}_{\textsc{Inv}}(i) = \mathcal{O}(1)$ for all $i \in \mathcal{I}$.
+    \noindent Suppose $\mathcal{O}_\textsc{Inv}(1)$ for all $f, \Omega$. Assuming $f, f' \overset{iid}{\sim} P(\mathcal{F}), \Omega \overset{iid}{\sim} P_\textsc{Test}(\Omega \mid f, f')$ gives a fixed but unknown distribution $P_\textsc{Neq}(\Omega) = P(f(\Omega)\not\Downarrow f'(\Omega) \mid f\neq f')$. The complexity of $\Theta_\textsc{Neq}$ can be shown to follow a geometric distribution:
 
-    We can test using property-based / metamorphic testing. Some strategies:
+    \vspace{-10pt}$$(1 - P_\textsc{Neq}(\Omega))^nP_\textsc{Neq}(\Omega) \text{ with mean } \mathop{\mathbb{E}}[\Theta_\textsc{Neq}] = (1-P_\textsc{Neq}(\Omega))P_\textsc{Neq}(\Omega)^{-1}$$
 
-    Isomorphism testing
+    \noindent While a single witness $\Omega$ s.t. $f(\Omega) \not\Downarrow f'(\Omega)$ is sufficient for disequality, in general this procedure can be intractable depending on $|\mathcal{I}|, P_\textsc{Neq}(\Omega), \mathcal{O}_{\textsc{Inv}}$.
 
-    Metamorphic testing
+%    We can test using property-based / metamorphic testing. Some strategies:
 
-%    \subsection{Contextual Equivalence}
-%
-%    As defined, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) computational are implicitly circular. Is there any way to fix this problem, avoiding all reference to inclusion? What if we had a way to observe certain intermediate effects?
+%    Isomorphism testing
+
+%    Metamorphic testing
+
+
+    \pagebreak\subsection{Observational Equivalence}
+
+    As constructed, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) definitions are implicitly circular, requiring an external notion of equality. Is there any way to fix this problem, avoiding all reference to inclusion? What if we had a way to observe certain intermediate effects?
 
 %    http://www.cs.ox.ac.uk/people/samuel.staton/papers/fossacs-2019.pdf
 %    http://users.ox.ac.uk/~scro3229/documents/birmingham-talk.pdf
 
-%    Two terms $\textt{M}$ and $\textt{N}$ are contextually equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts.
+    Two terms $\textt{M}$ and $\textt{N}$ are contextually equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts.
 
-%    This is kinda like word embeddings.
+    This is kinda like word embeddings.
 
-%    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
+    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
-%    We can define semantic equality in our setting using word embeddings.
+    We can define semantic equality in our setting using word embeddings.
 
-    \subsection{Probabilistic Equivalence}\label{sec:probabilistic}
+    \subsection{Approximate Equivalence}\label{sec:ap-eq}
 
-    While precise, the prior definitions of equality are far too rigid in practice. The spaces involved are either intractably large or lack formal semantics. We now turn to a language for reasoning about probabilistic equivalence.
+    The definition of computational equivalence requires too much work to demonstrate equality, and is too prone to false alarms. It is often the case we are given a partial specification for a program, and may want to check for conformance to a specification.
+
+    Metamorphic testing can be expressed as follows: Given an oracle $\mathbf P: \mathcal I \rightarrow \mathcal R$, and a set of inputs $\mathbf X = \{\mathbf{x}^{(1)}, \dots, \mathbf{x}^{(z)}\}$ and outputs $\mathbf Y = \{\mathbf{y}^{(1)} = \mathbf{P}(\mathbf{x}^{(1)}), \dots, \mathbf{y}^{(z)} = \mathbf{P}(\mathbf{x}^{(z)})\}$, a metamorphic relation (MR) is a relation $\mathcal M \subset \mathcal I^z \times \mathcal R^z$ where $z \geq 2$. In the simplest case, an MR is an equivalence relation $\mathcal R$, i.e.: $\langle \mathbf x, \mathbf y, \mathbf x', \mathbf y' \rangle \in \mathcal R \Leftrightarrow \mathbf x \sim_{\mathcal R} \mathbf x' \Leftrightarrow \mathbf P(\mathbf x) \approx \mathbf P(\mathbf x')$.
+
+    \subsection{Probabilistic Equivalence}\label{sec:pr-eq}
+
+    Though precise, the prior definitions of equality are far too rigid in practice. The spaces involved either lack formal semantics or are intractable to exhaustive search. We now turn to a language for reasoning about probabilistic equivalence, which allows us to infer if and when functions are approximately equivalent.
 
 %    How do we know when we are approaching equality? We can use a distance metric.
 
