@@ -7,7 +7,12 @@
 % Packages
 \usepackage{amsmath}
 \usepackage[pdf]{graphviz}
-\usepackage{amssymb}
+%\usepackage{amssymb}
+\usepackage{stackengine,amssymb,graphicx,scalerel}
+\newcommand\SL{\stackengine{.2ex}{S\,}{\,L}{U}{c}{F}{F}{L}}
+\newcommand\CircArrowRight[1]{\stackengine{-.3ex}{\scalebox{.8}{#1}}{\CAR}{O}{c}{F}{F}{L}}
+\newcommand\CAR{\scaleto{\circlearrowright}{3ex}}
+
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
 \usepackage{bussproofs}
@@ -48,7 +53,7 @@
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
-    Equality is a highly overloaded notation in mathematics and computer science. Loosely speaking, $x = y$ denotes that we may replace, or are replacing one expression $x$, with another, $y$. Typically, we consider two expressions to be equal if there is no decision procedure which can tell them apart.
+    Equality is an overloaded notation in mathematics and computer science. Loosely speaking, $x = y$ denotes that we may replace, or are replacing one expression $x$, with another, $y$. Typically, we consider two expressions to be equal if there is no decision procedure which can tell them apart.
 
     The trouble is, equality is not a differentiable operator. If two expressions are unequal, the derivative alone cannot tell us how to adjust one in order to bring them closer together. Consider the Kronecker $\delta$-function, $\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
 
@@ -216,7 +221,7 @@
 
     \noindent We can visualize $G$ as a directed graph, omitting all loops. Notice how each path converges to the same term, a property known as $\textit{strong confluence}$.
 
-    \hspace{12pt}\digraph[scale=0.5, center=true]{abcint}{
+    \hspace{12pt}\digraph[scale=0.5]{abcint}{
     node[ fontname="CMU Classical Serif" fontsize=20 ];
     edge[ fontname="CMU Classical Serif" fontsize=18 ];
     rankdir=LR;
@@ -241,7 +246,7 @@
 
     \noindent Let us suppose $|\mathcal{I}|, |\Omega^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[g, g'], \forall g = g' \in \mathcal{I} \rightarrow \mathcal{R}$. It can be shown the above procedure requires:
 
-    $$\mathcal{O}_{\textsc{Eq}}(\underset{i \leq n}{\text{max }}\underset{n}{\text{min}}\{|G| \mid \Gamma^i_g \vdash G, \Gamma_g^n = \Gamma_g^{n+1}\})$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{I}|!) \text{ for } \Omega.$$
+    $$\mathcal{O}_{\textsc{Eq}} = \underset{i \leq n}{\text{max }}\underset{n}{\text{min}}\{|G| \mid \Gamma^i_g \vdash G, \Gamma_g^n = \Gamma_g^{n+1}\}$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{I}|!) \text{ for } \Omega.$$
 
     \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|g = g']$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Omega' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Omega$ are known to be undecidable~\citep{baader1999term}.
 
@@ -294,7 +299,7 @@
         \RightLabel{\textsc{Sub}}
         \UnaryInf$\Gamma \fCenter f(\Omega) \Downarrow 4$
         \def\fCenter{\ :=}
-        \Axiom$f\fCenter ac, \Omega:=\{(a, 1), (b, 2), (c, 2)\} \in \Gamma'$
+        \Axiom$f'\fCenter ac, \Omega:=\{(a, 1), (b, 2), (c, 2)\} \in \Gamma'$
         \def\fCenter{\ \vdash\ }
         \RightLabel{\textsc{Inv}}
         \UnaryInf$\Gamma' \fCenter a(\Omega)\cdot c(\Omega)$
@@ -308,7 +313,7 @@
 
     \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $\Omega$, and \textsc{Sub} returns concrete values $\mathcal{R}$, here depicted on $f'$:
 
-    \hspace{-30pt}\digraph[scale=0.5, center=true]{abcext0}{
+    \hspace{-30pt}\digraph[scale=0.5]{abcext0}{
     node[ fontname="CMU Classical Serif" fontsize=20 ];
     edge[ fontname="CMU Classical Serif" fontsize=18 ];
     rankdir=LR;
@@ -324,7 +329,7 @@
     f -> d [label="Ω"]
     d -> a [label="Ω"]
     d -> c [label="Ω"]
-    }\hspace{-20pt}\digraph[scale=0.5, center=true]{abcext1}{
+    }\hspace{-20pt}\digraph[scale=0.5]{abcext1}{
     node[ fontname="CMU Classical Serif" fontsize=20 ];
     edge[ fontname="CMU Classical Serif" fontsize=18 ];
     rankdir=LR;
@@ -342,11 +347,11 @@
     c -> d [label="𝓡"]
     }
 
-    \noindent Suppose $\mathcal{O}_\textsc{Inv}(1)$ for all $f, \Omega$. Assuming $f, f' \overset{iid}{\sim} P(\mathcal{F}), \Omega \overset{iid}{\sim} P_\textsc{Test}(\Omega \mid f, f')$ gives a fixed but unknown distribution $P_\textsc{Neq}(\Omega) = P(f(\Omega)\not\Downarrow f'(\Omega) \mid f\neq f')$. The complexity of $\Theta_\textsc{Neq}$ can be shown to follow a geometric distribution:
+    \noindent Assuming $f, f' \sim P(\mathcal{F}), \Omega \overset{iid}{\sim} P_\textsc{Test}(\Omega \mid f \neq f')$ yields a fixed but unknown distribution, $P_\textsc{Neq}(\Omega) = P(f(\Omega)\not\Downarrow f'(\Omega) \mid f\neq f')$. Let $\Theta_\textsc{Inv} = 1$ for all $f, \Omega$. The complexity of certifying $\textsc{Neq}$ in $n$ trials follows a geometric distribution:
 
-    \vspace{-10pt}$$(1 - P_\textsc{Neq}(\Omega))^nP_\textsc{Neq}(\Omega) \text{ with mean } \mathop{\mathbb{E}}[\Theta_\textsc{Neq}] = (1-P_\textsc{Neq}(\Omega))P_\textsc{Neq}(\Omega)^{-1}$$
+    \vspace{-10pt}$$\Theta_\textsc{Neq} \sim (1 - P_\textsc{Neq}(\Omega))^nP_\textsc{Neq}(\Omega) \text{ with } \mathop{\mathbb{E}}[\Theta_\textsc{Neq}] = (1-P_\textsc{Neq}(\Omega))P_\textsc{Neq}(\Omega)^{-1}$$
 
-    \noindent While a single witness $\Omega$ s.t. $f(\Omega) \not\Downarrow f'(\Omega)$ is sufficient for disequality, in general this procedure can be intractable depending on $|\mathcal{I}|, P_\textsc{Neq}(\Omega), \mathcal{O}_{\textsc{Inv}}$.
+    \noindent Although a single witness $\Omega$ s.t. $f(\Omega) \not\Downarrow f'(\Omega)$ is sufficient for disequality, the above sampling procedure may be intractable depending on $|\mathcal{I}|, P_\textsc{Neq}(\Omega), \Theta_{\textsc{Inv}}$.
 
 %    We can test using property-based / metamorphic testing. Some strategies:
 
@@ -357,34 +362,49 @@
 
     \pagebreak\subsection{Observational Equivalence}
 
-    As constructed, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) definitions are implicitly circular, requiring an external notion of equality. Is there any way to fix this problem, avoiding all reference to inclusion? What if we had a way to observe certain intermediate effects?
+    As presented, both decision procedures for establishing intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence are implicitly circular, or require an external theory of equality to implement. Is there a way to fix this problem, avoiding any external definition of equality? One solution, proposed by Morris~\cite{morris1969lambda} is called \textit{observational} or \textit{contextual equivalence}. Suppose we have a language $\mathcal{L}$...
+
+    \begin{prooftree}
+        \AxiomC{$\Gamma \vdash C[\![t]\!]\Downarrow s \land C[\![t']\!]\Downarrow s$ $\forall$ $C[\![\cdot]\!] \mid C[\![t]\!], C[\![t']\!]$}
+        \RightLabel{\textsc{Eq}}
+        \UnaryInfC{$\Gamma \vdash t =_{\mathcal{L}} t'$}
+        \DisplayProof
+        \vskip 1em
+        \AxiomC{$\Gamma \vdash \exists C[\![\cdot]\!] \mid C[\![t]\!], C[\![t']\!]\in \mathcal{L} \land C[\![t]\!] \Downarrow s \land C[\![t']\!] \not\Downarrow s$}
+        \RightLabel{\textsc{Neq}}
+        \UnaryInfC{$\Gamma \vdash t =_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
+
+%        \AxiomC{$\Gamma \vdash \exists C[\![\cdot]\!] \in \mathcal{L}$ s.t. $C[\![f]\!]\circlearrowleft \lor C[\![f']\!]\circlearrowleft$}
+%        \RightLabel{\textsc{Neq}}
+%        \UnaryInfC{$\Gamma \vdash f \neq_{\mathcal{L}} f'$}
+%        \DisplayProof
+%        \hskip 1em
+    \end{prooftree}
 
 %    http://www.cs.ox.ac.uk/people/samuel.staton/papers/fossacs-2019.pdf
 %    http://users.ox.ac.uk/~scro3229/documents/birmingham-talk.pdf
 
-    Two terms $\textt{M}$ and $\textt{N}$ are contextually equivalent iff $\forall \textt{C[...]}$ where $\textt{C[M]}$ is valid in our language and halts, $\textt{C[N]}$ is also valid and halts.
+    We can think of this definition as dual to computational equivalence. Instead of searching for values which demonstrate inequality, we search for contexts $C[\![\cdot]\!]$ which can distinguish terms. In effect, this allows the language to implement its own internal definition of equality to distinguish $t, t'$. If no such mechanism exists, we conclude $t$ and $t'$ are contextually equivalent with respect to $\mathcal{L}$. If we can supply a single $C[\![\cdot]\!]$ where equality does not hold, then $t, t'$ are disequal. This definition by itself does not provide an algorithm for synthesizing $C$, but many good ones exist.
 
-    This is kinda like word embeddings.
+%    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
-    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
-
-    We can define semantic equality in our setting using word embeddings.
+%    We can define semantic equality in our setting using word embeddings.
 
     \subsection{Approximate Equivalence}\label{sec:ap-eq}
 
-    The definition of computational equivalence requires too much work to demonstrate equality, and is too prone to false alarms. It is often the case we are given a partial specification for a program, and may want to check for conformance to a specification.
+    For most practical applications, the above definitions require too much work to demonstrate equality, when exact equality may not be possible or even desirable. It is often the case we are given a labeled dataset sampled from an inaccessible distribution, and want to compare some computer program approximating that distribution to detect errors with respect to that dataset. This is known as statistical risk estimation. One solution is to use metamorphic testing~\cite{chen2020metamorphic}.
 
     Metamorphic testing can be expressed as follows: Given an oracle $\mathbf P: \mathcal I \rightarrow \mathcal R$, and a set of inputs $\mathbf X = \{\mathbf{x}^{(1)}, \dots, \mathbf{x}^{(z)}\}$ and outputs $\mathbf Y = \{\mathbf{y}^{(1)} = \mathbf{P}(\mathbf{x}^{(1)}), \dots, \mathbf{y}^{(z)} = \mathbf{P}(\mathbf{x}^{(z)})\}$, a metamorphic relation (MR) is a relation $\mathcal M \subset \mathcal I^z \times \mathcal R^z$ where $z \geq 2$. In the simplest case, an MR is an equivalence relation $\mathcal R$, i.e.: $\langle \mathbf x, \mathbf y, \mathbf x', \mathbf y' \rangle \in \mathcal R \Leftrightarrow \mathbf x \sim_{\mathcal R} \mathbf x' \Leftrightarrow \mathbf P(\mathbf x) \approx \mathbf P(\mathbf x')$.
 
-    \subsection{Probabilistic Equivalence}\label{sec:pr-eq}
+    \pagebreak\subsection{Probabilistic Equivalence}\label{sec:pr-eq}
 
-    Though precise, the prior definitions of equality are far too rigid in practice. The spaces involved either lack formal semantics or are intractable to exhaustive search. We now turn to a language for reasoning about probabilistic equivalence, which allows us to infer if and when functions are approximately equivalent.
+    Though precise, the prior definitions of equality are far too rigid in practice. The spaces involved either lack formal semantics or are intractable to exhaustive search. We now turn to a language for reasoning about probabilistic equivalence, which allows us to decide approximate equivalence.
 
 %    How do we know when we are approaching equality? We can use a distance metric.
 
     % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
 
-    Various graph distance metrics have been proposed~\citet{sanfeliu1983distance}.
+    Various graph distance metrics have been proposed~\cite{sanfeliu1983distance}.
 
     Hypothesis testing
 
@@ -395,6 +415,10 @@
     L\'evy-Prokhorov
 
     Gromov-Hausdorff
+
+    Jensen-Shannon
+
+    Kullback-Leibler
 
     Weisfeiler-Lehman
 
@@ -421,11 +445,11 @@
 
     Graphs are algebraic structures...
 
-    Semirings arise in strange and marvelous places. (min, +), (max, \times)
+    Semirings arise in strange and marvelous places. $(min, +), (max, \times)$
 
     \begin{enumerate}
-        \item https://people.cs.kuleuven.be/~luc.deraedt/Francqui4ab.pdf#page=71
-        \item http://www.mit.edu/~kepner/GraphBLAS/GraphBLAS-Math-release.pdf#page=11
+        \item \url{https://people.cs.kuleuven.be/~luc.deraedt/Francqui4ab.pdf#page=71}
+        \item \url{http://www.mit.edu/~kepner/GraphBLAS/GraphBLAS-Math-release.pdf#page=11}
     \end{enumerate}
 
     \subsection{Programs are graphs}\label{sec:program-graphs}
