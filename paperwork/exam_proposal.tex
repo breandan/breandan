@@ -53,9 +53,11 @@
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
-    Equality is an overloaded notation in mathematics and computer science. Loosely speaking, $x = y$ denotes that we may replace, or are replacing one expression $x$, with another, $y$. Typically, we consider two expressions to be equal if there is no decision procedure which can tell them apart.
+    Reason is the source of all human knowledge. In order to understand human reasoning, we need to understand how concepts are related. Next to identity, one of the simplest relations between concepts is equality.
 
-    The trouble is, equality is not a differentiable operator. If two expressions are unequal, the derivative alone cannot tell us how to adjust one in order to bring them closer together. Consider the Kronecker $\delta$-function, $\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
+    For such an important concept, the notation for equality is recklessly overloaded in mathematics and computer science. For example, the expression $x = y$ may denote: (1) define $x$ to be $y$, (2) $x$ and $y$ are the same, (3) are $x$ and $y$ the same? (4) $x$ and $y$ are exchangeable, (5) assign $y$ to $x$, (6) assign $x$ to $y$, among other logical and programming nuances. If two expressions are equal, it is generally possible to treat them in the same manner.
+
+    But this is not always possible. Suppose we need to compute the derivative of a program with respect to its inputs. The trouble is, relational equality is not a differentiable operator. Consider the Kronecker $\delta$-function: %$\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
 
     $$
     \delta_k(x, y) :=
@@ -65,15 +67,15 @@
     \end{cases}
     $$
 
-    When we encounter a differentiable program containing $\delta_k$, how do we compute its derivative? Since $\mathbb{B}$ is finite, $\delta_d^{-1}(B\subset \mathbb{B})$ is not open, thus $\delta_d$ is not a continuous function and its gradient $\nabla\delta_k$ is undefined. Now consider the Dirac $\delta$ function, $\delta_d: \mathbb{R}^2 \rightarrow \mathbb{R}$, a probability distribution on $\mathbb{R}^2$:
+    When encountering $\delta_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $\delta_d^{-1}(B\subset \mathbb{B})$ is not open, thus $\delta_d$ is not continuous and $\nabla\delta_k$ is undefined. Now consider the Dirac $\delta$-function, which is defined as follows: %$\delta_d: \mathbb{R}^2 \rightarrow \mathbb{R}$,
 
     $$
     \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)\delta(x-a,y-b)d(x, y) = f(a,b)
     $$
 
-    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-behaved everywhere on $\mathbb{R}^2$. Here we encounter an important distinction between intensional and computational equality. Unlike symbolic expressions, humans have invented many useful functions which can only be described indirectly but cannot be constructed explicitly, e.g. a probability distribution concentrated on a set of measure zero. Nevertheless, they represent convenient abstractions for modeling many physical and computational processes.
+    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-behaved everywhere on $\mathbb{R}^2$. However we encounter an important distinction between intensional and extensional equality. Unlike representable functions, many functions can only be described indirectly, e.g. a probability distribution concentrated on a set of measure zero. Nevertheless, these constructions are convenient abstractions for modeling many physical and computational processes.
 
-    Neither $\nabla\delta_k$ nor $\delta_d$ are possible to construct explicitly. How does one compute $\nabla\delta_k$ without knowing $x$ or $y$, or $\delta_d$ without knowing $f$ a priori? To allow a more flexible definition of the $=$ operator, we require a function which approximates the logical properties of $\delta_k$, but can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
+    Neither $\nabla\delta_k$ nor $\delta_d$ are a satisfactory basis for equality. To allow a more flexible definition of the $=$ operator, we require a function which approximates the logical properties of $\delta_k$, but can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -113,11 +115,7 @@
         \UnaryInfC{\textit{Congruence}}
     \end{prooftree}
 
-%    First we will describe exact equality, then progressively relax our definition of equivalence to obtain a more useful definition.
-
-%    We require a metric~\ref{sec:probabilistic}.
-
-    \subsection{Decidability}\label{sec:algorithms}
+    \pagebreak\subsection{Decidability}\label{sec:algorithms}
 
     To determine whether two expressions are equal, we need a decision procedure. Various approaches have been taken to decide exact and approximate equality in the deterministic and probabilistic setting. We list a few below.
 
@@ -141,11 +139,11 @@
     It is seldom the case that two semantically equal expressions are trivially equal: we must first perform some computation to establish their equality. In the exact setting, this procedure might be summarized as follows:
 
     \begin{enumerate}
-        \item Rewrite: Either enumerate valid rewrites using enumerative search or reduce the proposition into normal form if possible, then,
+        \item Rewrite: Either enumerate a set of equivalent expressions, or reduce the proposition into normal form if possible, then,
         \item Compare: Perform a computationally trivial (e.g. $\mathcal{O}(n)$) comparison.
     \end{enumerate}
 
-    Unfortunately, exact equality is known to be undecidable in general (G\"odel). From Turing, we know there is no way to construct a halting machine which accepts every equality and rejects every disequality in a universal language. Equality between two mathematical formulas is undecidable. (Richardson) Even equality in first-order logic is undecidable. Furthermore any nontrivial property is undecidable. (Rice)
+    Unfortunately, exact equality is known to be undecidable in first order logic~\cite{godel1929vollstandigkeit} and in general~\cite{godel1931formal}. There is no machine which accepts every equality and rejects every disequality in a universal language~\cite{turing1937computable}. Equality between two elementary mathematical functions is undecidable~\cite{richardson1994identity}. Furthermore any nontrivial semantic property is undecidable~\cite{rice1953classes}.
 
     %Is there any left hope? Yes! (Felleisen)
 
@@ -156,7 +154,7 @@
         \item Sample: Build a probabilistic model and sample from its distribution
     \end{itemize}
 
-    In the following section, we will introduce two compatible theories corresponding to intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equality, then expand our definition to include approximate or probabilistic equivalence. In so doing, we will see the tradeoff between complexity and exactness.
+    In the following section, we will introduce a few compatible theories corresponding to intensional and extensional equality, then expand on those definitions to include approximate and probabilistic equivalence. In so doing, we will see the tradeoff between complexity, sensitivity and specificity.
 
 %    Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
 %
@@ -362,7 +360,7 @@
 
     \pagebreak\subsection{Observational Equivalence}
 
-    As presented, both decision procedures for establishing intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence are implicitly circular, or require an external theory of equality to implement. Is there a way to fix this problem, avoiding any external definition of equality? One solution, proposed by Morris~\cite{morris1969lambda} is called \textit{observational} or \textit{contextual equivalence}. Suppose we have a language $\mathcal{L}$...
+    As presented, both decision procedures for establishing intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence require an external theory of equality to implement. Is there a way to fix this problem, avoiding any external definition of equality? One solution, proposed by Morris~\cite{morris1969lambda} is called \textit{observational} or \textit{contextual equivalence}. Suppose we have a language $\mathcal{L}$...
 
     \begin{prooftree}
         \AxiomC{$\Gamma \vdash C[\![t]\!]\Downarrow s \land C[\![t']\!]\Downarrow s$ $\forall$ $C[\![\cdot]\!] \mid C[\![t]\!], C[\![t']\!]$}
