@@ -7,11 +7,8 @@
 % Packages
 \usepackage{amsmath}
 \usepackage[pdf]{graphviz}
-%\usepackage{amssymb}
-\usepackage{stackengine,amssymb,graphicx,scalerel}
-\newcommand\SL{\stackengine{.2ex}{S\,}{\,L}{U}{c}{F}{F}{L}}
-\newcommand\CircArrowRight[1]{\stackengine{-.3ex}{\scalebox{.8}{#1}}{\CAR}{O}{c}{F}{F}{L}}
-\newcommand\CAR{\scaleto{\circlearrowright}{3ex}}
+\usepackage{amssymb}
+\usepackage{centernot}
 
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
@@ -55,14 +52,14 @@
 
     Reason is the source of all human knowledge. In order to understand human reasoning, we need to understand how concepts are related. Next to identity, one of the simplest relations between concepts is equality.
 
-    For such an important concept, the notation for equality is recklessly overloaded in mathematics and computer science. For example, the expression $x = y$ may denote: (1) define $x$ to be $y$, (2) $x$ and $y$ are the same, (3) are $x$ and $y$ the same? (4) $x$ and $y$ are exchangeable, (5) assign $y$ to $x$, (6) assign $x$ to $y$, among other logical and programming nuances. If two expressions are equal, it is generally possible to treat them in the same manner.
+    For such an important concept, the notation for equality is recklessly overloaded in mathematics and computer science. For example, the expression $x = y$ may denote: (1)~define $x$ to be $y$, (2)~$x$ and $y$ are the same, (3)~are $x$ and $y$ the same? (4)~$x$ and $y$ are exchangeable, (5)~assign $y$ to $x$, (6)~assign $x$ to $y$, among other peculiar programming idioms. If two expressions are equal, it is generally possible to treat them in the same manner.
 
-    But this is not always possible. Suppose we need to compute the derivative of a program with respect to its inputs. The trouble is, relational equality is not a differentiable operator. Consider the Kronecker $\delta$-function: %$\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
+    But this convention does not always hold! Suppose we need to compute the derivative of a logical function with respect to its inputs. The trouble is, logical equality is not differentiable. Consider the Kronecker $\delta$-function: %$\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
 
     $$
     \delta_k(x, y) :=
     \begin{cases}
-        1 \text{ if } x = y, \\
+        1 \text{ if } x \overset{?}{=} y, \\
         0 \text{ otherwise }\\
     \end{cases}
     $$
@@ -70,17 +67,17 @@
     When encountering $\delta_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $\delta_d^{-1}(B\subset \mathbb{B})$ is not open, thus $\delta_d$ is not continuous and $\nabla\delta_k$ is undefined. Now consider the Dirac $\delta$-function, which is defined as follows: %$\delta_d: \mathbb{R}^2 \rightarrow \mathbb{R}$,
 
     $$
-    \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)\delta(x-a,y-b)d(x, y) = f(a,b)
+    \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)\delta(x-a,y-b)d(x, y) \overset{\Delta}{=} f(a,b)
     $$
 
-    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-behaved everywhere on $\mathbb{R}^2$. However we encounter an important distinction between intensional and extensional equality. Unlike representable functions, many functions can only be described indirectly, e.g. a probability distribution concentrated on a set of measure zero. Nevertheless, these constructions are convenient abstractions for modeling many physical and computational processes.
+    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-behaved everywhere on $\mathbb{R}^2$. However we encounter an important distinction between intensional and extensional equality. Unlike elementary functions, there exist many functions which can only be described indirectly, e.g. a probability distribution on a set of measure zero. Nevertheless, these constructions are convenient abstractions for modeling many physical and computational processes.
 
-    Neither $\nabla\delta_k$ nor $\delta_d$ are a satisfactory basis for equality. To allow a more flexible definition of the $=$ operator, we require a function which approximates the logical properties of $\delta_k$, but can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\sim$ is a binary relation with the following logical properties:
+    Neither $\nabla\delta_k$ nor $\delta_d$ are a satisfactory basis for equality. To allow a more flexible definition of the $=$ operator, we require a relation which approximates the logical properties of $\delta_k$, but can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\equiv$ is a binary relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
         \AxiomC{}
-        \UnaryInfC{$a \sim a$}
+        \UnaryInfC{$a \equiv a$}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -88,8 +85,8 @@
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
-        \AxiomC{$a \sim b$}
-        \UnaryInfC{$b \sim a$}
+        \AxiomC{$a \equiv b$}
+        \UnaryInfC{$b \equiv a$}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -97,9 +94,9 @@
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
-        \AxiomC{$a \sim b$}
-        \AxiomC{$b \sim c$}
-        \BinaryInfC{$a \sim c$}
+        \AxiomC{$a \equiv b$}
+        \AxiomC{$b \equiv c$}
+        \BinaryInfC{$a \equiv c$}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -107,8 +104,8 @@
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
-        \AxiomC{$a \sim b$}
-        \UnaryInfC{$f(a) \sim f(b)$}
+        \AxiomC{$a \equiv b$}
+        \UnaryInfC{$f(a) \equiv f(b)$}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -143,7 +140,7 @@
         \item Compare: Perform a computationally trivial (e.g. $\mathcal{O}(n)$) comparison.
     \end{enumerate}
 
-    Unfortunately, exact equality is known to be undecidable in first order logic~\cite{godel1929vollstandigkeit} and in general~\cite{godel1931formal}. There is no machine which accepts every equality and rejects every disequality in a universal language~\cite{turing1937computable}. Equality between two elementary mathematical functions is undecidable~\cite{richardson1994identity}. Furthermore any nontrivial semantic property is undecidable~\cite{rice1953classes}.
+    Unfortunately, exact equality is known to be undecidable in first order~\cite{godel1929vollstandigkeit} and higher theories~\cite{godel1931formal}. We know there can be no machine which accepts every equality and rejects every disequality in a universal language~\cite{turing1937computable}. By extension, any nontrivial property of partial functions is undecidable~\cite{rice1953classes}. %Equality between two elementary mathematical functions is undecidable~\cite{richardson1994identity}.
 
     %Is there any left hope? Yes! (Felleisen)
 
@@ -187,14 +184,14 @@
         \AxiomC{$\Gamma^n_{f} \vdash E, G$}
         \AxiomC{$f' \in E$}
         \RightLabel{\textsc{Eq}}
-        \BinaryInfC{$\Gamma^n_{f} \vdash f = f'$ by $G^{-n}(f')$}
+        \BinaryInfC{$\Gamma^n_{f} \vdash f \equiv f'$ by $G^{-n}(f')$}
         \DisplayProof
         \hskip 1em
         \AxiomC{$\Gamma^n_{f} \vdash E$}
         \AxiomC{$\Gamma^{n+1}_{f}\vdash E$}
         \AxiomC{$f'\notin E$}
         \RightLabel{\textsc{Neq}}
-        \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \neq f'$}
+        \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \not\equiv f'$}
     \end{prooftree}
 
     \noindent For example, suppose we are given $f: \{a, b, c\} \mapsto a b c, f': \{a, b, c\} \mapsto c b a$ and $\Omega := \{(a, a), (ab, ba)\}$. Indeed, $\textsc{Eq}[f, f']$ can be established as follows:
@@ -214,7 +211,7 @@
 %        \RightLabel{Eq}
 %        \UnarbInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash cba \in E$
         \RightLabel{\textsc{Eq}}
-        \UnaryInf$\Gamma^3_{f} \fCenter f=f'\text{ by } G^{-3}(f':=cba) = \{f := abc\}$
+        \UnaryInf$\Gamma^3_{f} \fCenter f \equiv f'\text{ by } G^{-3}(f':=cba) = \{f := abc\}$
     \end{prooftree}
 
     \noindent We can visualize $G$ as a directed graph, omitting all loops. Notice how each path converges to the same term, a property known as $\textit{strong confluence}$.
@@ -267,12 +264,12 @@
         \vskip 1em
         \AxiomC{$\Gamma, \Gamma' \vdash f(\Omega) \Downarrow f'(\Omega) \text{ } \forall \Omega$}
         \RightLabel{\textsc{Eq}}
-        \UnaryInfC{$\Gamma \vdash f = f'$}
+        \UnaryInfC{$\Gamma \vdash f \equiv f'$}
         \DisplayProof
         \hskip 1em
         \AxiomC{$\Gamma, \Gamma' \vdash \exists \Omega \mid f(\Omega) \not\Downarrow f'(\Omega) $}
         \RightLabel{\textsc{Neq}}
-        \UnaryInfC{$\Gamma \vdash f \neq f'$ by $\Omega$}
+        \UnaryInfC{$\Gamma \vdash f \not\equiv f'$ by $\Omega$}
     \end{prooftree}
 
     % big step semantics
@@ -306,7 +303,7 @@
         \RightLabel{\textsc{Sub}}
         \UnaryInf$\Gamma' \fCenter f'(\Omega) \Downarrow 2$
         \RightLabel{\textsc{Neq}}
-        \BinaryInfC{$\Gamma, \Gamma' \vdash f \neq f'$ by $\{(a, 1), (b, 2), (c, 2)\}$}
+        \BinaryInfC{$\Gamma, \Gamma' \vdash f \not\equiv f'$ by $\{(a, 1), (b, 2), (c, 2)\}$}
     \end{prooftree}
 
     \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $\Omega$, and \textsc{Sub} returns concrete values $\mathcal{R}$, here depicted on $f'$:
@@ -345,7 +342,7 @@
     c -> d [label="𝓡"]
     }
 
-    \noindent Assuming $f, f' \sim P(\mathcal{F}), \Omega \overset{iid}{\sim} P_\textsc{Test}(\Omega \mid f \neq f')$ yields a fixed but unknown distribution, $P_\textsc{Neq}(\Omega) = P(f(\Omega)\not\Downarrow f'(\Omega) \mid f\neq f')$. Let $\Theta_\textsc{Inv} = 1$ for all $f, \Omega$. The complexity of certifying $\textsc{Neq}$ in $n$ trials follows a geometric distribution:
+    \noindent Assuming $f, f' \sim P(\mathcal{F}), \Omega \overset{iid}{\sim} P_\textsc{Test}(\Omega \mid f \not\equiv f')$ yields a fixed but unknown distribution, $P_\textsc{Neq}(\Omega) = P(f(\Omega)\not\Downarrow f'(\Omega) \mid f \not\equiv f')$. Let $\Theta_\textsc{Inv} = 1$ for all $f, \Omega$. The complexity of certifying $\textsc{Neq}$ in $n$ trials follows a geometric distribution:
 
     \vspace{-10pt}$$\Theta_\textsc{Neq} \sim (1 - P_\textsc{Neq}(\Omega))^nP_\textsc{Neq}(\Omega) \text{ with } \mathop{\mathbb{E}}[\Theta_\textsc{Neq}] = (1-P_\textsc{Neq}(\Omega))P_\textsc{Neq}(\Omega)^{-1}$$
 
@@ -360,29 +357,23 @@
 
     \pagebreak\subsection{Observational Equivalence}
 
-    As presented, both decision procedures for establishing intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence require an external theory of equality to implement. Is there a way to fix this problem, avoiding any external definition of equality? One solution, proposed by Morris~\cite{morris1969lambda} is called \textit{observational} or \textit{contextual equivalence}. Suppose we have a language $\mathcal{L}$...
+    A careful reading of intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence will reveal they both need an external definition of equality. First realized by Morris~\cite{morris1969lambda}, one solution to this problem known as \textit{observational equivalence} allows a language $\mathcal{L}$ to implement its own internal definition of equality. Given $\mathcal{L}$ and a one-holed context $C[\![\cdot]\!]$, our job is to check for termination: if $C[\![\cdot]\!]$ is both well-defined and halts, we write $C[\![\cdot]\!]\Downarrow$, otherwise $C[\![\cdot]\!]\Uparrow$.
 
     \begin{prooftree}
-        \AxiomC{$\Gamma \vdash C[\![t]\!]\Downarrow s \land C[\![t']\!]\Downarrow s$ $\forall$ $C[\![\cdot]\!] \mid C[\![t]\!], C[\![t']\!]$}
+        \AxiomC{$\Gamma, t, t', \mathcal{L} \vdash C[\![t]\!]\Downarrow \iff C[\![t']\!]\Downarrow$ $\forall$ $C[\![\cdot]\!] \in \mathcal{L}$}
         \RightLabel{\textsc{Eq}}
-        \UnaryInfC{$\Gamma \vdash t =_{\mathcal{L}} t'$}
+        \UnaryInfC{$\Gamma \vdash t \equiv_{\mathcal{L}} t'$}
         \DisplayProof
         \vskip 1em
-        \AxiomC{$\Gamma \vdash \exists C[\![\cdot]\!] \mid C[\![t]\!], C[\![t']\!]\in \mathcal{L} \land C[\![t]\!] \Downarrow s \land C[\![t']\!] \not\Downarrow s$}
+        \AxiomC{$\Gamma, t, t', \mathcal{L} \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
         \RightLabel{\textsc{Neq}}
-        \UnaryInfC{$\Gamma \vdash t =_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
-
-%        \AxiomC{$\Gamma \vdash \exists C[\![\cdot]\!] \in \mathcal{L}$ s.t. $C[\![f]\!]\circlearrowleft \lor C[\![f']\!]\circlearrowleft$}
-%        \RightLabel{\textsc{Neq}}
-%        \UnaryInfC{$\Gamma \vdash f \neq_{\mathcal{L}} f'$}
-%        \DisplayProof
-%        \hskip 1em
+        \UnaryInfC{$\Gamma \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
     \end{prooftree}
 
 %    http://www.cs.ox.ac.uk/people/samuel.staton/papers/fossacs-2019.pdf
 %    http://users.ox.ac.uk/~scro3229/documents/birmingham-talk.pdf
 
-    We can think of this definition as dual to computational equivalence. Instead of searching for values which demonstrate inequality, we search for contexts $C[\![\cdot]\!]$ which can distinguish terms. In effect, this allows the language to implement its own internal definition of equality to distinguish $t, t'$. If no such mechanism exists, we conclude $t$ and $t'$ are contextually equivalent with respect to $\mathcal{L}$. If we can supply a single $C[\![\cdot]\!]$ where equality does not hold, then $t, t'$ are disequal. This definition by itself does not provide an algorithm for synthesizing $C$, but many good ones exist.
+    We can think of this definition as dual to computational equivalence. Instead of searching for inputs which exhibit extensional in/equality, we search for contexts which distinguish terms, or a proof that no such context exists. Two terms $t$ and $t'$ are contextually equivalent with respect to $\mathcal{L}$ if we can prove for all contexts in $\mathcal{L}$, $C[\![t]\!]$ halts if and only if $C[\![t']\!]$ halts. If no such proof can be found, then the test is inconclusive. While this definition does not provide a procedure for deciding equality, many avenues exist.
 
 %    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
@@ -390,13 +381,13 @@
 
     \subsection{Approximate Equivalence}\label{sec:ap-eq}
 
-    For most practical applications, the above definitions require too much work to demonstrate equality, when exact equality may not be possible or even desirable. It is often the case we are given a labeled dataset sampled from an inaccessible distribution, and want to compare some computer program approximating that distribution to detect errors with respect to that dataset. This is known as statistical risk estimation. One solution is to use metamorphic testing~\cite{chen2020metamorphic}.
+    It is often the case we are given a labeled dataset sampled from an inaccessible distribution, and want to compare some computer program approximating that distribution to detect errors with respect to that dataset. This is known as statistical risk estimation. One solution is to use metamorphic testing~\cite{chen2020metamorphic}.
 
     Metamorphic testing can be expressed as follows: Given an oracle $\mathbf P: \mathcal I \rightarrow \mathcal R$, and a set of inputs $\mathbf X = \{\mathbf{x}^{(1)}, \dots, \mathbf{x}^{(z)}\}$ and outputs $\mathbf Y = \{\mathbf{y}^{(1)} = \mathbf{P}(\mathbf{x}^{(1)}), \dots, \mathbf{y}^{(z)} = \mathbf{P}(\mathbf{x}^{(z)})\}$, a metamorphic relation (MR) is a relation $\mathcal M \subset \mathcal I^z \times \mathcal R^z$ where $z \geq 2$. In the simplest case, an MR is an equivalence relation $\mathcal R$, i.e.: $\langle \mathbf x, \mathbf y, \mathbf x', \mathbf y' \rangle \in \mathcal R \Leftrightarrow \mathbf x \sim_{\mathcal R} \mathbf x' \Leftrightarrow \mathbf P(\mathbf x) \approx \mathbf P(\mathbf x')$.
 
     \pagebreak\subsection{Probabilistic Equivalence}\label{sec:pr-eq}
 
-    Though precise, the prior definitions of equality are far too rigid in practice. The spaces involved either lack formal semantics or are intractable to exhaustive search. We now turn to a language for reasoning about probabilistic equivalence, which allows us to decide approximate equivalence.
+    Though precise, the prior definitions of equality are far too rigid in practice. The spaces involved either lack formal semantics or are intractable to exhaustive search. We now turn to a language for probabilistic reasoning, which admits among other things, a decision procedure for probabilistic equivalence.
 
 %    How do we know when we are approaching equality? We can use a distance metric.
 
@@ -410,13 +401,15 @@
 
     Kantorovich-Rubinstein
 
+    Kullback-Leibler
+
     L\'evy-Prokhorov
 
     Gromov-Hausdorff
 
     Jensen-Shannon
 
-    Kullback-Leibler
+    Cauchy-Schwartz
 
     Weisfeiler-Lehman
 
@@ -435,7 +428,7 @@
 
     Duality is also an important concept in computer science. One famous example is the duality between code and data: in \textit{homoiconic} languages, we can treat code as data and data as code. cf. Kleene's recursion theorem.
 
-    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself?
+    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define a the graph as an algebraic object.
 
     \subsection{Algebraic graphs}\label{subsec:algebraic-graphs}
 
