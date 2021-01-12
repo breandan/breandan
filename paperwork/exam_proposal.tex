@@ -167,7 +167,7 @@
 
     \subsection{Intensional equivalence}\label{subsec:in-eq}
 
-    Let $\Omega \subseteq \mathcal{F} \times \mathcal{F}$ be an equivalence relation on representable functions which are closed under composition. We say two representations $f, f' \in \mathcal{I} \rightarrow \mathcal{R}$ are intensionally equal or disequal under $\Omega$ if we can establish $(f,f') \in \Omega^*$.
+    Let $\Omega \subseteq \mathcal{F} \times \mathcal{F}$ be a relation on representable functions which are closed under composition. We say two representations $f, f' \in \mathcal{I} \rightarrow \mathcal{R}$ are intensionally equal or disequal under $\Omega$ if we can establish $(f,f') \in \Omega^*$.
 
     \begin{prooftree}
         \AxiomC{$f: \mathcal{I \rightarrow R} \in \Gamma^0$}
@@ -184,14 +184,14 @@
         \AxiomC{$\Gamma^n_{f} \vdash E, G$}
         \AxiomC{$f' \in E$}
         \RightLabel{\textsc{Eq}}
-        \BinaryInfC{$\Gamma^n_{f} \vdash f \equiv f'$ by $G^{-n}(f')$}
+        \BinaryInfC{$\Gamma^n_{f} \vdash f \equiv_\Omega f'$ by $G^{-n}(f')$}
         \DisplayProof
         \hskip 1em
         \AxiomC{$\Gamma^n_{f} \vdash E$}
         \AxiomC{$\Gamma^{n+1}_{f}\vdash E$}
         \AxiomC{$f'\notin E$}
         \RightLabel{\textsc{Neq}}
-        \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \not\equiv f'$}
+        \TrinaryInfC{$\Gamma^{n+1}_{f} \vdash f \not\equiv_\Omega f'$}
     \end{prooftree}
 
     \noindent For example, suppose we are given $f: \{a, b, c\} \mapsto a b c, f': \{a, b, c\} \mapsto c b a$ and $\Omega := \{(a, a), (ab, ba)\}$. Indeed, $\textsc{Eq}[f, f']$ can be established as follows:
@@ -211,7 +211,7 @@
 %        \RightLabel{Eq}
 %        \UnarbInf$\Gamma^3_{f} \fCenter E \hskip 3em f' \vdash cba \in E$
         \RightLabel{\textsc{Eq}}
-        \UnaryInf$\Gamma^3_{f} \fCenter f \equiv f'\text{ by } G^{-3}(f':=cba) = \{f := abc\}$
+        \UnaryInf$\Gamma^3_{f} \fCenter f \equiv_\Omega f'\text{ by } G^{-3}(f':=cba) = \{f := abc\}$
     \end{prooftree}
 
     \noindent We can visualize $G$ as a directed graph, omitting all loops. Notice how each path converges to the same term, a property known as $\textit{strong confluence}$.
@@ -239,11 +239,11 @@
     d -> f [label=<Ω<SUB>1</SUB>> minlen=2]
     }
 
-    \noindent Let us suppose $|\mathcal{I}|, |\Omega^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[g, g'], \forall g = g' \in \mathcal{I} \rightarrow \mathcal{R}$. It can be shown the above procedure requires:
+    \noindent Let us suppose $|\mathcal{I}|, |\Omega^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[g, g'], \forall g \equiv_\Omega g' \in \mathcal{I} \rightarrow \mathcal{R}$. It can be shown the above procedure requires:
 
-    $$\mathcal{O}_{\textsc{Eq}} = \underset{i \leq n}{\text{max }}\underset{n}{\text{min}}\{|G| \mid \Gamma^i_g \vdash G, \Gamma_g^n = \Gamma_g^{n+1}\}$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{I}|!) \text{ for } \Omega.$$
+    $$\mathcal{O}_{\textsc{Eq}} = \underset{i \leq n}{\text{max }}\underset{n}{\text{argmin}}\{|G| \mid \Gamma^i_g \vdash G, \Gamma_g^n = \Gamma_g^{n+1}\}$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{I}|!) \text{ for } \Omega.$$
 
-    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|g = g']$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Omega' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Omega$ are known to be undecidable~\citep{baader1999term}.
+    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|g \equiv g']$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Omega' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Omega$ are known to be undecidable~\citep{baader1999term}.
 
     \subsection{Computational equivalence}\label{subsec:comp-eq}
 
@@ -303,7 +303,7 @@
         \RightLabel{\textsc{Sub}}
         \UnaryInf$\Gamma' \fCenter f'(\Omega) \Downarrow 2$
         \RightLabel{\textsc{Neq}}
-        \BinaryInfC{$\Gamma, \Gamma' \vdash f \not\equiv f'$ by $\{(a, 1), (b, 2), (c, 2)\}$}
+        \BinaryInfC{$\Gamma, \Gamma' \vdash f \not\equiv f'$ by $\Omega :=\{(a, 1), (b, 2), (c, 2)\}$}
     \end{prooftree}
 
     \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $\Omega$, and \textsc{Sub} returns concrete values $\mathcal{R}$, here depicted on $f'$:
