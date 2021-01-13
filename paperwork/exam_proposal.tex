@@ -355,7 +355,7 @@
 
     \pagebreak\subsection{Observational Equivalence}
 
-    A careful reading of intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence will reveal that both require an external definition of equality to satisfy. One solution to this problem known as \textit{observational equivalence}~\cite{morris1969lambda} allows a language $\mathcal{L}$ to implement an internal mechanism to verify equality. Given $\mathcal{L}$, a term $t$, and one-holed context $C[\![\cdot]\!]$, our job is to check for termination: if $C[\![t]\!]$ is both well-defined and halts, we write $C[\![t]\!]\Downarrow$, otherwise $C[\![t]\!]\Uparrow$.
+    As presented, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence require an external definition of equality to satisfy. One solution to this problem known as \textit{observational equivalence}~\cite{morris1969lambda} allows a language $\mathcal{L}$ to implement an internal mechanism to verify equality. Given $\mathcal{L}$, a term $t$, and one-hole context $C[\![\cdot]\!]$, our job is to check for termination: if $C[\![t]\!]$ is both well-defined and halts, we write $C[\![t]\!]\Downarrow$, otherwise $C[\![t]\!]\Uparrow$.
 
     \begin{prooftree}
         \AxiomC{$\Gamma \vdash C[\![t]\!]\Downarrow \iff C[\![t']\!]\Downarrow$ $\forall$ $C[\![\cdot]\!] \in \mathcal{L}$}
@@ -379,9 +379,56 @@
 
     \subsection{Approximate Equivalence}\label{sec:ap-eq}
 
-    % https://papers.nips.cc/paper/2000/file/4e87337f366f72daa424dae11df0538c-Paper.pdf
 
-    Approximate equivalence requires a distance metric. To define a proper distance metric, we need the concept of a \textit{kernel function}. Suppose we have a feature map $\varphi: \mathcal{X} \rightarrow \mathcal{Y}$. A kernel function $k: \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$ defined as $k(f, g) \mapsto \left< \varphi(f), \varphi(g) \right>_\mathcal{Y}$ is a metric on $\mathcal{Y}$. Crucially, $\left< \cdot, \cdot \right>_\mathcal{Y}$ must be an inner product, i.e. Cauchy-Schwartz must hold.
+    Approximate equivalence requires a \textit{distance metric}, $\delta: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$, a generalized equivalence relation with the following logical properties:
+
+    \begin{prooftree}
+        \bottomAlignProof
+        \AxiomC{$\delta(a, b) = 0$}
+        \UnaryInfC{$a \equiv_\delta b$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Definiteness}}
+        \DisplayProof
+        \hskip 1.5em
+        \bottomAlignProof
+        \AxiomC{$\delta, a, b$}
+        \UnaryInfC{$\delta(a, b) = \delta(b, a)$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Symmetry}}
+        \DisplayProof
+        \hskip 1.5em
+        \bottomAlignProof
+        \AxiomC{$\delta(a, c)$}
+        \AxiomC{$b$}
+        \BinaryInfC{$\delta(a, c) \leq \delta(a, b) + \delta(b, c)$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Triangularity}}
+    \end{prooftree}
+
+    \noindent A \textit{kernel function} $\Delta: (\mathcal{X}\rightarrow\mathcal{Z}) \times (\mathcal{X}\rightarrow\mathcal{Z}) \rightarrow \mathbb{R}$ can be defined as a metric over $\mathcal{Z}$ with some additional structure. In particular for every kernel, there exists a feature map $\varphi: (\mathcal{X} \rightarrow \mathcal{Y}) \rightarrow \mathcal{Z}$ such that $\Delta(f, g) \mapsto \left<\varphi(f), \varphi(g)\right>_\mathcal{Z}$. Given a feature map $\varphi$, we can construct the corresponding kernel as follows:
+
+    % https://papers.nips.cc/paper/2000/file/4e87337f366f72daa424dae11df0538c-Paper.pdf
+    % https://www.stat.berkeley.edu/~bartlett/courses/2014spring-cs281bstat241b/lectures/20-notes.pdf#page=17
+    % https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c03_p47-84.pdf#page=29
+    \begin{prooftree}
+        \bottomAlignProof
+        \AxiomC{}
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{TODO}}
+        \DisplayProof
+        \hskip 1.5em
+    \end{prooftree}
+
+    For each kernel, there is a primal and dual form ...
 
     \begin{center}
         \begin{tabular}{|c|c|c|}
