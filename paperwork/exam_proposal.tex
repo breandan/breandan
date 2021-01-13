@@ -167,10 +167,10 @@
 
     \subsection{Intensional equivalence}\label{subsec:in-eq}
 
-    Let $\Omega \subseteq \mathcal{F} \times \mathcal{F}$ be a relation on representable functions which are closed under composition. We say two representations $f, g \in \mathcal{I} \rightarrow \mathcal{R}$ are intensionally equal under $\Omega$ if we can establish that $g \in \Omega^n(f)$ for some $n \in \mathbb{N}$.
+    Let $\Omega \subseteq \mathcal{F} \times \mathcal{F}$ be a relation on representable functions which are closed under composition. We say two representations $f, g \in \mathcal{X} \rightarrow \mathcal{Y}$ are intensionally equal under $\Omega$ if we can establish that $g \in \Omega^n(f)$ for some $n \in \mathbb{N}$.
 
     \begin{prooftree}
-        \AxiomC{$f, g: \mathcal{I \rightarrow R} \in \Gamma^0_{g}$}
+        \AxiomC{$f, g: \mathcal{X \rightarrow Y} \in \Gamma^0_{g}$}
         \RightLabel{\textsc{Init}}
         \UnaryInfC{$\Gamma^0_{g} \vdash \{f\}, \{(f, f)\}$}
 %        \UnaryInfC{\textit{Commutivity}}
@@ -237,18 +237,18 @@
     d -> f [label=<Ω<SUB>1</SUB>> minlen=2]
     }
 
-    \noindent Let us suppose $|\mathcal{I}|, |\Omega^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[f, g], \forall f \equiv_\Omega g \in \mathcal{I} \rightarrow \mathcal{R}$. It can be shown the above procedure requires:
+    \noindent Let us suppose $|\mathcal{X}|, |\Omega^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[f, g], \forall f \equiv_\Omega g \in \mathcal{X} \rightarrow \mathcal{Y}$. It can be shown the above procedure requires:
 
-    $$\mathcal{O}_{\textsc{Eq}} = \underset{i \leq n}{\text{max }}\underset{n}{\text{argmin}}\{|G| \mid \Gamma^i_{g} \vdash G, \Gamma_{g}^n = \Gamma_{g}^{n+1}\}$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{I}|!) \text{ for } \Omega.$$
+    $$\mathcal{O}_{\textsc{Eq}} = \underset{i \leq n}{\text{max }}\underset{n}{\text{argmin}}\{|G| \mid \Gamma^i_{g} \vdash G, \Gamma_{g}^n = \Gamma_{g}^{n+1}\}$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{X}|!) \text{ for } \Omega.$$
 
     \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|f \equiv g]$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Omega' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Omega$ are known to be undecidable~\citep{baader1999term}.
 
     \subsection{Computational equivalence}\label{subsec:comp-eq}
 
-    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is highly sensitive to $|\mathcal{I}|$ and $\Omega$. While equality may be tractable, disequality is definitely an obstacle. In the computational setting, we will see the opposite holds, ceteris paribus. %Two values $r, r': \mathcal{R}$ share a normal form in which equality is trivial.
+    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is highly sensitive to $|\mathcal{X}|$ and $\Omega$. While equality may be tractable, disequality is definitely an obstacle. In the computational setting, we will see the opposite holds, ceteris paribus. %Two values $r, r': \mathcal{Y}$ share a normal form in which equality is trivial.
 
     \begin{prooftree}
-        \AxiomC{$fg: \mathcal{I} \rightarrow \mathcal{R}, \Omega: \{\mathcal{I}\rightarrow \mathcal{R}\}\rightarrow \mathcal{R} \in \Gamma$}
+        \AxiomC{$fg: \mathcal{X} \rightarrow \mathcal{Y}, \Omega: \{\mathcal{X}\rightarrow \mathcal{Y}\}\rightarrow \mathcal{Y} \in \Gamma$}
         \RightLabel{\textsc{Inv}}
         \UnaryInfC{$\Gamma \vdash fg(\Omega) \Downarrow f(\Omega) \cdot g(\Omega)$}
         \DisplayProof
@@ -256,7 +256,7 @@
         \AxiomC{$\Gamma \vdash f$}
         \AxiomC{$\Gamma \vdash \Omega$}
         \RightLabel{\textsc{Sub}}
-%        \AxiomC{$i: \mathcal{I}$}
+%        \AxiomC{$i: \mathcal{X}$}
         \BinaryInfC{$\Gamma \vdash f(\Omega) \Downarrow \Omega[f]$}
         \DisplayProof
         \vskip 1em
@@ -304,7 +304,7 @@
         \BinaryInfC{$\Gamma, \Gamma' \vdash f \not\equiv g$ by $\Omega :=\{(a, 1), (b, 2), (c, 2)\}$}
     \end{prooftree}
 
-    \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $\Omega$, and \textsc{Sub} returns concrete values $\mathcal{R}$, here depicted on $g$:
+    \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $\Omega$, and \textsc{Sub} returns concrete values $\mathcal{Y}$, here depicted on $g$:
 
     \hspace{-30pt}\digraph[scale=0.5]{abcext0}{
     node[ fontname="CMU Classical Serif" fontsize=20 ];
@@ -344,7 +344,7 @@
 
     \vspace{-10pt}$$\Theta_\textsc{Neq} \sim (1 - P_\textsc{Neq}(\Omega))^nP_\textsc{Neq}(\Omega) \text{ with } \mathop{\mathbb{E}}[\Theta_\textsc{Neq}] = (1-P_\textsc{Neq}(\Omega))P_\textsc{Neq}(\Omega)^{-1}$$
 
-    \noindent Although a single witness $\Omega$ s.t. $f(\Omega) \not\Downarrow g(\Omega)$ is sufficient for disequality, this procedure may be intractable depending on $|\mathcal{I}|, P_\textsc{Neq}(\Omega)$ and $\Theta_{\textsc{Inv}}$. Other fuzzing methods for selecting $\Omega$ based on the structure of $f$ are also possible.
+    \noindent Although a single witness $\Omega$ s.t. $f(\Omega) \not\Downarrow g(\Omega)$ is sufficient for disequality, this procedure may be intractable depending on $|\mathcal{X}|, P_\textsc{Neq}(\Omega)$ and $\Theta_{\textsc{Inv}}$. Other fuzzing methods for selecting $\Omega$ based on the structure of $f$ are also possible.
 
 %    We can test using property-based / metamorphic testing. Some strategies:
 
@@ -379,7 +379,36 @@
 
     \subsection{Approximate Equivalence}\label{sec:ap-eq}
 
-    It is often the case we are given a dataset $p_{\textsc{Train}}, p_{\textsc{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution, where $p^{(1..n)} \overset{iid}{\sim} P(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta \rightarrow Y$ approximating $P_\textsc{Gen}$ to detect errors with respect to that dataset.
+    % https://papers.nips.cc/paper/2000/file/4e87337f366f72daa424dae11df0538c-Paper.pdf
+
+    Approximate equivalence requires a distance metric. To define a proper distance metric, we need the concept of a \textit{kernel function}. Suppose we have a feature map $\varphi: \mathcal{X} \rightarrow \mathcal{Y}$. A kernel function $k: \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$ defined as $k(f, g) \mapsto \left< \varphi(f), \varphi(g) \right>_\mathcal{Y}$ is a metric on $\mathcal{Y}$. Crucially, $\left< \cdot, \cdot \right>_\mathcal{Y}$ must be an inner product, i.e. Cauchy-Schwartz must hold.
+
+    \begin{center}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            Polynomial & $k(\mathbf{f},\mathbf{g}):=(\mathbf{f}^{T}\mathbf{g}+r)^{n}$ & $\quad \mathbf{f},\mathbf{g}\in \mathbb {R} ^{d}, n \in \mathbb N, r\geq 0$ \\ \hline
+            Laplacian & $k(\mathbf {f}, \mathbf {g}):=\exp \left(-{\frac {\|\mathbf {f} -\mathbf {g} \|}{\sigma}}\right)$ & $\quad \mathbf{f},\mathbf{g}\in \mathbb {R} ^{d},\sigma >0$ \\ \hline
+            Gaussian RBF & $k(\mathbf {f}, \mathbf {g}):=\exp \left(-{\frac {\|\mathbf {f} -\mathbf {g} \|^{2}}{2\sigma ^{2}}}\right)$ & $\quad \mathbf{f},\mathbf{g}\in \mathbb {R} ^{d},\sigma >0$ \\ \hline
+            String Kernel & ... & ... \\ \hline
+            Tree Kernel & ... & ... \\ \hline
+        \end{tabular}
+    \end{center}
+
+    We want a want a kernel function $M_\theta: (\mathcal{X}\rightarrow \mathcal{Y}) \times (\mathcal{X}\rightarrow \mathcal{Y})\rightarrow \mathbb{R}$ between two computable functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal...
+
+%    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta \rightarrow Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
+
+%    \begin{prooftree}
+%        \AxiomC{$\Gamma \vdash f \circ g, f: Z \rightarrow Y, g: X \rightarrow Z, B: := P_\text{Train}[i]$}
+%        \RightLabel{\textsc{SGD}}
+%        \UnaryInfC{$\Gamma \vdash t \equiv_{\mathcal{L}} t'$}
+%        \DisplayProof
+%        \vskip 1em
+%%        \AxiomC{$\Gamma \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
+%%        \RightLabel{\textsc{ERM}}
+%%        \UnaryInfC{$\Gamma \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
+%    \end{prooftree}
+
 
     %Given an oracle $M: \mathcal I \rightarrow \mathcal R$, and a set of inputs $X := \{x^{(i)}\}_{i=1}^n$ and outputs $Y := \{y^{(i)} := M(x^{(i)})\}_{i=1}^n$, a metamorphic relation (MR) is a relation $M \subset \mathcal I^z \times \mathcal R^z$ where $z \geq 2$. In the simplest case, an MR is an equivalence relation $\mathcal R$, i.e.: $\langle \mathbf x, \mathbf y, \mathbf x', \mathbf y' \rangle \in \mathcal R \Leftrightarrow \mathbf x \sim_{\mathcal R} \mathbf x' \Leftrightarrow \mathbf P(\mathbf x) \approx \mathbf P(\mathbf x')$.
 
@@ -413,10 +442,9 @@
 
     TODO: Define probability distributions, integration, kernel functions and metrics.
 
-    We want a metric $M_\theta: (\mathcal{I}\rightarrow{O}) \times (\mathcal{I}\rightarrow{O})\rightarrow \mathbb{R}$ between two functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal. During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
+%    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
     \pagebreak
-
 
     \section{From computation to knowledge graphs}\label{sec:graphs}
 
