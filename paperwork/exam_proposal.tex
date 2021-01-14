@@ -1,3 +1,4 @@
+%! suppress = Unicode
 %! Author = breandan
 %! Date = 11/16/20
 
@@ -8,8 +9,15 @@
 \usepackage{amsmath}
 \usepackage[pdf]{graphviz}
 \usepackage{amssymb}
+\usepackage{mathrsfs}
+
+\usepackage{unicode-math}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\usepackage{cancel}
+\newcommand{\nDownarrow}{\ensuremath{\text{ }\cancel{\Downarrow}\text{ }}}
 \usepackage{centernot}
 
+\usepackage{tikz-cd}
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
 \usepackage{bussproofs}
@@ -50,29 +58,29 @@
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
-    Reason is the source of all human knowledge. In order to understand human reasoning, we need to understand how concepts are related. Next to identity, one of the simplest relations between concepts is equality.
+    Reason is the source of all human knowledge. In order to understand reason, we need to understand how concepts are related. Next to identity, one of the simplest relations between concepts is equality.
 
     For such an important concept, the notation for equality is recklessly overloaded in mathematics and computer science. For example, the expression $x = y$ may denote: (1)~define $x$ to be $y$, (2)~$x$ and $y$ are the same, (3)~are $x$ and $y$ the same? (4)~$x$ and $y$ are exchangeable, (5)~assign $y$ to $x$, (6)~assign $x$ to $y$, among other peculiar programming idioms. If two expressions are equal, it is generally possible to treat them in the same manner.
 
-    But this convention does not always hold! Suppose we need to compute the derivative of a logical function with respect to its inputs. The trouble is, logical equality is not differentiable. Consider the Kronecker $\delta$-function: %$\delta_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
+    But this convention does not always hold! Suppose we need to compute the derivative of a logical function with respect to its inputs. The trouble is, logical equality is not differentiable. Consider the Kronecker $δ$-function: %$δ_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
 
     $$
-    \delta_k(x, y) :=
+    δ_k(x, y) :=
     \begin{cases}
         1 \text{ if } x \overset{?}{=} y, \\
         0 \text{ otherwise }\\
     \end{cases}
     $$
 
-    When encountering $\delta_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $\delta_d^{-1}(B\subset \mathbb{B})$ is not open, thus $\delta_d$ is not continuous and $\nabla\delta_k$ is undefined. Now consider the Dirac $\delta$-function, which is defined as follows: %$\delta_d: \mathbb{R}^2 \rightarrow \mathbb{R}$,
+    When encountering $δ_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $δ_d^{-1}(B\subset \mathbb{B})$ is not open, thus $δ_d$ is not continuous and $\nablaδ_k$ is undefined. Now consider the Dirac $δ$-function, which is defined as follows: %$δ_d: \mathbb{R}^2 \rightarrow \mathbb{R}$,
 
     $$
-    \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)\delta(x-a,y-b)d(x, y) \overset{\Delta}{=} f(a,b)
+    \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)δ(x-a,y-b)d(x, y) \overset{Δ}{=} f(a,b)
     $$
 
-    Unlike $\nabla\delta_k$, it can be shown that $\nabla\delta_d$ is well-behaved everywhere on $\mathbb{R}^2$. However we encounter an important distinction between intensional and extensional equality. Unlike elementary functions, there exist many functions which can only be described indirectly, e.g. a probability distribution on a set of measure zero. Nevertheless, these constructions are convenient abstractions for modeling many physical and computational processes.
+    Unlike $\nablaδ_k$, it can be shown that $\nablaδ_d$ is well-behaved everywhere on $\mathbb{R}^2$. However we encounter an important distinction between intensional and extensional equality. Unlike elementary functions, there exist many functions which can only be described indirectly, e.g. a probability distribution on a set of measure zero. Nevertheless, these constructions are convenient abstractions for modeling many physical and computational processes.
 
-    Neither $\nabla\delta_k$ nor $\delta_d$ are a satisfactory basis for equality. To allow a more flexible definition of the $=$ operator, we require a relation which approximates the logical properties of $\delta_k$, but can be made differentiable like $\delta_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\equiv$ is a binary relation with the following logical properties:
+    Neither $\nablaδ_k$ nor $δ_d$ are a satisfactory basis for equality. To allow a more flexible definition of the $=$ operator, we require a relation which approximates the logical properties of $δ_k$, but can be made differentiable like $δ_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\equiv$ is a binary relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -81,7 +89,7 @@
         \noLine
         \UnaryInfC{}
         \noLine
-        \UnaryInfC{\textit{Reflexivity}}
+        \UnaryInfC{\textit{Identity}}
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
@@ -167,49 +175,49 @@
 
     \subsection{Intensional equivalence}\label{subsec:in-eq}
 
-    Let $\Omega \subseteq \mathcal{F} \times \mathcal{F}$ be a relation on representable functions which are closed under composition. We say two representations $f, g \in \mathcal{X} \rightarrow \mathcal{Y}$ are intensionally equal under $\Omega$ if we can establish that $g \in \Omega^n(f)$ for some $n \in \mathbb{N}$.
+    Let $Ω \subseteq \mathcal{F} \times \mathcal{F}$ be a relation on representable functions which are closed under composition. We say two representations $f, g \in \mathcal{X} \rightarrow \mathcal{Y}$ are intensionally equal under $Ω$ if we can establish that $g \in Ω^n(f)$ for some $n \in \mathbb{N}$.
 
     \begin{prooftree}
-        \AxiomC{$f, g: \mathcal{X \rightarrow Y} \in \Gamma^0_{g}$}
+        \AxiomC{$f, g: \mathcal{X \rightarrow Y} \in Γ^0_{g}$}
         \RightLabel{\textsc{Init}}
-        \UnaryInfC{$\Gamma^0_{g} \vdash \{f\}, \{(f, f)\}$}
+        \UnaryInfC{$Γ^0_{g} \vdash \{f\}, \{(f, f)\}$}
 %        \UnaryInfC{\textit{Commutivity}}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma^{n}_{g} \vdash E \subseteq \mathcal{F}, G \subseteq E \times E$}
+        \AxiomC{$Γ^{n}_{g} \vdash E \subseteq \mathcal{F}, G \subseteq E \times E$}
         \RightLabel{\textsc{Sub}}
-        \UnaryInfC{$\Gamma^{n+1}_{g} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in \Omega}}e'\leftarrow e[\sigma_1\rightarrow\sigma_2], (e, e')$}
+        \UnaryInfC{$Γ^{n+1}_{g} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in Ω}}e'\leftarrow e[\sigma_1\rightarrow\sigma_2], (e, e')$}
         \DisplayProof
         \vskip 1em
-        \AxiomC{$\Gamma^n_{g} \vdash E, G$}
+        \AxiomC{$Γ^n_{g} \vdash E, G$}
         \AxiomC{$g \in E$}
         \RightLabel{\textsc{Eq}}
-        \BinaryInfC{$\Gamma^n_{g} \vdash f \equiv_\Omega g$ by $G^{-n}(g)$}
+        \BinaryInfC{$Γ^n_{g} \vdash f \equiv_Ω g$ by $G^{-n}(g)$}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma^n_{g} \vdash E$}
-        \AxiomC{$\Gamma^{n+1}_{g}\vdash E$}
+        \AxiomC{$Γ^n_{g} \vdash E$}
+        \AxiomC{$Γ^{n+1}_{g}\vdash E$}
         \AxiomC{$g\notin E$}
         \RightLabel{\textsc{Neq}}
-        \TrinaryInfC{$\Gamma^{n+1}_{g} \vdash f \not\equiv_\Omega g$}
+        \TrinaryInfC{$Γ^{n+1}_{g} \vdash f \not\equiv_Ω g$}
     \end{prooftree}
 
-    \noindent For example, suppose we are given $f: \{a, b, c\} \mapsto a b c, g: \{a, b, c\} \mapsto c b a$ and $\Omega := \{(a, a), (ab, ba)\}$. Indeed, $\textsc{Eq}[f, g]$ can be established as follows:
+    \noindent For example, suppose we are given $f: \{a, b, c\} \mapsto a b c, g: \{a, b, c\} \mapsto c b a$ and $Ω := \{(a, a), (ab, ba)\}$. Indeed, $\textsc{Eq}[f, g]$ can be established as follows:
 
     \vspace{-10pt}\begin{prooftree}
         \def\fCenter{\ := \ }
-        \Axiom$f \fCenter abc, \text{ } g := cba \in \Gamma_g^0$
+        \Axiom$f \fCenter abc, \text{ } g := cba \in Γ_g^0$
         \def\fCenter{\ \vdash\ }
         \RightLabel{\textsc{Init}}
-        \UnaryInf$\Gamma^0_{g} \fCenter \{abc\}, \{(abc, abc)\}$
+        \UnaryInf$Γ^0_{g} \fCenter \{abc\}, \{(abc, abc)\}$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma^1_{g} \fCenter \{\ldots, bac, acb\}, \{\ldots, (abc, bac), (abc, acb)\}$
+        \UnaryInf$Γ^1_{g} \fCenter \{\ldots, bac, acb\}, \{\ldots, (abc, bac), (abc, acb)\}$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma^2_{g} \fCenter \{\ldots, bca, cab\}, \{\ldots, (bac, bac), (acb, acb), (bac, bca), (acb, cab)\}$
+        \UnaryInf$Γ^2_{g} \fCenter \{\ldots, bca, cab\}, \{\ldots, (bac, bac), (acb, acb), (bac, bca), (acb, cab)\}$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma^3_{g} \fCenter \{\ldots, \mathbf{cba}\}, \{\ldots, (bca, bca), (cab, cab), (cab,\textbf{cba})\}$
+        \UnaryInf$Γ^3_{g} \fCenter \{\ldots, \mathbf{cba}\}, \{\ldots, (bca, bca), (cab, cab), (cab,\textbf{cba})\}$
         \RightLabel{\textsc{Eq}}
-        \UnaryInf$\Gamma^3_{g} \fCenter f \equiv_\Omega g\text{ by } G^{-3}(g:=cba) = \{f := abc\}$
+        \UnaryInf$Γ^3_{g} \fCenter f \equiv_Ω g\text{ by } G^{-3}(g:=cba) = \{f := abc\}$
     \end{prooftree}
 
     \noindent We can visualize $G$ as a directed graph, omitting all loops. Notice how each path converges to the same term, a property known as $\textit{strong confluence}$.
@@ -237,74 +245,74 @@
     d -> f [label=<Ω<SUB>1</SUB>> minlen=2]
     }
 
-    \noindent Let us suppose $|\mathcal{X}|, |\Omega^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[f, g], \forall f \equiv_\Omega g \in \mathcal{X} \rightarrow \mathcal{Y}$. It can be shown the above procedure requires:
+    \noindent Let us suppose $|\mathcal{X}|, |Ω^*| \in \mathbb{N}$ and consider the complexity of establishing $\textsc{Eq}[f, g], \forall f \equiv_Ω g \in \mathcal{X} \rightarrow \mathcal{Y}$. It can be shown the above procedure requires:
 
-    $$\mathcal{O}_{\textsc{Eq}} = \underset{i \leq n}{\text{max }}\underset{n}{\text{argmin}}\{|G| \mid \Gamma^i_{g} \vdash G, \Gamma_{g}^n = \Gamma_{g}^{n+1}\}$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{X}|!) \text{ for } \Omega.$$
+    $$\mathcal{O}_{\textsc{Eq}} = \underset{i \leq n}{\text{max }}\underset{n}{\text{argmin}}\{|G| \mid Γ^i_{g} \vdash G, Γ_{g}^n = Γ_{g}^{n+1}\}$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{X}|!) \text{ for } Ω.$$
 
-    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|f \equiv g]$ is more tractable. However termination is not necessarily guaranteed, e.g. $\Omega' := \{(a, 1a)\}$. Equality and termination under arbitrary $\Omega$ are known to be undecidable~\citep{baader1999term}.
+    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|f \equiv g]$ is more tractable. However termination is not necessarily guaranteed, e.g. $Ω' := \{(a, 1a)\}$. Equality and termination under arbitrary $Ω$ are known to be undecidable~\citep{baader1999term}.
 
     \subsection{Computational equivalence}\label{subsec:comp-eq}
 
-    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is highly sensitive to $|\mathcal{X}|$ and $\Omega$. While equality may be tractable, disequality is definitely an obstacle. In the computational setting, we will see the opposite holds, ceteris paribus. %Two values $r, r': \mathcal{Y}$ share a normal form in which equality is trivial.
+    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is highly sensitive to $|\mathcal{X}|$ and $Ω$. While equality may be tractable, disequality is definitely an obstacle. In the computational setting, we will see the opposite holds, ceteris paribus. %Two values $r, r': \mathcal{Y}$ share a normal form in which equality is trivial.
 
     \begin{prooftree}
-        \AxiomC{$fg: \mathcal{X} \rightarrow \mathcal{Y}, \Omega: \{\mathcal{X}\rightarrow \mathcal{Y}\}\rightarrow \mathcal{Y} \in \Gamma$}
+        \AxiomC{$fg: \mathcal{X} \rightarrow \mathcal{Y}, Ω: \{\mathcal{X}\rightarrow \mathcal{Y}\}\rightarrow \mathcal{Y} \in Γ$}
         \RightLabel{\textsc{Inv}}
-        \UnaryInfC{$\Gamma \vdash fg(\Omega) \Downarrow f(\Omega) \cdot g(\Omega)$}
+        \UnaryInfC{$Γ \vdash fg(Ω) \Downarrow f(Ω) \cdot g(Ω)$}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma \vdash f$}
-        \AxiomC{$\Gamma \vdash \Omega$}
+        \AxiomC{$Γ \vdash f$}
+        \AxiomC{$Γ \vdash Ω$}
         \RightLabel{\textsc{Sub}}
 %        \AxiomC{$i: \mathcal{X}$}
-        \BinaryInfC{$\Gamma \vdash f(\Omega) \Downarrow \Omega[f]$}
+        \BinaryInfC{$Γ \vdash f(Ω) \Downarrow Ω[f]$}
         \DisplayProof
         \vskip 1em
-        \AxiomC{$\Gamma, \Gamma' \vdash f(\Omega) \Downarrow g(\Omega) \text{ } \forall \Omega$}
+        \AxiomC{$Γ, Γ' \vdash f(Ω) \Downarrow g(Ω) \text{ } \forall Ω$}
         \RightLabel{\textsc{Eq}}
-        \UnaryInfC{$\Gamma, \Gamma' \vdash f \equiv g$}
+        \UnaryInfC{$Γ, Γ' \vdash f \equiv g$}
         \DisplayProof
         \hskip 1em
-        \AxiomC{$\Gamma, \Gamma' \vdash \exists \Omega \mid f(\Omega) \not\Downarrow g(\Omega) $}
+        \AxiomC{$Γ, Γ' \vdash \exists Ω \mid f(Ω) \nDownarrow g(Ω) $}
         \RightLabel{\textsc{Neq}}
-        \UnaryInfC{$\Gamma, \Gamma' \vdash f \not\equiv g$ by $\Omega$}
+        \UnaryInfC{$Γ, Γ' \vdash f \not\equiv g$ by $Ω$}
     \end{prooftree}
 
     % big step semantics
 %    Extensional equality asks``Do $f_1$ and $f_2$ behave in the same way over all inputs?''
-    \noindent \textsc{Sub} loosely corresponds to $\eta$-reduction in the untyped $\lambda$-calculus, however $f \notin \Omega$ is disallowed and we assume all variables are bound by \textsc{Inv}. Let us consider $f: \{a, b, c\}\mapsto abc, g: \{a, b, c\} \mapsto ac$ under $\Omega:=\{(a, 1), (b, 2), (c, 2)\}$:
+    \noindent \textsc{Sub} loosely corresponds to $\eta$-reduction in the untyped $\lambda$-calculus, however $f \notin Ω$ is disallowed and we assume all variables are bound by \textsc{Inv}. Let us consider $f: \{a, b, c\}\mapsto abc, g: \{a, b, c\} \mapsto ac$ under $Ω:=\{(a, 1), (b, 2), (c, 2)\}$:
 
     %If we test $\hat i \in {-2, -1, 0, 1, \ldots}$, we have $f_1(-2)=f_2(-2)$, $f_1(-1)=f_2(-1)$, $f_1(0)=f_2(0)$, $f_1(1) \neq f_2(1)$. Once we detect an $f_1(\hat i) \neq f_2(\hat i)$, we can halt immediately.
 
     \vspace{-10pt}\begin{prooftree}
         \def\fCenter{\ :=}
         \def\defaultHypSeparation{\hskip -1.1in}
-        \Axiom$f\fCenter abc, \Omega:=\{(a, 1), (b, 2), (c, 2)\} \in \Gamma$
+        \Axiom$f\fCenter abc, Ω:=\{(a, 1), (b, 2), (c, 2)\} \in Γ$
         \def\fCenter{\ \vdash\ }
         \RightLabel{\textsc{Inv}}
-        \UnaryInf$\Gamma \fCenter a(\Omega)\cdot bc(\Omega)$
+        \UnaryInf$Γ \fCenter a(Ω)\cdot bc(Ω)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma \fCenter 1\cdot bc(\Omega)$
+        \UnaryInf$Γ \fCenter 1\cdot bc(Ω)$
         \RightLabel{\textsc{Inv}}
-        \UnaryInf$\Gamma \fCenter 1\cdot b(\Omega)\cdot c(\Omega)$
+        \UnaryInf$Γ \fCenter 1\cdot b(Ω)\cdot c(Ω)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma \fCenter 2\cdot c(\Omega)$
+        \UnaryInf$Γ \fCenter 2\cdot c(Ω)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma \fCenter f(\Omega) \Downarrow 4$
+        \UnaryInf$Γ \fCenter f(Ω) \Downarrow 4$
         \def\fCenter{\ :=}
-        \Axiom$g\fCenter ac, \Omega:=\{(a, 1), (b, 2), (c, 2)\} \in \Gamma'$
+        \Axiom$g\fCenter ac, Ω:=\{(a, 1), (b, 2), (c, 2)\} \in Γ'$
         \def\fCenter{\ \vdash\ }
         \RightLabel{\textsc{Inv}}
-        \UnaryInf$\Gamma' \fCenter a(\Omega)\cdot c(\Omega)$
+        \UnaryInf$Γ' \fCenter a(Ω)\cdot c(Ω)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma' \fCenter 1\cdot c(\Omega)$
+        \UnaryInf$Γ' \fCenter 1\cdot c(Ω)$
         \RightLabel{\textsc{Sub}}
-        \UnaryInf$\Gamma' \fCenter g(\Omega) \Downarrow 2$
+        \UnaryInf$Γ' \fCenter g(Ω) \Downarrow 2$
         \RightLabel{\textsc{Neq}}
-        \BinaryInfC{$\Gamma, \Gamma' \vdash f \not\equiv g$ by $\Omega :=\{(a, 1), (b, 2), (c, 2)\}$}
+        \BinaryInfC{$Γ, Γ' \vdash f \not\equiv g$ by $Ω :=\{(a, 1), (b, 2), (c, 2)\}$}
     \end{prooftree}
 
-    \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $\Omega$, and \textsc{Sub} returns concrete values $\mathcal{Y}$, here depicted on $g$:
+    \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $Ω$, and \textsc{Sub} returns concrete values $\mathcal{Y}$, here depicted on $g$:
 
     \hspace{-30pt}\digraph[scale=0.5]{abcext0}{
     node[ fontname="CMU Classical Serif" fontsize=20 ];
@@ -340,11 +348,11 @@
     c -> d [label="𝓡"]
     }
 
-    \noindent Assuming $f, g \sim P(\mathcal{F}), \Omega \overset{iid}{\sim} P_\textsc{Test}(\Omega \mid f \not\equiv g)$ yields a fixed but unknown distribution, $P_\textsc{Neq}(\Omega) = P(f(\Omega)\not\Downarrow g(\Omega) \mid f \not\equiv g)$. Let $\Theta_\textsc{Inv} = 1$ for all $f, \Omega$. The complexity of certifying $\textsc{Neq}$ in $n$ trials follows a geometric distribution:
+    \noindent Assuming $f, g \sim P(\mathcal{F}), Ω \overset{iid}{\sim} P_\textsc{Test}(Ω \mid f \not\equiv g)$ yields a fixed but unknown distribution, $P_\textsc{Neq}(Ω) = P(f(Ω) \nDownarrow g(Ω) \mid f \not\equiv g)$. Let $\Theta_\textsc{Inv} = 1$ for all $f, Ω$. The complexity of certifying $\textsc{Neq}$ in $n$ trials follows a geometric distribution:
 
-    \vspace{-10pt}$$\Theta_\textsc{Neq} \sim (1 - P_\textsc{Neq}(\Omega))^nP_\textsc{Neq}(\Omega) \text{ with } \mathop{\mathbb{E}}[\Theta_\textsc{Neq}] = (1-P_\textsc{Neq}(\Omega))P_\textsc{Neq}(\Omega)^{-1}$$
+    \vspace{-10pt}$$\Theta_\textsc{Neq} \sim (1 - P_\textsc{Neq}(Ω))^nP_\textsc{Neq}(Ω) \text{ with } \mathop{\mathbb{E}}[\Theta_\textsc{Neq}] = (1-P_\textsc{Neq}(Ω))P_\textsc{Neq}(Ω)^{-1}$$
 
-    \noindent Although a single witness $\Omega$ s.t. $f(\Omega) \not\Downarrow g(\Omega)$ is sufficient for disequality, this procedure may be intractable depending on $|\mathcal{X}|, P_\textsc{Neq}(\Omega)$ and $\Theta_{\textsc{Inv}}$. Other fuzzing methods for selecting $\Omega$ based on the structure of $f$ are also possible.
+    \noindent Although a single witness $Ω$ s.t. $f(Ω) \nDownarrow g(Ω)$ is sufficient for disequality, this procedure may be intractable depending on $|\mathcal{X}|, P_\textsc{Neq}(Ω)$ and $\Theta_{\textsc{Inv}}$. Other fuzzing methods for selecting $Ω$ based on the structure of $f$ are also possible.
 
 %    We can test using property-based / metamorphic testing. Some strategies:
 
@@ -358,14 +366,14 @@
     As presented, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence require an external definition of equality to satisfy. One solution to this problem known as \textit{observational equivalence}~\cite{morris1969lambda} allows a language $\mathcal{L}$ to implement an internal mechanism to verify equality. Given $\mathcal{L}$, a term $t$, and one-hole context $C[\![\cdot]\!]$, our job is to check for termination: if $C[\![t]\!]$ is both well-defined and halts, we write $C[\![t]\!]\Downarrow$, otherwise $C[\![t]\!]\Uparrow$.
 
     \begin{prooftree}
-        \AxiomC{$\Gamma \vdash C[\![t]\!]\Downarrow \iff C[\![t']\!]\Downarrow$ $\forall$ $C[\![\cdot]\!] \in \mathcal{L}$}
+        \AxiomC{$Γ \vdash C[\![t]\!]\Downarrow \iff C[\![t']\!]\Downarrow$ $\forall$ $C[\![\cdot]\!] \in \mathcal{L}$}
         \RightLabel{\textsc{Eq}}
-        \UnaryInfC{$\Gamma \vdash t \equiv_{\mathcal{L}} t'$}
+        \UnaryInfC{$Γ \vdash t \equiv_{\mathcal{L}} t'$}
         \DisplayProof
         \vskip 1em
-        \AxiomC{$\Gamma \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
+        \AxiomC{$Γ \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
         \RightLabel{\textsc{Neq}}
-        \UnaryInfC{$\Gamma \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
+        \UnaryInfC{$Γ \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
     \end{prooftree}
 
 %    http://www.cs.ox.ac.uk/people/samuel.staton/papers/fossacs-2019.pdf
@@ -379,13 +387,12 @@
 
     \subsection{Approximate Equivalence}\label{sec:ap-eq}
 
-
-    Approximate equivalence requires a \textit{distance metric}, $\delta: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$, a generalized equivalence relation with the following logical properties:
+    Approximate equivalence requires a \textit{distance metric}, $δ: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$. This is a generalized equivalence relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
-        \AxiomC{$\delta(a, b) = 0$}
-        \UnaryInfC{$a \equiv_\delta b$}
+        \AxiomC{$δ(a, b) = 0$}
+        \UnaryInfC{$a \equiv_δ b$}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -393,8 +400,8 @@
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
-        \AxiomC{$\delta, a, b$}
-        \UnaryInfC{$\delta(a, b) = \delta(b, a)$}
+        \AxiomC{$δ(a, b)$}
+        \UnaryInfC{$δ(b, a)$}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -402,33 +409,55 @@
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
-        \AxiomC{$\delta(a, c)$}
+        \AxiomC{$a$}
         \AxiomC{$b$}
-        \BinaryInfC{$\delta(a, c) \leq \delta(a, b) + \delta(b, c)$}
+        \AxiomC{$c$}
+        \TrinaryInfC{$δ(a, c) \leq δ(a, b) + δ(b, c)$}
         \noLine
         \UnaryInfC{}
         \noLine
         \UnaryInfC{\textit{Triangularity}}
     \end{prooftree}
 
-    \noindent A \textit{kernel function} $\Delta: (\mathcal{X}\rightarrow\mathcal{Z}) \times (\mathcal{X}\rightarrow\mathcal{Z}) \rightarrow \mathbb{R}$ can be defined as a metric over $\mathcal{Z}$ with some additional structure. In particular for every kernel, there exists a feature map $\varphi: (\mathcal{X} \rightarrow \mathcal{Y}) \rightarrow \mathcal{Z}$ such that $\Delta(f, g) \mapsto \left<\varphi(f), \varphi(g)\right>_\mathcal{Z}$. Given a feature map $\varphi$, we can construct the corresponding kernel as follows:
+    \noindent A \textit{kernel function} can be defined as a metric on $\mathcal{Z}$ with some additional structure. In particular for every kernel function, there exists a feature map $\varphi: (\mathcal{X} \rightarrow \mathcal{Y}) \rightarrow \mathcal{Z}$ such that $Δ: (f, g) \mapsto \left<\varphi(a), \varphi(b)\right>$. Consider a space of valid kernel functions, $▲ \subset (\mathcal{Y}\rightarrow\mathcal{Z})^2 \rightarrow \mathbb{R}_{\geq 0}$. We may define it inductively:
 
     % https://papers.nips.cc/paper/2000/file/4e87337f366f72daa424dae11df0538c-Paper.pdf
     % https://www.stat.berkeley.edu/~bartlett/courses/2014spring-cs281bstat241b/lectures/20-notes.pdf#page=17
     % https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c03_p47-84.pdf#page=29
+%    http://www.cs.cmu.edu/~aarti/Class/10701_Spring14/slides/kernel_methods.pdf#page=38
+
     \begin{prooftree}
         \bottomAlignProof
-        \AxiomC{}
-        \UnaryInfC{}
-        \noLine
-        \UnaryInfC{}
-        \noLine
-        \UnaryInfC{\textit{TODO}}
+        \AxiomC{$Δ \in ▲, k \in \mathbb{R}_{> 0}$}
+        \UnaryInfC{$kΔ \in ▲$}
         \DisplayProof
-        \hskip 1.5em
+        \hskip 0.6em
+        \bottomAlignProof
+        \AxiomC{$Δ_{1, 2} \in ▲$}
+        \UnaryInfC{$Δ_1 + Δ_2 \in ▲$}
+        \DisplayProof
+        \hskip 0.6em
+        \bottomAlignProof
+        \AxiomC{$Δ_{1, 2} \in ▲$}
+        \UnaryInfC{$Δ_1Δ_2 \in ▲$}
+        \DisplayProof
+        \hskip 0.6em
+        \bottomAlignProof
+        \AxiomC{$Δ \in ▲, f \in (^*→\mathcal{Y})^2$}
+        \UnaryInfC{$Δ\circ f \in ▲$}
     \end{prooftree}
 
-    For each kernel, there is a primal and dual form ...
+    \noindent Suppose we are given a feature map $\varphi: \mathbb{R}^n \rightarrow \mathbb{R}^m$ and consider the complexity of computing  the inner product $\left<\varphi(f), \varphi(g)\right>$. The computational benefit of a kernel emerges when $n \ll m$: instead of applying the map and computing the inner product, we can instead apply the kernel function directly in input space. This may be easier to visualize as a commutative diagram:
+
+    \[\begin{tikzcd}
+          \mathcal{X}_1\arrow{r}{f} & \mathcal{Y\times \mathcal{Y}} \arrow{r}{\varphi} \arrow[labels=below left]{dr}{\Delta} & \mathcal{Z}\times\mathcal{Z} \arrow{d}{\left<\cdot, \cdot\right>} \\
+          \mathcal{X}_2\arrow[labels=below right]{ur}{g} & & \mathbb{R}_{\geq 0}
+    \end{tikzcd}
+    \]
+
+    \noindent Some common kernel functions are listed below:
+
+    %, we can construct the corresponding kernel as follows...
 
     \begin{center}
         \begin{tabular}{|c|c|c|}
@@ -438,6 +467,7 @@
             Gaussian RBF & $k(\mathbf {f}, \mathbf {g}):=\exp \left(-{\frac {\|\mathbf {f} -\mathbf {g} \|^{2}}{2\sigma ^{2}}}\right)$ & $\quad \mathbf{f},\mathbf{g}\in \mathbb {R} ^{d},\sigma >0$ \\ \hline
             String Kernel & ... & ... \\ \hline
             Tree Kernel & ... & ... \\ \hline
+            Graph Kernel & ... & ... \\ \hline
         \end{tabular}
     \end{center}
 
@@ -446,16 +476,15 @@
 %    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta \rightarrow Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
 
 %    \begin{prooftree}
-%        \AxiomC{$\Gamma \vdash f \circ g, f: Z \rightarrow Y, g: X \rightarrow Z, B: := P_\text{Train}[i]$}
+%        \AxiomC{$Γ \vdash f \circ g, f: Z \rightarrow Y, g: X \rightarrow Z, B: := P_\text{Train}[i]$}
 %        \RightLabel{\textsc{SGD}}
-%        \UnaryInfC{$\Gamma \vdash t \equiv_{\mathcal{L}} t'$}
+%        \UnaryInfC{$Γ \vdash t \equiv_{\mathcal{L}} t'$}
 %        \DisplayProof
 %        \vskip 1em
-%%        \AxiomC{$\Gamma \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
+%%        \AxiomC{$Γ \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
 %%        \RightLabel{\textsc{ERM}}
-%%        \UnaryInfC{$\Gamma \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
+%%        \UnaryInfC{$Γ \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
 %    \end{prooftree}
-
 
     %Given an oracle $M: \mathcal I \rightarrow \mathcal R$, and a set of inputs $X := \{x^{(i)}\}_{i=1}^n$ and outputs $Y := \{y^{(i)} := M(x^{(i)})\}_{i=1}^n$, a metamorphic relation (MR) is a relation $M \subset \mathcal I^z \times \mathcal R^z$ where $z \geq 2$. In the simplest case, an MR is an equivalence relation $\mathcal R$, i.e.: $\langle \mathbf x, \mathbf y, \mathbf x', \mathbf y' \rangle \in \mathcal R \Leftrightarrow \mathbf x \sim_{\mathcal R} \mathbf x' \Leftrightarrow \mathbf P(\mathbf x) \approx \mathbf P(\mathbf x')$.
 
@@ -467,7 +496,7 @@
 
     % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
 
-    Various graph distance metrics have been proposed~\cite{sanfeliu1983distance}.
+    Various measures have been proposed...
 
     Hypothesis testing
 
@@ -485,7 +514,8 @@
 
     Cauchy-Schwartz
 
-    Weisfeiler-Lehman
+    EMD
+
 
     TODO: Define probability distributions, integration, kernel functions and metrics.
 
