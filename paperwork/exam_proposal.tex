@@ -419,7 +419,15 @@
         \UnaryInfC{\textit{Triangularity}}
     \end{prooftree}
 
-    \noindent A \textit{kernel function} can be defined as a metric on $\mathcal{Z}$ with some additional structure. In particular for every kernel function, there exists a feature map $\varphi: (\mathcal{X} \rightarrow \mathcal{Y}) \rightarrow \mathcal{Z}$ such that $Δ: (f, g) \mapsto \left<\varphi(a), \varphi(b)\right>$. Consider a space of valid kernel functions, $▲ \subset (\mathcal{Y}\rightarrow\mathcal{Z})^2 \rightarrow \mathbb{R}_{\geq 0}$. We may define it inductively:
+    \noindent A \textit{kernel function} can be defined as a metric on $\mathcal{Z}$ with some additional structure. In particular for every kernel function, there exists a feature map $\varphi: \mathcal{Y} \rightarrow \mathcal{Z}$ such that $Δ: (a, b) \mapsto \left<\varphi(a), \varphi(b)\right>$. Given a specific feature map $\symbf\varphi: \mathbb{R}^m \rightarrow \mathbb{R}^n$, constructing a kernel corresponds to finding $\Delta \in \mathbb{R}^{m \times m}$ symmetric PSD, i.e. $\Delta^\intercal = \Delta$, and $0 \leq \mathbf{x}^\intercal \Delta \mathbf{x}$ for all $\mathbf{x} \in \mathbb{R}^m$~\cite{mercer1909functions}. Consider the complexity of evaluating the inner product $\left<\symbf\varphi(f), \symbf\varphi(g)\right>$ in feature space. The computational benefit of a kernel becomes apparent when $m \ll n$: rather than applying $\symbf\varphi$ and then computing $\left<f^\intercal\symbf\varphi, g^\intercal\symbf\varphi\right>$, we can simply apply $\Delta(f, g)$ for a $\Theta((m-n)^2)$ speedup. This shortcut may be easier to visualize as a commutative diagram:
+
+    \[\begin{tikzcd}
+          \mathcal{Y\times \mathcal{Y}} \arrow{r}{\varphi} \arrow[labels=below left]{dr}{\Delta} & \mathcal{Z}\times\mathcal{Z} \arrow{d}{\left<\cdot, \cdot\right>} \\
+          & \mathbb{R}_{\geq 0}
+    \end{tikzcd}
+    \]
+
+    Consider the space of valid kernel functions, $▲ \subset (\mathcal{Y}\rightarrow\mathcal{Z})^2 \rightarrow \mathbb{R}_{\geq 0}$. We may define it inductively:
 
     % https://papers.nips.cc/paper/2000/file/4e87337f366f72daa424dae11df0538c-Paper.pdf
     % https://www.stat.berkeley.edu/~bartlett/courses/2014spring-cs281bstat241b/lectures/20-notes.pdf#page=17
@@ -443,19 +451,12 @@
         \DisplayProof
         \hskip 0.6em
         \bottomAlignProof
-        \AxiomC{$Δ \in ▲, f \in (^*→\mathcal{Y})^2$}
+        \AxiomC{$Δ \in ▲, f \in (^*→\mathcal{Z})^2$}
         \UnaryInfC{$Δ\circ f \in ▲$}
     \end{prooftree}
 
-    \noindent Suppose we are given a feature map $\varphi: \mathbb{R}^n \rightarrow \mathbb{R}^m$ and consider the complexity of computing  the inner product $\left<\varphi(f), \varphi(g)\right>$. The computational benefit of a kernel emerges when $n \ll m$: instead of applying the map and computing the inner product, we can instead apply the kernel function directly in input space. This may be easier to visualize as a commutative diagram:
 
-    \[\begin{tikzcd}
-          \mathcal{X}_1\arrow{r}{f} & \mathcal{Y\times \mathcal{Y}} \arrow{r}{\varphi} \arrow[labels=below left]{dr}{\Delta} & \mathcal{Z}\times\mathcal{Z} \arrow{d}{\left<\cdot, \cdot\right>} \\
-          \mathcal{X}_2\arrow[labels=below right]{ur}{g} & & \mathbb{R}_{\geq 0}
-    \end{tikzcd}
-    \]
-
-    \noindent Some common kernel functions are listed below:
+    \noindent Some common elementary kernel functions are listed below:
 
     %, we can construct the corresponding kernel as follows...
 
