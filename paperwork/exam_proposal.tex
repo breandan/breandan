@@ -419,15 +419,15 @@
         \UnaryInfC{\textit{Triangularity}}
     \end{prooftree}
 
-    \noindent A \textit{kernel function} can be defined as a metric on $\mathcal{Z}$ with some additional structure. In particular for every kernel function, there exists a feature map $\varphi: \mathcal{Y} \rightarrow \mathcal{Z}$ such that $Δ: (a, b) \mapsto \left<\varphi(a), \varphi(b)\right>$. Given a specific feature map $\symbf\varphi: \mathbb{R}^m \rightarrow \mathbb{R}^n$, constructing a kernel corresponds to finding $\Delta \in \mathbb{R}^{m \times m}$ symmetric PSD, i.e. $\Delta^\intercal = \Delta$, and $0 \leq \mathbf{x}^\intercal \Delta \mathbf{x}$ for all $\mathbf{x} \in \mathbb{R}^m$~\cite{mercer1909functions}. Consider the complexity of evaluating the inner product $\left<\symbf\varphi(f), \symbf\varphi(g)\right>$ in feature space. The computational benefit of a kernel becomes apparent when $m \ll n$: rather than applying $\symbf\varphi$ and then computing $\left<f^\intercal\symbf\varphi, g^\intercal\symbf\varphi\right>$, we can simply apply $\Delta(f, g)$ for a $\Theta((m-n)^2)$ speedup. This shortcut may be easier to visualize as a commutative diagram:
+    \noindent A \textit{kernel function} $Δ: (\mathcal{X}\rightarrow\mathcal{Y})^2\rightarrow \mathbb{R}_{\geq 0}$ can be defined as a metric on $\mathcal{Z}$ with some additional structure. Specifically for every kernel function, there exists a feature map $\varphi: (\mathcal{X}→\mathcal{Y}) → \mathcal{Z}$ such that $Δ: (f, g) \mapsto \left<\varphi(f), \varphi(g)\right>$. Given a feature map $\symbf\varphi: \mathbb{R}^m → \mathbb{R}^n$, constructing a kernel corresponds to finding $\Delta \in \mathbb{R}^{m \times m}$ symmetric PSD, i.e. $\Delta^\intercal = \Delta$, and $0 \leq \mathbf{x}^\intercal \Delta \mathbf{x}$ for all $\mathbf{x} \in \mathbb{R}^m$~\cite{mercer1909functions}. Consider the complexity of evaluating the inner product $\left<\symbf\varphi(f), \symbf\varphi(g)\right>$ in feature space. The computational benefit of a kernel becomes apparent when $m \ll n$. Rather than applying $\symbf\varphi$, then evaluating $\left<f^\intercal\symbf\varphi, g^\intercal\symbf\varphi\right>$, we may simply apply $\Delta(f, g)$ for an $\Theta(m^2 - n^2)$ speedup. Known as the \textit{kernel trick}, this shortcut may be easier to visualize categorically, where $f, g: \mathcal{X}→\mathcal{Y}$.
 
     \[\begin{tikzcd}
-          \mathcal{Y\times \mathcal{Y}} \arrow{r}{\varphi} \arrow[labels=below left]{dr}{\Delta} & \mathcal{Z}\times\mathcal{Z} \arrow{d}{\left<\cdot, \cdot\right>} \\
+          (\mathcal{X→\mathcal{Y}})^2 \arrow{r}{\varphi} \arrow[labels=below left]{dr}{\Delta} & \mathcal{Z}\times\mathcal{Z} \arrow{d}{\left<\cdot, \cdot\right>} \\
           & \mathbb{R}_{\geq 0}
     \end{tikzcd}
     \]
 
-    Consider the space of valid kernel functions, $▲ \subset (\mathcal{Y}\rightarrow\mathcal{Z})^2 \rightarrow \mathbb{R}_{\geq 0}$. We may define it inductively:
+    \noindent By planting a single valid kernel $\Delta$, one can grow a tree of kernel functions $▲ \subset (\mathcal{X}→\mathcal{Y})^2 → \mathbb{R}_{\geq 0}$, forming a grammar with the following productions:
 
     % https://papers.nips.cc/paper/2000/file/4e87337f366f72daa424dae11df0538c-Paper.pdf
     % https://www.stat.berkeley.edu/~bartlett/courses/2014spring-cs281bstat241b/lectures/20-notes.pdf#page=17
@@ -472,12 +472,12 @@
         \end{tabular}
     \end{center}
 
-    We want a want a kernel function $M_\theta: (\mathcal{X}\rightarrow \mathcal{Y}) \times (\mathcal{X}\rightarrow \mathcal{Y})\rightarrow \mathbb{R}$ between two computable functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal...
+    We want a kernel function $M_\theta: (\mathcal{X} → \mathcal{Y}) \times (\mathcal{X}→\mathcal{Y})→\mathbb{R}$ between two computable functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal...
 
-%    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta \rightarrow Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
+%    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta → Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
 
 %    \begin{prooftree}
-%        \AxiomC{$Γ \vdash f \circ g, f: Z \rightarrow Y, g: X \rightarrow Z, B: := P_\text{Train}[i]$}
+%        \AxiomC{$Γ \vdash f \circ g, f: Z → Y, g: X → Z, B: := P_\text{Train}[i]$}
 %        \RightLabel{\textsc{SGD}}
 %        \UnaryInfC{$Γ \vdash t \equiv_{\mathcal{L}} t'$}
 %        \DisplayProof
@@ -487,7 +487,7 @@
 %%        \UnaryInfC{$Γ \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
 %    \end{prooftree}
 
-    %Given an oracle $M: \mathcal I \rightarrow \mathcal R$, and a set of inputs $X := \{x^{(i)}\}_{i=1}^n$ and outputs $Y := \{y^{(i)} := M(x^{(i)})\}_{i=1}^n$, a metamorphic relation (MR) is a relation $M \subset \mathcal I^z \times \mathcal R^z$ where $z \geq 2$. In the simplest case, an MR is an equivalence relation $\mathcal R$, i.e.: $\langle \mathbf x, \mathbf y, \mathbf x', \mathbf y' \rangle \in \mathcal R \Leftrightarrow \mathbf x \sim_{\mathcal R} \mathbf x' \Leftrightarrow \mathbf P(\mathbf x) \approx \mathbf P(\mathbf x')$.
+    %Given an oracle $M: \mathcal I → \mathcal R$, and a set of inputs $X := \{x^{(i)}\}_{i=1}^n$ and outputs $Y := \{y^{(i)} := M(x^{(i)})\}_{i=1}^n$, a metamorphic relation (MR) is a relation $M \subset \mathcal I^z \times \mathcal R^z$ where $z \geq 2$. In the simplest case, an MR is an equivalence relation $\mathcal R$, i.e.: $\langle \mathbf x, \mathbf y, \mathbf x', \mathbf y' \rangle \in \mathcal R \Leftrightarrow \mathbf x \sim_{\mathcal R} \mathbf x' \Leftrightarrow \mathbf P(\mathbf x) \approx \mathbf P(\mathbf x')$.
 
     \pagebreak\subsection{Probabilistic Equivalence}\label{sec:pr-eq}
 
