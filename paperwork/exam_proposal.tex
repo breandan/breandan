@@ -17,6 +17,7 @@
 \newcommand{\nDownarrow}{\ensuremath{\text{ }\cancel{\Downarrow}\text{ }}}
 \usepackage{centernot}
 
+\usepackage{tabularx}
 \usepackage{tikz-cd}
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
@@ -72,15 +73,15 @@
     \end{cases}
     $$
 
-    When encountering $δ_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $δ_d^{-1}(B\subset \mathbb{B})$ is not open, thus $δ_d$ is not continuous and $\nablaδ_k$ is undefined. Now consider the Dirac $δ$-function, which is defined as follows: %$δ_d: \mathbb{R}^2 \rightarrow \mathbb{R}$,
+    When encountering $δ_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $δ_k^{-1}(B\subset \mathbb{B})$ is not open, thus $δ_k$ is not continuous and $\nablaδ_k$ is undefined. Now consider the Dirac $δ$-function, which is defined as follows: %$δ_d: \mathbb{R}^2 \rightarrow \mathbb{R}$,
 
     $$
-    \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)δ(x-a,y-b)d(x, y) \overset{Δ}{=} f(a,b)
+    \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)δ_d(x-a,y-b)d(x, y) \overset{Δ}{=} f(a,b)
     $$
 
     Unlike $\nablaδ_k$, it can be shown that $\nablaδ_d$ is well-behaved everywhere on $\mathbb{R}^2$. However we encounter an important distinction between intensional and extensional equality. Unlike elementary functions, there exist many functions which can only be described indirectly, e.g. a probability distribution on a set of measure zero. Nevertheless, these constructions are convenient abstractions for modeling many physical and computational processes.
 
-    Neither $\nablaδ_k$ nor $δ_d$ are a satisfactory basis for equality. To allow a more flexible definition of the $=$ operator, we require a relation which approximates the logical properties of $δ_k$, but can be made differentiable like $δ_d$. A more general notion is the concept of an \textit{equivalence relation}. An equivalence relation $\equiv$ is a binary relation with the following logical properties:
+    Neither $δ_k$ nor $\nablaδ_d$ are a satisfactory basis for logical equality. To allow a more flexible definition of the $\overset{?}{=}$ operator, we require a relation which approximates the logical properties of $δ_k$, but can be made differentiable like $δ_d$. A more general notion is the concept of an \textit{equivalence relation} $\equiv$, a binary relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -387,7 +388,7 @@
 
     \subsection{Approximate Equivalence}\label{sec:ap-eq}
 
-    Approximate equivalence requires a \textit{distance metric}, $δ: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$. This is a generalized equivalence relation with the following logical properties:
+    Though precise, boolean equality is far too rigid for many applications. The spaces involved either lack formal semantics or are intractable to verify, leaving decidability out of reach. We can relax this definition by introducing a generalized equivalence relation for reasoning on continuous spaces, called a \textit{distance metric}, $δ: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$. This has the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -419,7 +420,7 @@
         \UnaryInfC{\textit{Triangularity}}
     \end{prooftree}
 
-    \noindent A \textit{kernel function} $Δ: (\mathcal{X}\rightarrow\mathcal{Y})^2\rightarrow \mathbb{R}_{\geq 0}$ can be defined as a metric on $\mathcal{Z}$ with some additional structure. Specifically for every kernel function, there exists a feature map $\varphi: (\mathcal{X}→\mathcal{Y}) → \mathcal{Z}$ such that $Δ: (f, g) \mapsto \left<\varphi(f), \varphi(g)\right>$. Given a feature map $\symbf\varphi: \mathbb{R}^m → \mathbb{R}^n$, constructing a kernel corresponds to finding $\Delta \in \mathbb{R}^{m \times m}$ symmetric PSD, i.e. $\Delta^\intercal = \Delta$, and $0 \leq \mathbf{x}^\intercal \Delta \mathbf{x}$ for all $\mathbf{x} \in \mathbb{R}^m$~\cite{mercer1909functions}. Consider the complexity of evaluating the inner product $\left<\symbf\varphi(f), \symbf\varphi(g)\right>$ in feature space. The computational benefit of a kernel becomes apparent when $m \ll n$. Rather than applying $\symbf\varphi$, then evaluating $\left<f^\intercal\symbf\varphi, g^\intercal\symbf\varphi\right>$, we may simply apply $\Delta(f, g)$ for an $\Theta(m^2 - n^2)$ speedup. Known as the \textit{kernel trick}, this shortcut may be easier to visualize categorically, where $f, g: \mathcal{X}→\mathcal{Y}$.
+    \noindent A \textit{kernel function} $Δ: (\mathcal{X}\rightarrow\mathcal{Y})^2\rightarrow \mathbb{R}_{\geq 0}$ can be defined as a metric on $\mathcal{Z}$ with some additional structure. Specifically for every kernel function, there exists a feature map $\varphi: (\mathcal{X}→\mathcal{Y}) → \mathcal{Z}$ such that $Δ: (f, g) \mapsto \left<\varphi(f), \varphi(g)\right>$. Given a feature map $\symbf\varphi: \mathbb{R}^m → \mathbb{R}^n$, constructing a kernel corresponds to finding $\Delta \in \mathbb{R}^{m \times m}$ symmetric PSD, i.e. $\Delta^\intercal = \Delta$, and $0 \leq \mathbf{x}^\intercal \Delta \mathbf{x}$ for all $\mathbf{x} \in \mathbb{R}^m$~\cite{mercer1909functions}. Consider the complexity of evaluating the inner product $\left<\symbf\varphi(f), \symbf\varphi(g)\right>$ in feature space. The computational benefit of a kernel becomes apparent when $m \ll n$. Rather than applying $\symbf\varphi$, then evaluating $\left<f^\intercal\symbf\varphi, g^\intercal\symbf\varphi\right>$, we may simply apply $\Delta(f, g)$ for a $\Theta(m^2 - n^2)$ speedup. Known as the \textit{kernel trick}, this shortcut may be easier to see categorically, where $f, g: \mathcal{X}→\mathcal{Y}$.
 
     \[\begin{tikzcd}
           (\mathcal{X→\mathcal{Y}})^2 \arrow{r}{\varphi} \arrow[labels=below left]{dr}{\Delta} & \mathcal{Z}\times\mathcal{Z} \arrow{d}{\left<\cdot, \cdot\right>} \\
@@ -427,7 +428,7 @@
     \end{tikzcd}
     \]
 
-    \noindent By planting a single valid kernel $\Delta$, one can grow a tree of kernel functions $▲ \subset (\mathcal{X}→\mathcal{Y})^2 → \mathbb{R}_{\geq 0}$, forming a grammar with the following productions:
+    \noindent By planting a single valid kernel $\Delta$, one can grow a tree of kernel functions $▲ \subset (\mathcal{X}→\mathcal{Y})^2 → \mathbb{R}_{\geq 0}$ which may be described by the following grammar:
 
     % https://papers.nips.cc/paper/2000/file/4e87337f366f72daa424dae11df0538c-Paper.pdf
     % https://www.stat.berkeley.edu/~bartlett/courses/2014spring-cs281bstat241b/lectures/20-notes.pdf#page=17
@@ -436,7 +437,7 @@
 
     \begin{prooftree}
         \bottomAlignProof
-        \AxiomC{$Δ \in ▲, k \in \mathbb{R}_{> 0}$}
+        \AxiomC{$Δ \in ▲, k \in \mathbb{R}_{\geq 0}$}
         \UnaryInfC{$kΔ \in ▲$}
         \DisplayProof
         \hskip 0.6em
@@ -455,20 +456,35 @@
         \UnaryInfC{$Δ\circ f \in ▲$}
     \end{prooftree}
 
-
-    \noindent Some common elementary kernel functions are listed below:
+    \noindent Some elementary kernel functions for various datatypes are given below:
 
     %, we can construct the corresponding kernel as follows...
 
     \begin{center}
         \begin{tabular}{|c|c|c|}
-            \hline
-            Polynomial & $k(\mathbf{f},\mathbf{g}):=(\mathbf{f}^{T}\mathbf{g}+r)^{n}$ & $\quad \mathbf{f},\mathbf{g}\in \mathbb {R} ^{d}, n \in \mathbb N, r\geq 0$ \\ \hline
-            Laplacian & $k(\mathbf {f}, \mathbf {g}):=\exp \left(-{\frac {\|\mathbf {f} -\mathbf {g} \|}{\sigma}}\right)$ & $\quad \mathbf{f},\mathbf{g}\in \mathbb {R} ^{d},\sigma >0$ \\ \hline
-            Gaussian RBF & $k(\mathbf {f}, \mathbf {g}):=\exp \left(-{\frac {\|\mathbf {f} -\mathbf {g} \|^{2}}{2\sigma ^{2}}}\right)$ & $\quad \mathbf{f},\mathbf{g}\in \mathbb {R} ^{d},\sigma >0$ \\ \hline
-            String Kernel & ... & ... \\ \hline
-            Tree Kernel & ... & ... \\ \hline
-            Graph Kernel & ... & ... \\ \hline
+            \cline{2-3}
+            \multicolumn{1}{c|}{} & $\Delta(f,g)$ & $\varphi(x) $\\\hline
+            % http://www.cs.rpi.edu/~stewart/lec23-post/kernels.pdf#page=14
+%            https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c09_p291-326.pdf#page=5
+            Polynomial & $(\mathbf{f}^\intercal\mathbf{g} + r)^{q}$ & $\Big[\sqrt{{q \choose \mathbf{n}}c^{n_0}}\prod_{k} x_k^{n_k}\Big]^\intercal_{\mathbf{n} \in \{\mathbf{n}\mid  \mathbf{1^\intercal n} = q\}}$ \\ \hline
+            % https://vikas.sindhwani.org/RandomLaplace.pdf#page=3
+            % https://www.csie.ntu.edu.tw/~cjlin/talks/kuleuven_svm.pdf#page=11
+            Gaussian RBF & $e^{-{\frac {\|\mathbf{f} -\mathbf{g} \|^{2}}{2\sigma ^{2}}}}$ & $e^{-γx^2} \Big[1, \sqrt{\frac{(2γ)^i}{i!}}x^i\Big]^\intercal_{i\in (0, \text{dim}(x)-1]}$ \\ \hline
+%            https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c09_p291-326.pdf#page=4
+            Subset & $\prod_{i = 1}^n (f_i g_i + 1)$ & $[\varphi_\textsc{Poly}(x)_A]^\intercal_{A\subseteq [1, n]}$\\ \hline
+%            https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c11_p344-396.pdf
+%            https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c11_p344-396.pdf#page=8
+            Substring & $\sum_{\sigma \in Σ^*}(f * σ)(g * σ)$ & $|\{i \mid \sigma = x_{i..(i+|σ|)}\}|$ \\ \hline
+            Subtree~\cite{shervashidze2009fast} & $\Delta_\textsc{WL}(f, g)$ &
+            \[ \begin{cases}
+                   δ_k(t, x) & t \overset{?}{=} x\\
+                   \varphi_t(\overset{\leftarrow}{x}) + \varphi_t(\overset{\rightarrow}{x}) & \text{otherwise.} \\
+            \end{cases}
+            \] \\ \hline
+%            https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c11_p344-396.pdf#page=44
+%            https://papers.nips.cc/paper/2009/file/0a49e3c3a03ebde64f85c0bacd8a08e2-Paper.pdf#page=4
+%            https://www.cs.mcgill.ca/~wlh/grl_book/files/GRL_Book.pdf#page=22
+            Subgraph~\citep{hamilton2020graph} & $\Delta_\textsc{SS}(\varphi^{(h)}(f), \varphi^{(h)}(g))$ & $\textsc{Hash}(\{\{\varphi^{(i - 1)}(u) \forall u \in \mathcal{N}(x)\}\})$ \\ \hline
         \end{tabular}
     \end{center}
 
@@ -491,7 +507,7 @@
 
     \pagebreak\subsection{Probabilistic Equivalence}\label{sec:pr-eq}
 
-    Though precise, the prior definitions of equality are far too rigid in practice. The spaces involved either lack formal semantics or are intractable to exhaustive search. We now turn to a language for probabilistic reasoning, which admits among other things, a decision procedure for probabilistic equivalence.
+
 
 %    How do we know when we are approaching equality? We can use a distance metric.
 
