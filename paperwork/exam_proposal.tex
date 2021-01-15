@@ -18,6 +18,8 @@
 \usepackage{centernot}
 
 \usepackage{tabularx}
+\usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage{tikz-cd}
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
@@ -760,11 +762,14 @@ P(x_1,\ldots,x_D)=\prod_{i=1}^D P(x_i \mid \texttt{parents}(x_i))
         \RightLabel{Contract}
         \BinaryInfC{$X \perp W \mid Y$}
     \end{prooftree}
+
     A path between two vertices $\ccirc{A} \ldots \ccirc{B}$ is blocked if:
+
     \begin{enumerate}[(a)]
         \item $\ccirc{A} \ldots \rightarrow \gcirc{V} \rightarrow \ldots \ccirc{B}$ or $\ccirc{A}\ldots\leftarrow\gcirc{V}\rightarrow\ldots\ccirc{B}$.
         \item $\ccirc{A}\ldots\rightarrow \ccirc{V} \leftarrow\ldots\ccirc{B}$ and $\gcirc{?} \not\in \texttt{desc}(\ccirc{V})$.
     \end{enumerate}
+
     $\ccirc{A}$ and $\ccirc{B}$ are d-separated if all paths are blocked.
 
 \subsection{Probabilistic Circuits}\label{sec:language}
