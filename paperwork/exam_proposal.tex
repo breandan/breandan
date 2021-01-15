@@ -29,6 +29,33 @@
 \usepackage{float}
 \usepackage{xcolor}
 
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{sourcecodepro}
+\usepackage{listings}
+\usepackage{tikz-qtree}
+\usepackage{amsthm}
+\usepackage{bm}
+\usetikzlibrary{bayesnet}
+\usetikzlibrary{arrows}
+\usepackage{caption}
+\usepackage{subcaption}
+\usetikzlibrary{backgrounds}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\newcommand{\CompOrder}{\mathcal{O}}
+\def\graphspace{\mathbf{G}}
+\def\Uniform{\mbox{\rm Uniform}}
+\def\Gaussian{\mbox{\rm Gaussian}}
+\def\Bernoulli{\mbox{\rm Bernoulli}}
+\def\Dirichlet{\mbox{\rm Dirichlet}}
+
+\usepackage{mathtools}% superior to amsmath
+\usepackage{tikz}
+
 
 \title{Pattern Recognition in Procedural Knowledge}
 \author{Breandan Considine}
@@ -488,7 +515,7 @@
         \end{tabular}
     \end{center}
 
-    We want a kernel function $M_\theta: (\mathcal{X} → \mathcal{Y}) \times (\mathcal{X}→\mathcal{Y})→\mathbb{R}$ between two computable functions, which predicts their semantic similarity. In other words, the closer two functions are with respect to $M_\theta$, the more likely they are to be equal...
+    \noindent Suppose we have a dataset $X := \{x^{(i)}\}_{i=1}^n$ and $Y := \{y^{(i)} := p(x^{(i)})\}_{i=1}^n$ and a program $\hat p: \mathcal{X} → \mathcal{Y}$ approximating $p$. A \textit{metamorphic relation} (MR)~\cite{chen2020metamorphic} is an approximate equivalence relation $\mathcal{R} \subset \mathcal X^z \times \mathcal Y^z$ where $z \geq 2$, e.g. $\langle x, y, x', y' \rangle \in \mathcal R \Leftrightarrow x \sim_{\mathcal R} x' \Leftrightarrow ||P(x) - P(x' + c)|| < k, \forall c, ||c|| < k$. The kernel function gives us several options. Using the extensional approach, we could evaluate $\mathbb{E}_{i}^n\big[\Delta\big(\left<x^{(i)}, \hat p(x^{(i)})\right>, \left<x^{(i)}, y^{(i)}\right>\big)\big]$ directly. Or, we could construct a kernel function $M_\theta: (\mathcal{X} → \mathcal{Y}) \times (\mathcal{X}→\mathcal{Y})→\mathbb{R}$ by synthesizing pairs of random computable functions which are equal and disequal, and learning $\Theta$ by gradient descent. The closer two functions are with respect to $M_\theta$, the closer they are to semantic equality.
 
 %    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta → Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
 
@@ -503,38 +530,291 @@
 %%        \UnaryInfC{$Γ \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
 %    \end{prooftree}
 
-    %Given an oracle $M: \mathcal I → \mathcal R$, and a set of inputs $X := \{x^{(i)}\}_{i=1}^n$ and outputs $Y := \{y^{(i)} := M(x^{(i)})\}_{i=1}^n$, a metamorphic relation (MR) is a relation $M \subset \mathcal I^z \times \mathcal R^z$ where $z \geq 2$. In the simplest case, an MR is an equivalence relation $\mathcal R$, i.e.: $\langle \mathbf x, \mathbf y, \mathbf x', \mathbf y' \rangle \in \mathcal R \Leftrightarrow \mathbf x \sim_{\mathcal R} \mathbf x' \Leftrightarrow \mathbf P(\mathbf x) \approx \mathbf P(\mathbf x')$.
 
     \pagebreak\subsection{Probabilistic Equivalence}\label{sec:pr-eq}
 
+    So far, we have seen various notions of exact and approximate equivalence. However, what is missing is a way to quantify how likely two random functions sampled from a distribution are to being equal. We now turn to a language for probabilistic inference.
 
+    Probabilistic inference is a logical framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference based on constructive logic.
+
+    Let $E$ be a set of events and $S$ be a set of subsets of $E$. A \textit{probability distribution} is a function $P: S \times \Sigma \rightarrow \mathbb{R}^{+}$ satisfying the Kolmogorov~\cite{kolmogorov1933grundbegriffe} axioms, in particular:
+
+    \begin{itemize}
+        \itemsep-1em
+        \item [(3)] $P(S = s) \in \mathbb{R}^{+}, \forall s \in S$.& \\
+        \item [(4)] $P(E) = 1$. ($S = $ may be omitted for brevity.)& \\
+        \item [(5)] $P(X \cup Y) = P(X) + P(Y), \forall X \cap Y = \varnothing$.
+    \end{itemize}
+
+    Given a distribution over a set $X$, we can \textit{sample} from it to produce a single element from that set, a \textit{random variable}:
+
+\begin{prooftree}
+\AxiomC{$\Gamma \vdash P(X): X \times \Sigma \rightarrow \mathbb{R}^{+}$}
+\AxiomC{$\Gamma \vdash x \sim P(X)$}
+\RightLabel{Sample}
+\BinaryInfC{$\Gamma \vdash x: (X \times \Sigma \rightarrow \mathbb{R}^{+}) \leadsto X$}
+\end{prooftree}
+%We can assign a probability distribution to a variable, by \textit{sampling} from it. As we increase the sample size, the distribution of values will converge to the true distribution.
+%
+%$$
+%d \sim \mathcal{D}
+%$$
+The joint distribution $P(X, Y)$ is a distribution over the Cartesian product of two sets $X$ and $Y$, denoted $X \times Y$:
+\begin{prooftree}
+\AxiomC{$\Gamma \vdash P(X): X \times \Sigma \rightarrow \mathbb R^{+}$}
+\AxiomC{$\Gamma \vdash P(Y): Y \times \Sigma \rightarrow \mathbb R^{+}$}
+\RightLabel{Joint}
+\BinaryInfC{$\Gamma \vdash P(X, Y): X \times Y \times \Sigma \rightarrow \mathbb R^{+}$}
+\end{prooftree}
+Given a joint distribution $P(X, Y)$, if we see an event $y: Y$, this observation is called \textit{conditioning} and the resulting distribution over $X$, a \textit{conditional distribution}:
+% https://www.cambridge.org/core/services/aop-cambridge-core/content/view/819623B1B5B33836476618AC0621F0EE/9781108488518AR.pdf/Foundations_of_Probabilistic_Programming.pdf?event-type=FTLA#page=325
+\begin{prooftree}
+\AxiomC{$\Gamma \vdash P(X, Y): X \times Y \times \Sigma \rightarrow\mathbb{R}^+$}
+\AxiomC{$\Gamma \vdash y: Y$}
+\RightLabel{Cond}
+\BinaryInfC{$\Gamma \vdash P(X \mid Y := y): X \times \Sigma \rightarrow\mathbb{R}^+$}
+\end{prooftree}
+Given a conditional distribution and its prior, to exchange the order of conditioning, we can use Bayes rule~\cite{bayes1763essay} :
+\begin{prooftree}
+\AxiomC{$\overbrace{P(X \mid Y)}^{\text{Likelihood}}$}
+\AxiomC{$\overbrace{P(Y)}^{\text{Prior}}$}
+\RightLabel{Bayes}
+\BinaryInfC{$\underbrace{P(Y \mid X) \propto}_{\text{Normalize}} \underbrace{P(X \mid Y)}_{\text{Observe}}\underbrace{P(Y)}_{\text{Sample}}$}
+\end{prooftree}
+When a conditional distribution $P(X \mid Y)$ does not depend on its prior, the variables are said to be \textit{independent}.
+\begin{prooftree}
+\AxiomC{$P(X \mid Y) \equiv P(X)$}
+\RightLabel{Indep}
+\UnaryInfC{$X \perp Y$}
+\end{prooftree}
+Equivalently, when two distributions $P(X)$ and $P(Y)$ are multiplied to form a joint distribution $P(X, Y)$, we may conclude that $X$ and $Y$ are independent random variables:
+\begin{prooftree}
+\AxiomC{$P(X, Y) \equiv P(X)P(Y)$}
+\RightLabel{Fact}
+\UnaryInfC{$X \perp Y$}
+\end{prooftree}
+When two conditionals $P(X \mid Z)$, $P(Y \mid Z)$ are multiplied to form a joint distribution $P(X, Y \mid Z)$, $X$ and $Y$ are said to be \textit{conditionally independent given $Z$}:
+\begin{prooftree}
+\AxiomC{$P(X,Y \mid Z) \equiv P(X \mid Z)P(Y \mid Z)$}
+\RightLabel{CondIndep}
+\UnaryInfC{$X \perp Y \mid Z$ }
+\end{prooftree}
+
+\subsection{Operational Semantics}
+So far, we have defined a denotational semantics describing a simple type system for probability functions. But how exactly do we obtain concrete samples and estimates?
+In order to sample from a univariate distribution, we can feed the output from a uniform PRNG into a specific function called a \textit{quantile}. Unfortunately, most common distributions are defined in terms of their probability or cumulative density functions and do not have a closed form quantile, so we must approximate it by inverting the CDF:
+% https://en.wikipedia.org/wiki/Inverse_transform_sampling
+\begin{prooftree}
+\AxiomC{$\texttt{x} \sim P(X)$}
+\AxiomC{$\texttt{CDF}: x \mapsto \int P(X = x)dx$}
+\RightLabel{Draw}
+\BinaryInfC{$\texttt{PRNG() = CDF(x)}$}
+\RightLabel{Invert}
+\UnaryInfC{$\texttt{x = INVCDF(PRNG())}$}
+\end{prooftree}
+If we have two random variables sampled from known distributions and wanted to combine them, what would be the resulting distribution? For independent RVs, we know the joint distribution is the product of their distributions:
+% https://en.wikipedia.org/wiki/Joint_probability_distribution#Joint_distribution_for_independent_variables
+\begin{prooftree}
+\AxiomC{$P(X)$}
+\AxiomC{$P(Y)$}
+\RightLabel{Join}
+\BinaryInfC{$P(X, Y) \equiv P(X)P(Y)$}
+\end{prooftree}
+But suppose we knew a formula describing how those RVs were related. All mathematical formulae are composed of algebraic operators, but the algebra of RVs is nontrivial: the distribution formed by combining two RVs, in general, cannot be obtained by the same formula on their distributions.
+$$P\big(f(X, Y)\big) \neq f\big(P(X), P(Y)\big)$$
+To obtain a formula for the combined distribution, we must ensure the combination of two probability distributions is also a probability distribution. Generally speaking, to combine two arbitrary RVs, we must integrate. For a dyadic function, we can take the double integral, which is known to be exchangeable under certain conditions~\cite{fubini1907sugli}:
+% https://terrytao.wordpress.com/2015/10/12/275a-notes-2-product-measures-and-independence/
+\begin{prooftree}
+\AxiomC{$x \sim P(X)$}
+\AxiomC{$y \sim P(Y)$}
+\AxiomC{$z: X \times Y \rightarrow Z$}
+\TrinaryInfC{$P(Z = z(x, y) \mid X = x, Y = y) = \int\int z(x, y)dxdy$}
+\UnaryInfC{$\int_{Y}\int_{X} f(x, y)dxdy = \int_{X}\int_{Y} f(x, y)dydx$}
+\end{prooftree}
+These integrals can often be simplified by considering the specific dependence relation. For instance, the sum distribution for independent RVs is obtained by convolving their respective density functions:
+% https://en.wikipedia.org/wiki/Convolution_of_probability_distributions#Introduction
+\begin{prooftree}
+\AxiomC{$P(X)$}
+\AxiomC{$P(Y)$}
+\RightLabel{Conv}
+\BinaryInfC{$P(X + Y) = P(X) * P(Y)$}
+\end{prooftree}
+More specifically, if we have a so-called \textit{stable distribution}~\cite{levy1925calcul}, the solution is even more simple. For example, if $X$ and $Y$ are both known to be Gaussian RVs, we can combine their parameters $\mu$ and $\sigma$ directly:
+% https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables#Independent_random_variables
+\begin{prooftree}
+\AxiomC{$x \sim \mathcal{N}(\mu_x, \sigma^2_x)$}
+\AxiomC{$y \sim \mathcal{N}(\mu_y, \sigma^2_y)$}
+\AxiomC{$z = x + y$}
+\TrinaryInfC{$z \sim \mathcal{N}(\mu_x + \mu_y, \sigma^2_x + \sigma^2_x)$}
+\end{prooftree}
+As described in~\cite{willard2020minikanren}, there exist many simplified relations of the above variety, which can be derived through analytic integration of the corresponding density functions.
+%Likewise, their product can be defined as an integral:
+%
+%% https://en.wikipedia.org/wiki/Product_distribution#Derivation_for_independent_random_variables
+%
+%\begin{prooftree}
+%    \AxiomC{$x \sim P(X)$}
+%    \AxiomC{$y \sim P(Y)$}
+%    \AxiomC{$z = xy$}
+%    \RightLabel{Conv}
+%    \TrinaryInfC{$P(Z = z) = \int P(X = x)P(Y=\frac{z}{x})\frac{1}{|x|}dx$}
+%\end{prooftree}
+Given a joint distribution $P(X, Y)$, in order to remove a variable, we must sum or integrate over its conditional distribution. This process is known as \textit{marginalization}, and the resulting distribution is called a \textit{marginal distribution}:
+\begin{prooftree}
+\AxiomC{$\Gamma \vdash P(X, Y): X\times Y \times \Sigma \rightarrow\mathbb{R}^+$}
+\RightLabel{Mar}
+\UnaryInfC{$\Gamma \vdash P(X): X\times \Sigma \rightarrow\mathbb{R}^+ \propto \int P(X \mid Y = y)dy$}
+\end{prooftree}
+Given the joint distribution, we can obtain a conditional distribution by dividing the joint by the marginal distribution:
+\begin{prooftree}
+\AxiomC{$\Gamma \vdash P(X, Y): X\times Y \times \Sigma \rightarrow\mathbb{R}^+$}
+\RightLabel{Con}
+\UnaryInfC{$\Gamma \vdash P(X \mid Y): X \times \Sigma \rightarrow\mathbb{R}^+ = P(X, Y) \div P(Y)$}
+\end{prooftree}
+
+\subsection{Probabilistic Graphical Models}
+Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are a framework for probabilistic inference on distributions whose conditional dependence structure may be expressed as a graph. The graph's edges capture conditional independence relations between RVs. One type of PGM is a directed graphical model (DGM).
+If we observe a variable with two latent variables which are not conditionally independent, we call this a \textit{collider}.
+
+\tikzset{latent/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt}, every node/.append style={draw,circle, inner sep=1pt}}
+\makeatletter
+\newcommand\ccirc[1]{%
+\mathpalette\@ccirc{#1}%
+}
+\newcommand\@ccirc[2]{%
+\tikz[baseline=(math.base)] \node (math) {$\m@th#1#2$};%
+}
+\newcommand\gcirc[1]{%
+\mathpalette\@gcirc{#1}%
+}
+\newcommand\@gcirc[2]{%
+\tikz[baseline=(math.base)] \node[fill=gray!30] (math) {$\m@th#1#2$};%
+}
+\makeatother
+% http://maximustann.github.io/mach/2015/07/06/belief-network-2/
+% http://frnsys.com/notes/ai/foundations/probabilistic_graphical_models.html
+\begin{prooftree}
+\AxiomC{$X \cancel\perp Y \mid Z$}
+\RightLabel{Collide}
+\UnaryInfC{
+\begin{tikzpicture}
+\node[obs] (z) {$Z$};%
+\node[latent,above=of z,xshift=-1cm,fill] (x) {$X$}; %
+\node[latent,above=of z,xshift=1cm] (y) {$Y$}; %
+\edge {x,y} {z}
+\end{tikzpicture}
+}
+\end{prooftree}
+If we observe a variable with conditionally independent latent variables, we call this a \textit{fork} or equivalently, a \textit{chain}.
+\begin{prooftree}
+\AxiomC{$X \perp Y \mid Z$}
+\RightLabel{Fork}
+\UnaryInfC{
+\begin{tikzpicture}
+\node[obs] (z) {$Z$};%
+\node[latent,below=of z,xshift=-1cm,fill] (x) {$X$}; %
+\node[latent,below=of z,xshift=1cm] (y) {$Y$}; %
+\edge {z} {x,y}
+\end{tikzpicture}
+}
+\DisplayProof
+\AxiomC{$X \perp Y \mid Z$}
+\RightLabel{Chain}
+\UnaryInfC{
+\begin{tikzpicture}
+\node[obs] (z) {$Z$};%
+\node[latent,above=of z,yshift=-11pt, xshift=-32pt,fill] (x) {$X$}; %
+\node[latent,below=of z,yshift=11pt, xshift=32pt] (y) {$Y$}; %
+\edge {x} {z}
+\edge {z} {y}
+\end{tikzpicture}
+}
+\end{prooftree}
+A belief network (BN) is an acyclic DGM of the form:
+\begin{equation*}
+P(x_1,\ldots,x_D)=\prod_{i=1}^D P(x_i \mid \texttt{parents}(x_i))
+\end{equation*}
+% TODO: Variable elimination as graph transformation
+% https://cedar.buffalo.edu/~srihari/CSE674/Chap9/9.3-VE-Algorithm.pdf#page=24
+% https://www.youtube.com/watch?v=FDNB0A61PGE
+
+    The grammar of conditional independence statements has some equivalence relations~\cite{pearl1985graphoids}:
+% http://ftp.cs.ucla.edu/pub/stat_ser/r53-L.pdf#page=8
+    \begin{prooftree}
+        \AxiomC{$X \perp Y \mid Z$}
+        \RightLabel{Sym}
+        \UnaryInfC{$Y \perp X \mid Z$}
+        \DisplayProof
+        \hskip 1.5em
+        \AxiomC{$X \perp Y, W \mid Z$}
+        \RightLabel{Decomp}
+        \UnaryInfC{$X \perp Y \mid Z$}
+        \DisplayProof
+        \AxiomC{$X \perp Y \mid Z$}
+        \AxiomC{$X \perp Z \mid Y$}
+        \RightLabel{Union}
+        \BinaryInfC{$X \perp Y,W \mid Z$}
+        \DisplayProof
+        \AxiomC{$X \perp W \mid Y, Z$}
+        \AxiomC{$X \perp Z \mid Y$}
+        \RightLabel{Contract}
+        \BinaryInfC{$X \perp W \mid Y$}
+    \end{prooftree}
+    A path between two vertices $\ccirc{A} \ldots \ccirc{B}$ is blocked if:
+    \begin{enumerate}[(a)]
+        \item $\ccirc{A} \ldots \rightarrow \gcirc{V} \rightarrow \ldots \ccirc{B}$ or $\ccirc{A}\ldots\leftarrow\gcirc{V}\rightarrow\ldots\ccirc{B}$.
+        \item $\ccirc{A}\ldots\rightarrow \ccirc{V} \leftarrow\ldots\ccirc{B}$ and $\gcirc{?} \not\in \texttt{desc}(\ccirc{V})$.
+    \end{enumerate}
+    $\ccirc{A}$ and $\ccirc{B}$ are d-separated if all paths are blocked.
+
+\subsection{Probabilistic Circuits}\label{sec:language}
+
+Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is NP-hard~\citep{dagum1993approximating} We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
+
+Recent work~\cite{choi2020probabilistic} has explored tractable models for probabilistic reasoning based on semiring algebras. Semirings are known to have many useful applications in graph theory~\cite{dolan2013fun} and formal languages~\cite{bernady2013efficient}. A semiring algebra has two operators, $\oplus$ and $\otimes$, with the usual properties. In particular, distributivity holds.
+
+\begin{prooftree}
+\AxiomC{$X \otimes (Y \oplus Z)$}
+\UnaryInfC{$(X \otimes Y) \oplus (X \otimes Z)$}
+\DisplayProof
+\AxiomC{$(Y \oplus Z) \otimes X$}
+\RightLabel{Distrib}
+\UnaryInfC{$(X \otimes Y) \oplus (X \otimes Z)$}
+\end{prooftree}
+The sum product network (SPN) is a commutative semiring over univariate distributions~\cite{friesen2016sum}:
+\begin{center}
+\begin{tabular}{ccc}
+$PC \rightarrow v \sim \mathcal{D}$ &
+$PC \rightarrow PC \oplus PC$ &
+$PC \rightarrow PC \otimes PC$
+\end{tabular}
+\end{center}
+Given a BN, we can compile it to a SPN using the following procedure described by~\cite{butz2019sum}:
+% Topsort: https://epubs.siam.org/doi/pdf/10.1137/0210049#page=17
+\begin{algorithm}
+\begin{algorithmic}
+\Procedure{Translate}{b: BN}: SPN
+\State c $\leftarrow $\Call{VariableEliminate}{b}\Comment{Reverse topsort.}
+\State s $\leftarrow $\Call{RedistributeParams}{c}\Comment{AC $\rightarrow$ SPN.}
+\State s $\leftarrow $\Call{CompileMarginalized}{s}
+\State \Return{\Call{Canonicalize}{s}}
+\EndProcedure
+\Procedure{Canonicalize}{s$_0$: SPN}: SPN
+\State s$_1 \leftarrow$ \Call{AddTerminals}{s$_0$}
+\State s$_1 \leftarrow$ \Call{MergeProducts}{s$_1$}
+\State $\textbf{if } $s$_0 =$ s$_1$ \textbf{ then return } s$_1$\Comment{Recurse until we}
+\State $\textbf{else return }$\Call{Canonicalize}{s$_1$}\Comment{reach a fixpoint.}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 %    How do we know when we are approaching equality? We can use a distance metric.
 
     % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
 
-    Various measures have been proposed...
+    Various metrics on distributions have been proposed...
 
-    Hypothesis testing
-
-    Kolmogorov-Smirnov
-
-    Kantorovich-Rubinstein
-
-    Kullback-Leibler
-
-    L\'evy-Prokhorov
-
-    Gromov-Hausdorff
-
-    Jensen-Shannon
-
-    Cauchy-Schwartz
-
-    EMD
-
-
-    TODO: Define probability distributions, integration, kernel functions and metrics.
+    Hypothesis testing Kolmogorov-Smirnov, Kantorovich-Rubinstein, Kullback-Leibler, L\'evy-Prokhorov, Gromov-Hausdorff, Jensen-Shannon, Cauchy-Schwartz, EMD. TODO: Define probability distributions, integration, kernel functions and metrics.
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
@@ -552,7 +832,7 @@
 
     \subsection{Algebraic graphs}\label{subsec:algebraic-graphs}
 
-    Graphs can be modeled algebraically~\citep{weisfeiler1968reduction}  using algebraic data types \citep{mokhov2017algebraic}.
+    Graphs can be modeled algebraically~\cite{weisfeiler1968reduction}  using algebraic data types~\cite{mokhov2017algebraic}.
 
     Graphs are algebraic structures...
 
@@ -575,7 +855,6 @@
 
     \subsection{Probabilistic graphical models}\label{sec:pgms}
 
-    Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is NP-hard~\citep{dagum1993approximating} We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
 
     \subsection{Knowledge graphs}
 
