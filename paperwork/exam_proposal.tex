@@ -82,13 +82,13 @@
 
     Historically, most knowledge was stored as natural language. A growing portion is now \textit{code}~\citep{allamanis2018survey}. The majority of code is procedural knowledge, written by a human and intended to operate a machine. Though it shares many statistical properties in common with natural language~\citep{hindle2012naturalness}, code has a well-defined grammar and unambiguous semantics~\citep{pierce2010software}. We can use these properties to precisely reason about operational or procedural correctness.
 
-    Prior work explored differentiable programming~\citep{considine2019programming}. Differentiability plays a key role in learning, but does not provide the necessary vocabulary to describe human knowledge. In order to capture human knowledge and begin to reason as humans do, programs must be able to express the concept of \textit{uncertainty}. In this work, we propose a set of tools and techniques for reasoning about uncertainty in the form of \textit{procedural knowledge}. We define procedural knowledge as a set of representable, or constructable functions describing common data transformations and how to realize them.
+    Prior work explored differentiable programming~\citep{considine2019programming}. Differentiability plays a key role in learning, but does not provide the necessary vocabulary to describe human knowledge. In order to capture human knowledge and begin to reason as humans do, programs must be able to express the concept of \textit{uncertainty}. In this work, we propose a set of tools and techniques for reasoning about uncertainty in the form of \textit{procedural knowledge}. We define procedural knowledge as a set of routines representing abstract data transformations and how to realize them on a physical computer.
 
     To reason about procedural knowledge, we must first define what it means for two procedures to be equal. Although equality is known to be undecidable in most languages, various equivalence tests and semi-decision procedures have been developed. For example, we could rewrite said procedures~\citep{baader1999term}, compare them in various contexts~\citep{felleisen1990expressive}, and simulate or execute them on various input data~\citep{chen2020metamorphic} so as to ascertain their exact relationship.
 
     In practice, exact equality is too rigid to operationalize. A more useful theory would allow us to compare two procedures in the presence of naturally-arising stochasticity. What is the probability of observing local variations? How are those observations related? And how do local variations affect global behavior? In order to correctly pose these questions and begin to answer them, we must be able to reason probabilistically.
 
-    Graphs are a natural representation for both procedural knowledge~\citep{allamanis2017learning} and probabilistic reasoning~\citep{pearl2014probabilistic}. The language of linear algebra provides a unifying framework for many graph algorithms and program analysis tasks~\citep{kepner2011graph}. Recent evidence suggests probabilistic inference is tractable for a large class of graphical models~\citep{choi2020probabilistic}. And sparse matrix representations enable efficient processing of large graphs on modern graphics processors~\citep{kepner2016mathematical}.
+    Graphs are a natural representation for both procedural knowledge~\citep{allamanis2017learning} and probabilistic reasoning~\citep{pearl2014probabilistic}, enabling a large class of useful data transformations and vastly simplifying their implementation on physical machinery. Depending on the author's perspective, it is possible to view the execution of these routines as simultaneously operating a machine, reducing a symbolic expression or running a dynamical process on a dataflow graph.
 
     In this work, we will define exact and approximate equality and cover some deterministic and probabilistic algorithms for deciding it. We will then describe a few graph representations for encoding approximate procedural knowledge. Finally, we will discuss some opportunities for applying these ideas to search-based software engineering, in particular code search, vulnerability detection, fault localization and program repair.
 
@@ -548,7 +548,7 @@
 
     \pagebreak\subsection{Probabilistic equivalence}\label{sec:pr-eq}
 
-    So far, we have seen various notions of exact and approximate equivalence. However, what is missing is a way to quantify the probability a certain output is produced, or the likelihood of observing a representable function in the wild, given some prior context. To do this properly, we need a language for constructing programs probabilistically. Probabilistic inference is one such framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference. \\
+    So far, we have seen various notions of exact and approximate equivalence. However, what is needed is a way to quantify the probability a certain output is produced, or the likelihood of observing a representable function in the wild, given some prior context. To do this properly, we need a language for constructing programs probabilistically. Probabilistic inference is one such framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference. \\
 
     \noindent Let $E$ be a set of \textit{events} and $S$ a set of subsets of $E$. A \textit{probability distribution} is a function $P: S \times \Sigma \rightarrow \mathbb{R}^{+}$, which satisfies the Kolmogorov~\cite{kolmogorov1933grundbegriffe} axioms:
 
@@ -749,19 +749,17 @@
 
     \pagebreak
 
-    \section{From computation to knowledge graphs}\label{sec:graphs}
+    \section{From computation to graphs}\label{sec:graphs}
 
     % https://en.wikipedia.org/wiki/Duality_(optimization)
 
-    Duality is an important concept in mathematical optimization. Many optimization problems can be seen as dual to each other: KKT and SVM duality. Duality occurs in automatic differentiation with dual number arithmetic.
+    Many optimization problems can be seen as dual to each other: KKT and SVM duality. Duality occurs in automatic differentiation with dual number arithmetic. Duality also arises in computer science. One famous example is the duality between code and data: in \textit{homoiconic} languages, we can treat code as data and data as code. Is there a common way to represent both?
 
-    Duality is also an important concept in computer science. One famous example is the duality between code and data: in \textit{homoiconic} languages, we can treat code as data and data as code. cf. Kleene's recursion theorem.
+%    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define a the graph as an algebraic object.
 
-    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define a the graph as an algebraic object.
+    Graphs are algebraic structures~\cite{weisfeiler1968reduction}. One way to represent a graph is as a matrix ${\mathbb{B}, \mathbb{N}, \mathbb{R}}^{n\times n}$ which has a clear algebraic interpretation. The language of linear algebra provides a unifying framework for many graph algorithms and program analysis tasks~\citep{kepner2011graph} and sparse matrix algorithms enable efficient processing of large graphs on modern graphics processors~\citep{kepner2016mathematical}.
 
-    \subsection{Algebraic graphs}\label{subsec:algebraic-graphs}
-
-    Graphs are algebraic structures~\cite{weisfeiler1968reduction}. The most common way to represent a graph is as a matrix $\mathbb{R}^{n\times n}$ which clearly has an algebraic interpretation. But there is another interesting way to define graphs using algebraic data types~\cite{mokhov2017algebraic}. First, we need to define a graph inductively:
+    Graphs can also be defined inductively, using an algebraic data type~\cite{mokhov2017algebraic}.
 
     vertex  → int
 
@@ -771,26 +769,20 @@
 
     graph   → empty | context & graph
 
-    \noindent The sum and product emerge naturally. Semirings arise in strange and marvelous places. $(min, +), (max, \times)$
+    The sum emerges naturally, however there are multiple ways to define the product of two graphs. Semirings arise in strange and marvelous places. $(min, +), (max, \times)$
+
+    \subsection{Programs are graphs}\label{sec:program-graphs}
+
+    Programs are graphical structures at multiple levels of abstraction. Call graphs, dataflow graphs, computation graphs~\citep{breuleux2017automatic}, e-Graphs~\citep{willsey2020egg} in reasoning systems, all the way down to boolean circuits~\citep{miller1988efficient} in numerical computing.
 
 %    \begin{enumerate}
 %        \item \url{https://people.cs.kuleuven.be/~luc.deraedt/Francqui4ab.pdf#page=71}
 %        \item \url{http://www.mit.edu/~kepner/GraphBLAS/GraphBLAS-Math-release.pdf#page=11}
 %    \end{enumerate}
 
-    \subsection{Programs are graphs}\label{sec:program-graphs}
+    \pagebreak\subsection{Distributions are graphs}\label{sec:distributions-graphs}
 
-    computation graphs~\citep{breuleux2017automatic} in machine learning
-
-    e-Graphs~\citep{willsey2020egg} in reasoning systems
-
-    arithmetic circuits~\citep{miller1988efficient} in numerical computing
-
-    probabilistic circuits~\citep{choi2020probabilistic} in probabilistic modeling community
-
-    \pagebreak\subsection{Probabilistic graphical models}
-
-    Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are a framework for probabilistic inference on distributions whose conditional dependence structure may be expressed as a graph. The graph's edges capture conditional independence relations between RVs. One type of PGM is a directed graphical model (DGM).
+    Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are a framework for probabilistic inference on distributions whose conditional dependence structure may be expressed as a graph, whose edges capture conditional independence relations between RVs. One type of PGM is a directed graphical model (DGM).
 
     \tikzset{latent/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt}, every node/.append style={draw,circle, inner sep=1pt}}
     \makeatletter
@@ -850,8 +842,6 @@
         P(x_1,\ldots,x_D)=\prod_{i=1}^D P(x_i \mid \texttt{parents}(x_i))
     \end{equation*}
 
-    \subsection{Probabilistic circuits}\label{sec:language}
-
     Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is NP-hard~\citep{dagum1993approximating} We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
 
     Recent work~\cite{choi2020probabilistic} has explored tractable models for probabilistic reasoning based on semiring algebras. Semirings are known to have many useful applications in graph theory~\cite{dolan2013fun} and formal languages~\cite{bernady2013efficient}. A semiring algebra has two operators, $\oplus$ and $\otimes$, with the usual properties. In particular, distributivity holds.
@@ -893,24 +883,22 @@
 %        \end{algorithmic}
 %    \end{algorithm}
 
+    \subsection{Knowledge is a graph}\label{subsec:kgs}
+
+    Knowledge graphs~\citep{hogan2020knowledge} are multi-relational graphs whose nodes and edges possess a type. Two entities can be related by multiple types, and each type can relate many pairs of entities. We can index an entity based on its type for knowledge retrieval, and use types to reason about compound queries, e.g. ``Which company has a direct flight from a port city to a capital city?''
 
     \subsection{Message passing algorithms}
 
     Many algorithms can be implemented as message passing on graphs...
 
-    \subsection{Knowledge graphs}
 
-    Knowledge graphs~\citep{hogan2020knowledge} are multi-relational graphs whose nodes and edges possess a type. Two entities can be related by multiple types, and each type can relate many pairs of entities. We can index an entity based on its type for knowledge retrieval, and use types to reason about compound queries, e.g. ``Which company has a direct flight from a port city to a capital city?''
-
-    \pagebreak
-
-    \section{From procedural knowledge to code}\label{sec:applications}
+    \pagebreak\section{From code to procedural knowledge}\label{sec:applications}
 
     Experts typically encode their knowledge using pen and paper. It is generally possible for skilled coders to translate textual information into code. However there are many equivalent ways to translate text into code -- the same algorithm implemented in the same language by different authors is seldom written the same way. So we need some mechanism to detect exact or approximate equality in procedural knowledge.
 
     Instead of the Sisyphean task of forever translating these ideas from scratch, coders need to step back and think: Is it possible to just encode the axioms and enough knowledge to derive a family of algorithms, then let the compiler derive the most appropriate procedure for computing some desired quantity? A good compiler might be able to use those facts to optimize computation graphs, e.g. for latency or numerical stability.
 
-    One way to think of big code is as a procedural knowledge system, describing common data transformations. Suppose we had a \textit{bibliotheca universalis} containing many human-written code examples, which a human could select from manually (a la Hoogle~\citep{james2020digging}) or which could be linked to during compilation. We would like a way to extract common snippets and reason about those transformations, for example to detect similar procedures or optimize an existing procedure.
+    One way to think of big code is as a procedural knowledge system, describing common data transformations and how to achieve them. Suppose we had a \textit{bibliotheca universalis} containing many human-written code examples, which a human could select from manually (a la Hoogle~\citep{james2020digging}) or which could be linked to during compilation. We would like a way to extract common snippets and reason about those transformations, for example to detect similar procedures or optimize an existing procedure.
 
     Knowledge systems or \textit{ontologies} are a collection of related facts which have been established by human beings. For example, we can treat mathematics as a knowledge base of rewrite rules. This has been successfully operationalized in Theano~\citep{bergstra2010theano}, Kotlin$\nabla$~\citep{considine2019kotlingrad} and other DSLs. More broadly, we can also think of constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Probonto~\citep{swat2016probonto} and KMath~\citep{nozik2019kotlin} as working towards this same goal.
 
@@ -926,9 +914,9 @@
 
     \subsection{Code search}
 
-    model fragments of code and natural language as a graphs and learn a distance metric which captures the notion of similarity. Some graphs will be incomplete, or missing some features, others will have extra information that is unnecessary.
+    -model fragments of code and natural language as a graph and learn a distance metric which captures the notion of similarity. Some graphs will be incomplete, or missing some features, others will have extra information that is unnecessary.
 
-    Given a piece of code and the surrounding context (e.g. in an IDE or compiler), search a database for the most similar graphs, then to recommend them to the user (e.g. fixes or repairs for compiler error messages), or suggest some relevant examples to help the user write some incomplete piece of code.It is similar to a string edit distance, but for graph structured objects. There are a few pieces to this:
+    Given a piece of code and the surrounding context (e.g. in an IDE or compiler), search a database for the k most similar graphs, then to recommend them to the user (e.g. fixes or repairs for compiler error messages), or suggest some relevant examples to help the user write some incomplete piece of code. Similar to a string edit distance, but for graph structured objects. There are a few pieces to this:
 
     \begin{enumerate}
         \item Semantic segmentation (what granularity to slice?)
@@ -951,7 +939,10 @@
 
     Take a procedural knowledge base, generate a DSL from it.
 
-    \pagebreak
+    \pagebreak \section{Acknowledgements}
+
+    The author wishes to thank his advisor Jin Guo, Xuejie Si and Fuyuan Lyu, for providing several helpful comments on this proposal and Torsten Scholak, David Yu-Tung Hui, Disha Shrivastava, Jordi Armengol-Estap\'e, Matt Rice, Dave Keenan, and John Tromp for various miscellaneous feedback.
+
     \bibliography{exam_proposal}
     \bibliographystyle{plain}
 \end{document}
