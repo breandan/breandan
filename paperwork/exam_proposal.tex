@@ -17,6 +17,13 @@
 \newcommand{\nDownarrow}{\ensuremath{\text{ }\cancel{\Downarrow}\text{ }}}
 \usepackage{centernot}
 
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\pgfmathdeclarefunction{gauss}{2}{%
+\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+
 \usepackage{tabularx}
 \usepackage{enumerate}
 \usepackage{enumitem}
@@ -75,7 +82,7 @@
 
     Historically, most knowledge was stored as natural language. A growing portion is now \textit{code}~\citep{allamanis2018survey}. The majority of code is procedural knowledge, written by a human and intended to operate a machine. Though it shares many statistical properties in common with natural language~\citep{hindle2012naturalness}, code has a well-defined grammar and unambiguous semantics~\citep{pierce2010software}. We can use these properties to precisely reason about operational or procedural correctness.
 
-    Prior work explored differentiable programming~\citep{considine2019programming}. Differentiability plays a key role in learning, but does not provide the necessary vocabulary to describe human knowledge. In order to capture human knowledge and begin to reason as humans do, programs must be able to express the concept of \textit{uncertainty}. In this work, we propose a set of tools and techniques for reasoning about uncertainty in the form of procedural knowledge.
+    Prior work explored differentiable programming~\citep{considine2019programming}. Differentiability plays a key role in learning, but does not provide the necessary vocabulary to describe human knowledge. In order to capture human knowledge and begin to reason as humans do, programs must be able to express the concept of \textit{uncertainty}. In this work, we propose a set of tools and techniques for reasoning about uncertainty in the form of \textit{procedural knowledge}. We define procedural knowledge as a set of representable, or constructable functions describing common data transformations and how to realize them.
 
     To reason about procedural knowledge, we must first define what it means for two procedures to be equal. Although equality is known to be undecidable in most languages, various equivalence tests and semi-decision procedures have been developed. For example, we could rewrite said procedures~\citep{baader1999term}, compare them in various contexts~\citep{felleisen1990expressive}, and simulate or execute them on various input data~\citep{chen2020metamorphic} so as to ascertain their exact relationship.
 
@@ -154,6 +161,8 @@
 
     To determine whether two expressions are equal, we need a decision procedure. Various approaches for deciding exact and approximate equality in the deterministic and probabilistic setting are possible. We list a few below.
 
+    \bgroup
+    \def\arraystretch{1.2}
     \begin{table}[H]
         \centering
         \begin{tabular}{c|l|l|}
@@ -170,6 +179,7 @@
             \end{tabular} \\ \hline
         \end{tabular}
     \end{table}
+    \egroup
 
     It is seldom the case that two semantically equal expressions are trivially equal: we must first perform some computation to establish their equality. In the exact setting, this procedure might be summarized as follows:
 
@@ -520,7 +530,7 @@
     \end{center}
     \egroup
 
-    \noindent An \textit{approximate equivalence relation} is a binary relation $\mathcal{A} \subset \mathcal (\mathcal X → \mathcal Y)^2$,~ e.g. $f \approx_{d} g \Leftrightarrow \mathbb \Delta(f, g) \leq d$. Given a dataset $X := \{x^{(i)}\}_{i=1}^n$, $Y := \{f(x^{(i)})\}_{i=1}^n$ and a program $g: \mathcal{X} → \mathcal{Y}$, we could use the extensional approach to evaluate $\Delta_X: (f, g) \mapsto \Delta_Y(y^{(i)}, g(x^{(i)}))$ directly. Alternatively, given an intensional descriptor $\varphi_θ(\cdot): (\mathcal X → \mathcal Y) → \mathcal Z$ we could construct a synthetic kernel $\Delta_θ: (f, g) \mapsto \left<\varphi_θ(f), \varphi_θ(g)\right>$, seeking $θ^* = \text{argmin}_θ\big(\Delta_θ(f, g) - \Delta_X(f, g)\big)^2$ over $f, g \overset{iid}{\sim} P(\mathcal X → \mathcal Y), X \overset{iid}{\sim} P(\mathcal X^n)$ via gradient descent. The problem then becomes: how do we match the distribution of naturally-arising programs?
+    \noindent An \textit{approximate equivalence relation} is a binary relation $\mathcal{A} \subset \mathcal (\mathcal X → \mathcal Y)^2$,~ e.g. $f \approx_{d} g \Leftrightarrow \mathbb \Delta(f, g) \leq d$. Given a dataset $X := [x^{(i)}]_{i=1}^n$, $Y := [f(x^{(i)})]_{i=1}^n$ and a program $g: \mathcal{X} → \mathcal{Y}$, we could use the extensional approach to evaluate $\Delta_X: (f, g) \mapsto \Delta_Y(Y, [g(x^{(i)})]_{i=0}^n)$ directly. Alternately, given an intensional descriptor $\varphi_θ(\cdot): (\mathcal X → \mathcal Y) → \mathcal Z$ we could construct a synthetic kernel $\Delta_θ: (f, g) \mapsto \left<\varphi_θ(f), \varphi_θ(g)\right>$, seeking $θ^* = \text{argmin}_θ\big(\Delta_θ(f, g) - \Delta_X(f, g)\big)^2$ over $f, g \overset{iid}{\sim} P(\mathcal X → \mathcal Y), X \overset{iid}{\sim} P(\mathcal X^n)$ via gradient descent. The problem then becomes: how do we match the distribution of naturally-arising programs?
 
 %    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta → Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
 
@@ -538,15 +548,15 @@
 
     \pagebreak\subsection{Probabilistic equivalence}\label{sec:pr-eq}
 
-    So far, we have seen various notions of exact and approximate equivalence. However, what is missing is a way to quantify the probability a certain value or set of values is produced, or the likelihood of observing a representable function in the wild. To do this properly we need a language for constructing programs probabilistically. Probabilistic inference is one such framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference.
+    So far, we have seen various notions of exact and approximate equivalence. However, what is missing is a way to quantify the probability a certain output is produced, or the likelihood of observing a representable function in the wild, given some prior context. To do this properly, we need a language for constructing programs probabilistically. Probabilistic inference is one such framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference. \\
 
-    Let $E$ be a set of events and $S$ be a set of subsets of $E$. A \textit{probability distribution} is a function $P: S \times \Sigma \rightarrow \mathbb{R}^{+}$ satisfying the Kolmogorov~\cite{kolmogorov1933grundbegriffe} axioms, in particular:
+    \noindent Let $E$ be a set of \textit{events} and $S$ a set of subsets of $E$. A \textit{probability distribution} is a function $P: S \times \Sigma \rightarrow \mathbb{R}^{+}$, which satisfies the Kolmogorov~\cite{kolmogorov1933grundbegriffe} axioms:
 
     \begin{itemize}
         \itemsep-1em
-        \item [(3)] $P(S = s) \in \mathbb{R}^{+}, \forall s \in S$.& \\
-        \item [(4)] $P(E) = 1$. ($S = $ may be omitted for brevity.)& \\
-        \item [(5)] $P(X \cup Y) = P(X) + P(Y), \forall X \cap Y = \varnothing$.
+        \item [(3)] $P(S = s) \in \mathbb{R}^{+}, \forall s \in S$. ($S \overset{?}{=} s$ is usually written $S = s$ for brevity.) \\
+        \item [(4)] $P(E) := 1$. ($P(S = E)$ may be shortened to $P(E)$ for brevity.) \\
+        \item [(5)] $P(X \cup Y) := P(X) + P(Y), \forall X \cap Y = \varnothing$.
     \end{itemize}
 
     \noindent Given a distribution over a set $X$, we can \textit{sample} from it to produce a single element from that set, a \textit{random variable}:
@@ -564,7 +574,7 @@
 %d \sim \mathcal{D}
 %$$
 
-\noindent The \textit{joint} $P(X, Y)$ is a distribution over the product of two sets, $X \times Y$:
+\noindent The \textit{joint}, $P(X, Y)$, is a distribution over the product of two sets, $X \times Y$:
 
 \begin{prooftree}
 \AxiomC{$\Gamma \vdash P(X): X \times \Sigma \rightarrow \mathbb R^{+}$}
@@ -573,17 +583,17 @@
 \BinaryInfC{$\Gamma \vdash P(X, Y): X \times Y \times \Sigma \rightarrow \mathbb R^{+}$}
 \end{prooftree}
 
-\noindent Given a joint $P(X, Y)$, if we see an event $y: Y$, this observation is called \textit{conditioning} and the resulting distribution over $X$, a \textit{conditional distribution}:
+\noindent Given a joint $P(X, Y)$, if we observe an event $y: Y$, this observation is called \textit{conditioning} and the resulting distribution over $X$, a \textit{conditional distribution}:
 
 % https://www.cambridge.org/core/services/aop-cambridge-core/content/view/819623B1B5B33836476618AC0621F0EE/9781108488518AR.pdf/Foundations_of_Probabilistic_Programming.pdf?event-type=FTLA#page=325
 \begin{prooftree}
 \AxiomC{$\Gamma \vdash P(X, Y): X \times Y \times \Sigma \rightarrow\mathbb{R}^+$}
 \AxiomC{$\Gamma \vdash y: Y$}
 \RightLabel{Cond}
-\BinaryInfC{$\Gamma \vdash P(X \mid Y := y): X \times \Sigma \rightarrow\mathbb{R}^+$}
+\BinaryInfC{$\Gamma \vdash P(X \mid Y = y): X \times \Sigma \rightarrow\mathbb{R}^+$}
 \end{prooftree}
 
-\noindent Given a conditional distribution and its prior, to exchange the order of conditioning, we can use Bayes rule~\cite{bayes1763essay} :
+\noindent In general, conditioning is order-dependent. Given a conditional distribution and its prior, to exchange the order of conditioning, we can use Bayes rule:
 
 \begin{prooftree}
 \AxiomC{$\overbrace{P(X \mid Y)}^{\text{Likelihood}}$}
@@ -592,19 +602,16 @@
 \BinaryInfC{$\underbrace{P(Y \mid X) \propto}_{\text{Normalize}} \underbrace{P(X \mid Y)}_{\text{Observe}}\underbrace{P(Y)}_{\text{Sample}}$}
 \end{prooftree}
 
-\noindent When a conditional distribution $P(X \mid Y)$ does not depend on its prior, the variables are said to be \textit{independent}.
+\noindent When a conditional distribution $P(X \mid Y)$ does not depend on its prior, the events are said to be \textit{independent}. Equivalently, if two distributions $P(X)$ and $P(Y)$ are multiplied to form a joint distribution $P(X, Y)$, we may also conclude that $X$ and $Y$ are independent events:
 
 \begin{prooftree}
 \AxiomC{$P(X \mid Y) \equiv P(X)$}
 \RightLabel{Indep}
 \UnaryInfC{$X \perp Y$}
-\end{prooftree}
-
-\noindent Equivalently, if two distributions $P(X)$ and $P(Y)$ are multiplied to form a joint distribution $P(X, Y)$, we may conclude that $X$ and $Y$ are independent:
-
-\begin{prooftree}
+\DisplayProof
+\hskip 1.5em
 \AxiomC{$P(X, Y) \equiv P(X)P(Y)$}
-\RightLabel{Fact}
+\RightLabel{Factor}
 \UnaryInfC{$X \perp Y$}
 \end{prooftree}
 
@@ -642,7 +649,7 @@
 %        \BinaryInfC{$X \perp W \mid Y$}
 %    \end{prooftree}
 
-    In order to sample from a univariate distribution, we can feed the output from a uniform PRNG into a specific function called a \textit{quantile}. Unfortunately, most common distributions are defined in terms of their probability or cumulative density functions and do not have a closed form quantile, so we must approximate it by inverting the CDF:
+    \noindent In order to sample from a univariate distribution, we can feed the output from a uniform PRNG into a \textit{quantile function}. Unfortunately, most common distributions are defined in terms of their probability or cumulative density functions and have no representable quantile, so we are forced to approximate it by inverting the CDF, using e.g. Kolmogorov–Smirnov:
 
 % https://en.wikipedia.org/wiki/Inverse_transform_sampling
 \begin{prooftree}
@@ -654,7 +661,7 @@
 \UnaryInfC{$\texttt{x = INVCDF(PRNG())}$}
 \end{prooftree}
 
-    If we have two random variables sampled from known distributions and want to combine them, we must ensure the combination is also a probability distribution. Generally speaking, to combine two arbitrary RVs, we must integrate. For a dyadic function, we can take the double integral, which is known to be exchangeable under certain conditions~\cite{fubini1907sugli}:
+\noindent If we have two random variables sampled from known distributions and want to combine them, we must ensure the combination is also a probability distribution. Generally speaking, to combine two arbitrary RVs, we must integrate. For a dyadic function, we can take the double integral, which is known to be exchangeable under certain conditions~\cite{fubini1907sugli}:
 
 % https://terrytao.wordpress.com/2015/10/12/275a-notes-2-product-measures-and-independence/
 \begin{prooftree}
@@ -665,7 +672,7 @@
 \UnaryInfC{$\int_{Y}\int_{X} f(x, y)dxdy = \int_{X}\int_{Y} f(x, y)dydx$}
 \end{prooftree}
 
-These integrals can often be simplified by considering the specific dependence relation. For instance, the sum distribution for independent RVs is obtained by convolving their respective density functions:
+\noindent These integrals can often be simplified by considering the specific dependence relation. For instance, the sum distribution for independent RVs is obtained by convolving their respective density functions:
 
 % https://en.wikipedia.org/wiki/Convolution_of_probability_distributions#Introduction
 \begin{prooftree}
@@ -675,7 +682,7 @@ These integrals can often be simplified by considering the specific dependence r
 \BinaryInfC{$P(X + Y) = P(X) * P(Y)$}
 \end{prooftree}
 
-More specifically, if we have a so-called \textit{stable distribution}~\cite{levy1925calcul}, the solution is even more simple. For example, if $X$ and $Y$ are both known to be Gaussian RVs, we can combine their parameters $\mu$ and $\sigma$ directly:
+\noindent More specifically, if we have a so-called \textit{stable distribution}~\cite{levy1925calcul}, evaluating the convolution is even more simple. For example, if $X$ and $Y$ are both known to be Gaussian RVs, we can combine their parameters $\mu$ and $\sigma$ directly. As described in~\cite{willard2020minikanren}, there exist many simplified relations of the following variety, which can be derived by analytic integration:
 
 % https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables#Independent_random_variables
 \begin{prooftree}
@@ -684,8 +691,6 @@ More specifically, if we have a so-called \textit{stable distribution}~\cite{lev
 \AxiomC{$z = x + y$}
 \TrinaryInfC{$z \sim \mathcal{N}(\mu_x + \mu_y, \sigma^2_x + \sigma^2_x)$}
 \end{prooftree}
-
-As described in~\cite{willard2020minikanren}, there exist many simplified relations of the above variety, which can be derived through analytic integration of the corresponding density functions.
 
 %Likewise, their product can be defined as an integral:
 %
@@ -699,7 +704,7 @@ As described in~\cite{willard2020minikanren}, there exist many simplified relati
 %    \TrinaryInfC{$P(Z = z) = \int P(X = x)P(Y=\frac{z}{x})\frac{1}{|x|}dx$}
 %\end{prooftree}
 
-Given a joint distribution $P(X, Y)$, in order to remove a variable, we must sum or integrate over its conditional distribution. This process is known as \textit{marginalization}, and the resulting distribution is called a \textit{marginal}:
+\noindent Given a joint distribution $P(X, Y)$, in order to remove a variable, we must sum or integrate over its conditional distribution. This process is known as \textit{marginalization}, and the resulting distribution is called a \textit{marginal}:
 
 \begin{prooftree}
 \AxiomC{$\Gamma \vdash P(X, Y): X\times Y \times \Sigma \rightarrow\mathbb{R}^+$}
@@ -707,7 +712,7 @@ Given a joint distribution $P(X, Y)$, in order to remove a variable, we must sum
 \UnaryInfC{$\Gamma \vdash P(X): X\times \Sigma \rightarrow\mathbb{R}^+ \propto \int P(X \mid Y = y)dy$}
 \end{prooftree}
 
-Given the joint distribution, we can obtain a conditional distribution by dividing the joint by the marginal distribution:
+\noindent Given the joint distribution, we can obtain a conditional distribution by dividing the joint by the marginal distribution:
 
 \begin{prooftree}
 \AxiomC{$\Gamma \vdash P(X, Y): X\times Y \times \Sigma \rightarrow\mathbb{R}^+$}
@@ -719,10 +724,27 @@ Given the joint distribution, we can obtain a conditional distribution by dividi
 
     % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
 
-    Various metrics on distributions have been proposed...
+    \noindent It is seldom the case two distributions are exactly equal in practice. Given two distributions, we would like to quantify how similar they are.
 
-    Hypothesis testing, Kolmogorov-Smirnov, Kantorovich-Rubinstein, Kullback-Leibler, L\'evy-Prokhorov, Jensen-Shannon, EMD.
+    \begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[x=2cm, y=2cm, every axis plot post/.append style={
+        mark=none,domain=-2:2.5,samples=50,smooth},
+        axis x line*=bottom, % no box around the plot, only x and y axis
+        ticks=none,
+        y axis line style={draw=none},
+        xticklabels={,,},
+        enlargelimits=upper] % extend the axes a bit to the right and top
+            \addplot[name path=F] {gauss(0,0.5)};
+            \addplot[name path=G] {gauss(0.5,0.6)};
+            \addplot[pattern=north west lines, pattern color=gray!50]fill between[of=F and G, soft clip={domain=-2:0.495}];
+            \addplot[pattern=north west lines, pattern color=gray!50]fill between[of=F and G, soft clip={domain=0.495:2.5}];
+        \end{axis}
+    \end{tikzpicture}
+    \end{figure}
 
+    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly becomes computationally intractable in higher dimensions. Various kernels, metrics and pseudometrics on distributions have been proposed to alleviate this problem, for example: Kantorovich-Rubinstein, Kullback-Leibler, L\'evy-Prokhorov, Jensen-Shannon, EMD, et al.
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
     \pagebreak
