@@ -24,7 +24,7 @@
 \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
 }
 
-\usepackage{tabularx}
+\usepackage{adjustbox}
 \usepackage{enumerate}
 \usepackage{enumitem}
 \usepackage{tikz-cd}
@@ -64,6 +64,7 @@
 
 \usepackage{mathtools}% superior to amsmath
 \usepackage{tikz}
+\usepackage{graphicx}
 
 
 \title{Pattern Recognition in Procedural Knowledge}
@@ -86,9 +87,9 @@
 
     To reason about procedural knowledge, we must first define what it means for two procedures to be equal. Although equality is known to be undecidable in most languages, various equivalence tests and semi-decision procedures have been developed. For example, we could rewrite said procedures~\citep{baader1999term}, compare them in various contexts~\citep{felleisen1990expressive}, and simulate or execute them on various input data~\citep{chen2020metamorphic} so as to ascertain their exact relationship.
 
-    In practice, exact equality is too rigid to operationalize. A more useful theory would allow us to compare two procedures in the presence of naturally-arising stochasticity. What is the probability of observing local variations? How are those observations related? And how do local variations affect global behavior? In order to correctly pose these questions and begin to answer them, we must be able to reason probabilistically.
+    In practice, exact equality is too rigid to operationalize. A more useful theory would allow us to compare two similar procedures in the presence of naturally-arising stochasticity. What is the probability of observing local variations? How are those observations related? And how do local variations affect global behavior? In order to correctly pose these questions and begin to answer them, we must be able to reason probabilistically.
 
-    Graphs are a natural representation for both procedural knowledge~\citep{allamanis2017learning} and probabilistic reasoning~\citep{pearl2014probabilistic}, enabling a large class of useful data transformations and vastly simplifying their implementation on physical machinery. Depending on the author's perspective, it is possible to view the execution of these routines as simultaneously operating a machine, reducing a symbolic expression or running a dynamical process on a dataflow graph.
+    Graphs are a natural representation for both procedural knowledge~\citep{allamanis2017learning} and probabilistic reasoning~\citep{pearl2014probabilistic}, both enabling a large class of useful data transformations and vastly simplifying their implementation on physical machinery. Depending on the author's perspective, it is possible to view the evaluation of these routines as either operating a stateful machine, reducing a symbolic expression or running a dynamical process on a dataflow graph.
 
     In this work, we will define exact and approximate equality and cover some deterministic and probabilistic algorithms for deciding it. We will then describe a few graph representations for encoding approximate procedural knowledge. Finally, we will discuss some opportunities for applying these ideas to search-based software engineering, in particular code search, vulnerability detection, fault localization and program repair.
 
@@ -159,7 +160,7 @@
 
     \pagebreak\subsection{Decidability}\label{sec:algorithms}
 
-    To determine whether two expressions are equal, we need a decision procedure. Various approaches for deciding exact and approximate equality in the deterministic and probabilistic setting are possible. We list a few below.
+    To determine if two procedures are equal, we need a decision procedure. We list several high-level approaches for deciding exact and approximate equality in the deterministic and probabilistic setting in the table below:
 
     \bgroup
     \def\arraystretch{1.2}
@@ -548,7 +549,7 @@
 
     \pagebreak\subsection{Probabilistic equivalence}\label{sec:pr-eq}
 
-    So far, we have seen various notions of exact and approximate equivalence. However, what is needed is a way to quantify the probability a certain output is produced, or the likelihood of observing a representable function in the wild, given some prior context. To do this properly, we need a language for constructing programs probabilistically. Probabilistic inference is one such framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference. \\
+    So far, we have seen various notions of exact and approximate equivalence. However, what is needed is a way to quantify the probability a certain output is produced, or the likelihood of observing a representable function in the wild, given some prior knowledge. To do this properly, we need a language for propagating uncertainty through a computation. Probabilistic inference is one such framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference. \\
 
     \noindent Let $E$ be a set of \textit{events} and $S$ a set of subsets of $E$. A \textit{probability distribution} is a function $P: S \times \Sigma \rightarrow \mathbb{R}^{+}$, which satisfies the Kolmogorov~\cite{kolmogorov1933grundbegriffe} axioms:
 
@@ -661,7 +662,7 @@
 \UnaryInfC{$\texttt{x = INVCDF(PRNG())}$}
 \end{prooftree}
 
-\noindent If we have two random variables sampled from known distributions and want to combine them, we must ensure the combination is also a probability distribution. Generally speaking, to combine two arbitrary RVs, we must integrate. For a dyadic function, we can take the double integral, which is known to be exchangeable under certain conditions~\cite{fubini1907sugli}:
+\noindent If we have two random variables sampled from known distributions and want to combine them, we must ensure the combination is also a probability distribution. Generally speaking, to combine two arbitrary RVs, we must integrate their density functions. For a dyadic function, we can take the double integral, which is known to be exchangeable under certain conditions~\cite{fubini1907sugli}:
 
 % https://terrytao.wordpress.com/2015/10/12/275a-notes-2-product-measures-and-independence/
 \begin{prooftree}
@@ -672,17 +673,22 @@
 \UnaryInfC{$\int_{Y}\int_{X} f(x, y)dxdy = \int_{X}\int_{Y} f(x, y)dydx$}
 \end{prooftree}
 
-\noindent These integrals can often be simplified by considering the specific dependence relation. For instance, the sum distribution for independent RVs is obtained by convolving their respective density functions:
+\noindent While generally intractable in higher arity, these integrals can often be simplified by considering the specific dependence relation between the arguments. For instance, the sum of two independent RVs follows a distribution which can be obtained by convolving their respective density functions:
 
 % https://en.wikipedia.org/wiki/Convolution_of_probability_distributions#Introduction
 \begin{prooftree}
 \AxiomC{$P(X)$}
 \AxiomC{$P(Y)$}
-\RightLabel{Conv}
+\RightLabel{$\oplus$}
 \BinaryInfC{$P(X + Y) = P(X) * P(Y)$}
+\DisplayProof
+\AxiomC{$P(X)$}
+\AxiomC{$P(Y)$}
+\RightLabel{$\otimes$}
+\BinaryInfC{$P(X + Y) = \int P(X)P(Y=\frac{x+y}{x})\frac{1}{|x|}dx$}
 \end{prooftree}
 
-\noindent More specifically, if we have a so-called \textit{stable distribution}~\cite{levy1925calcul}, evaluating the convolution is even more simple. For example, if $X$ and $Y$ are both known to be Gaussian RVs, we can combine their parameters $\mu$ and $\sigma$ directly. As described in~\cite{willard2020minikanren}, there exist many simplified relations of the following variety, which can be derived by analytic integration:
+\noindent More specifically, if we have a so-called \textit{stable distribution}~\cite{levy1925calcul}, evaluating the convolution can be obtained by combining their parameters $\mu$ and $\sigma$ directly. As described in~\cite{willard2020minikanren}, there exist many simplified relations of the following variety, which can be discovered by analytic integration:
 
 % https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables#Independent_random_variables
 \begin{prooftree}
@@ -704,19 +710,19 @@
 %    \TrinaryInfC{$P(Z = z) = \int P(X = x)P(Y=\frac{z}{x})\frac{1}{|x|}dx$}
 %\end{prooftree}
 
-\noindent Given a joint distribution $P(X, Y)$, in order to remove a variable, we must sum or integrate over its conditional distribution. This process is known as \textit{marginalization}, and the resulting distribution is called a \textit{marginal}:
+\noindent Given a joint distribution $P(X, Y)$, in order to remove a variable, we must sum or integrate over the conditional distribution. This procedure is known as \textit{marginalization}, and the resulting distribution is called a \textit{marginal}:
 
 \begin{prooftree}
 \AxiomC{$\Gamma \vdash P(X, Y): X\times Y \times \Sigma \rightarrow\mathbb{R}^+$}
-\RightLabel{Mar}
-\UnaryInfC{$\Gamma \vdash P(X): X\times \Sigma \rightarrow\mathbb{R}^+ \propto \int P(X \mid Y = y)dy$}
+\RightLabel{Marg}
+\UnaryInfC{$\Gamma \vdash P(X): X\times \Sigma \rightarrow\mathbb{R}^+ \propto \int P(X \mid Y = y)P(Y = y)dy$}
 \end{prooftree}
 
-\noindent Given the joint distribution, we can obtain a conditional distribution by dividing the joint by the marginal distribution:
+\noindent If we observe an event $Y$ in a joint distribution where $0 < P(Y)$, we can the joint by the prior to obtain the conditional distribution:
 
 \begin{prooftree}
 \AxiomC{$\Gamma \vdash P(X, Y): X\times Y \times \Sigma \rightarrow\mathbb{R}^+$}
-\RightLabel{Con}
+\RightLabel{Cond}
 \UnaryInfC{$\Gamma \vdash P(X \mid Y): X \times \Sigma \rightarrow\mathbb{R}^+ = P(X, Y) \div P(Y)$}
 \end{prooftree}
 
@@ -724,7 +730,7 @@
 
     % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
 
-    \noindent It is seldom the case two distributions are exactly equal in practice. Given two distributions, we would like to quantify how similar they are.
+    \noindent It is seldom the case two distributions are exactly equal in practice. Given two distributions, we would like a way to quantify how similar they are.
 
     \begin{figure}[!h]
     \centering
@@ -744,7 +750,8 @@
     \end{tikzpicture}
     \end{figure}
 
-    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly becomes computationally intractable in higher dimensions. Various kernels, metrics and pseudometrics on distributions have been proposed to alleviate this problem, for example: Kantorovich-Rubinstein, Kullback-Leibler, L\'evy-Prokhorov, Jensen-Shannon, EMD, et al.
+    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly grows quickly intractable in higher dimensions. Various kernels, metrics and pseudometrics on distributions have been proposed to alleviate this problem, for example: Kantorovich-Rubinstein, Kullback-Leibler, L\'evy-Prokhorov, Jensen-Shannon, EMD, et al.
+
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
     \pagebreak
@@ -753,11 +760,11 @@
 
     % https://en.wikipedia.org/wiki/Duality_(optimization)
 
-    Many optimization problems can be seen as dual to each other: KKT and SVM duality. Duality occurs in automatic differentiation with dual number arithmetic. Duality also arises in computer science. One famous example is the duality between code and data: in \textit{homoiconic} languages, we can treat code as data and data as code. Is there a common way to represent both?
+%    Many optimization problems can be seen as dual to each other: KKT and SVM duality. Duality occurs in automatic differentiation with dual number arithmetic. Duality also arises in computer science. One famous example is the duality between code and data: in \textit{homoiconic} languages, we can treat code as data and data as code. Is there a common way to represent both?
 
 %    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define a the graph as an algebraic object.
 
-    Graphs are algebraic structures~\cite{weisfeiler1968reduction}. One way to represent a graph is as a matrix ${\mathbb{B}, \mathbb{N}, \mathbb{R}}^{n\times n}$ which has a clear algebraic interpretation. The language of linear algebra provides a unifying framework for many graph algorithms and program analysis tasks~\citep{kepner2011graph} and sparse matrix algorithms enable efficient processing of large graphs on modern graphics processors~\citep{kepner2016mathematical}.
+    Graphs are algebraic structures~\cite{weisfeiler1968reduction} capable of representing a wide variety of procedural and relational information. A graph can be represented as a matrix $\{\mathbb{B}, \mathbb{N}, \mathbb{R}\}^{n\times n}$, with entries describing the presence, label, or weight between vertices. The language of linear algebra provides a unifying framework for studying many graph algorithms and program analysis tasks~\citep{kepner2011graph}. and sparse matrix algorithms enable efficient processing of large graphs on modern graphics processors~\citep{kepner2016mathematical}.
 
     Graphs can also be defined inductively, using an algebraic data type~\cite{mokhov2017algebraic}.
 
@@ -775,6 +782,159 @@
 
     Programs are graphical structures at multiple levels of abstraction. Call graphs, dataflow graphs, computation graphs~\citep{breuleux2017automatic}, e-Graphs~\citep{willsey2020egg} in reasoning systems, all the way down to boolean circuits~\citep{miller1988efficient} in numerical computing.
 
+    \bgroup
+    \def\arraystretch{1.2}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c|c|c|c|}
+            \hline \textbf{Formula} & \textbf{Program} & \textbf{Dataflow} & \textbf{Matrix} \\ \hline
+            \begin{tabular}[c]{@{}l@{}} $\hat y = mx + b$\\ $l = ||\hat y - y||_2$\end{tabular}
+              &
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+sum = 0
+l = [0, 0, 0, 0]
+for i in range(0, 4):
+  l[i] += θ[i] * x[i]
+for i in range(0, 4):
+  l[i] -= y[i] + b
+for i in range(0, 4):
+  l[i] *= l[i]
+for i in range(0, 4):
+  sum += l[i]
+l = sqrt(sum)
+\end{lstlisting}
+    & \begin{adjustbox}{minipage={.22\textwidth}, height=0.14\textwidth, margin*=0cm -0.3cm 0cm 0.1cm}
+    \digraph[scale=0.1]{prograph}{
+    graph ["concentrate"="true","rankdir"="LR","bgcolor"="transparent","margin"="0.0","compound"="true","nslimit"="20"]
+    "eeba8" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "a8416" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "4500f" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="pow"]
+    "a67f9" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "0.5" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="0.5"]
+    "f14a3" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "9c49d" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "59c48" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "980bd" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "8f532" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "1a609" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "e58c4" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "23f5b" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "d829b" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "y₀" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₀"]
+    "2783d" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "8bd47" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "y₂" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₂"]
+    "517e6" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "8caa0" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "y₁" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₁"]
+    "7da0d" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "b12cb" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "b" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="b"]
+    "f8941" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "3eecd" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "2e83a" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "b59fd" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "dae83" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "b11ba" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "3bb89" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "b2454" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "7bed4" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "39644" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "12c32" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "d58d1" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "6c64d" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "fb0f0" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "6c2be" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "57fd4" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "a9bc3" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "x₀" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₀"]
+    "θ₀" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="θ₀"]
+    "x₂" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₂"]
+    "θ₁" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="θ₁"]
+    "x₂" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₂"]
+    "x₄" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₄"]
+    "x₁" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₁"]
+    "x₃" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₃"]
+    "eeba8" -> "a8416" ["arrowhead"="normal","label"=""]
+    "a8416" -> "4500f" ["arrowhead"="normal","label"=""]
+    "a67f9" -> "a8416" ["arrowhead"="normal","label"=""]
+    "0.5" -> "4500f" ["arrowhead"="normal","label"=""]
+    "f14a3" -> "eeba8" ["arrowhead"="normal","label"=""]
+    "9c49d" -> "eeba8" ["arrowhead"="normal","label"=""]
+    "59c48" -> "a67f9" ["arrowhead"="normal","label"=""]
+    "980bd" -> "a67f9" ["arrowhead"="normal","label"=""]
+    "8f532" -> "f14a3" ["arrowhead"="normal","label"=""]
+    "1a609" -> "f14a3" ["arrowhead"="normal","label"=""]
+    "e58c4" -> "9c49d" ["arrowhead"="normal","label"=""]
+    "23f5b" -> "9c49d" ["arrowhead"="normal","label"=""]
+    "d829b" -> "59c48" ["arrowhead"="normal","label"=""]
+    "y₀" -> "59c48" ["arrowhead"="normal","label"=""]
+    "y₀" -> "980bd" ["arrowhead"="normal","label"=""]
+    "2783d" -> "980bd" ["arrowhead"="normal","label"=""]
+    "8bd47" -> "8f532" ["arrowhead"="normal","label"=""]
+    "y₂" -> "8f532" ["arrowhead"="normal","label"=""]
+    "y₂" -> "1a609" ["arrowhead"="normal","label"=""]
+    "517e6" -> "1a609" ["arrowhead"="normal","label"=""]
+    "8caa0" -> "e58c4" ["arrowhead"="normal","label"=""]
+    "y₁" -> "e58c4" ["arrowhead"="normal","label"=""]
+    "y₁" -> "23f5b" ["arrowhead"="normal","label"=""]
+    "7da0d" -> "23f5b" ["arrowhead"="normal","label"=""]
+    "b12cb" -> "d829b" ["arrowhead"="normal","label"=""]
+    "b" -> "d829b" ["arrowhead"="normal","label"=""]
+    "b" -> "2783d" ["arrowhead"="normal","label"=""]
+    "b" -> "8bd47" ["arrowhead"="normal","label"=""]
+    "b" -> "517e6" ["arrowhead"="normal","label"=""]
+    "b" -> "8caa0" ["arrowhead"="normal","label"=""]
+    "b" -> "7da0d" ["arrowhead"="normal","label"=""]
+    "f8941" -> "2783d" ["arrowhead"="normal","label"=""]
+    "3eecd" -> "8bd47" ["arrowhead"="normal","label"=""]
+    "2e83a" -> "517e6" ["arrowhead"="normal","label"=""]
+    "b59fd" -> "8caa0" ["arrowhead"="normal","label"=""]
+    "dae83" -> "7da0d" ["arrowhead"="normal","label"=""]
+    "b11ba" -> "b12cb" ["arrowhead"="normal","label"=""]
+    "3bb89" -> "b12cb" ["arrowhead"="normal","label"=""]
+    "b2454" -> "f8941" ["arrowhead"="normal","label"=""]
+    "7bed4" -> "f8941" ["arrowhead"="normal","label"=""]
+    "39644" -> "3eecd" ["arrowhead"="normal","label"=""]
+    "12c32" -> "3eecd" ["arrowhead"="normal","label"=""]
+    "d58d1" -> "2e83a" ["arrowhead"="normal","label"=""]
+    "6c64d" -> "2e83a" ["arrowhead"="normal","label"=""]
+    "fb0f0" -> "b59fd" ["arrowhead"="normal","label"=""]
+    "6c2be" -> "b59fd" ["arrowhead"="normal","label"=""]
+    "57fd4" -> "dae83" ["arrowhead"="normal","label"=""]
+    "a9bc3" -> "dae83" ["arrowhead"="normal","label"=""]
+    "x₀" -> "b11ba" ["arrowhead"="normal","label"=""]
+    "x₀" -> "b2454" ["arrowhead"="normal","label"=""]
+    "θ₀" -> "b11ba" ["arrowhead"="normal","label"=""]
+    "θ₀" -> "b2454" ["arrowhead"="normal","label"=""]
+    "θ₀" -> "39644" ["arrowhead"="normal","label"=""]
+    "θ₀" -> "d58d1" ["arrowhead"="normal","label"=""]
+    "θ₀" -> "fb0f0" ["arrowhead"="normal","label"=""]
+    "θ₀" -> "57fd4" ["arrowhead"="normal","label"=""]
+    "x₂" -> "3bb89" ["arrowhead"="normal","label"=""]
+    "x₂" -> "7bed4" ["arrowhead"="normal","label"=""]
+    "θ₁" -> "3bb89" ["arrowhead"="normal","label"=""]
+    "θ₁" -> "7bed4" ["arrowhead"="normal","label"=""]
+    "θ₁" -> "12c32" ["arrowhead"="normal","label"=""]
+    "θ₁" -> "6c64d" ["arrowhead"="normal","label"=""]
+    "θ₁" -> "6c2be" ["arrowhead"="normal","label"=""]
+    "θ₁" -> "a9bc3" ["arrowhead"="normal","label"=""]
+    "x₂" -> "39644" ["arrowhead"="normal","label"=""]
+    "x₂" -> "d58d1" ["arrowhead"="normal","label"=""]
+    "x₄" -> "12c32" ["arrowhead"="normal","label"=""]
+    "x₄" -> "6c64d" ["arrowhead"="normal","label"=""]
+    "x₁" -> "fb0f0" ["arrowhead"="normal","label"=""]
+    "x₁" -> "57fd4" ["arrowhead"="normal","label"=""]
+    "x₃" -> "6c2be" ["arrowhead"="normal","label"=""]
+    "x₃" -> "a9bc3" ["arrowhead"="normal","label"=""]
+    } \end{adjustbox} &
+            \begin{adjustbox}{minipage={.18\textwidth}, height=0.11\textwidth, margin*=0cm -0.1cm 0cm 0cm}
+            \includegraphics[scale=0.15]{../clipart/adj_prog.png}
+            \end{adjustbox}
+            \\ \hline
+        \end{tabular}
+    \end{table}
+    \egroup
 %    \begin{enumerate}
 %        \item \url{https://people.cs.kuleuven.be/~luc.deraedt/Francqui4ab.pdf#page=71}
 %        \item \url{http://www.mit.edu/~kepner/GraphBLAS/GraphBLAS-Math-release.pdf#page=11}
@@ -941,7 +1101,7 @@
 
     \pagebreak \section{Acknowledgements}
 
-    The author wishes to thank his advisor Jin Guo, Xuejie Si and Fuyuan Lyu, for providing several helpful comments on this proposal and Torsten Scholak, David Yu-Tung Hui, Disha Shrivastava, Jordi Armengol-Estap\'e, Matt Rice, Dave Keenan, and John Tromp for various miscellaneous feedback.
+    The author wishes to thank his advisor Jin Guo, Xujie Si and Fuyuan Lyu, for providing several helpful comments on this proposal and Torsten Scholak, David Yu-Tung Hui, Disha Shrivastava, Jordi Armengol-Estap\'e, Matt Rice, Dave Keenan, and John Tromp for various miscellaneous feedback.
 
     \bibliography{exam_proposal}
     \bibliographystyle{plain}
