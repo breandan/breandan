@@ -24,6 +24,7 @@
 \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
 }
 
+\usepackage{arydshln}
 \usepackage{adjustbox}
 \usepackage{enumerate}
 \usepackage{enumitem}
@@ -40,6 +41,7 @@
 
 \usepackage{tikz-3dplot}
 \usetikzlibrary{3d}
+\usetikzlibrary{calligraphy}
 \newif\ifshowcellnumber
 \showcellnumbertrue
 
@@ -171,18 +173,18 @@
     \def\arraystretch{1.2}
     \begin{table}[H]
         \centering
-        \begin{tabular}{c|l|l|}
-            \cline{2-3} & \textbf{Deterministic} & \textbf{Probabilistic} \\ \hline
-            \multicolumn{1}{|c|}{\textbf{Exact}} & \begin{tabular}[c]{@{}l@{}}
+        \begin{tabular}{c|l:l}
+            & \textbf{Deterministic} & \textbf{Probabilistic} \\ \hline
+            \multicolumn{1}{c|}{\textbf{Exact}} & \begin{tabular}[c]{@{}l@{}}
                                                        Type Checking\\ Model Checking
             \end{tabular} & \begin{tabular}[c]{@{}l@{}}
                                 Variable Elimination\\Probabilistic Circuits
-            \end{tabular} \\ \hline
-            \multicolumn{1}{|c|}{\textbf{Approximate}} & \begin{tabular}[c]{@{}l@{}}
+            \end{tabular} \\\hdashline
+            \multicolumn{1}{c|}{\textbf{Approximate}} & \begin{tabular}[c]{@{}l@{}}
                                                              Software Testing\\Dynamic Analysis
             \end{tabular} & \begin{tabular}[c]{@{}l@{}}
                                 Monte Carlo Methods\\Bayesian Networks
-            \end{tabular} \\ \hline
+            \end{tabular}
         \end{tabular}
     \end{table}
     \egroup
@@ -791,10 +793,11 @@
     \def\arraystretch{1.2}
     \begin{table}[H]
         \centering
-        \begin{tabular}{|c|c|c|c|}
-            \hline \textbf{Formula} & \textbf{Program} & \textbf{Dataflow} & \textbf{Matrix} \\ \hline
-            \begin{tabular}[c]{@{}l@{}} $\hat y = θx + b$\\ $l = ||\hat y - y||_2$\end{tabular}
-              &
+        \begin{tabular}{lcc}
+            \textbf{Program} & \textbf{Dataflow} & \textbf{Matrix} \\
+%            \begin{tabular}[c]{@{}l@{}} $\hat y = θx + b$\\ $l = ||\hat y - y||_2$\end{tabular}
+%              &
+\begin{adjustbox}{minipage={.25\textwidth}, height=0.14\textwidth, margin*=-0.8cm 0cm 0cm 0.1cm}
 \begin{lstlisting}[basicstyle=\ttfamily\tiny]
 sum = 0
 l = [0, 0, 0, 0]
@@ -808,7 +811,8 @@ for i in range(0, 4):
   sum += l[i]
 l = sqrt(sum)
 \end{lstlisting}
-    & \begin{adjustbox}{minipage={.22\textwidth}, height=0.14\textwidth, margin*=0cm -0.3cm 0cm 0.1cm}
+\end{adjustbox}
+    & \begin{adjustbox}{minipage={.25\textwidth}, height=0.14\textwidth, margin*=0cm 0cm 0cm 0.1cm}
     \digraph[scale=0.1]{prograph}{
     graph ["concentrate"="true","rankdir"="LR","bgcolor"="transparent","margin"="0.0","compound"="true","nslimit"="20"]
     "eeba8" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
@@ -933,10 +937,9 @@ l = sqrt(sum)
     "x₃" -> "6c2be" ["arrowhead"="normal","label"=""]
     "x₃" -> "a9bc3" ["arrowhead"="normal","label"=""]
     } \end{adjustbox} &
-            \begin{adjustbox}{minipage={.18\textwidth}, height=0.11\textwidth, margin*=0cm -0.1cm 0cm 0cm}
+            \begin{adjustbox}{minipage={.15\textwidth}, height=0.14\textwidth, margin*=-0.2cm 0cm 0cm 0.5cm}
             \includegraphics[scale=0.15]{../clipart/adj_prog.png}
             \end{adjustbox}
-            \\ \hline
         \end{tabular}
     \end{table}
     \egroup
@@ -1050,9 +1053,9 @@ l = sqrt(sum)
 
     \subsection{Knowledge is a graph}\label{subsec:kgs}
 
-    Abduction is the process of knowledge formation: recognizing common \textit{patterns} or \textit{motifs} in raw data, forming discrete \textit{categories} or \textit{types} of objects which share those attributes, and adding links which represent abstract relations between them, such as composition, causation, correlation, or subsumption. The key idea is moving from the space of unstructured data, to a structured domain containing abstract concepts and their relations. This domain is a graph.
+    Abduction is the process of knowledge formation: recognizing \textit{patterns} or \textit{motifs} in raw data, forming discrete \textit{categories} or \textit{types} of objects which share those attributes, and adding links which represent abstract relations between them, such as composition, causation, or subsumption. The key idea is moving from the space of unstructured data, to a structured domain containing abstract concepts and their relations. This domain is a graph.
 
-    Knowledge graphs~\citep{hogan2020knowledge} are \textit{multi-relational graphs}, or \textit{hypergraphs} whose edges possess a type. Two entities can be related by multiple types, and each type can relate many pairs of entities. This object can be represented by a rank-3 boolean tensor, $\mathbb{B}^3$, also called a \textit{data cube}, although it is technically a rectangular prism depending on the number of types, $|\mathcal{T}|$. We depict this structure below:
+    Knowledge graphs~\citep{hogan2020knowledge} are \textit{multi-relational graphs}, or \textit{hypergraphs} whose edges are typed. Two entities can be related by multiple types, and each type can relate many pairs of entities. This object can be represented by a rank-3 boolean tensor, $\mathbb{B}^3$, which we call a \textit{type tensor}, also known as a \textit{data cube}, although technically a rectangular prism depending on the number of types, $|\mathcal{T}|$. We depict this structure below:
 
     \definecolor{R}{RGB}{202,65,55}
     \definecolor{G}{RGB}{151,216,56}
@@ -1088,7 +1091,6 @@ l = sqrt(sum)
     {W}{W}{W}
     {W}{X}{W}
     \BuildArray
-%\def\myarray{{"X","X","B","X","G","X","R","R","X","X","X","X","G","X","B","B","X","X","G","B","R","X","R","B","X","X","X"}}
     \pgfmathsetmacro\radius{0.1}
     \tdplotsetmaincoords{55}{135}
 
@@ -1100,8 +1102,9 @@ l = sqrt(sum)
     \begin{table}[H]
         \centering
         \begin{tabular}{cc}
-            \begin{adjustbox}{minipage={.5\textwidth}}
-            \hspace{-30pt}\digraph[scale=0.5]{abcext0}{
+            \textbf{Typed Graph} & \textbf{Data Cube} \\
+            \begin{adjustbox}{minipage={.49\textwidth}, margin*=-0.5cm 0cm -0.5cm 0cm}
+            \digraph[scale=0.5]{abcext0}{
             node[ fontname="CMU Classical Serif" fontsize=20 ];
             edge[ fontname="CMU Classical Serif" fontsize=18 ];
             rankdir=LR;
@@ -1133,7 +1136,7 @@ l = sqrt(sum)
             d -> f [label="𝓨"]
             a -> d [label="𝓨"]
             c -> d [label="𝓨"]
-            } \end{adjustbox} & \begin{adjustbox}{minipage={.5\textwidth}}
+            } \end{adjustbox} & \begin{adjustbox}{minipage={.48\textwidth}}
             \begin{tikzpicture}
         \clip (-3,-2.5) rectangle (3,2.5);
         \begin{scope}[tdplot_main_coords]
@@ -1162,6 +1165,13 @@ l = sqrt(sum)
             \fi
             }
             }
+
+            \draw [decorate,decoration={calligraphic brace,amplitude=10pt,mirror},yshift=0pt, line width=1.25pt]
+            (3,0) -- (3,3) node [black,midway,xshift=-8pt, yshift=-14pt] {\footnotesize $\mathcal{O}$};
+            \draw [decorate,decoration={calligraphic brace,amplitude=10pt},yshift=0pt, line width=1.25pt]
+            (3,0) -- (0,-3) node [black,midway,xshift=-16pt, yshift=0pt] {\footnotesize $\mathcal{O}$};
+            \draw [decorate,decoration={calligraphic brace,amplitude=10pt},yshift=0pt, line width=1.25pt]
+            (0,-3) -- (-3,-3) node [black,midway,xshift=-8pt, yshift=14pt] {\footnotesize $\mathcal{T}$};
         \end{scope}
             \end{tikzpicture}
             \end{adjustbox}
@@ -1169,9 +1179,7 @@ l = sqrt(sum)
     \end{table}
     \egroup
 
-    Indexed, by an injective map $\mathcal{O} \times \mathcal{O} \times \mathcal{T} → \mathbb{N}^3$, vertical slices of this cube produce an ordinary graph, and horizontal and depthwise slices produce a set of covariant and contravariant type signatures. Type inference this system consists of a sequence of tensor contractions.
-
-    We can index an entity based on its type for knowledge retrieval, and use types to reason about compound queries, e.g. ``Which company has a direct flight from a port city to a capital city?''
+    Indexed by an injective map $\mathcal{O} \times \mathcal{O} \times \mathcal{T} → \mathbb{N}^3$, vertical slices of this cube produce an ordinary graph, and horizontal and depthwise slices produce a set of covariant and contravariant type signatures. Type inference this system consists of a sequence of tensor contractions.
 
     Our work is primarily interested in procedural knowledge, a knowledge graph whose topology describes how to structure computation to achieve some desired task. The nodes in this graph represent available \textit{functions} or \textit{routines} in a programming language and the edges describes composition of those functions.
 
