@@ -38,6 +38,11 @@
 \usepackage{float}
 \usepackage{xcolor}
 
+\usepackage{tikz-3dplot}
+\usetikzlibrary{3d}
+\newif\ifshowcellnumber
+\showcellnumbertrue
+
 \usepackage{algpseudocode}
 \usepackage{algorithmicx}
 \usepackage{sourcecodepro}
@@ -788,7 +793,7 @@
         \centering
         \begin{tabular}{|c|c|c|c|}
             \hline \textbf{Formula} & \textbf{Program} & \textbf{Dataflow} & \textbf{Matrix} \\ \hline
-            \begin{tabular}[c]{@{}l@{}} $\hat y = mx + b$\\ $l = ||\hat y - y||_2$\end{tabular}
+            \begin{tabular}[c]{@{}l@{}} $\hat y = θx + b$\\ $l = ||\hat y - y||_2$\end{tabular}
               &
 \begin{lstlisting}[basicstyle=\ttfamily\tiny]
 sum = 0
@@ -796,7 +801,7 @@ l = [0, 0, 0, 0]
 for i in range(0, 4):
   l[i] += θ[i] * x[i]
 for i in range(0, 4):
-  l[i] -= y[i] + b
+  l[i] -= y[i] - b
 for i in range(0, 4):
   l[i] *= l[i]
 for i in range(0, 4):
@@ -806,55 +811,55 @@ l = sqrt(sum)
     & \begin{adjustbox}{minipage={.22\textwidth}, height=0.14\textwidth, margin*=0cm -0.3cm 0cm 0.1cm}
     \digraph[scale=0.1]{prograph}{
     graph ["concentrate"="true","rankdir"="LR","bgcolor"="transparent","margin"="0.0","compound"="true","nslimit"="20"]
-    "eeba8" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "a8416" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "4500f" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="pow"]
-    "a67f9" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "0.5" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="0.5"]
-    "f14a3" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "9c49d" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "59c48" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "980bd" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "8f532" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "1a609" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "e58c4" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "23f5b" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "d829b" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "y₀" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₀"]
-    "2783d" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "8bd47" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "y₂" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₂"]
-    "517e6" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "8caa0" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "y₁" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₁"]
-    "7da0d" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "b12cb" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "b" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="b"]
-    "f8941" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "3eecd" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "2e83a" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "b59fd" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "dae83" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "b11ba" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "3bb89" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "b2454" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "7bed4" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "39644" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "12c32" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "d58d1" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "6c64d" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "fb0f0" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "6c2be" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "57fd4" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "a9bc3" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "x₀" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₀"]
-    "θ₀" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="θ₀"]
-    "x₂" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₂"]
-    "θ₁" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="θ₁"]
-    "x₂" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₂"]
-    "x₄" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₄"]
-    "x₁" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₁"]
-    "x₃" ["fontcolor"="black","fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₃"]
+    "eeba8" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "a8416" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "4500f" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="pow"]
+    "a67f9" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "0.5" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="0.5"]
+    "f14a3" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "9c49d" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "59c48" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "980bd" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "8f532" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "1a609" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "e58c4" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "23f5b" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "d829b" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "y₀" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₀"]
+    "2783d" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "8bd47" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "y₂" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₂"]
+    "517e6" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "8caa0" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "y₁" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₁"]
+    "7da0d" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "b12cb" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "b" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="b"]
+    "f8941" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "3eecd" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "2e83a" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "b59fd" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "dae83" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
+    "b11ba" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "3bb89" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "b2454" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "7bed4" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "39644" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "12c32" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "d58d1" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "6c64d" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "fb0f0" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "6c2be" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "57fd4" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "a9bc3" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
+    "x₀" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₀"]
+    "θ₀" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="θ₀"]
+    "x₂" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₂"]
+    "θ₁" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="θ₁"]
+    "x₂" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₂"]
+    "x₄" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₄"]
+    "x₁" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₁"]
+    "x₃" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₃"]
     "eeba8" -> "a8416" ["arrowhead"="normal","label"=""]
     "a8416" -> "4500f" ["arrowhead"="normal","label"=""]
     "a67f9" -> "a8416" ["arrowhead"="normal","label"=""]
@@ -944,7 +949,7 @@ l = sqrt(sum)
 
     Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are a framework for probabilistic inference on distributions whose conditional dependence structure may be expressed as a graph, whose edges capture conditional independence relations between RVs. One type of PGM is a directed graphical model (DGM).
 
-    \tikzset{latent/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt}, every node/.append style={draw,circle, inner sep=1pt}}
+    \tikzset{latent/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt, draw,circle, inner sep=1pt}, obs/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt, draw,circle, inner sep=1pt}}
     \makeatletter
     \newcommand\ccirc[1]{%
     \mathpalette\@ccirc{#1}%
@@ -1045,7 +1050,130 @@ l = sqrt(sum)
 
     \subsection{Knowledge is a graph}\label{subsec:kgs}
 
-    Knowledge graphs~\citep{hogan2020knowledge} are multi-relational graphs whose nodes and edges possess a type. Two entities can be related by multiple types, and each type can relate many pairs of entities. We can index an entity based on its type for knowledge retrieval, and use types to reason about compound queries, e.g. ``Which company has a direct flight from a port city to a capital city?''
+    Abduction is the process of knowledge formation: recognizing common \textit{patterns} or \textit{motifs} in raw data, forming discrete \textit{categories} or \textit{types} of objects which share those attributes, and adding links which represent abstract relations between them, such as composition, causation, correlation, or subsumption. The key idea is moving from the space of unstructured data, to a structured domain containing abstract concepts and their relations. This domain is a graph.
+
+    Knowledge graphs~\citep{hogan2020knowledge} are \textit{multi-relational graphs}, or \textit{hypergraphs} whose edges possess a type. Two entities can be related by multiple types, and each type can relate many pairs of entities. This object can be represented by a rank-3 boolean tensor, $\mathbb{B}^3$, also called a \textit{data cube}, although it is technically a rectangular prism depending on the number of types, $|\mathcal{T}|$. We depict this structure below:
+
+    \definecolor{R}{RGB}{202,65,55}
+    \definecolor{G}{RGB}{151,216,56}
+    \definecolor{B}{RGB}{51,72,237}
+    \definecolor{W}{RGB}{255,255,255}
+    \definecolor{X}{RGB}{65,65,65}
+
+    \newcommand{\TikZRubikFaceLeft}[9]{\def\myarrayL{#1,#2,#3,#4,#5,#6,#7,#8,#9}}
+    \newcommand{\TikZRubikFaceRight}[9]{\def\myarrayR{#1,#2,#3,#4,#5,#6,#7,#8,#9}}
+    \newcommand{\TikZRubikFaceTop}[9]{\def\myarrayT{#1,#2,#3,#4,#5,#6,#7,#8,#9}}
+    \newcommand{\BuildArray}{\foreach \X [count=\Y] in \myarrayL%
+    {\ifnum\Y=1%
+    \xdef\myarray{"\X"}%
+    \else%
+    \xdef\myarray{\myarray,"\X"}%
+    \fi}%
+    \foreach \X in \myarrayR%
+    {\xdef\myarray{\myarray,"\X"}}%
+    \foreach \X in \myarrayT%
+    {\xdef\myarray{\myarray,"\X"}}%
+    \xdef\myarray{{\myarray}}%
+    }
+    \TikZRubikFaceLeft
+    {X}{W}{W}
+    {W}{X}{X}
+    {X}{W}{W}
+    \TikZRubikFaceRight
+    {W}{X}{W}
+    {X}{W}{X}
+    {W}{X}{W}
+    \TikZRubikFaceTop
+    {X}{W}{X}
+    {W}{W}{W}
+    {W}{X}{W}
+    \BuildArray
+%\def\myarray{{"X","X","B","X","G","X","R","R","X","X","X","X","G","X","B","B","X","X","G","B","R","X","R","B","X","X","X"}}
+    \pgfmathsetmacro\radius{0.1}
+    \tdplotsetmaincoords{55}{135}
+
+    \showcellnumberfalse
+
+
+    \bgroup
+    \def\arraystretch{1.2}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{cc}
+            \begin{adjustbox}{minipage={.5\textwidth}}
+            \hspace{-30pt}\digraph[scale=0.5]{abcext0}{
+            node[ fontname="CMU Classical Serif" fontsize=20 ];
+            edge[ fontname="CMU Classical Serif" fontsize=18 ];
+            rankdir=LR;
+            len=3;
+            node [shape=Mrecord];
+
+            f [ label="g"; ]
+            a [ label="a"; ]
+            c [ label="c"; ]
+            d [ label="·"; ]
+
+%    a -> a [label="Σ₀"]
+            f -> d [label="Ω"]
+            d -> a [label="Ω"]
+            d -> c [label="Ω"]
+            }\hspace{-20pt}\digraph[scale=0.5]{abcext1}{
+            node[ fontname="CMU Classical Serif" fontsize=20 ];
+            edge[ fontname="CMU Classical Serif" fontsize=18 ];
+            rankdir=LR;
+            len=3;
+            node [shape=Mrecord];
+
+            f [ label="g"; ]
+            a [ label="a"; ]
+            c [ label="c"; ]
+            d [ label="·"; ]
+
+%    a -> a [label="Σ₀"]
+            d -> f [label="𝓨"]
+            a -> d [label="𝓨"]
+            c -> d [label="𝓨"]
+            } \end{adjustbox} & \begin{adjustbox}{minipage={.5\textwidth}}
+            \begin{tikzpicture}
+        \clip (-3,-2.5) rectangle (3,2.5);
+        \begin{scope}[tdplot_main_coords]
+            \filldraw [canvas is yz plane at x=1.5] (-1.5,-1.5) rectangle (1.5,1.5);
+            \filldraw [canvas is xz plane at y=1.5] (-1.5,-1.5) rectangle (1.5,1.5);
+            \filldraw [canvas is yx plane at z=1.5] (-1.5,-1.5) rectangle (1.5,1.5);
+            \foreach \X [count=\XX starting from 0] in {-1.5,-0.5,0.5}{
+            \foreach \Y [count=\YY starting from 0] in {-1.5,-0.5,0.5}{
+            \pgfmathtruncatemacro{\Z}{\XX+3*(2-\YY)}
+            \pgfmathsetmacro{\mycolor}{\myarray[\Z]}
+            \draw [thick,canvas is yz plane at x=1.5,shift={(\X,\Y)},fill=\mycolor] (0.5,0) -- ({1-\radius},0) arc (-90:0:\radius) -- (1,{1-\radius}) arc (0:90:\radius) -- (\radius,1) arc (90:180:\radius) -- (0,\radius) arc (180:270:\radius) -- cycle;
+            \ifshowcellnumber
+            \node[canvas is yz plane at x=1.5,shift={(\X+0.5,\Y+0.5)}] {\Z};
+            \fi
+            \pgfmathtruncatemacro{\Z}{2-\XX+3*(2-\YY)+9}
+            \pgfmathsetmacro{\mycolor}{\myarray[\Z]}
+            \draw [thick,canvas is xz plane at y=1.5,shift={(\X,\Y)},fill=\mycolor] (0.5,0) -- ({1-\radius},0) arc (-90:0:\radius) -- (1,{1-\radius}) arc (0:90:\radius) -- (\radius,1) arc (90:180:\radius) -- (0,\radius) arc (180:270:\radius) -- cycle;
+            \ifshowcellnumber
+            \node[canvas is xz plane at y=1.5,shift={(\X+0.5,\Y+0.5)},xscale=-1] {\Z};
+            \fi
+            \pgfmathtruncatemacro{\Z}{2-\YY+3*\XX+18}
+            \pgfmathsetmacro{\mycolor}{\myarray[\Z]}
+            \draw [thick,canvas is yx plane at z=1.5,shift={(\X,\Y)},fill=\mycolor] (0.5,0) -- ({1-\radius},0) arc (-90:0:\radius) -- (1,{1-\radius}) arc (0:90:\radius) -- (\radius,1) arc (90:180:\radius) -- (0,\radius) arc (180:270:\radius) -- cycle;
+            \ifshowcellnumber
+            \node[canvas is yx plane at z=1.5,shift={(\X+0.5,\Y+0.5)},xscale=-1,rotate=-90] {\Z};
+            \fi
+            }
+            }
+        \end{scope}
+            \end{tikzpicture}
+            \end{adjustbox}
+        \end{tabular}
+    \end{table}
+    \egroup
+
+    Indexed, by an injective map $\mathcal{O} \times \mathcal{O} \times \mathcal{T} → \mathbb{N}^3$, vertical slices of this cube produce an ordinary graph, and horizontal and depthwise slices produce a set of covariant and contravariant type signatures. Type inference this system consists of a sequence of tensor contractions.
+
+    We can index an entity based on its type for knowledge retrieval, and use types to reason about compound queries, e.g. ``Which company has a direct flight from a port city to a capital city?''
+
+    Our work is primarily interested in procedural knowledge, a knowledge graph whose topology describes how to structure computation to achieve some desired task. The nodes in this graph represent available \textit{functions} or \textit{routines} in a programming language and the edges describes composition of those functions.
 
     \subsection{Message passing algorithms}
 
