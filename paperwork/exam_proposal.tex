@@ -271,11 +271,10 @@
     \noindent We can visualize $G$ as a directed graph, omitting all loops. Notice how each path converges to the same term, a property known as $\textit{strong confluence}$.
 
     \hspace{12pt}\digraph[scale=0.5]{abcint}{
-    node[ fontname="CMU Classical Serif" fontsize=20 ];
+    node[ fontname="CMU Classical Serif" fontsize=20 shape=Mrecord ];
     edge[ fontname="CMU Classical Serif" fontsize=18 ];
     rankdir=LR;
     len=3;
-    node [shape=Mrecord];
 
     a [ label="abc"; ]
     b [ label="bac"; ]
@@ -363,11 +362,10 @@
     \noindent We can view the above process as acting on a dataflow graph, where \textsc{Inv} backpropagates $Ω$, and \textsc{Sub} returns concrete values $\mathcal{Y}$, here depicted on $g$:
 
     \hspace{-30pt}\digraph[scale=0.5]{abcext0}{
-    node[ fontname="CMU Classical Serif" fontsize=20 ];
+    node[ fontname="CMU Classical Serif" fontsize=20 shape=Mrecord ];
     edge[ fontname="CMU Classical Serif" fontsize=18 ];
     rankdir=LR;
     len=3;
-    node [shape=Mrecord];
 
     f [ label="g"; ]
     a [ label="a"; ]
@@ -379,11 +377,10 @@
     d -> a [label="Ω"]
     d -> c [label="Ω"]
     }\hspace{-20pt}\digraph[scale=0.5]{abcext1}{
-    node[ fontname="CMU Classical Serif" fontsize=20 ];
+    node[ fontname="CMU Classical Serif" fontsize=20 shape=Mrecord ];
     edge[ fontname="CMU Classical Serif" fontsize=18 ];
     rankdir=LR;
     len=3;
-    node [shape=Mrecord];
 
     f [ label="g"; ]
     a [ label="a"; ]
@@ -814,128 +811,131 @@ l = sqrt(sum)
 \end{adjustbox}
     & \begin{adjustbox}{minipage={.25\textwidth}, height=0.14\textwidth, margin*=0cm 0cm 0cm 0.1cm}
     \digraph[scale=0.1]{prograph}{
+    node[ fontname="Helvetica" fontsize=20 shape=Mrecord ];
+    edge[ fontname="Helvetica" fontsize=18 ];
+    
     graph ["concentrate"="true","rankdir"="LR","bgcolor"="transparent","margin"="0.0","compound"="true","nslimit"="20"]
-    "eeba8" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "a8416" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "4500f" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="pow"]
-    "a67f9" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "0.5" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="0.5"]
-    "f14a3" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "9c49d" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "59c48" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "980bd" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "8f532" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "1a609" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "e58c4" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "23f5b" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "d829b" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "y₀" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₀"]
-    "2783d" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "8bd47" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "y₂" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₂"]
-    "517e6" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "8caa0" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "y₁" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="y₁"]
-    "7da0d" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "b12cb" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "b" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="b"]
-    "f8941" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "3eecd" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "2e83a" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "b59fd" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "dae83" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="+"]
-    "b11ba" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "3bb89" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "b2454" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "7bed4" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "39644" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "12c32" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "d58d1" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "6c64d" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "fb0f0" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "6c2be" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "57fd4" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "a9bc3" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="*"]
-    "x₀" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₀"]
-    "θ₀" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="θ₀"]
-    "x₂" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₂"]
-    "θ₁" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="θ₁"]
-    "x₂" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₂"]
-    "x₄" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₄"]
-    "x₁" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₁"]
-    "x₃" ["fontname"="Helvetica","fontsize"="20","shape"="Mrecord","label"="x₃"]
-    "eeba8" -> "a8416" ["arrowhead"="normal","label"=""]
-    "a8416" -> "4500f" ["arrowhead"="normal","label"=""]
-    "a67f9" -> "a8416" ["arrowhead"="normal","label"=""]
-    "0.5" -> "4500f" ["arrowhead"="normal","label"=""]
-    "f14a3" -> "eeba8" ["arrowhead"="normal","label"=""]
-    "9c49d" -> "eeba8" ["arrowhead"="normal","label"=""]
-    "59c48" -> "a67f9" ["arrowhead"="normal","label"=""]
-    "980bd" -> "a67f9" ["arrowhead"="normal","label"=""]
-    "8f532" -> "f14a3" ["arrowhead"="normal","label"=""]
-    "1a609" -> "f14a3" ["arrowhead"="normal","label"=""]
-    "e58c4" -> "9c49d" ["arrowhead"="normal","label"=""]
-    "23f5b" -> "9c49d" ["arrowhead"="normal","label"=""]
-    "d829b" -> "59c48" ["arrowhead"="normal","label"=""]
-    "y₀" -> "59c48" ["arrowhead"="normal","label"=""]
-    "y₀" -> "980bd" ["arrowhead"="normal","label"=""]
-    "2783d" -> "980bd" ["arrowhead"="normal","label"=""]
-    "8bd47" -> "8f532" ["arrowhead"="normal","label"=""]
-    "y₂" -> "8f532" ["arrowhead"="normal","label"=""]
-    "y₂" -> "1a609" ["arrowhead"="normal","label"=""]
-    "517e6" -> "1a609" ["arrowhead"="normal","label"=""]
-    "8caa0" -> "e58c4" ["arrowhead"="normal","label"=""]
-    "y₁" -> "e58c4" ["arrowhead"="normal","label"=""]
-    "y₁" -> "23f5b" ["arrowhead"="normal","label"=""]
-    "7da0d" -> "23f5b" ["arrowhead"="normal","label"=""]
-    "b12cb" -> "d829b" ["arrowhead"="normal","label"=""]
-    "b" -> "d829b" ["arrowhead"="normal","label"=""]
-    "b" -> "2783d" ["arrowhead"="normal","label"=""]
-    "b" -> "8bd47" ["arrowhead"="normal","label"=""]
-    "b" -> "517e6" ["arrowhead"="normal","label"=""]
-    "b" -> "8caa0" ["arrowhead"="normal","label"=""]
-    "b" -> "7da0d" ["arrowhead"="normal","label"=""]
-    "f8941" -> "2783d" ["arrowhead"="normal","label"=""]
-    "3eecd" -> "8bd47" ["arrowhead"="normal","label"=""]
-    "2e83a" -> "517e6" ["arrowhead"="normal","label"=""]
-    "b59fd" -> "8caa0" ["arrowhead"="normal","label"=""]
-    "dae83" -> "7da0d" ["arrowhead"="normal","label"=""]
-    "b11ba" -> "b12cb" ["arrowhead"="normal","label"=""]
-    "3bb89" -> "b12cb" ["arrowhead"="normal","label"=""]
-    "b2454" -> "f8941" ["arrowhead"="normal","label"=""]
-    "7bed4" -> "f8941" ["arrowhead"="normal","label"=""]
-    "39644" -> "3eecd" ["arrowhead"="normal","label"=""]
-    "12c32" -> "3eecd" ["arrowhead"="normal","label"=""]
-    "d58d1" -> "2e83a" ["arrowhead"="normal","label"=""]
-    "6c64d" -> "2e83a" ["arrowhead"="normal","label"=""]
-    "fb0f0" -> "b59fd" ["arrowhead"="normal","label"=""]
-    "6c2be" -> "b59fd" ["arrowhead"="normal","label"=""]
-    "57fd4" -> "dae83" ["arrowhead"="normal","label"=""]
-    "a9bc3" -> "dae83" ["arrowhead"="normal","label"=""]
-    "x₀" -> "b11ba" ["arrowhead"="normal","label"=""]
-    "x₀" -> "b2454" ["arrowhead"="normal","label"=""]
-    "θ₀" -> "b11ba" ["arrowhead"="normal","label"=""]
-    "θ₀" -> "b2454" ["arrowhead"="normal","label"=""]
-    "θ₀" -> "39644" ["arrowhead"="normal","label"=""]
-    "θ₀" -> "d58d1" ["arrowhead"="normal","label"=""]
-    "θ₀" -> "fb0f0" ["arrowhead"="normal","label"=""]
-    "θ₀" -> "57fd4" ["arrowhead"="normal","label"=""]
-    "x₂" -> "3bb89" ["arrowhead"="normal","label"=""]
-    "x₂" -> "7bed4" ["arrowhead"="normal","label"=""]
-    "θ₁" -> "3bb89" ["arrowhead"="normal","label"=""]
-    "θ₁" -> "7bed4" ["arrowhead"="normal","label"=""]
-    "θ₁" -> "12c32" ["arrowhead"="normal","label"=""]
-    "θ₁" -> "6c64d" ["arrowhead"="normal","label"=""]
-    "θ₁" -> "6c2be" ["arrowhead"="normal","label"=""]
-    "θ₁" -> "a9bc3" ["arrowhead"="normal","label"=""]
-    "x₂" -> "39644" ["arrowhead"="normal","label"=""]
-    "x₂" -> "d58d1" ["arrowhead"="normal","label"=""]
-    "x₄" -> "12c32" ["arrowhead"="normal","label"=""]
-    "x₄" -> "6c64d" ["arrowhead"="normal","label"=""]
-    "x₁" -> "fb0f0" ["arrowhead"="normal","label"=""]
-    "x₁" -> "57fd4" ["arrowhead"="normal","label"=""]
-    "x₃" -> "6c2be" ["arrowhead"="normal","label"=""]
-    "x₃" -> "a9bc3" ["arrowhead"="normal","label"=""]
+    "eeba8" ["label"="+"]
+    "a8416" ["label"="+"]
+    "4500f" ["label"="pow"]
+    "a67f9" ["label"="*"]
+    "0.5" ["label"="0.5"]
+    "f14a3" ["label"="*"]
+    "9c49d" ["label"="*"]
+    "59c48" ["label"="+"]
+    "980bd" ["label"="+"]
+    "8f532" ["label"="+"]
+    "1a609" ["label"="+"]
+    "e58c4" ["label"="+"]
+    "23f5b" ["label"="+"]
+    "d829b" ["label"="+"]
+    "y₀" ["label"="y₀"]
+    "2783d" ["label"="+"]
+    "8bd47" ["label"="+"]
+    "y₂" ["label"="y₂"]
+    "517e6" ["label"="+"]
+    "8caa0" ["label"="+"]
+    "y₁" ["label"="y₁"]
+    "7da0d" ["label"="+"]
+    "b12cb" ["label"="+"]
+    "b" ["label"="b"]
+    "f8941" ["label"="+"]
+    "3eecd" ["label"="+"]
+    "2e83a" ["label"="+"]
+    "b59fd" ["label"="+"]
+    "dae83" ["label"="+"]
+    "b11ba" ["label"="*"]
+    "3bb89" ["label"="*"]
+    "b2454" ["label"="*"]
+    "7bed4" ["label"="*"]
+    "39644" ["label"="*"]
+    "12c32" ["label"="*"]
+    "d58d1" ["label"="*"]
+    "6c64d" ["label"="*"]
+    "fb0f0" ["label"="*"]
+    "6c2be" ["label"="*"]
+    "57fd4" ["label"="*"]
+    "a9bc3" ["label"="*"]
+    "x₀" ["label"="x₀"]
+    "θ₀" ["label"="θ₀"]
+    "x₂" ["label"="x₂"]
+    "θ₁" ["label"="θ₁"]
+    "x₂" ["label"="x₂"]
+    "x₄" ["label"="x₄"]
+    "x₁" ["label"="x₁"]
+    "x₃" ["label"="x₃"]
+    "eeba8" -> "a8416"
+    "a8416" -> "4500f"
+    "a67f9" -> "a8416"
+    "0.5" -> "4500f"
+    "f14a3" -> "eeba8"
+    "9c49d" -> "eeba8"
+    "59c48" -> "a67f9"
+    "980bd" -> "a67f9"
+    "8f532" -> "f14a3"
+    "1a609" -> "f14a3"
+    "e58c4" -> "9c49d"
+    "23f5b" -> "9c49d"
+    "d829b" -> "59c48"
+    "y₀" -> "59c48"
+    "y₀" -> "980bd"
+    "2783d" -> "980bd"
+    "8bd47" -> "8f532"
+    "y₂" -> "8f532"
+    "y₂" -> "1a609"
+    "517e6" -> "1a609"
+    "8caa0" -> "e58c4"
+    "y₁" -> "e58c4"
+    "y₁" -> "23f5b"
+    "7da0d" -> "23f5b"
+    "b12cb" -> "d829b"
+    "b" -> "d829b"
+    "b" -> "2783d"
+    "b" -> "8bd47"
+    "b" -> "517e6"
+    "b" -> "8caa0"
+    "b" -> "7da0d"
+    "f8941" -> "2783d"
+    "3eecd" -> "8bd47"
+    "2e83a" -> "517e6"
+    "b59fd" -> "8caa0"
+    "dae83" -> "7da0d"
+    "b11ba" -> "b12cb"
+    "3bb89" -> "b12cb"
+    "b2454" -> "f8941"
+    "7bed4" -> "f8941"
+    "39644" -> "3eecd"
+    "12c32" -> "3eecd"
+    "d58d1" -> "2e83a"
+    "6c64d" -> "2e83a"
+    "fb0f0" -> "b59fd"
+    "6c2be" -> "b59fd"
+    "57fd4" -> "dae83"
+    "a9bc3" -> "dae83"
+    "x₀" -> "b11ba"
+    "x₀" -> "b2454"
+    "θ₀" -> "b11ba"
+    "θ₀" -> "b2454"
+    "θ₀" -> "39644"
+    "θ₀" -> "d58d1"
+    "θ₀" -> "fb0f0"
+    "θ₀" -> "57fd4"
+    "x₂" -> "3bb89"
+    "x₂" -> "7bed4"
+    "θ₁" -> "3bb89"
+    "θ₁" -> "7bed4"
+    "θ₁" -> "12c32"
+    "θ₁" -> "6c64d"
+    "θ₁" -> "6c2be"
+    "θ₁" -> "a9bc3"
+    "x₂" -> "39644"
+    "x₂" -> "d58d1"
+    "x₄" -> "12c32"
+    "x₄" -> "6c64d"
+    "x₁" -> "fb0f0"
+    "x₁" -> "57fd4"
+    "x₃" -> "6c2be"
+    "x₃" -> "a9bc3"
     } \end{adjustbox} &
             \begin{adjustbox}{minipage={.15\textwidth}, height=0.14\textwidth, margin*=-0.2cm 0cm 0cm 0.5cm}
             \includegraphics[scale=0.15]{../clipart/adj_prog.png}
@@ -1106,38 +1106,36 @@ l = sqrt(sum)
         \begin{tabular}{cc}
             \textbf{Typed Graph} & \textbf{Type Tensor} \\
             \begin{adjustbox}{minipage={.49\textwidth}, margin*=-0.5cm 0cm -0.5cm 0cm}
-            \digraph[scale=0.5]{abcext0}{
-            node[ fontname="CMU Classical Serif" fontsize=20 ];
+            \digraph[scale=0.5]{abcext3}{
+            node[ fontname="CMU Classical Serif" fontsize=20 shape=Mrecord ];
             edge[ fontname="CMU Classical Serif" fontsize=18 ];
             rankdir=LR;
             len=3;
-            node [shape=Mrecord];
 
             f [ label="g"; ]
             a [ label="a"; ]
             c [ label="c"; ]
-            d [ label="·"; ]
+            d [ label="‖·‖" fontname="CMU Sans Serif" ]
 
 %    a -> a [label="Σ₀"]
             f -> d [label="Ω"]
             d -> a [label="Ω"]
             d -> c [label="Ω"]
-            }\hspace{-20pt}\digraph[scale=0.5]{abcext1}{
-            node[ fontname="CMU Classical Serif" fontsize=20 ];
+            }\hspace{-20pt}\digraph[scale=0.5]{abcext4}{
+            node[ fontname="CMU Classical Serif" fontsize=20 shape=Mrecord ];
             edge[ fontname="CMU Classical Serif" fontsize=18 ];
             rankdir=LR;
             len=3;
-            node [shape=Mrecord];
 
             f [ label="g"; ]
             a [ label="a"; ]
             c [ label="c"; ]
-            d [ label="·"; ]
+            d [ label="‖·‖" fontname="CMU Sans Serif" ]
 
 %    a -> a [label="Σ₀"]
-            d -> f [label="𝓨"]
-            a -> d [label="𝓨"]
-            c -> d [label="𝓨"]
+            d -> f [label="ℤ"]
+            a -> d [label="ℤ⁴"]
+            c -> d [label="ℤ⁴"]
             } \end{adjustbox} & \begin{adjustbox}{minipage={.48\textwidth}}
             \begin{tikzpicture}
         \clip (-3,-2.5) rectangle (3,2.5);
@@ -1181,7 +1179,8 @@ l = sqrt(sum)
     \end{table}
     \egroup
 
-    A type tensor $C[\![\cdot]\!]$ indexed by a bijection $\mathcal{F} \times \mathcal{T} \times \mathcal{T} → \mathbb{N}^3$, can be thought of as a type-level function mapping a function and a type to a set of types. Given concrete types $T, S: \mathcal{T}$ and a one-hole context $C[\![\cdot]\!]: T → S$, program synthesis in our type system consists of a sequence of tensor contractions computing the congruence closure on $T$ to determine whether there exists a path from $T$ to $S$. While subtyping, parametric polymorphism and higher-kinded types are possible to encode by considering higher-rank tensors, here we devote our attention the first-order, or rank-3 case, where functions map a concrete type to a concrete type. The typing rules are given below.
+    \vspace{-20pt}A type tensor indexed by a bijection $\mathcal{F} \times \mathcal{T} \times \mathcal{T} → \mathbb{N}^3$ is a type-level function $C[\![\cdot]\!] \subseteq \mathcal{F} \times \mathcal{T} → \mathcal{T}$ mapping a function $C: \mathcal{F}$ and type $T: \mathcal{T}$ to a set of reachable types $T^* \subseteq \mathcal{T}$, the congruence closure $C[\![T^*]\!] \equiv T^*$ of $T$ under $C$. Given a concrete type $S: \mathcal{T}$ and a one-hole context, $C[\![\cdot]\!]: ? → S$, synthesis in our type system consists of a series of tensor contractions computing the preimage of $S$ under $C$, $C^{-1}[\![S]\!]$. While subtyping, parametric polymorphism and higher-kinded types are possible to encode by considering higher-rank tensors, here we devote our attention to the simply-typed, rank-3 setting, in which every function maps a concrete type to a concrete type closed under composition. The typing rules for this procedure are given below.
+
 
 
     \subsection{Message passing algorithms}
