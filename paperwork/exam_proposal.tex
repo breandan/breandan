@@ -90,7 +90,7 @@
 
     Historically, most knowledge was stored as natural language. A growing portion is now \textit{code}~\citep{allamanis2018survey}. The majority of code is procedural knowledge, written by a human and intended to operate a machine. Though it shares many statistical properties in common with natural language~\citep{hindle2012naturalness}, code has a well-defined grammar and unambiguous semantics~\citep{pierce2010software}. We can use these properties to precisely reason about operational or procedural correctness.
 
-    Prior work explored differentiable programming~\citep{considine2019programming}. Differentiability plays a key role in learning, but does not provide the necessary vocabulary to describe human knowledge. In order to capture human knowledge and begin to reason as humans do, programs must be able to express the concept of \textit{uncertainty}. In this work, we propose a set of tools and techniques for reasoning about uncertainty in the form of \textit{procedural knowledge}. We define procedural knowledge as a set of routines representing abstract data transformations and how to realize them on a physical computer.
+    Prior work explored differentiable programming~\citep{considine2019programming}. Differentiability plays a key role in learning, but does not provide the necessary vocabulary to describe human knowledge. In order to capture human knowledge and begin to reason as humans do, programs must be able to express the concept of \textit{uncertainty}. We propose a set of tools and techniques for reasoning about uncertainty in the form of \textit{procedural knowledge}. In our work, we define procedural knowledge as a graph whose topology represents how to structure computation in order to achieve some desired programming task.
 
     To reason about procedural knowledge, we must first define what it means for two procedures to be equal. Although equality is known to be undecidable in most languages, various equivalence tests and semi-decision procedures have been developed. For example, we could rewrite said procedures~\citep{baader1999term}, compare them in various contexts~\citep{felleisen1990expressive}, and simulate or execute them on various input data~\citep{chen2020metamorphic} so as to ascertain their exact relationship.
 
@@ -1053,13 +1053,15 @@ l = sqrt(sum)
 
     \subsection{Knowledge is a graph}\label{subsec:kgs}
 
-    Abduction is the process of knowledge formation: recognizing \textit{patterns} or \textit{motifs} in raw data, forming discrete \textit{categories} or \textit{types} of objects which share those attributes, and adding links which represent abstract relations between them, such as composition, causation, or subsumption. The key idea is moving from the space of unstructured data, to a structured domain containing abstract concepts and their relations. This domain is a graph.
+    \textit{Abduction} is the process of knowledge distillation: recognizing \textit{patterns} or \textit{motifs} in raw data, forming discrete \textit{categories} or \textit{types} of objects which share similar attributes, and adding edges representing abstract relations between types, such as composition, causation, or subsumption. The key idea is moving from the space of unstructured data to a structured domain containing abstract concepts and their relations. This domain is a graph.
 
-    Knowledge graphs~\citep{hogan2020knowledge} are \textit{multi-relational graphs}, or \textit{hypergraphs} whose edges are typed. Two entities can be related by multiple types, and each type can relate many pairs of entities. This object can be represented by a rank-3 boolean tensor, $\mathbb{B}^3$, which we call a \textit{type tensor}, also known as a \textit{data cube}, although technically a rectangular prism depending on the number of types, $|\mathcal{T}|$. We depict this structure below:
+    Knowledge graphs~\citep{hogan2020knowledge} are \textit{multi-relational graphs}, or \textit{hypergraphs} whose edges possess at least one type. Our work is primarily concerned with \textit{procedural knowledge}, or knowledge whose topology describes how to structure computation in order to achieve some desired task, although the technique we propose can also be applied to arbitrary directed, typed hypergraphs.
+
+    The vertices in our graph represent \textit{functions} in some typed programming language and the edges represent their input and output types. Functions may be related by multiple types, and each type may relate multiple functions. Let $|\mathcal T|$ be the number of types in our system and $|\mathcal{F}|$ be the number of functions. We call our structure a \textit{type tensor}, $\mathbb{B}^{|\mathcal{F}|\times|\mathcal{T}|\times|\mathcal T|}$, also known as a \textit{logic table} or a \textit{data cube}. Consider the case where $|\mathcal F| = |\mathcal T| = 3$:
 
     \definecolor{R}{RGB}{202,65,55}
     \definecolor{G}{RGB}{151,216,56}
-    \definecolor{B}{RGB}{51,72,237}
+    \definecolor{B}{RGB}{0,0,0}
     \definecolor{W}{RGB}{255,255,255}
     \definecolor{X}{RGB}{65,65,65}
 
@@ -1088,7 +1090,7 @@ l = sqrt(sum)
     {W}{X}{W}
     \TikZRubikFaceTop
     {X}{W}{X}
-    {W}{W}{W}
+    {W}{W}{X}
     {W}{X}{W}
     \BuildArray
     \pgfmathsetmacro\radius{0.1}
@@ -1102,7 +1104,7 @@ l = sqrt(sum)
     \begin{table}[H]
         \centering
         \begin{tabular}{cc}
-            \textbf{Typed Graph} & \textbf{Data Cube} \\
+            \textbf{Typed Graph} & \textbf{Type Tensor} \\
             \begin{adjustbox}{minipage={.49\textwidth}, margin*=-0.5cm 0cm -0.5cm 0cm}
             \digraph[scale=0.5]{abcext0}{
             node[ fontname="CMU Classical Serif" fontsize=20 ];
@@ -1167,9 +1169,9 @@ l = sqrt(sum)
             }
 
             \draw [decorate,decoration={calligraphic brace,amplitude=10pt,mirror},yshift=0pt, line width=1.25pt]
-            (3,0) -- (3,3) node [black,midway,xshift=-8pt, yshift=-14pt] {\footnotesize $\mathcal{O}$};
+            (3,0) -- (3,3) node [black,midway,xshift=-8pt, yshift=-14pt] {\footnotesize $\mathcal{T}$};
             \draw [decorate,decoration={calligraphic brace,amplitude=10pt},yshift=0pt, line width=1.25pt]
-            (3,0) -- (0,-3) node [black,midway,xshift=-16pt, yshift=0pt] {\footnotesize $\mathcal{O}$};
+            (3,0) -- (0,-3) node [black,midway,xshift=-16pt, yshift=0pt] {\footnotesize $\mathcal{F}$};
             \draw [decorate,decoration={calligraphic brace,amplitude=10pt},yshift=0pt, line width=1.25pt]
             (0,-3) -- (-3,-3) node [black,midway,xshift=-8pt, yshift=14pt] {\footnotesize $\mathcal{T}$};
         \end{scope}
@@ -1179,9 +1181,8 @@ l = sqrt(sum)
     \end{table}
     \egroup
 
-    Indexed by an injective map $\mathcal{O} \times \mathcal{O} \times \mathcal{T} → \mathbb{N}^3$, vertical slices of this cube produce an ordinary graph, and horizontal and depthwise slices produce a set of covariant and contravariant type signatures. Type inference this system consists of a sequence of tensor contractions.
+    A type tensor $C[\![\cdot]\!]$ indexed by a bijection $\mathcal{F} \times \mathcal{T} \times \mathcal{T} → \mathbb{N}^3$, can be thought of as a type-level function mapping a function and a type to a set of types. Given concrete types $T, S: \mathcal{T}$ and a one-hole context $C[\![\cdot]\!]: T → S$, program synthesis in our type system consists of a sequence of tensor contractions computing the congruence closure on $T$ to determine whether there exists a path from $T$ to $S$. While subtyping, parametric polymorphism and higher-kinded types are possible to encode by considering higher-rank tensors, here we devote our attention the first-order, or rank-3 case, where functions map a concrete type to a concrete type. The typing rules are given below.
 
-    Our work is primarily interested in procedural knowledge, a knowledge graph whose topology describes how to structure computation to achieve some desired task. The nodes in this graph represent available \textit{functions} or \textit{routines} in a programming language and the edges describes composition of those functions.
 
     \subsection{Message passing algorithms}
 
