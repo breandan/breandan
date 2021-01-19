@@ -781,7 +781,7 @@
         \end{tabular}
     \end{minipage}\\
 
-    The sum emerges naturally, however there are multiple valid ways to define a graph product. As we will now see, this simple data structure can be used to describe many important computational processes.
+    The graph sum emerges naturally, however there are multiple valid ways to define a graph product. As we will now see, this simple data structure can be used to describe many fundamental computational processes.
 
     \subsection{Programs are graphs}\label{sec:program-graphs}
 
@@ -1317,11 +1317,11 @@ l = sqrt(sum)
 
     \subsection{DSL generation}\label{subsec:gen}
 
-    Most knowledge starts on pen and paper. It is generally possible for a skilled developer to translate textual information into code. However, there are many valid translations -- the same algorithm implemented in the same language by different authors is seldom written the same way. Instead of the translating these ideas from scratch, it may be possible to encode the axioms and enough knowledge to derive a family of algorithms, then let the compiler derive the most appropriate procedure for computing a desired quantity, using a sufficiently expressive logic system and a database of facts to optimize computation graphs, e.g. for latency or numerical stability.
+    Most knowledge starts with pen on paper. It is generally possible for developers to translate well-structured pseudocode into code. However, there are many valid translations -- the same algorithm implemented in the same language by different authors is seldom written the same way. Instead of translating these ideas from scratch, it may be possible to encode just a few axioms and enough knowledge to derive a family of algorithms, reusing existing optimizations written by other developers and selecting the most appropriate procedure for computing a desired quantity, e.g. using a sufficiently expressive logic system, and a database of simple facts and relations.
 
-    Knowledge systems or \textit{ontologies} are a collection of related facts designed or discovered by human beings. For example, we can treat mathematical knowledge as kind of a symbolic rewrite system. This has been successfully operationalized in Theano~\citep{bergstra2010theano} and other DSLs. It is possible to view constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Arend and KMath~\citep{nozik2019kotlin} and Kotlin$\nabla$~\citep{considine2019kotlingrad} are also working towards this goal.
+    Knowledge systems or \textit{ontologies} are a collection of related facts designed or discovered by human beings. For example, we can treat mathematical knowledge as kind of a symbolic rewrite system. This has been successfully operationalized in Theano~\citep{bergstra2010theano} and other DSLs. It is possible to view constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Arend, KMath~\citep{nozik2019kotlin} and Kotlin$\nabla$~\citep{considine2019kotlingrad} are also working towards this high-level goal.
 
-    In knowledge engineering, approximate equality is known as entity \textit{alignment} or \textit{matching}. With an approximate matching algorithm, we could accurately detect near-duplicates in a large codebase, find similar documentation snippets, retrieve contextually or semantically relevant code samples to assist developers writing unfamiliar code, and we could search for bugs in code or fixes from an external knowledge base to repair them. All of these tasks require some notion of semantic similarity between procedures.
+    In knowledge engineering, approximate equality is known as entity \textit{alignment} or \textit{matching}. With an approximate matching algorithm, we could accurately detect near-duplicates in a large codebase, find similar documentation snippets, retrieve contextually or semantically relevant code samples to assist developers writing unfamiliar code, and search for bugs in code or fixes from an external knowledge base to repair them. All of these tasks require some notion of semantic similarity between procedures.
 
     \pagebreak \section{Acknowledgements}
 
