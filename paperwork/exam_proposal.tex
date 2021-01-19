@@ -98,7 +98,7 @@
 
     Graphs are a natural representation for both procedural knowledge~\citep{allamanis2017learning} and probabilistic reasoning~\citep{pearl2014probabilistic}, both enabling a large class of useful data transformations and vastly simplifying their implementation on physical machinery. Depending on the author's perspective, it is possible to view the evaluation of these routines as either operating a stateful machine, reducing a symbolic expression or running a dynamical process on a dataflow graph.
 
-    In this work, we first  define exact and approximate equality and cover some deterministic and probabilistic algorithms for deciding it (\S~\ref{sec:definitions}). We then describe a few graph representations for encoding approximate procedural knowledge (\S~\ref{sec:graphs}). Finally, we will discuss some opportunities for applying these ideas to search-based software engineering, in particular code search, vulnerability detection, fault localization and program repair (\S~\ref{sec:applications}).
+    In this work, we first  define exact and approximate equality and cover some deterministic and probabilistic algorithms for deciding it (\S~\ref{sec:definitions}). We then describe a few graph representations for encoding approximate procedural knowledge (\S~\ref{sec:graphs}). Finally, we will discuss some opportunities for applying these ideas to search-based software engineering, in particular, documentation alignment, code search, synthesis and DSL generation (\S~\ref{sec:applications}).
 
 
     \section{From exact to approximate equality}\label{sec:definitions}
@@ -754,7 +754,7 @@
     \end{tikzpicture}
     \end{figure}
 
-    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly grows quickly intractable in higher dimensions. Various kernels, metrics and pseudometrics on distributions have been proposed to alleviate this problem, for example: Kantorovich-Rubinstein, Kullback-Leibler, L\'evy-Prokhorov, Jensen-Shannon, EMD, et al.
+    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly grows quickly intractable in higher dimensions. Various kernels, metrics and pseudometrics on multidimensional distributions have been proposed to alleviate this problem, for example, Jensen-Shannon, Kantorovich-Rubinstein, Kullback-Leibler, Earthmover, et al. In general, approximations such as Gibbs sampling or Markov methods are usually required and unless the integral can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
@@ -768,19 +768,19 @@
 
 %    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define a the graph as an algebraic object.
 
-    Graphs are algebraic structures~\cite{weisfeiler1968reduction} capable of representing a wide variety of procedural and relational information. A graph can be represented as a matrix $\{\mathbb{B}, \mathbb{N}, \mathbb{R}\}^{n\times n}$, with entries describing the presence, label, or weight between vertices. The language of linear algebra provides a unifying framework for studying many graph algorithms and program analysis tasks~\citep{kepner2011graph}. and sparse matrix algorithms enable efficient processing of large graphs on modern graphics processors~\citep{kepner2016mathematical}.
+    Graphs are algebraic structures~\cite{weisfeiler1968reduction} capable of representing a wide variety of procedural and relational information. A graph can be represented as a matrix $\{\mathbb{B}, \mathbb{N}, \mathbb{R}\}^{n\times n}$, with entries describing the presence, label, or weight between vertices. Linear algebra provides a unifying framework for studying many graph algorithms and program analysis tasks~\citep{kepner2011graph}. Graphs can also be defined inductively, using an algebraic data type~\cite{erwig2001inductive, mokhov2017algebraic}, e.g.:\\
 
-    Graphs can also be defined inductively, using an algebraic data type~\cite{mokhov2017algebraic}.
+    \hspace{2.2cm}\begin{minipage}[c]{0.5\textwidth}
+        \centering
+        \begin{tabular}{lcl}
+            vertex  & → & int \\
+            adj     & → & [vertex] \\
+            context & → & (adj, vertex, adj) \\
+            graph   & → & empty | context \& graph \\
+        \end{tabular}
+    \end{minipage}\\
 
-    vertex  → int
-
-    adj     → [vertex]
-
-    context → (adj, vertex, adj)
-
-    graph   → empty | context & graph
-
-    The sum emerges naturally, however there are multiple ways to define the product of two graphs. Semirings arise in strange and marvelous places. $(min, +), (max, \times)$
+    The sum emerges naturally, however there are multiple valid ways to define a graph product. As we will now see, this simple data structure can be used to describe many important computational processes.
 
     \subsection{Programs are graphs}\label{sec:program-graphs}
 
@@ -1012,7 +1012,7 @@ l = sqrt(sum)
 
     Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is known to be NP-hard~\citep{dagum1993approximating}. We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
 
-    Recent work~\cite{choi2020probabilistic} has explored tractable models for probabilistic reasoning based on semiring algebras. Semirings are known to have many useful applications in graph theory and formal languages~\cite{dolan2013fun}. A semiring algebra has two operators, $\oplus$ and $\otimes$, with the usual properties. In particular, distributivity holds.
+    Recent work~\cite{choi2020probabilistic} has explored tractable models for probabilistic reasoning based on semiring algebras, known to have many useful applications in graph theory and formal languages. A semiring algebra has two operators, $\oplus$ and $\otimes$, with the usual properties, in particular, distributivity holds.
 
     \begin{prooftree}
         \AxiomC{$X \otimes (Y \oplus Z)$}
@@ -1023,14 +1023,52 @@ l = sqrt(sum)
         \RightLabel{\textsc{Distrib}}
         \UnaryInfC{$(X \otimes Y) \oplus (X \otimes Z)$}
     \end{prooftree}
-    The sum product network (SPN) is a commutative semiring over univariate distributions~\cite{friesen2016sum}:
-    \begin{center}
-        \begin{tabular}{ccc}
-            $PC \rightarrow v \sim \mathcal{D}$ &
-            $PC \rightarrow PC \oplus PC$ &
-            $PC \rightarrow PC \otimes PC$
-        \end{tabular}
-    \end{center}
+
+    Probabilistic circuits (PCs) form a commutative semiring over univariate distributions~\cite{friesen2016sum}, whose grammar and  a simple example follow below:
+
+    \begin{tabular}{cc}
+        \hspace{-1.8cm}\begin{minipage}[c]{0.5\textwidth}
+            \centering
+            \begin{tabular}{l}
+                $PC \rightarrow v \sim \mathcal{D}$ \\
+                $PC \rightarrow PC \oplus PC$ \\
+                $PC \rightarrow PC \otimes PC$
+            \end{tabular}
+        \end{minipage}
+        &
+        \begin{minipage}[c]{0.5\textwidth}
+            \centering
+            \digraph[scale=0.4]{spn1}{
+                margin=0
+                compound=true
+                rankdir=LR
+                node [shape=Mrecord,fontname="JetBrains Mono"]
+                edge [fontsize=8,fontcolor=indigo]
+                bgcolor=transparent
+                nslimit=20
+
+                g0 [label="{{μ|σ}|Normal|{<Out0>g0}}"]
+                g1 [label="{{μ|σ}|Normal|{<Out0>g1}}"]
+                g2 [label="{{μ|σ}|Normal|{<Out0>g2}}"]
+                g3 [label="{{μ|σ}|Normal|{<Out0>g3}}"]
+
+                f4 [label="{{<In0>g0|<In1>g1|<In2>g2}|Σ|{<Out0>f4}}"]
+                f5 [label="{{<In0>f4|<In1>g3}|Π|{<Out0>f5}}"]
+
+                g0:Out0 -> f4:In0
+                g1:Out0 -> f4:In1
+                g2:Out0 -> f4:In2
+                g3:Out0 -> f5:In1
+                f4:Out0 -> f5:In0
+
+
+                out1 [style=invis,shape=point]
+                out2 [style=invis,shape=point]
+
+                f5 -> out1
+            }
+        \end{minipage}
+    \end{tabular}
 
 %    Given a BN, we can compile it to a SPN using the following procedure described by~\cite{butz2019sum}:
 %
@@ -1183,21 +1221,23 @@ l = sqrt(sum)
     \vspace{-20pt}A type tensor indexed by a bijection $\mathcal{F} \times \mathcal{T} \times \mathcal{T} → \mathbb{N}^3$ is a type-level function $C[\![\cdot]\!] \subseteq \mathcal{F} \times \mathcal{T} → \mathcal{T}$ mapping a function $C: \mathcal{F}$ and type $T: \mathcal{T}$ to a set of reachable types $T^* \subseteq \mathcal{T}$, the congruence closure $C[\![T^*]\!] \equiv T^*$ of $T$ under $C$. Given a concrete type $S: \mathcal{T}$ and a one-hole context, $C[\![\cdot]\!]: ? → S$, synthesis in our type system consists of a series of tensor contractions computing the preimage of $S$ under $C$, $C^{-1}[\![S^*]\!]$. While subtyping, parametricity and higher-kinded types are possible to encode by considering higher-rank tensors, here we devote our attention to the simply-typed, rank-3 setting, in which every function maps a concrete type to a concrete type closed under composition. We adopt Chiang et al.'s named tensor notation~\cite{chaing2020named}. The typing rules for this procedure are given below.
 
     \begin{prooftree}
-        \AxiomC{$(C[\![S]\!] \underset{\mathcal{F}}\odot C[\![\cdot]\!])^n$}
+        \AxiomC{$Γ ⊢ C[\![T]\!]: T → ?$}
         \RightLabel{\textsc{Infer}}
-        \UnaryInfC{$(X \otimes Y) \oplus (X \otimes Z)$}
+        \UnaryInfC{$Γ ⊢ C[\![T]\!]: T → (C^{n = n+1}[\![S]\!])^n$}
         \DisplayProof
         \hskip 1.5em
-        \AxiomC{$(Y \oplus Z) \otimes X$}
+        \AxiomC{$Γ ⊢ C[\![\cdot]\!]: ? → T$}
         \RightLabel{\textsc{Fill}}
-        \UnaryInfC{$(X \otimes Y) \oplus (X \otimes Z)$}
+        \UnaryInfC{$Γ ⊢ (C[\![S]\!] \underset{\mathcal{F}}\odot C[\![\cdot]\!])^n$}
     \end{prooftree}
 
-    To increase the speed of type inference, we can precompute the congruence $C[\![\cdot]\!]$ and preimage closure $C^{-1}[\![\cdot]\!]$ so that $\textsc{Infer}$ and $\textsc{Fill}$ are both $\mathcal{O}(1)$.
+    \noindent To increase the speed of type inference, we can precompute the congruence $C[\![\cdot]\!]$ and preimage closure $C^{-1}[\![\cdot]\!]$ so that $\textsc{Infer}$ and $\textsc{Fill}$ are both $\mathcal{O}(1)$. The type tensor simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in an arbitrary program. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is mapped to another. This, we plan to discuss in future work.
 
     \subsection{Message passing algorithms}\label{subsec:message-passing-algorithms}
 
-    The type tensor simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in an arbitrary program. To compute this probability, we need to use Markov Chains. So, we need a transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that one function is to be composed of another. Many algorithms can be implemented as message passing on graphs. Effectively, these all share the property of being a dynamical system.
+    Many algorithms can be implemented as message passing on graphs. Effectively, these all share the property of being a graph dynamical system, which can be evolved by iterated matrix multiplication.
+
+    Suppose $\mathbf M$ is a positive matrix, $0 < \mathbf M[i, j] \forall i, j$. If $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Under some weak assumptions, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant. Our work is primarily interested in determinstic transition systems, where $\mathcal T \in \{\mathbb B, \mathbb N\}$.
 
     \pagebreak\section{From code to procedural knowledge}\label{sec:applications}
 
@@ -1225,8 +1265,7 @@ l = sqrt(sum)
 
     \pagebreak\subsection{Code search}\label{subsec:code-search}
 
-    Given a similarity metric on code, a straightforward application is code search and indexing. Prior work in code search has explore type-directed~\cite{james2020digging} and learning-based~\cite{gu2018deep} and semantic search~\cite{premtoon2020semantic} techniques separately, but few techniques incorporate the benefits of all three approaches.
-    (a la Hoogle~\citep{james2020digging}) or which could be linked to during compilation. We would like a way to extract common snippets and reason about those transformations, for example to detect similar procedures or optimize an existing procedure.
+    Given a similarity metric on code, a straightforward application is code search. Prior work in this area has explored type-directed~\cite{james2020digging}, learning-based~\cite{gu2018deep} and semantic search~\cite{premtoon2020semantic} techniques separately, but few techniques incorporate the benefits of all three approaches. We would like a way to extract common snippets and reason about those transformations, for example to detect semantically similar procedures or optimize an existing procedure.
 
     \begin{enumerate}
         \item Efficiently searching corpus for a pattern
@@ -1247,6 +1286,10 @@ l = sqrt(sum)
     \end{enumerate}
 
     The rewriting mechanism is similar to a string edit distance, but for graphs. One way of measuring distance could be measuring the shortest number of steps for rewriting a graph A to graph B, i.e. the more "similar" these two graphs are the fewer rewriting steps it should take.
+
+    \subsection{Program synthesis}\label{subsec:synthesis}
+
+    In this proposal, we have seen a number of methods for generating, or synthesizing a short program from space of valid programs. Various approaches are presented for determining the equivalence of valid programs and sampling from a probability space. What is needed is a way to sample from the space of valid programs given a set of constraints. Our approach is based on a type-directed synthesis framework, which produces a set of valid programs. Given a grammar and type system, we would like Many program synthesis tasks require abstract reasoning.
 
     \subsection{eDSL generation}\label{subsec:gen}
 
