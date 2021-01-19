@@ -29,6 +29,7 @@
 \usepackage{enumerate}
 \usepackage{enumitem}
 \usepackage{tikz-cd}
+\usetikzlibrary{calc}
 \usepackage{amsfonts}
 %\usepackage{prooftrees}
 \usepackage{bussproofs}
@@ -1222,13 +1223,13 @@ l = sqrt(sum)
 
     \begin{prooftree}
         \AxiomC{$Γ ⊢ C[\![T]\!]: T → ?$}
-        \RightLabel{\textsc{Infer}}
-        \UnaryInfC{$Γ ⊢ C[\![T]\!]: T → (C^{n = n+1}[\![S]\!])^n$}
+        \RightLabel{\textsc{Prop}}
+        \UnaryInfC{$Γ ⊢ C[\![T]\!]: T → C^{n = n+1}[\![S]\!]$}
         \DisplayProof
         \hskip 1.5em
         \AxiomC{$Γ ⊢ C[\![\cdot]\!]: ? → T$}
         \RightLabel{\textsc{Fill}}
-        \UnaryInfC{$Γ ⊢ (C[\![S]\!] \underset{\mathcal{F}}\odot C[\![\cdot]\!])^n$}
+        \UnaryInfC{$Γ ⊢ C^{n = n+1}[\![T \in s^* \subseteq \mathcal{F}]\!]$}
     \end{prooftree}
 
     \noindent To increase the speed of type inference, we can precompute the congruence $C[\![\cdot]\!]$ and preimage closure $C^{-1}[\![\cdot]\!]$ so that $\textsc{Infer}$ and $\textsc{Fill}$ are both $\mathcal{O}(1)$. The type tensor simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in an arbitrary program. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is mapped to another. This, we plan to discuss in future work.
@@ -1237,7 +1238,29 @@ l = sqrt(sum)
 
     Many algorithms can be implemented as message passing on graphs. Effectively, these all share the property of being a graph dynamical system, which can be evolved by iterated matrix multiplication.
 
-    Suppose $\mathbf M$ is a positive matrix, $0 < \mathbf M[i, j] \forall i, j$. If $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Under some weak assumptions, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant. Our work is primarily interested in determinstic transition systems, where $\mathcal T \in \{\mathbb B, \mathbb N\}$.
+    Suppose $\mathbf M$ is a positive matrix, $0 < \mathbf M[i, j] \forall i, j$. If $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Under some weak assumptions, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant.
+
+%    $f(x, y) = \begin{bmatrix} \frac{cos(x+2y)}{x} & 0 \\ 0 & \frac{sin(x-2y)}{y} \end{bmatrix} * \begin{bmatrix}x\\y\end{bmatrix} = \begin{bmatrix}cos(x+2y)\\sin(x-2y)\end{bmatrix}$
+%
+%    \begin{tikzpicture}
+%        \begin{axis}[
+%            xmin = -4, xmax = 4,
+%            ymin = -4, ymax = 4,
+%            zmin = 0, zmax = 1,
+%            axis equal image,
+%            view = {0}{90},
+%        ]
+%            \addplot3[
+%            quiver = {
+%                u = {-x},
+%                v = {y},
+%            },
+%            -stealth,
+%            domain = -4:4,
+%            domain y = -4:4,
+%            ] {0};
+%        \end{axis}
+%    \end{tikzpicture}
 
     \pagebreak\section{From code to procedural knowledge}\label{sec:applications}
 
