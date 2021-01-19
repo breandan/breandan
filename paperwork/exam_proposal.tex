@@ -1219,26 +1219,28 @@ l = sqrt(sum)
     \end{table}
     \egroup
 
-    \vspace{-20pt}A type tensor indexed by a bijection $\mathcal{F} \times \mathcal{T} \times \mathcal{T} → \mathbb{N}^3$ is a type-level function $C[\![\cdot]\!] \subseteq \mathcal{F} \times \mathcal{T} → \mathcal{T}$ mapping a function $C: \mathcal{F}$ and type $T: \mathcal{T}$ to a set of reachable types $T^* \subseteq \mathcal{T}$, the congruence closure $C[\![T^*]\!] \equiv T^*$ of $T$ under $C$. Given a concrete type $S: \mathcal{T}$ and a one-hole context, $C[\![\cdot]\!]: ? → S$, synthesis in our type system consists of a series of tensor contractions computing the preimage of $S$ under $C$, $C^{-1}[\![S^*]\!]$. While subtyping, parametricity and higher-kinded types are possible to encode by considering higher-rank tensors, here we devote our attention to the simply-typed, rank-3 setting, in which every function maps a concrete type to a concrete type closed under composition. We adopt Chiang et al.'s named tensor notation~\cite{chaing2020named}. The typing rules for this procedure are given below.
+    \vspace{-20pt}A type tensor indexed by a bijection $\mathcal{F} \times \mathcal{T} \times \mathcal{T} → \mathbb{N}^3$ is a type-level function $C[\![\cdot]\!] \subseteq \mathcal{F} \times \mathcal{T} → \mathcal{T}$ mapping a function $C: \mathcal{F}$ and type $T: \mathcal{T}$ to a set of reachable types $T^* \subseteq \mathcal{T}$, the congruence closure $C[\![T^*]\!] \equiv T^*$ of $T$ under $C$. Given a concrete type $S: \mathcal{T}$ and a one-hole context, $C[\![\cdot]\!]: ? → S$, synthesis in our type system consists of applying tensor contraction to compute the preimage of $S$ under $C$, $C^{-1}[\![S^*]\!]$. We leave this procedure for future work.
 
-    \begin{prooftree}
-        \AxiomC{$Γ ⊢ C[\![T]\!]: T → ?$}
-        \RightLabel{\textsc{Prop}}
-        \UnaryInfC{$Γ ⊢ C[\![T]\!]: T → C^{n = n+1}[\![S]\!]$}
-        \DisplayProof
-        \hskip 1.5em
-        \AxiomC{$Γ ⊢ C[\![\cdot]\!]: ? → T$}
-        \RightLabel{\textsc{Fill}}
-        \UnaryInfC{$Γ ⊢ C^{n = n+1}[\![T \in s^* \subseteq \mathcal{F}]\!]$}
-    \end{prooftree}
-
-    \noindent To increase the speed of type inference, we can precompute the congruence $C[\![\cdot]\!]$ and preimage closure $C^{-1}[\![\cdot]\!]$ so that $\textsc{Infer}$ and $\textsc{Fill}$ are both $\mathcal{O}(1)$. The type tensor simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in an arbitrary program. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is mapped to another. This, we plan to discuss in future work.
-
-    \subsection{Message passing algorithms}\label{subsec:message-passing-algorithms}
-
-    Many algorithms can be implemented as message passing on graphs. Effectively, these all share the property of being a graph dynamical system, which can be evolved by iterated matrix multiplication.
-
-    Suppose $\mathbf M$ is a positive matrix, $0 < \mathbf M[i, j] \forall i, j$. If $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Under some weak assumptions, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant.
+%    While subtyping, parametricity and higher-kinded types are possible to encode by considering higher-rank tensors, here we devote our attention to the simply-typed, rank-3 setting, in which every function maps a concrete type to a concrete type closed under composition. We adopt Chiang et al.'s named tensor notation~\cite{chaing2020named}. The typing rules for this procedure are defined below.
+%
+%    \begin{prooftree}
+%        \AxiomC{$Γ ⊢ C[\![T]\!]: T → ?$}
+%        \RightLabel{\textsc{Prop}}
+%        \UnaryInfC{$Γ ⊢ C[\![T]\!]: T → C^{n = n+1}[\![S]\!]$}
+%        \DisplayProof
+%        \hskip 1.5em
+%        \AxiomC{$Γ ⊢ C[\![\cdot]\!]: ? → T$}
+%        \RightLabel{\textsc{Fill}}
+%        \UnaryInfC{$Γ ⊢ C^{n = n+1}[\![T \in s^* \subseteq \mathcal{F}]\!]$}
+%    \end{prooftree}
+%
+%    \noindent To increase the speed of type inference, we can precompute the congruence $C[\![\cdot]\!]$ and preimage closure $C^{-1}[\![\cdot]\!]$ so that $\textsc{Infer}$ and $\textsc{Fill}$ are both $\mathcal{O}(1)$. The type tensor simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in an arbitrary program. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is mapped to another. We plan to discuss this aspect in future work.
+%
+%    \subsection{Message passing algorithms}\label{subsec:message-passing-algorithms}
+%
+%    Many algorithms can be implemented as message passing on graphs. Effectively, these all share the property of being a graph dynamical system. Any algebraic structure which forms a commutative semiring can be propagated through the graph topology using ordinary matrix multiplication.
+%
+%    Suppose $\mathbf M$ is a positive matrix, $0 < \mathbf M[i, j] \forall i, j$. The Perron-Frobenius theorm states that if $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Under some weak assumptions, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant.
 
 %    $f(x, y) = \begin{bmatrix} \frac{cos(x+2y)}{x} & 0 \\ 0 & \frac{sin(x-2y)}{y} \end{bmatrix} * \begin{bmatrix}x\\y\end{bmatrix} = \begin{bmatrix}cos(x+2y)\\sin(x-2y)\end{bmatrix}$
 %
@@ -1284,46 +1286,42 @@ l = sqrt(sum)
 
     Our work seeks to facilitate procedural knowledge discovery by enriching lexical queries with semantic information extracted from a programming environment, and prioritizing semantically relevant software artifacts among a set of matching search results. Broadly, the tools we have proposed in this literature review can be used to study both source code and procedural knowledge graphs, however due to the paucity of cross-domain entity links between code and natural language artifacts, reasoning about cross-domain relations will require developing new approaches to feature engineering, unsupervised learning and entity alignment in the low-data regime.
 
-    Such an application, if successful, would allow developers to more quickly and easily locate semantically or contextually relevant code samples in API documentation and open source repositories. The same tools could also help authors maintain a consistent set of API documentation and usage examples across a large codebase, a persistent obstacle when evolving an API.
+    Such an application, if successful, would allow developers to more quickly and easily locate semantically or contextually relevant code samples in API documentation and open source repositories. The same tools could also help authors maintain a consistent set of API documentation and usage examples across a large codebase, a persistent obstacle when evolving any API.
 
     \pagebreak\subsection{Code search}\label{subsec:code-search}
 
-    Given a similarity metric on code, a straightforward application is code search. Prior work in this area has explored type-directed~\cite{james2020digging}, learning-based~\cite{gu2018deep} and semantic search~\cite{premtoon2020semantic} techniques separately, but few techniques incorporate the benefits of all three approaches. We would like a way to extract common snippets and reason about those transformations, for example to detect semantically similar procedures or optimize an existing procedure.
+    Given a learned similarity metric between procedures, one straightforward application is code search. Prior work in this area has explored type-directed~\cite{james2020digging}, learning-based~\cite{gu2018deep} and semantic search~\cite{premtoon2020semantic} techniques. These techniques all use a fixed, or synthetic ordering over search results. For a given hole context, there are often many valid completions within an API or codebase. Given a corpus of procedures in their surrounding typing environment, is it possible to estimate a probability distribution on a shared embedding between contexts and results, and measure the likelihood that a given search result occurs in an empty location? This requires:
 
     \begin{enumerate}
-        \item Efficiently searching corpus for a pattern
-        \item Identifying alignment and matching results
-        \item Incorporating information into user's context
+        \item Efficiently searching a corpus for a well-typed pattern
+        \item Ranking the matching search results by semantic alignment
+        \item Incorporating information into user's context (e.g. variable renaming)
     \end{enumerate}
 
-    -model fragments of code and natural language as a graph and learn a distance metric which captures the notion of similarity. Some graphs will be incomplete, or missing some features, others will have extra information that is unnecessary.
-
-
-    Given a piece of code and the surrounding context (e.g. in an IDE or compiler), search a database for the k most similar graphs, then to recommend them to the user (e.g. fixes or repairs for compiler error messages), or suggest some relevant examples to help the user write some incomplete piece of code. Similar to a string edit distance, but for graph structured objects. There are a few pieces to this:
+    Given a cursor and the surrounding context (e.g. in an IDE or editor), such a tool would need to search a database for the most similar contexts, extract common snippets to estimate their \textit{concordance} or \textit{agreement} with the surrounding code context, then adapt the foreign code snippet into to the user's context. External contexts including public code samples or API-documentation (e.g. fixes or repairs for compiler error messages) could help the user or complete some unfinished piece of code. A few open research questions include:
 
     \begin{enumerate}
-        \item Semantic segmentation (what granularity to slice?)
-        \item Graph search (how to search efficiently?)
-        \item Recommendation (how to integrate into user's code)
-        \item Graph matching (how to measure similarity?)
+        \item \textbf{Semantic segmentation}: How do we slice or truncate context?
+        \item \textbf{Graph search}: What kernel be used for fast subgraph detection?
+        \item \textbf{Context ranking}: What features to use to best measure similarity?
+        \item \textbf{Refactoring}: How to integrate a selected result into the user's code?
     \end{enumerate}
 
-    The rewriting mechanism is similar to a string edit distance, but for graphs. One way of measuring distance could be measuring the shortest number of steps for rewriting a graph A to graph B, i.e. the more "similar" these two graphs are the fewer rewriting steps it should take.
+    The proposed method presents an interesting engineering challenge. To work for code completion, it would need to have relatively low latency for a pleasant user experience. While the model could be trained on a large corpus offline, the contextual embedding would need to be periodically recomputed as the surrounding typing environment changes in the editor. Furthermore, the search and retrieval speed would need keystroke latency to be effective.
 
-    \subsection{Program synthesis}\label{subsec:synthesis}
+    \pagebreak\subsection{Program synthesis}\label{subsec:synthesis}
 
-    In this proposal, we have seen a number of methods for generating, or synthesizing a short program from space of valid programs. Various approaches are presented for determining the equivalence of valid programs and sampling from a probability space. What is needed is a way to sample from the space of valid programs given a set of constraints. Our approach is based on a type-directed synthesis framework, which produces a set of valid programs. Given a grammar and type system, we would like Many program synthesis tasks require abstract reasoning.
+    In this proposal, we have seen a number of procedures for generating, or synthesizing a short procedure from space of valid procedures. Various approaches are presented for determining the equivalence of valid procedures and sampling from a constrained space of representable functions to produce a higher-order probabilistic function, satisfying a set of constraints.
 
-    \subsection{eDSL generation}\label{subsec:gen}
+    Our initial approach described in \ref{subsec:kgs}, simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in a codebase. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is to be composed with another. Given a grammar and type system, we would like a way of sampling novel programs according to the distribution of programs which occur in some codebase.
 
-    Experts typically encode their knowledge using pen and paper. It is generally possible for skilled coders to translate textual information into code. However there are many equivalent ways to translate text into code -- the same algorithm implemented in the same language by different authors is seldom written the same way. So we need some mechanism to detect exact or approximate equality in procedural knowledge.
+    \subsection{DSL generation}\label{subsec:gen}
 
-    Instead of the translating these ideas from scratch, coders should step back and think: Is it possible to just encode the axioms and enough knowledge to derive a family of algorithms, then let the compiler derive the most appropriate procedure for computing some desired quantity? A good compiler could use a database of facts to optimize computation graphs, e.g. for latency or numerical stability.
+    Most knowledge starts on pen and paper. It is generally possible for a skilled developer to translate textual information into code. However, there are many valid translations -- the same algorithm implemented in the same language by different authors is seldom written the same way. Instead of the translating these ideas from scratch, it may be possible to encode the axioms and enough knowledge to derive a family of algorithms, then let the compiler derive the most appropriate procedure for computing a desired quantity, using a sufficiently expressive logic system and a database of facts to optimize computation graphs, e.g. for latency or numerical stability.
 
-    Knowledge systems or \textit{ontologies} are a collection of related facts which have been established by human beings. For example, we can treat mathematics as a knowledge base of rewrite rules. This has been successfully operationalized in Theano~\citep{bergstra2010theano}, Kotlin$\nabla$~\citep{considine2019kotlingrad} and other DSLs. More broadly, we can also think of constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Probonto~\citep{swat2016probonto} and Arend and KMath~\citep{nozik2019kotlin} as working towards this same goal.
+    Knowledge systems or \textit{ontologies} are a collection of related facts designed or discovered by human beings. For example, we can treat mathematical knowledge as kind of a symbolic rewrite system. This has been successfully operationalized in Theano~\citep{bergstra2010theano} and other DSLs. It is possible to view constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Arend and KMath~\citep{nozik2019kotlin} and Kotlin$\nabla$~\citep{considine2019kotlingrad} are also working towards this goal.
 
-    In knowledge graphs, approximate equality is known as entity \textit{alignment} or \textit{matching}. With a probabilistic matching algorithm, we could accurately detect near duplicates in a codebase. We could retrieve code samples to assist developers writing unfamiliar code. And we could search for bugs in code or fixes from a knowledge base to repair them. Suppose we want to search through a software knowledge base for an error and stack trace, then use the information in the KB to repair our bug.
-    Take a procedural knowledge base, generate a DSL from it.
+    In knowledge engineering, approximate equality is known as entity \textit{alignment} or \textit{matching}. With an approximate matching algorithm, we could accurately detect near-duplicates in a large codebase, find similar documentation snippets, retrieve contextually or semantically relevant code samples to assist developers writing unfamiliar code, and we could search for bugs in code or fixes from an external knowledge base to repair them. All of these tasks require some notion of semantic similarity between procedures.
 
     \pagebreak \section{Acknowledgements}
 
