@@ -1201,27 +1201,25 @@ l = sqrt(sum)
 
     \pagebreak\section{From code to procedural knowledge}\label{sec:applications}
 
-    \textit{Procedural} knowledge is knowledge designed or discovered to accomplish a specific task. Unlike general knowledge where relations may be bidirectional, procedural knowledge has an implicit temporal direction. The methods presented in this literature review have broad applications to parsing and indexing procedural knowledge in general. Given a sequence of \textit{paths}, or \textit{traces} representing discrete steps in a goal-directed procedure, our research provides a framework for estimating procedural similarity, and synthesizing or recommending semantically similar procedures under feasible orderings. Specifically, our work focuses on the domain of \textit{programming} knowledge.
+    \textit{Procedural knowledge} is knowledge designed or discovered to facilitate a specific task. Unlike relational knowledge may be bidirectional, procedural knowledge has an implicit direction. The methods presented in this literature review have broad applications to parsing and indexing procedural knowledge. Given a sequence of \textit{paths}, or \textit{traces} representing discrete steps in a goal-directed process with intermediate results, our research seeks to provide a mechanism for estimating procedural similarity, to synthesize or recommend semantically similar procedures under feasible reorderings. Specifically, our work focuses on the domain of \textit{programming} knowledge.
 
-    Programming \textit{functions} or \textit{procedures} accept \textit{inputs} and produce \textit{outputs}. All syntactically valid programs have an unambiguous grammar. If a syntactically valid procedure is well-typed, we may safely assume its runtime values match the declared types. It is often beneficial to consider narrower definitions for the purposes of correctness, but for approximate procedural similarity these restrictions are often unnecessary.
+    Code shares many statistical properties in common with natural language and can be studied using natural language approaches~\cite{hindle2012naturalness}. Unlike natural language, all syntactically-valid code has an unambiguous grammar. Furthermore, code primarily consists of \textit{functions} or \textit{procedures} intended to operate a machine. The underlying programming model may be relational, object-oriented or functional, but all mainstream programming languages support some form of \textit{procedure} which accepts inputs and produces outputs.
 
-    Given a well-typed software \textit{library} and its dependencies, the \textit{API surface} represents available ways to structure computation to achieve some desired programming task. All procedures in a typed API declare a \textit{type signature}, e.g. \texttt{getHomePhone: Person → PhoneNumber}, representing a contract between the API and its consumer: if we call the function \texttt{getHomePhone} with a \texttt{Person}, we will receive a \texttt{PhoneNumber} in return. We call the graph of all possible ways to compose an API a \textit{call graph}. This graph forms a procedural knowledge system, describing common data transformations and how to realize them using the API. In practice, even considering bounded-length programs, only a small fraction of the well-typed orderings are seen in practice. However these orderings are not often far from obvious, requiring a large amount of natural language \textit{documentation} to explain.
+    All procedures in a statically-typed programming language have a \textit{type signature}, for example, \texttt{getHomePhone: Person → PhoneNumber}. This represents a \textit{contract} between the procedure and its caller: if the procedure \texttt{getHomePhone} is called with a \texttt{Person}, it will return a \texttt{PhoneNumber}. All other inputs and outputs are forbidden by the type system. While often beneficial to consider more narrow definitions such as soundness or correctness, for procedural similarity these assumptions are unnecessary.
 
-    Knowledge systems or \textit{ontologies} are a collection of related facts which have been established by human beings. For example, we can treat mathematics as a knowledge base of rewrite rules. This has been successfully operationalized in Theano~\citep{bergstra2010theano}, Kotlin$\nabla$~\citep{considine2019kotlingrad} and other DSLs. More broadly, we can also think of constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Probonto~\citep{swat2016probonto} and KMath~\citep{nozik2019kotlin} as working towards this same goal.
+    Application programming interfaces (APIs) are a set of interfaces which describe available ways of structuring computation to achieve a set of related programming tasks. We call the graph of all possible ways to compose an API the \textit{API surface}. One traverses the API surface by composing accessible procedures in a \textit{call graph}. Thus, we can view the API as kind of a \textit{procedural knowledge base} representing common data transformations and how to compose them. In practice, how to achieve some desired goal is often far from obvious, requiring a large amount of documentation to explain.
 
-    In knowledge graphs, approximate equality is known as entity \textit{alignment} or \textit{matching}. With a probabilistic matching algorithm, we could accurately detect near duplicates in a codebase. We could retrieve code samples to assist developers writing unfamiliar code. And we could search for bugs in code or fixes from a knowledge base to repair them. Probabilistic reasoning can be gainfully employed on these and many related tasks.
+    Many consumers of popular APIs publish their code in open source repositories. This resource is a largely untapped source of knowledge for most programming tools. Our work seeks to find ways of reusing the knowledge contained in open source repositories to help users unfamiliar with an API locate examples and compose software using the API. In the following section, we propose three applications of procedural pattern recognition for code search (\S~\ref{subsec:code-search}), program repair (\S\ref{subsec:code-search}), and eDSL generation (\S~\ref{subsec:code-search}).
 
-    Suppose we want to search through a software knowledge base for an error and stack trace, then use the information in the KB to repair our bug.
+    \subsection{Code search}\label{subsec:code-search}
+
+    (a la Hoogle~\citep{james2020digging}) or which could be linked to during compilation. We would like a way to extract common snippets and reason about those transformations, for example to detect similar procedures or optimize an existing procedure.
 
     \begin{enumerate}
         \item Efficiently searching corpus for a pattern
         \item Identifying alignment and matching results
         \item Incorporating information into user's context
     \end{enumerate}
-
-    \subsection{Code search}
-
-    (a la Hoogle~\citep{james2020digging}) or which could be linked to during compilation. We would like a way to extract common snippets and reason about those transformations, for example to detect similar procedures or optimize an existing procedure.
 
     -model fragments of code and natural language as a graph and learn a distance metric which captures the notion of similarity. Some graphs will be incomplete, or missing some features, others will have extra information that is unnecessary.
 
@@ -1236,21 +1234,21 @@ l = sqrt(sum)
 
     The rewriting mechanism is similar to a string edit distance, but for graphs. One way of measuring distance could be measuring the shortest number of steps for rewriting a graph A to graph B, i.e. the more "similar" these two graphs are the fewer rewriting steps it should take.
 
-    \subsection{Fault localization}
+    \subsection{Program repair}\label{subsec:prog-rep}
 
     searching for stack trace on stackoverflow
 
-    \subsection{Program repair}
-
-
     adapt some knowledge to match user's context
 
-    \subsection{eDSL generation}
+    \subsection{eDSL generation}\label{subsec:gen}
 
     Experts typically encode their knowledge using pen and paper. It is generally possible for skilled coders to translate textual information into code. However there are many equivalent ways to translate text into code -- the same algorithm implemented in the same language by different authors is seldom written the same way. So we need some mechanism to detect exact or approximate equality in procedural knowledge.
 
     Instead of the translating these ideas from scratch, coders should step back and think: Is it possible to just encode the axioms and enough knowledge to derive a family of algorithms, then let the compiler derive the most appropriate procedure for computing some desired quantity? A good compiler could use a database of facts to optimize computation graphs, e.g. for latency or numerical stability.
 
+    Knowledge systems or \textit{ontologies} are a collection of related facts which have been established by human beings. For example, we can treat mathematics as a knowledge base of rewrite rules. This has been successfully operationalized in Theano~\citep{bergstra2010theano}, Kotlin$\nabla$~\citep{considine2019kotlingrad} and other DSLs. More broadly, we can also think of constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Probonto~\citep{swat2016probonto} and KMath~\citep{nozik2019kotlin} as working towards this same goal.
+
+    In knowledge graphs, approximate equality is known as entity \textit{alignment} or \textit{matching}. With a probabilistic matching algorithm, we could accurately detect near duplicates in a codebase. We could retrieve code samples to assist developers writing unfamiliar code. And we could search for bugs in code or fixes from a knowledge base to repair them. Suppose we want to search through a software knowledge base for an error and stack trace, then use the information in the KB to repair our bug.
     Take a procedural knowledge base, generate a DSL from it.
 
     \pagebreak \section{Acknowledgements}
