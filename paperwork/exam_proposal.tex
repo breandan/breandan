@@ -784,7 +784,7 @@
 
     \subsection{Programs are graphs}\label{sec:program-graphs}
 
-    Programs are graphical structures with a rich denotational and operational semantics~\cite{henkel2018code}. To effectively reason about programs in semantically similar but syntactically diverse settings requires models which incorporate features from the call graph~\cite{liu2019neural} and surrounding typing context~\cite{allamanis2017learning}. Many semantic structures, such as data and control flow~\cite{si2018learning} can be represented as a directed acyclic graph (DAG), which admits linear-time solutions to a variety of graph problems, including topological sorting, single-source shortest path and reachability queries. Many useful graph representations have been proposed in the literature, including call graphs, dataflow graphs, computation graphs~\citep{breuleux2017automatic}, e-Graphs~\citep{willsey2020egg} down to boolean and arithmetic circuits~\citep{miller1988efficient}.
+    Programs are graphical structures with a rich denotational and operational semantics~\cite{henkel2018code}. To effectively reason about programs in semantically similar but syntactically diverse settings requires models which incorporate features from the call graph~\cite{liu2019neural} and surrounding typing context~\cite{allamanis2017learning}. Many semantic structures, such as data and control flow~\cite{si2018learning} can be represented as a directed acyclic graph, which admits linear-time solutions to a variety of graph problems, including topological sorting, single-source shortest path and reachability queries. Many useful graph representations have been proposed in the literature, including call graphs, dataflow graphs, computation graphs~\citep{breuleux2017automatic}, e-Graphs~\citep{willsey2020egg} down to boolean and arithmetic circuits~\citep{miller1988efficient}.
 
     \bgroup
     \def\arraystretch{1.2}
@@ -950,7 +950,7 @@ l = sqrt(sum)
 
     \pagebreak\subsection{Distributions are graphs}\label{sec:distributions-graphs}
 
-    Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are a framework for probabilistic inference on distributions whose conditional dependence structure may be expressed as a graph, whose edges capture conditional independence relations between RVs. One type of PGM is a directed graphical model (DGM).
+    Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are a framework for probabilistic inference on distributions whose conditional independence structure may be expressed as a graph, with edges representing dependence relations between RVs. One type of PGM is a directed graphical model (DGM):
 
     \tikzset{latent/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt, draw,circle, inner sep=1pt}, obs/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt, draw,circle, inner sep=1pt}}
     \makeatletter
@@ -1005,12 +1005,12 @@ l = sqrt(sum)
         }
     \end{prooftree}
 
-    A belief network (BN) is an acyclic DGM of the form:
+    \noindent A Bayesian belief network (BN) is an acyclic DGM of the following form:
     \begin{equation*}
         P(x_1,\ldots,x_D)=\prod_{i=1}^D P(x_i \mid \texttt{parents}(x_i))
     \end{equation*}
 
-    Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is NP-hard~\citep{dagum1993approximating} We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
+    Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is known to be NP-hard~\citep{dagum1993approximating}. We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
 
     Recent work~\cite{choi2020probabilistic} has explored tractable models for probabilistic reasoning based on semiring algebras. Semirings are known to have many useful applications in graph theory and formal languages~\cite{dolan2013fun}. A semiring algebra has two operators, $\oplus$ and $\otimes$, with the usual properties. In particular, distributivity holds.
 
@@ -1201,7 +1201,7 @@ l = sqrt(sum)
 
     \pagebreak\section{From code to procedural knowledge}\label{sec:applications}
 
-    \textit{Procedural knowledge} is knowledge designed or discovered to facilitate a specific task. Unlike \textit{relational knowledge} which may be bidirectional, procedural knowledge has an implicit direction. The methods presented in this literature review have broad applications to parsing and indexing procedural knowledge. Given a sequence of \textit{paths}, or \textit{traces} representing discrete steps in a goal-directed process with intermediate results, our research seeks to provide a mechanism for estimating procedural similarity, to synthesize or recommend semantically similar procedures under feasible reorderings. Specifically, our work focuses on the domain of \textit{programming} knowledge.
+    \textit{Procedural knowledge} is knowledge designed or discovered to facilitate a process. Unlike \textit{relational knowledge} which may be bidirectional, procedural knowledge has a specific direction or goal. The methods presented in this literature review have broad applications to parsing and indexing procedural knowledge. Given a sequence of \textit{paths}, or \textit{traces} representing discrete steps in a goal-directed process with intermediate results, our research seeks to provide a mechanism for estimating procedural similarity, to synthesize or recommend semantically similar procedures under feasible reorderings. Specifically, our work focuses on the domain of \textit{programming} knowledge.
 
     Code shares many statistical properties in common with natural language and can be studied using natural language properties~\cite{hindle2012naturalness}. Unlike natural language, all syntactically-valid code has an unambiguous grammar. Furthermore, code primarily consists of \textit{functions} or \textit{procedures} intended to operate a machine. The underlying programming model may be relational, object-oriented or functional, but all mainstream programming languages support some form of \textit{procedure} which accepts inputs and produces outputs.
 
@@ -1209,26 +1209,23 @@ l = sqrt(sum)
 
     Application programming interfaces (APIs) are a set of interfaces which describe available ways of structuring computation to achieve a set of related programming tasks. We call the graph of all possible ways to compose an API the \textit{API surface}. One traverses the API surface by composing accessible procedures in a \textit{call graph}. Thus, we can view the API as kind of a \textit{procedural knowledge base} representing common data transformations and how to compose them. In practice, how to achieve some desired goal is often far from obvious, requiring a large amount of documentation to explain.
 
-    Many consumers of popular APIs publish code and documentation in open source repositories, a largely untapped source of knowledge for programming tools. Our work seeks to find ways of linking knowledge contained in open source repositories to help users locate examples and compose software applications. In the following section, we propose three applications of procedural pattern recognition for documentation linking (\S~\ref{subsec:tracelink}), code search (\S~\ref{subsec:code-search}), program repair (\S\ref{subsec:code-search}), and eDSL generation (\S~\ref{subsec:code-search}).
+    Many consumers of popular APIs publish code and documentation in open source repositories, a largely untapped source of knowledge for programming tools. Our work seeks to find ways of linking knowledge contained in open source repositories to help users locate examples and compose software applications. In the following section, we propose three applications of procedural pattern recognition for documentation alignment (\S~\ref{subsec:tracelink}), code search (\S~\ref{subsec:code-search}), program repair (\S\ref{subsec:code-search}), and eDSL generation (\S~\ref{subsec:code-search}).
 
-    \subsection{Documentation linking}\label{subsec:tracelink}
+    \subsection{Documentation alignment}\label{subsec:tracelink}
 
-    Documentation is an indispensable resource for software developers learning to use a new language, framework or library. Maintainers of popular software projects often publish web-based developer documents, typically in markup languages like HTML or Markdown. These documents contain natural language sentences, code snippets, and hyperlinks to other documents and source code artifacts. All of these contain important semantic information. The markup graph describes the text in relation to other entities in the document hierarchy, while the link graph describes relationships between related documents or source code artifacts.
+    Documentation is an indispensable resource for software developers learning to use a new API or programming language. Maintainers of popular software projects often publish web-based developer documents, typically in markup languages such as HTML or Markdown. These documents contain a mixture of natural language sentences, code snippets, and hyperlinks to related documents and source code files. All of these artifacts hold rich semantic information: the markup graph describes the text in relation to other entities in the document hierarchy, while the link graph describes relationships between relevant documents or artifacts in a software repository.
 
-    Prior work in information retrieval for software development has investigated recommending documentation~\cite{robillard2015recommending} and Stack Overflow content~\cite{treude2016augmenting} to developers. Prior work also studies the relationship between comments and code entities~\citep{iyer2018mapping, panthaplackel2020associating} using machine learning, but only within source code. Examples of doc-to-source linking remains scarce.
+     Consider the typical workflow of a software developer who is seeking information about an unfamiliar API. To effectively locate relevant documentation, she must first copy a specific fragment of text (e.g. a function name, error message, or identifier) from a development environment into a search engine, providing relevant contextual information. The query must be descriptive enough to retrieve relevant documents with high probability, while omitting extraneous information (e.g. user-defined tokens) unlikely to occur outside the scope of the developer's personal environment or project.
 
-     Consider the typical workflow of a software developer seeking information about an unfamiliar API. To effectively locate relevant documentation, developers must first copy a specific fragment of text (e.g. a function name, error message, or identifier) from their development environment into a search engine, alongside some contextual information. This query must be descriptive enough to retrieve relevant documents with high probability, whilst omitting extraneous information (e.g. user-defined tokens) unlikely to occur outside the scope of the developer's personal environment or project.
+    Prior work in information retrieval for software development investigated recommending API documentation~\cite{robillard2015recommending} and Q\&A content~\cite{treude2016augmenting} to developers. Similar work in natural language processing has studied the relationship between comments and source code entities~\cite{iyer2018mapping, panthaplackel2020associating} strictly within source code. Examples of cross-domain entity linking in the source-to-doc (S2D) and doc-to-source (D2S) setting are scarce, however these results indicate alignment between natural language and software artifacts may be feasible.
 
-    Our work seeks to facilitate knowledge discovery by enriching lexical queries with contextual information extracted from the surrounding environment and prioritizing contextually relevant documentation and source code. Broadly, the tools we propose can be used for studying both source code~\citep{allamanis2017learning} and documentation~\citep{yang2016hierarchical}. Entity alignment in the doc-to-doc (D2D) and source-to-source (S2S) setting is a straightforward application of existing approaches in link prediction~\citep{zhang2018link} and code embedding~\citep{gu2018deep} techniques, however examples of entity linking in cross-domain applications remain scarce.
+    Our work seeks to facilitate procedural knowledge discovery by enriching lexical queries with semantic information extracted from a programming environment, and prioritizing semantically relevant software artifacts among a set of matching search results. Broadly, the tools we have proposed in this literature review can be used to study both source code and procedural knowledge graphs, however due to the paucity of cross-domain entity links between code and natural language artifacts, reasoning about cross-domain relations will require developing new approaches to feature engineering, unsupervised learning and entity alignment in the low-data regime.
 
-    searching for stack trace on stackoverflow
-
-    adapt some knowledge to match user's context
+    Such an application, if successful, would allow developers to more quickly and easily locate semantically or contextually relevant code samples in API documentation and open source repositories. The same tools could also help authors maintain a consistent set of API documentation and usage examples across a large codebase, a persistent obstacle when evolving an API.
 
     \pagebreak\subsection{Code search}\label{subsec:code-search}
 
-    Given a similarity metric on code, it is possible to
-
+    Given a similarity metric on code, a straightforward application is code search and indexing. Prior work in code search has explore type-directed~\cite{james2020digging} and learning-based~\cite{gu2018deep} and semantic search~\cite{premtoon2020semantic} techniques separately, but few techniques incorporate the benefits of all three approaches.
     (a la Hoogle~\citep{james2020digging}) or which could be linked to during compilation. We would like a way to extract common snippets and reason about those transformations, for example to detect similar procedures or optimize an existing procedure.
 
     \begin{enumerate}
@@ -1239,7 +1236,6 @@ l = sqrt(sum)
 
     -model fragments of code and natural language as a graph and learn a distance metric which captures the notion of similarity. Some graphs will be incomplete, or missing some features, others will have extra information that is unnecessary.
 
-    Prior work in code search has explore type-directed~\cite{james2020digging} and learning-based~\cite{gu2018deep} and semantic search~\cite{premtoon2020semantic} techniques separately, but few techniques incorporate the benefits of all three approaches.
 
     Given a piece of code and the surrounding context (e.g. in an IDE or compiler), search a database for the k most similar graphs, then to recommend them to the user (e.g. fixes or repairs for compiler error messages), or suggest some relevant examples to help the user write some incomplete piece of code. Similar to a string edit distance, but for graph structured objects. There are a few pieces to this:
 
