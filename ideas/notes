@@ -1,0 +1,32 @@
+Deep learning is primarily concerned with expectation maximization / loss minimization
+
+Lots of debate about the difference between learning and inference. Glazing over the details:
+
+* Learning: gradient descent on a loss function
+* Inference: integration/summation + normalization
+
+Not all predictions are equal: if we get the answer right 99% of the time, but launch the missiles at the wrong time...
+
+Learning lacks explainability / accountability: how un/certain are we? By what justification? What metrics?
+
+Too many methods push all of this complexity into designing a loss function and adding a trillion parameters
+
+Statistics is primarily concerned with density estimation
+
+How do we deal with uncertainty? Through simplifying models
+
+Density estimation is generally Hard
+
+Statistics is very powerful, but even tiny models require galactic computation when treated extensionally
+
+Knowledge / intensional representations are the answer.
+
+Tractable inference requires prior knowledge: knowledge is the key to prediction
+
+Newtonian mechanics tells us how mass interacts with itself: can be inaccurate but hugely simplifying
+
+Forecasts become increasingly uncertain in the future due to epistemic/alleoteric uncertainty
+
+Need to propagate uncertainty through a chain of computation...
+
+If we have a "model", we can propagate uncertainty through it
