@@ -108,7 +108,7 @@
 
     For such a fundamental concept, the notation for equality is recklessly overloaded in mathematics and computer science. Depending on context, $x = y$ may denote: (1)~define $x$ to be $y$, (2)~$x$ and $y$ are the same, (3)~are $x$ and $y$ the same? (4)~$x$ and $y$ are exchangeable, (5)~assign $y$ to $x$, (6)~assign $x$ to $y$, among other peculiar programming idioms. If two expressions are equal, it should be possible to treat them in the same manner.
 
-    But this convention does not always hold! Suppose we need to compute the derivative of a logical function with respect to its inputs. The trouble is, logical equality is not differentiable. Consider the Kronecker $δ$-function: %$δ_k: \mathbb{N}^2\rightarrow \mathbb{B}$:
+    But this convention does not always hold! Suppose we need to compute the derivative of a logical function with respect to its inputs. The trouble is, logical equality is not differentiable. Consider the Kronecker $δ$-function:
 
     $$
     δ_k(x, y) :=
@@ -118,7 +118,7 @@
     \end{cases}
     $$
 
-    When encountering $δ_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $δ_k^{-1}(B\subset \mathbb{B})$ is not open, thus $δ_k$ is not continuous and $\nablaδ_k$ is undefined. Now consider the Dirac $δ$-function, which is defined as follows: %$δ_d: \mathbb{R}^2 \rightarrow \mathbb{R}$,
+    When encountering $δ_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $δ_k^{-1}(B\subset \mathbb{B})$ is not open, thus $δ_k$ is not continuous and $\nablaδ_k$ is undefined. Now consider the Dirac $δ$-function, which is defined as follows:
 
     $$
     \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)δ_d(x-a,y-b)d(x, y) \overset{Δ}{=} f(a,b)
@@ -197,9 +197,7 @@
         \item Compare: Perform a computationally trivial (e.g. $\mathcal{O}(n)$) comparison.
     \end{enumerate}
 
-    Unfortunately, exact equality is known to be undecidable in first~\cite{godel1929vollstandigkeit} and higher order theories~\cite{godel1931formal}. We know there can be no machine which accepts every equality and rejects every disequality in a universal language~\cite{turing1937computable}. By extension, any nontrivial property of partial functions is undecidable~\cite{rice1953classes}. %Equality between two elementary mathematical functions is undecidable~\cite{richardson1994identity}.
-
-    %Is there any left hope? Yes! (Felleisen)
+    Unfortunately, exact equality is known to be undecidable in first~\cite{godel1929vollstandigkeit} and higher order theories~\cite{godel1931formal}. We know there can be no machine which accepts every equality and rejects every disequality in a universal language~\cite{turing1937computable}. By extension, any nontrivial property of partial functions is undecidable~\cite{rice1953classes}.
 
     Tractability may be related to, but is not contingent upon decidability. When decidable, equality may be intractable in practice, and languages where equality is undecidable may have decidable fragments. But even when exact equality is intractable, we may be able to construct a probabilistic decision procedure (PDP) or semidecision procedure (SDP) terminating for all practical purposes. The latter approaches fall into two broad categories:
 
@@ -209,18 +207,6 @@
     \end{itemize}
 
     In the following section, we will introduce a few compatible theories corresponding to intensional and extensional equality, then build on those definitions to include recent approaches to exact and approximate equality in the determinsitic and probabilistic setting. In so doing, we will see there is a delicate tradeoff between complexity, sensitivity and specificity.
-
-%    Mathematics is often a useful approximation of reality, but many mathematical concepts are impossible to realize. This is due to two problems:
-%
-%    \begin{enumerate}
-%        \item intrinsic: the mechanics of the system are intrinsically unsound or impossible to mechanize. How do we encode $\lim_{x \rightarrow \infty}$?
-%        \item extrinsic: all descriptions (epistemic) and observations (alleoteric) are approximate and this error can compound quickly.
-%    \end{enumerate}
-
-
-%    But can we organize mathematical knowledge as a decision tree? (Rich)
-
-%    Still, we can answer many questions exactly. If we restrict the reasoning system to incomplete queries, we can be consistent.
 
     \subsection{Intensional equivalence}\label{subsec:in-eq}
 
@@ -723,7 +709,7 @@
 \UnaryInfC{$\Gamma \vdash P(X): X\times \Sigma \rightarrow\mathbb{R}^+ \propto \int P(X \mid Y = y)P(Y = y)dy$}
 \end{prooftree}
 
-\noindent If we observe an event $Y$ in a joint distribution where $0 < P(Y)$, we can the joint by the prior to obtain the conditional distribution:
+\noindent If we observe an event $Y$ in a joint distribution where $0 < P(Y)$, we can divide the joint by the prior to obtain the conditional distribution:
 
 \begin{prooftree}
 \AxiomC{$\Gamma \vdash P(X, Y): X\times Y \times \Sigma \rightarrow\mathbb{R}^+$}
@@ -769,7 +755,7 @@
 
 %    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define a the graph as an algebraic object.
 
-    Graphs are algebraic structures~\cite{weisfeiler1968reduction} capable of representing a wide variety of procedural and relational information. A graph can be represented as a matrix $\{\mathbb{B}, \mathbb{N}, \mathbb{R}\}^{n\times n}$, with entries describing the presence, label, or weight between vertices. Linear algebra provides a unifying framework for studying many graph algorithms and program analysis tasks~\citep{kepner2011graph}. Graphs can also be defined inductively, using an algebraic data type~\cite{erwig2001inductive, mokhov2017algebraic}, e.g.:\\
+    Graphs are algebraic structures~\cite{weisfeiler1968reduction} capable of representing a wide variety of procedural and relational information. A graph can be represented as a matrix $\{\mathbb{B}, \mathbb{N}, \mathbb{R}\}^{n\times n}$, with entries describing the presence, label, or weight between vertices. Linear algebra provides a unifying framework for studying many graph algorithms and program analysis tasks~\citep{kepner2011graph}. Graphs can also be defined algebraically, using an algebraic data type~\cite{erwig2001inductive, mokhov2017algebraic}, e.g.:\\
 
     \hspace{2.2cm}\begin{minipage}[c]{0.5\textwidth}
         \centering
@@ -781,7 +767,9 @@
         \end{tabular}
     \end{minipage}\\
 
+
     The graph sum emerges naturally, however there are multiple valid ways to define a graph product. As we will now see, this simple data structure can be used to describe many fundamental computational processes.
+
 
     \subsection{Programs are graphs}\label{sec:program-graphs}
 
@@ -1011,21 +999,9 @@ l = sqrt(sum)
         P(x_1,\ldots,x_D)=\prod_{i=1}^D P(x_i \mid \texttt{parents}(x_i))
     \end{equation*}
 
-    Probabilistic graphical models (PGMs) are very expressive, but even approximate inference on belief networks (BNs) is known to be NP-hard~\citep{dagum1993approximating}. We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
+    PGMs are very expressive, but even approximate inference on BNs is known to be NP-hard~\citep{dagum1993approximating}. We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
 
-    Recent work~\cite{choi2020probabilistic} has explored tractable models for probabilistic reasoning based on semiring algebras, known to have many useful applications in graph theory and formal languages. A semiring algebra has two operators, $\oplus$ and $\otimes$, with the usual properties, in particular, distributivity holds.
-
-    \begin{prooftree}
-        \AxiomC{$X \otimes (Y \oplus Z)$}
-        \UnaryInfC{$(X \otimes Y) \oplus (X \otimes Z)$}
-        \DisplayProof
-        \hskip 1.5em
-        \AxiomC{$(Y \oplus Z) \otimes X$}
-        \RightLabel{\textsc{Distrib}}
-        \UnaryInfC{$(X \otimes Y) \oplus (X \otimes Z)$}
-    \end{prooftree}
-
-    Probabilistic circuits (PCs) form a commutative semiring over univariate distributions~\cite{friesen2016sum}, whose grammar and  a simple example follow below:
+    Recent work~\cite{choi2020probabilistic} has explored tractable models for probabilistic reasoning based on \textit{probabilistic circuits} (PCs), a tree which is formed by taking recursive sums and products of univariate distributions~\cite{friesen2016sum}. Their grammar and a simple example follow below:
 
     \begin{tabular}{cc}
         \hspace{-1.8cm}\begin{minipage}[c]{0.5\textwidth}
@@ -1091,7 +1067,7 @@ l = sqrt(sum)
 %        \end{algorithmic}
 %    \end{algorithm}
 
-    \subsection{Knowledge is a graph}\label{subsec:kgs}
+    \pagebreak\subsection{Knowledge is a graph}\label{subsec:kgs}
 
     \textit{Abduction} is the process of knowledge distillation: recognizing \textit{patterns} or \textit{motifs} in raw data, forming discrete \textit{categories} or \textit{types} of objects which share similar attributes, and adding edges representing abstract relations between types, such as composition, causation, or subsumption. The key idea is moving from the space of unstructured data to a structured domain containing abstract concepts and their relations. This domain is a graph.
 
@@ -1236,11 +1212,73 @@ l = sqrt(sum)
 %
 %    \noindent To increase the speed of type inference, we can precompute the congruence $C[\![\cdot]\!]$ and preimage closure $C^{-1}[\![\cdot]\!]$ so that $\textsc{Infer}$ and $\textsc{Fill}$ are both $\mathcal{O}(1)$. The type tensor simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in an arbitrary program. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is mapped to another. We plan to discuss this aspect in future work.
 %
-%    \subsection{Message passing algorithms}\label{subsec:message-passing-algorithms}
-%
-%    Many algorithms can be implemented as message passing on graphs. Effectively, these all share the property of being a graph dynamical system. Any algebraic structure which forms a commutative semiring can be propagated through the graph topology using ordinary matrix multiplication.
-%
-%    Suppose $\mathbf M$ is a positive matrix, $0 < \mathbf M[i, j] \forall i, j$. The Perron-Frobenius theorm states that if $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Under some weak assumptions, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant.
+
+    \subsection{Algebraic graphs}\label{subsec:algebraic-graphs}
+
+    The connections between graphs and algebra run deep. We will now visit a few. A commutative monoid $(S, •, \mathbb{1})$ is a set $S$, together with a binary operator $•: S \times S → S$ with the following algebraic properties:
+
+    \begin{prooftree}
+        \bottomAlignProof
+        \AxiomC{$a • (b • c)$}
+        \UnaryInfC{$(a • b) • c$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Associativity}}
+        \DisplayProof
+        \hskip 2.5em
+        \bottomAlignProof
+        \AxiomC{$a • \mathbb 1$}
+        \UnaryInfC{$\mathbb 1$\vphantom{$()$}}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Neutrality}}
+        \DisplayProof
+        \hskip 2.5em
+        \bottomAlignProof
+        \AxiomC{$a • b$}
+        \UnaryInfC{$b • a$\vphantom{$()$}}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Commutativity}}
+    \end{prooftree}
+
+    \noindent A semiring algebra $(S, \oplus, \otimes, \mathbb{0}, \mathbb{1})$ is a set, together with two binary operators $\oplus, \otimes: S \times S → S$ such that $(S, \oplus, \mathbb 0)$ is a commutative monoid and $(S, \otimes, \mathbb 1)$ is a monoid. It has the following additional properties:
+
+    \begin{prooftree}
+        \bottomAlignProof
+        \AxiomC{$a \otimes (b \oplus c)$}
+        \UnaryInfC{$(a \otimes b) \oplus (a \otimes c)$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Distributivity}}
+        \DisplayProof
+        \hskip 2.5em
+        \bottomAlignProof
+        \AxiomC{$a • \mathbb 0$}
+        \UnaryInfC{$\mathbb 0$\vphantom{$()$}}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Annihilation}}
+    \end{prooftree}
+
+    \noindent Semirings are known to have many useful applications in graph theory and formal languages. Any algebraic structure forming a semiring can be propagated through the graph topology using ordinary matrix multiplication. By selecting the right semiring algebra, we can solve a wide variety of graph problems and program analysis tasks.
+
+    Using an algebraic framework, many types of message passing, or graph propagation can be simplified to just two steps: \textit{aggregate} and \textit{accumulate}.
+
+    $$
+    \mathbf{X}^{(i+1)} = \overbrace{\underset{P\in P^*}{\bigoplus}\overbrace{\underset{e\in P}{\bigotimes}\mathbf{X}^{(i)}}^{\text{Aggregate}}}^{\text{Accumulate}}
+    $$
+
+    We refer the reader to~\cite{gondran2008graphs,baras2010path} for a more complete summary of these techniques.
+
+    map-reduce, aggregate-accumulate, fork-join, e.g. belief and expectation propagation, shortest path problems, and many others...
+
+%    Suppose $\mathbf M$ is a positive matrix, such that $\mathbf M_{ij}$ is strictly positive. According to the Perron-Frobenius theorem, if $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Assuming $\mathcal{T}$, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant.
 
 %    $f(x, y) = \begin{bmatrix} \frac{cos(x+2y)}{x} & 0 \\ 0 & \frac{sin(x-2y)}{y} \end{bmatrix} * \begin{bmatrix}x\\y\end{bmatrix} = \begin{bmatrix}cos(x+2y)\\sin(x-2y)\end{bmatrix}$
 %
@@ -1298,7 +1336,7 @@ l = sqrt(sum)
         \item Incorporating information into user's context (e.g. variable renaming)
     \end{enumerate}
 
-    Given a cursor and the surrounding context (e.g. in an IDE or editor), such a tool would need to search a database for the most similar contexts, extract common snippets to estimate their \textit{concordance} or \textit{agreement} with the surrounding code context, then adapt the foreign code snippet into to the user's context. External contexts including public code samples or API-documentation (e.g. fixes or repairs for compiler error messages) could help the user or complete some unfinished piece of code. A few open research questions include:
+    Given a cursor and the surrounding context (e.g. in an IDE or editor), such a tool would need to search a database for the most similar contexts, extract common snippets to estimate their \textit{concordance} or \textit{agreement} with the surrounding code context, then adapt the foreign code snippet into to the user's context. External contexts including public code samples or API-documentation (e.g. fixes or repairs for compiler error messages) could help the user or complete some unfinished piece of code. Some open research questions include:
 
     \begin{enumerate}
         \item \textbf{Semantic segmentation}: How do we slice or truncate context?
@@ -1313,13 +1351,13 @@ l = sqrt(sum)
 
     In this proposal, we have seen a number of procedures for generating, or synthesizing a short procedure from space of valid procedures. Various approaches are presented for determining the equivalence of valid procedures and sampling from a constrained space of representable functions to produce a higher-order probabilistic function, satisfying a set of constraints.
 
-    Our initial approach described in \ref{subsec:kgs}, simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in a codebase. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is to be composed with another. Given a grammar and type system, we would like a way of sampling novel programs according to the distribution of programs which occur in some codebase.
+    Our initial approach described in~\S\ref{subsec:kgs}, simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in a codebase. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is to be composed with another. Given a grammar and type system, we would like a way of sampling novel programs according to the distribution of programs which occur in some codebase.
 
     \subsection{DSL generation}\label{subsec:gen}
 
     Most knowledge starts with pen on paper. It is generally possible for developers to translate well-structured pseudocode into code. However, there are many valid translations -- the same algorithm implemented in the same language by different authors is seldom written the same way. Instead of translating these ideas from scratch, it may be possible to encode just a few axioms and enough knowledge to derive a family of algorithms, reusing existing optimizations written by other developers and selecting the most appropriate procedure for computing a desired quantity, e.g. using a sufficiently expressive logic system, and a database of simple facts and relations.
 
-    Knowledge systems or \textit{ontologies} are a collection of related facts designed or discovered by human beings. For example, we can treat mathematical knowledge as kind of a symbolic rewrite system. This has been successfully operationalized in Theano~\citep{bergstra2010theano} and other DSLs. It is possible to view constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Arend, KMath~\citep{nozik2019kotlin} and Kotlin$\nabla$~\citep{considine2019kotlingrad} are also working towards this high-level goal.
+    Knowledge systems or \textit{ontologies} are a collection of related facts designed or discovered by human beings. For example, we can treat mathematical knowledge as a kind of symbolic rewrite system. This has been successfully operationalized in Theano~\citep{bergstra2010theano} and other DSLs. It is possible to view constructive mathematics libraries like Metamath~\citep{megill2006metamath}, Rubi~\citep{rich2009knowledge}, Arend, KMath~\citep{nozik2019kotlin} and Kotlin$\nabla$~\citep{considine2019kotlingrad} are also working towards this high-level goal.
 
     In knowledge engineering, approximate equality is known as entity \textit{alignment} or \textit{matching}. With an approximate matching algorithm, we could accurately detect near-duplicates in a large codebase, find similar documentation snippets, retrieve contextually or semantically relevant code samples to assist developers writing unfamiliar code, and search for bugs in code or fixes from an external knowledge base to repair them. All of these tasks require some notion of semantic similarity between procedures.
 

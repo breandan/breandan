@@ -13,7 +13,7 @@ Too many methods push all of this complexity into designing a loss function and 
 
 Statistics is primarily concerned with density estimation
 
-How do we deal with uncertainty? Through simplifying models
+How do we deal with uncertainty? By simplifying models
 
 Density estimation is generally Hard
 
@@ -30,3 +30,16 @@ Forecasts become increasingly uncertain in the future due to epistemic/alleoteri
 Need to propagate uncertainty through a chain of computation...
 
 If we have a "model", we can propagate uncertainty through it
+
+A lot of knowledge is relational: A is related to B, B is related to C...
+
+Life is full of questions. If we want to get answers, we need to do computation
+
+Thought/reasoning/computation is the act of turning relational knowledge into procedural knowledge
+
+
+
+
+
+
+
