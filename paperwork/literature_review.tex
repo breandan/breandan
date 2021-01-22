@@ -709,7 +709,7 @@
 \UnaryInfC{$\Gamma \vdash P(X): X\times \Sigma \rightarrow\mathbb{R}^+ \propto \int P(X \mid Y = y)P(Y = y)dy$}
 \end{prooftree}
 
-\noindent If we observe an event $Y$ in a joint distribution where $0 < P(Y)$, we can divide the joint by the prior to obtain the conditional distribution:
+\noindent If we observe an event $Y$ in a joint distribution where $0 < P(Y)$, we can divide or \textit{normalize} by the prior to obtain the conditional distribution:
 
 \begin{prooftree}
 \AxiomC{$\Gamma \vdash P(X, Y): X\times Y \times \Sigma \rightarrow\mathbb{R}^+$}
@@ -1266,13 +1266,27 @@ l = sqrt(sum)
         \UnaryInfC{\textit{Annihilation}}
     \end{prooftree}
 
-    \noindent Semirings are known to have many useful applications in graph theory and formal languages. Any algebraic structure forming a semiring can be propagated through the graph topology using ordinary matrix multiplication. By selecting the right semiring algebra, we can solve a wide variety of graph problems and program analysis tasks.
+    \noindent Semirings are known to have many useful applications in graph theory and languages. Any algebraic structure which form a semiring can be propagated through the graph topology using ordinary matrix multiplication. By selecting the right semiring algebra, we can solve a wide variety of graph problems and program analysis tasks.
 
     Using an algebraic framework, many types of message passing, or graph propagation can be simplified to just two steps: \textit{aggregate} and \textit{accumulate}.
 
     $$
     \mathbf{X}^{(i+1)} = \overbrace{\underset{P\in P^*}{\bigoplus}\overbrace{\underset{e\in P}{\bigotimes}\mathbf{X}^{(i)}}^{\text{Aggregate}}}^{\text{Accumulate}}
     $$
+
+
+    \bgroup
+    \def\arraystretch{1.7}
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+            S                            & $\oplus$  & $\otimes$   & $\mathbb 0$ & $\mathbb 1$ & Path \\\hline
+            $\mathbb R \cup \{\infty\}$  & min       &  +          & $\infty$    &      0      & Shortest \\\hline
+            $\mathbb R \cup \{-\infty\}$ & max       & +           &     0       &   $\infty$  & Longest \\\hline
+            $\mathbb R \cup \{\infty\}$  & max       & min         &     0       &   $\infty$  & Widest \\\hline
+        \end{tabular}
+    \end{center}
+    \egroup
 
     We refer the reader to~\cite{gondran2008graphs,baras2010path} for a more complete summary of these techniques.
 
