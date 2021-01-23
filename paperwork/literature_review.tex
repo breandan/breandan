@@ -758,7 +758,7 @@
 
 %    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define a the graph as an algebraic object.
 
-    Graphs are algebraic structures~\cite{weisfeiler1968reduction} capable of representing a wide variety of procedural and relational information. A graph can be represented as a matrix $\{\mathbb{B}, \mathbb{N}, \mathbb{R}\}^{n\times n}$, with entries describing the presence, label, or weight between vertices. Linear algebra provides a unifying framework for studying many graph algorithms and program analysis tasks~\citep{kepner2011graph}. Graphs can also be defined algebraically, using an algebraic data type~\cite{erwig2001inductive, mokhov2017algebraic}, e.g.:\\
+    Graphs are algebraic structures~\cite{weisfeiler1968reduction} capable of representing a wide variety of procedural and relational information. A graph can be represented as a matrix $\{\mathbb{B}, \mathbb{N}, \mathbb{R}\}^{n\times n}$, with entries describing the presence, label, or distance between vertices. Linear algebra provides a unifying framework for studying many graph algorithms and program analysis tasks~\citep{kepner2011graph}. Graphs can also be defined algebraically, using an algebraic data type~\cite{erwig2001inductive, mokhov2017algebraic}, e.g.:\\
 
     \hspace{2.2cm}\begin{minipage}[c]{0.5\textwidth}
         \centering
@@ -1002,7 +1002,7 @@ l = sqrt(sum)
         P(x_1,\ldots,x_D)=\prod_{i=1}^D P(x_i \mid \texttt{parents}(x_i))
     \end{equation*}
 
-    \noindent PGMs are very expressive, but even approximate inference on BNs is known to be NP-hard~\citep{dagum1993approximating}. We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple algebraic rules. A PC is formed by taking recursive sums and products of univariate distributions~\cite{friesen2016sum}, as seen below:
+    \noindent PGMs are very expressive, but even approximate inference on BNs is known to be NP-hard~\citep{dagum1993approximating}. We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties in common with PGMs and can propagate statistical estimators like variance and higher moments using simple algebraic rules. A PC is formed by taking recursive sums and products of univariate distributions~\cite{friesen2016sum}, as seen below:
 
     \begin{tabular}{cc}
         \hspace{-1.8cm}
@@ -1271,12 +1271,16 @@ l = sqrt(sum)
         \UnaryInfC{$(a \otimes b) \oplus (a \otimes c)$}
         \noLine
         \UnaryInfC{}
+        \AxiomC{$(a \oplus b) \otimes c$}
+        \UnaryInfC{$(a \otimes c) \oplus (b \otimes c)$}
         \noLine
-        \UnaryInfC{\textit{Distributivity}}
+        \UnaryInfC{}
+        \noLine
+        \BinaryInfC{\textit{Distributivity}}
         \DisplayProof
         \hskip 2.5em
         \bottomAlignProof
-        \AxiomC{$a • \circled 0$}
+        \AxiomC{$a \otimes \circled 0$}
         \UnaryInfC{$\circled 0$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
@@ -1284,7 +1288,7 @@ l = sqrt(sum)
         \UnaryInfC{\textit{Annihilation}}
     \end{prooftree}
 
-    \noindent Using iterated matrix multiplication on semirings, it is possible solve a wide variety of path problems. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{accumulate}. Let $D_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $D_{st}$, one must run the following procedure on a desired path algebra:
+    \noindent Using iterated matrix multiplication on semirings, it is possible solve a wide variety of path problems. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{accumulate}. Let $\mathbf D_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $\mathbf D_{st}$, one may run the following procedure on a desired path algebra:
 
     \begin{center}
         \begin{tabular}{lc|cr}
@@ -1374,7 +1378,7 @@ l = sqrt(sum)
 
     \pagebreak\subsection{Program synthesis}\label{subsec:synthesis}
 
-    In this proposal, we have seen a number of procedures for generating, or synthesizing a short procedure from space of valid procedures. Various approaches are presented for determining the equivalence of valid procedures and sampling from a constrained space of representable functions to produce a higher-order probabilistic function, satisfying a set of constraints.
+    In this proposal, we have seen a number of procedures for generating, or synthesizing a short procedure from a space of valid procedures. Various approaches are presented for determining the equivalence of valid procedures and sampling from a constrained space of representable functions to produce a higher-order probabilistic function, satisfying a set of constraints.
 
     Our initial approach described in~\S\ref{subsec:kgs}, simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in a codebase. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is to be composed with another. Given a grammar and type system, we would like a way of sampling novel programs according to the distribution of programs which occur in some codebase.
 
