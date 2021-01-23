@@ -11,6 +11,9 @@
 \usepackage{amssymb}
 \usepackage{mathrsfs}
 
+\newcommand*\circled[1]{\tikz[baseline=-0.1cm]{
+    \node[shape=circle,draw,inner sep=0.5pt] (char) {\fontsize{7}{12}\textsf{#1}};}}
+
 \usepackage{unicode-math}
 \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 \usepackage{cancel}
@@ -131,7 +134,7 @@
     \begin{prooftree}
         \bottomAlignProof
         \AxiomC{}
-        \UnaryInfC{$a \equiv a$}
+        \UnaryInfC{$a \equiv a$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -140,7 +143,7 @@
         \hskip 1.5em
         \bottomAlignProof
         \AxiomC{$a \equiv b$}
-        \UnaryInfC{$b \equiv a$}
+        \UnaryInfC{$b \equiv a$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -150,7 +153,7 @@
         \bottomAlignProof
         \AxiomC{$a \equiv b$}
         \AxiomC{$b \equiv c$}
-        \BinaryInfC{$a \equiv c$}
+        \BinaryInfC{$a \equiv c$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -679,7 +682,7 @@
 \BinaryInfC{$P(X + Y) = \int P(X)P(Y=\frac{x+y}{x})\frac{1}{|x|}dx$}
 \end{prooftree}
 
-\noindent More specifically, if we have a so-called \textit{stable distribution}~\cite{levy1925calcul}, evaluating the convolution can be obtained by combining their parameters $\mu$ and $\sigma$ directly. As described in~\cite{willard2020minikanren}, there exist many simplified relations of the following variety, which can be discovered by analytic integration:
+\noindent More specifically, if we have a so-called \textit{stable distribution}~\cite{levy1925calcul}, evaluating the convolution can be obtained by combining their parameters $\mu$ and $\sigma$ directly. As described in~\cite{willard2020minikanren}, there exist many simplified relations of the following variety, which can be discovered through analytic integration:
 
 % https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables#Independent_random_variables
 \begin{prooftree}
@@ -741,7 +744,7 @@
     \end{tikzpicture}
     \end{figure}
 
-    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly grows quickly intractable in higher dimensions. Various kernels, metrics and pseudometrics on multidimensional distributions have been proposed to alleviate this problem, for example, Jensen-Shannon, Kantorovich-Rubinstein, Kullback-Leibler, Earthmover, et al. In general, approximations such as Gibbs sampling or Markov methods are usually required and unless the integral can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
+    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly grows quickly intractable in higher dimensions. Various kernels, metrics and pseudometrics on multidimensional distributions have been proposed to alleviate this problem, for example, Jensen-Shannon, Kantorovich-Rubinstein, Kullback-Leibler, Earthmover, et al. In general, approximations such as Gibbs sampling or Markov methods are usually required unless the integral can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
@@ -999,12 +1002,11 @@ l = sqrt(sum)
         P(x_1,\ldots,x_D)=\prod_{i=1}^D P(x_i \mid \texttt{parents}(x_i))
     \end{equation*}
 
-    PGMs are very expressive, but even approximate inference on BNs is known to be NP-hard~\citep{dagum1993approximating}. We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple rules.
-
-    Recent work~\cite{choi2020probabilistic} has explored tractable models for probabilistic reasoning based on \textit{probabilistic circuits} (PCs), a tree which is formed by taking recursive sums and products of univariate distributions~\cite{friesen2016sum}. Their grammar and a simple example follow below:
+    \noindent PGMs are very expressive, but even approximate inference on BNs is known to be NP-hard~\citep{dagum1993approximating}. We can faithfully represent a large class of PGMs and their corresponding distributions as probabilistic circuits (PCs)~\citep{choi2020probabilistic}, which are capable of exact inference in polynomial time and empirically tractable to calibrate using SGD or EM. PCs share many algebraic properties with PGMs and can propagate statistical estimators like variance and higher moments using simple algebraic rules. A PC is formed by taking recursive sums and products of univariate distributions~\cite{friesen2016sum}, as seen below:
 
     \begin{tabular}{cc}
-        \hspace{-1.8cm}\begin{minipage}[c]{0.5\textwidth}
+        \hspace{-1.8cm}
+        \begin{minipage}[c]{0.5\textwidth}
             \centering
             \begin{tabular}{l}
                 $PC \rightarrow v \sim \mathcal{D}$ \\
@@ -1047,25 +1049,42 @@ l = sqrt(sum)
         \end{minipage}
     \end{tabular}
 
-%    Given a BN, we can compile it to a SPN using the following procedure described by~\cite{butz2019sum}:
-%
-%% Topsort: https://epubs.siam.org/doi/pdf/10.1137/0210049#page=17
-%    \begin{algorithm}
-%        \begin{algorithmic}
-%            \Procedure{Translate}{b: BN}: SPN
-%            \State c $\leftarrow $\Call{VariableEliminate}{b}\Comment{Reverse topsort.}
-%            \State s $\leftarrow $\Call{RedistributeParams}{c}\Comment{AC $\rightarrow$ SPN.}
-%            \State s $\leftarrow $\Call{CompileMarginalized}{s}
-%            \State \Return{\Call{Canonicalize}{s}}
-%            \EndProcedure
-%            \Procedure{Canonicalize}{s$_0$: SPN}: SPN
-%            \State s$_1 \leftarrow$ \Call{AddTerminals}{s$_0$}
-%            \State s$_1 \leftarrow$ \Call{MergeProducts}{s$_1$}
-%            \State $\textbf{if } $s$_0 =$ s$_1$ \textbf{ then return } s$_1$\Comment{Recurse until we}
-%            \State $\textbf{else return }$\Call{Canonicalize}{s$_1$}\Comment{reach a fixpoint.}
-%            \EndProcedure
-%        \end{algorithmic}
-%    \end{algorithm}
+    \noindent Given a BN, we can compile it to a SPN using the following procedure~\cite{butz2019sum}:
+
+    \begin{tabular}{cc}
+        \\
+        \hspace{-1cm}
+        \begin{minipage}[c]{0.5\textwidth}
+            \footnotesize
+        \begin{algorithm}
+            \begin{algorithmic}
+                \Procedure{Translate}{b: BN}: SPN
+                \State c $\leftarrow $\Call{VariableEliminate}{b}
+                \State s $\leftarrow $\Call{RedistributeParameters}{c}
+                \State s $\leftarrow $\Call{CompileMarginalized}{s}
+                \State \Return{\Call{Canonicalize}{s}}
+                \EndProcedure
+            \end{algorithmic}
+            \end{algorithm}
+        \end{minipage}
+        &
+        \hspace{-0.8cm}
+        \begin{minipage}[c]{0.52\textwidth}
+            \footnotesize
+    \begin{algorithm}
+        \begin{algorithmic}
+                \Procedure{Canonicalize}{s$_0$: SPN}: SPN
+                \State s$_1 \leftarrow$ \Call{AddTerminals}{s$_0$}
+                \State s$_1 \leftarrow$ \Call{MergeProducts}{s$_1$}
+                \State $\textbf{if } $s$_0 =$ s$_1$ \textbf{ then return } s$_1$
+                \State $\textbf{else return }$\Call{Canonicalize}{s$_1$}
+                \EndProcedure
+            \end{algorithmic}
+        \end{algorithm}
+    \end{minipage}
+    \end{tabular}
+
+
 
     \pagebreak\subsection{Knowledge is a graph}\label{subsec:kgs}
 
@@ -1211,11 +1230,10 @@ l = sqrt(sum)
 %    \end{prooftree}
 %
 %    \noindent To increase the speed of type inference, we can precompute the congruence $C[\![\cdot]\!]$ and preimage closure $C^{-1}[\![\cdot]\!]$ so that $\textsc{Infer}$ and $\textsc{Fill}$ are both $\mathcal{O}(1)$. The type tensor simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in an arbitrary program. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is mapped to another. We plan to discuss this aspect in future work.
-%
 
     \subsection{Algebraic graphs}\label{subsec:algebraic-graphs}
 
-    The connections between graphs and algebra run deep. We will now visit a few. A commutative monoid $(S, •, \mathbb{1})$ is a set $S$, together with a binary operator $•: S \times S → S$ with the following algebraic properties:
+    The connection between algebra and graphs runs deep, unifying many seemingly disparate topics. A commutative monoid $(S, •, \circled{1})$ is a set $S$ with a binary operator $•: S \times S → S$ which has the following properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -1228,8 +1246,8 @@ l = sqrt(sum)
         \DisplayProof
         \hskip 2.5em
         \bottomAlignProof
-        \AxiomC{$a • \mathbb 1$}
-        \UnaryInfC{$\mathbb 1$\vphantom{$()$}}
+        \AxiomC{$a • \circled 1$}
+        \UnaryInfC{$a$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -1245,7 +1263,7 @@ l = sqrt(sum)
         \UnaryInfC{\textit{Commutativity}}
     \end{prooftree}
 
-    \noindent A semiring algebra $(S, \oplus, \otimes, \mathbb{0}, \mathbb{1})$ is a set, together with two binary operators $\oplus, \otimes: S \times S → S$ such that $(S, \oplus, \mathbb 0)$ is a commutative monoid and $(S, \otimes, \mathbb 1)$ is a monoid. It has the following additional properties:
+    \noindent A semiring algebra, denoted $(S, \oplus, \otimes, \circled{0}, \circled{1})$, is a set together with two binary operators $\oplus, \otimes: S \times S → S$ such that $(S, \oplus, \circled{0})$ is a commutative monoid and $(S, \otimes, \circled{1})$ is a monoid. It has the following additional properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -1258,39 +1276,32 @@ l = sqrt(sum)
         \DisplayProof
         \hskip 2.5em
         \bottomAlignProof
-        \AxiomC{$a • \mathbb 0$}
-        \UnaryInfC{$\mathbb 0$\vphantom{$()$}}
+        \AxiomC{$a • \circled 0$}
+        \UnaryInfC{$\circled 0$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
         \noLine
         \UnaryInfC{\textit{Annihilation}}
     \end{prooftree}
 
-    \noindent Semirings are known to have many useful applications in graph theory and languages. Any algebraic structure which form a semiring can be propagated through the graph topology using ordinary matrix multiplication. By selecting the right semiring algebra, we can solve a wide variety of graph problems and program analysis tasks.
+    \noindent Using iterated matrix multiplication on semirings, it is possible solve a wide variety of path problems. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{accumulate}. Let $D_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $D_{st}$, one must run the following procedure on a desired path algebra:
 
-    Using an algebraic framework, many types of message passing, or graph propagation can be simplified to just two steps: \textit{aggregate} and \textit{accumulate}.
-
-    $$
-    \mathbf{X}^{(i+1)} = \overbrace{\underset{P\in P^*}{\bigoplus}\overbrace{\underset{e\in P}{\bigotimes}\mathbf{X}^{(i)}}^{\text{Aggregate}}}^{\text{Accumulate}}
-    $$
-
-
-    \bgroup
-    \def\arraystretch{1.7}
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|}
-            \hline
-            S                            & $\oplus$  & $\otimes$   & $\mathbb 0$ & $\mathbb 1$ & Path \\\hline
-            $\mathbb R \cup \{\infty\}$  & min       &  +          & $\infty$    &      0      & Shortest \\\hline
-            $\mathbb R \cup \{-\infty\}$ & max       & +           &     0       &   $\infty$  & Longest \\\hline
-            $\mathbb R \cup \{\infty\}$  & max       & min         &     0       &   $\infty$  & Widest \\\hline
+        \begin{tabular}{lc|cr}
+            $\mathbf{D}_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Accumulate}}$ & & &
+            \bgroup
+            \def\arraystretch{1.2}
+        \begin{tabular}{c|c{1cm}c{1cm}|c{1cm}c{1cm}|c}
+            S                           & $\oplus$ & $\otimes$ & $\circled{0}$ & $\circled{1}$ & Path     \\\hline
+            $\mathbb R \cup \{\infty\}$ & min      & +         &   $\infty$    &      0        & Shortest \\
+            $\mathbb R \cup \{\infty\}$ & max      & +         &   $-\infty$   &      0        & Longest  \\
+            $\mathbb R \cup \{\infty\}$ & max      & min       &       0       &   $\infty$    & Widest   \\
+        \end{tabular}
+            \egroup
         \end{tabular}
     \end{center}
-    \egroup
 
-    We refer the reader to~\cite{gondran2008graphs,baras2010path} for a more complete summary of these techniques.
-
-    map-reduce, aggregate-accumulate, fork-join, e.g. belief and expectation propagation, shortest path problems, and many others...
+    \noindent A vast number of dynamic programming algorithms, including Bellman-Ford, Floyd-Warshall, Dijkstra, error, belief and expectation propagation, Markov chains, and many others can all be neatly expressed as message passing on a graph with a specific semiring algebra. We refer the curious reader to~\cite{gondran2008graphs,baras2010path} for a more complete summary thereof.
 
 %    Suppose $\mathbf M$ is a positive matrix, such that $\mathbf M_{ij}$ is strictly positive. According to the Perron-Frobenius theorem, if $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Assuming $\mathcal{T}$, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant.
 
