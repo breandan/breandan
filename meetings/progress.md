@@ -4,10 +4,7 @@
   - [ ] Design experiment to test graph matching
   - [ ] Implement random walk rewriter on real data
   - [ ] Inductive biases and inductive definitions
-  - [ ] Unification and disunification
   - [ ] Dependent type theory talk
-- COMP 598
-  - [ ] M3 / final project feedback
 - Other bets
   - [ ] Describe Kotlin∇ invocation semantics
   - [ ] Describe higher order/rank derivatives
@@ -18,6 +15,35 @@
   - [ ] Implement doubly-linked graph API
   - [ ] Compile arithmetic circuit to a matrix
   - [ ] [ISSAC](http://issac-conference.org/2021/) with Alex
+
+## January 25, 2020
+
+- Last week
+  - [Lit review](https://raw.githubusercontent.com/breandan/breandan/master/paperwork/literature_review.pdf)
+  - [Markov chain code synthesis](https://github.com/breandan/markovian/blob/master/src/main/kotlin/edu/mcgill/markovian/mcmc/MarkovChain.kt)
+  - [Computer Calculus RG](https://compcalc.github.io/)
+  - POPL / LAFI
+- This week
+  - [Comprehensive exam](https://raw.githubusercontent.com/breandan/breandan/master/presentations/comprehensive_exam.pdf)
+- Next week
+  - AD in PyTorch lecture
+- Reading
+  - [Relational inductive biases](https://arxiv.org/pdf/1806.01261.pdf)
+  - [Path problems in networks](https://www.morganclaypool.com/doi/abs/10.2200/S00245ED1V01Y201001CNT003)
+
+## Jan 18th, 2020
+
+- Progress
+  - Define procedural knowledge as a directed knowledge graph
+  - Revisit hypergraph grammars and message passing algorithms
+  - Set/Tree/Graph kernels and define objective function
+  - Incorporate Xujie and Fuyuan's feedback. Thank you!
+- Challenges / Questions
+  - Writing
+  - Timeliness
+  - Identifying related literature
+- Next week
+  - Prepare slides and talk
 
 ## December 16th, 2020
 
