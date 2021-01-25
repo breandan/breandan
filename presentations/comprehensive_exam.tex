@@ -1,11 +1,70 @@
 \documentclass{beamer}
-\usepackage{graphicx}
-\usepackage{listings}
-\usepackage{amsfonts}
+% Packages
 \usepackage{amsmath}
-\usepackage{multicol}
 \usepackage[pdf]{graphviz}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+
+\newcommand*\circled[1]{\tikz[baseline=-0.1cm]{
+\node[shape=circle,draw,inner sep=0.5pt] (char) {\fontsize{7}{12}\textsf{#1}};}}
+
+\usepackage{cancel}
+\newcommand{\nDownarrow}{\ensuremath{\text{ }\cancel{\Downarrow}\text{ }}}
+\usepackage{centernot}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\pgfmathdeclarefunction{gauss}{2}{%
+\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+
+\usepackage{arydshln}
+\usepackage{adjustbox}
+\usepackage{tikz-cd}
+\usetikzlibrary{calc}
+\usepackage{amsfonts}
+\usepackage{bussproofs}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{3d}
+\usetikzlibrary{calligraphy}
+\newif\ifshowcellnumber
+\showcellnumbertrue
+
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+\usepackage{sourcecodepro}
+\usepackage{listings}
+\usepackage{tikz-qtree}
+\usepackage{amsthm}
+\usepackage{bm}
+\usetikzlibrary{bayesnet}
+\usetikzlibrary{arrows}
+\usepackage{caption}
+\usepackage{subcaption}
+\usetikzlibrary{backgrounds}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\newcommand{\CompOrder}{\mathcal{O}}
+\def\graphspace{\mathbf{G}}
+\def\Uniform{\mbox{\rm Uniform}}
+\def\Gaussian{\mbox{\rm Gaussian}}
+\def\Bernoulli{\mbox{\rm Bernoulli}}
+\def\Dirichlet{\mbox{\rm Dirichlet}}
+
+\usepackage{multicol}
 \usepackage[skins,breakable,listings]{tcolorbox}
+
+\setlength{\leftmargini}{-1pt}
 
 \lstset{basicstyle=\ttfamily,breaklines=true}
 \usepackage{upquote}
@@ -25,8 +84,8 @@
 
 %\usepackage{cmap} % Copy-pastable unicode characters
 \usepackage{epigraph}
+\renewcommand{\textflush}{flushepinormal}
 \usepackage{accsupp}
-\usepackage{bussproofs}
 \newcommand{\noncopyable}[1]{%
 \BeginAccSupp{method=escape,ActualText={}}%
 #1%
@@ -110,7 +169,6 @@ keepaspectratio,
 \definecolor{slightgray}{rgb}{0.90, 0.90, 0.90}
 
 \usepackage{soul}
-\usepackage{hyperref}
 \makeatletter
 \def\SOUL@hlpreamble{%
 \setul{}{3.0ex}%
@@ -133,8 +191,6 @@ keepaspectratio,
 \endgroup
 }
 
-\mode<presentation> { \usetheme{Madrid} }
-
 \title{Pattern Recognition in Procedural Knowledge}
 \subtitle{Comprehensive Exam}
 
@@ -149,98 +205,98 @@ McGill University \\
 
 
 \begin{document}
-  \begin{frame}
-    \titlepage
-  \end{frame}
+\begin{frame}
+  \titlepage
+\end{frame}
 
-  \begin{frame}
-    \frametitle{Knowledge is lost in translation}
-    \begin{itemize}
-      \item First an end user describes a problem using natural language
-      \item Next an expert translates the problem into a formal language
-      \item Then an engineer implements the spec in a programming language
-      \item Code is \textit{not} the model, just one implementation of the model
-      \item And the model itself is just an approximation of the real world
-      \item System identification is hard, most abstractions are leaky
-    \end{itemize}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.8\textwidth]{../clipart/tincan.jpg}
-    \end{figure}
-  \end{frame}
+\begin{frame}
+  \frametitle{Knowledge is lost in translation}
+  \begin{itemize}
+    \item First an end user describes a problem using natural language
+    \item Next an expert translates the problem into a formal language
+    \item Then an engineer implements the spec in a programming language
+    \item Code is \textit{not} the model, just one implementation of the model
+    \item And the model itself is just an approximation of the real world
+    \item System identification is hard, most abstractions are leaky
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../clipart/tincan.jpg}
+  \end{figure}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{Knowledge is difficult to grasp}
-    \begin{itemize}
-      \item The human neocortex has a finite capacity working memory
-      \item Many codebases are enormous bodies of collective knowledge
-      \item Cannot be grasped entirely by a single knowledge worker
-      \item Programs do not live on a computer, programs are abstract concepts
-      \item Code is simply one \textit{artifact} or byproduct of computer programming
-      \item Seek to understand the creative process, not the byproduct
-    \end{itemize}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.5\textwidth]{../clipart/elephant.png}
-    \end{figure}
-  \end{frame}
+\begin{frame}
+  \frametitle{Knowledge is difficult to grasp}
+  \begin{itemize}
+    \item The human cortex has a finite capacity working memory
+    \item Many codebases are enormous bodies of collective knowledge
+    \item Cannot be grasped entirely by a single knowledge worker
+    \item Programs are not made of bits or bytes, but abstract procedures
+    \item Code is simply one \textit{artifact} or byproduct of programming
+    \item Seek to understand the process, not the byproduct
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../clipart/elephant.png}
+  \end{figure}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{Knowledge does not compose}
-    \begin{itemize}
-      \item Complex systems require participation from many stakeholders
-      \item In order to scale up participation, we need programs to compose
-      \item Impossible to build complex systems by cobbling together spare parts
-      \item Need better ways to facilitate collaborative knowledge engineering
-    \end{itemize}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.5\textwidth]{../clipart/compositionality.jpeg}
-    \end{figure}
-  \end{frame}
+\begin{frame}
+  \frametitle{Knowledge does not compose}
+  \begin{itemize}
+    \item Complex systems require participation from many stakeholders
+    \item In order to scale up participation, we need programs to compose
+    \item Impossible to build complex systems by gluing together spare parts
+    \item Need better ways to facilitate collaborative knowledge engineering
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../clipart/compositionality.jpeg}
+  \end{figure}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{Reason is a ladder to higher knowledge}
-    \begin{itemize}
-      \item To facilitate human understanding, we must have better tools
-      \item Tools should complement, not supplant human reasoning abilities
-      \item Reasoning is a tool to access higher forms of knowledge
-      \item Seek to augment human intelligence by automated reasoning
-    \end{itemize}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.5\textwidth]{../clipart/astronomers.png}
-    \end{figure}
-  \end{frame}
+\begin{frame}
+  \frametitle{Reason is a ladder to higher knowledge}
+  \begin{itemize}
+    \item To facilitate human understanding, we must have better tools
+    \item Tools should complement, not supplant human reasoning abilities
+    \item Reasoning is a tool to access higher forms of knowledge
+    \item Seek to augment human intelligence by automated reasoning
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../clipart/astronomers.png}
+  \end{figure}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{Learning and reasoning from first principles}
-    \begin{itemize}
+\begin{frame}
+  \frametitle{Learning and reasoning from first principles}
+  \begin{itemize}
 %      \item Learning to program by reading trillions of lines of code is like
 %      \\Learning to drive by reading highway transportation law
-      \item Learning to program by imitating big code is a hopeless task!
-      \item Such a system will only generate more code, increase technical debt
-      \item Source code alone is fragile, contains too many brittle assumptions
-      \item Where does source code come from? Need to retrace its provenance
-      \item Software more than just source code, many supporting artifacts
-      \item Software engineering starts with pen and paper\ldots
-    \end{itemize}
-    \begin{figure}[H]
-      \centering
+    \item Learning to program by imitating big code is a hopeless task!
+    \item Such a system will only generate more code, increase technical debt
+    \item Source code alone is fragile, contains too many brittle assumptions
+    \item Where does code come from? Need to retrace its \textit{provenance}
+    \item Software more than just source code, many supporting \textit{artifacts}
+    \item Software engineering starts with pen and paper\ldots
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
 
-      \begin{prooftree}
+    \begin{prooftree}
         \bottomAlignProof
         \AxiomC{}
-        \UnaryInfC{$a \sim a$}
+        \UnaryInfC{$a \equiv a$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
         \noLine
-        \UnaryInfC{\textit{Reflexivity}}
+        \UnaryInfC{\textit{Identity}}
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
-        \AxiomC{$a \sim b$}
-        \UnaryInfC{$b \sim a$}
+        \AxiomC{$a \equiv b$}
+        \UnaryInfC{$b \equiv a$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -248,9 +304,9 @@ McGill University \\
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
-        \AxiomC{$a \sim b$}
-        \AxiomC{$b \sim c$}
-        \BinaryInfC{$a \sim c$}
+        \AxiomC{$a \equiv b$}
+        \AxiomC{$b \equiv c$}
+        \BinaryInfC{$a \equiv c$\vphantom{$()$}}
         \noLine
         \UnaryInfC{}
         \noLine
@@ -258,188 +314,389 @@ McGill University \\
         \DisplayProof
         \hskip 1.5em
         \bottomAlignProof
-        \AxiomC{$a \sim b$}
-        \UnaryInfC{$f(a) \sim f(b)$}
+        \AxiomC{$a \equiv b$}
+        \UnaryInfC{$f(a) \equiv f(b)$}
         \noLine
         \UnaryInfC{}
         \noLine
         \UnaryInfC{\textit{Congruence}}
-      \end{prooftree}
+    \end{prooftree}
 
-    \end{figure}
-  \end{frame}
+  \end{figure}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{Induction, Deduction, Abduction, Transduction, et al.}
+\begin{frame}
+  \frametitle{Induction, Deduction, Abduction, Transduction, et al.}
+  \begin{itemize}
+    \item \textbf{*duction}: From Latin ductio, ductionem, meaning to lead away
+    \item \textbf{Conduction}: Transfer energy from one location to another
+    \item \textbf{Induction}: Infer general rules from specific observations
+    \item \textbf{Deduction}: Infer specific predictions from general rules
+    \item \textbf{Abduction}: Infer higher order rules (theory) from specific facts
+    \item \textbf{Transduction}: Infer specific predictions from specific observations
+    \item \textbf{Production}: Infer a more complex expression from a simpler one
+    \item \textbf{Reduction}: Infer a simpler expression from a more complex one
+  \end{itemize}
+  % http://web.cecs.pdx.edu/~harry/discrete/slides/Section3.1.pdf
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{../clipart/induction_deduction_transduction.png}
+    \includegraphics[width=0.3\textwidth]{../clipart/induction_deduction_abduction.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Logical Induction}
+  \begin{itemize}
+    \item Inductive data types: $\texttt{type Nat = Zero | Succ Nat}$
+    \item Inductive/recursive definitions: basis, induction, closure
+    \item Sum-Product networks:
+    \begin{lstlisting}
+    type SPN = SimpleDistribution
+             | + (SPN a) (SPN a)
+             | * (SPN a) (SPN a)
+    \end{lstlisting}
+    \item Inductively defined graphs:
+    \begin{lstlisting}
+    type Graph = Empty | Vertex
+               | + (Graph a) (Graph a)
+               | * (Graph a) (Graph a)
+    \end{lstlisting}
+    \item Coinduction / corecursion
+  \end{itemize}
+  % https://shmorhay.wordpress.com/2017/10/20/machine-learning-abduction-and-transduction/
+  % http://www.jfsowa.com/talks/iccs03.htm
+\end{frame}
+
+\begin{frame}
+  \frametitle{Induction in Machine Learning}
+  \begin{itemize}
+    \item How should learners fill in the gaps between observations?
+    \item Inductive biases allow a learning algorithm to prioritize one solution over another, irrespective of the observed data, e.g.:
     \begin{itemize}
-      \item \textbf{*duction}: From Latin ductio, ductionem, meaning to lead away
-      \item \textbf{Conduction}: Transfer energy from one location to another
-      \item \textbf{Induction}: Infer general rules from specific observations
-      \item \textbf{Deduction}: Infer specific predictions from general rules
-      \item \textbf{Abduction}: Infer higher order rules (theory) from specific facts
-      \item \textbf{Transduction}: Infer specific predictions from specific observations
-      \item \textbf{Production}: Infer a more complex expression from a simpler one
-      \item \textbf{Reduction}: Infer a more simple expression from a more complex one
-    \end{itemize}
-    % http://web.cecs.pdx.edu/~harry/discrete/slides/Section3.1.pdf
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.3\textwidth]{../clipart/induction_deduction_transduction.png}
-      \includegraphics[width=0.3\textwidth]{../clipart/induction_deduction_abduction.png}
-    \end{figure}
-  \end{frame}
-
-  \begin{frame}[fragile]
-    \frametitle{Logical Induction}
-    \begin{itemize}
-      \item Inductive data types: $\texttt{type Nat = Zero | Succ Nat}$
-      \item Inductive/recursive definitions: basis, induction, closure
-      \item Sum-Product networks:
-      \begin{lstlisting}
-      type SPN = SimpleDistribution
-               | + (SPN a) (SPN a)
-               | * (SPN a) (SPN a)
-      \end{lstlisting}
-      \item Inductively defined graphs:
-      \begin{lstlisting}
-      type Graph = Empty | Vertex
-                 | + (Graph a) (Graph a)
-                 | * (Graph a) (Graph a)
-      \end{lstlisting}
-      \item Coinduction / corecursion
-    \end{itemize}
-    % https://shmorhay.wordpress.com/2017/10/20/machine-learning-abduction-and-transduction/
-    % http://www.jfsowa.com/talks/iccs03.htm
-  \end{frame}
-
-  \begin{frame}
-    \frametitle{Induction in Machine Learning}
-    \begin{itemize}
-      \item How should machine learners fill in the gaps between observations?
-      \item Inductive biases allow a learning algorithm to prioritize one solution or interpretation over another, irrespective of the observed data, e.g.:
-      \begin{itemize}
-        \item Risk minimization (Vapnik, Chervonenkis, Arjovsky, et al.)
-        \item Minimum description length (Solomonoff, Kolmogorov, Chaitin)
-        \item Maximum entropy (Shannon, Jaynes et al.)
-        \item Nearest neighbors (Fix, Hodges, Cover et al.)
+      \item Risk minimization (Vapnik, Chervonenkis, Arjovsky, et al.)
+      \item Minimum description (Solomonoff, Kolmogorov, Chaitin)
+      \item Maximum entropy (Shannon, Jaynes et al.)
+      \item Nearest neighbors (Fix, Hodges, Cover et al.)
 %        \item Relational inductive biases (Battaglia et al.)
-        % https://blog.acolyer.org/2018/09/19/relational-inductive-biases-deep-learning-and-graph-networks/
-        \end{itemize}
-    \end{itemize}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.9\textwidth]{../clipart/relational_inductive_biases.jpg}
-      \caption{From \href{https://arxiv.org/pdf/1806.01261.pdf}{Battaglia et al. (2018), ``Relational inductive biases''}}
-    \end{figure}
-  \end{frame}
+      % https://blog.acolyer.org/2018/09/19/relational-inductive-biases-deep-learning-and-graph-networks/
+      \end{itemize}
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../clipart/relational_inductive_biases.jpg}
+    \caption{From \href{https://arxiv.org/pdf/1806.01261.pdf}{Battaglia et al. (2018), ``Relational inductive biases''}}
+  \end{figure}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{What do these two formalisms share in common?}
-    \begin{itemize}
+\begin{frame}
+  \frametitle{What do these two formalisms share in common?}
+  \begin{itemize}
 %      \item Propagate information through some kind of graph
-      \item Circuits propagate electricity through a copper graph
+    \item Circuits propagate electricity through a copper graph
 %      \item BNNs propagate electrochemical impulses through a cellular graph
-      \item Proofs propagate propositions through a logical graph
-      \item Neural networks propagate error through a computation graph
-      \item Bayes networks propagate uncertainty through a probabilistic graph
-      \item Knowledge graphs propagate ideas through a hypergraph
+    \item Proofs propagate propositions through a logical graph
+    \item Neural networks propagate error through a computation graph
+    \item Bayes nets propagate uncertainty through a probabilistic graph
+    \item Knowledge graphs propagate ideas through a hypergraph
 %      \item Citation networks propagate ideas through a citation graph
 %      \item $\lambda$-calculus propagates $\lambda$ terms through a reduction graph
-    \end{itemize}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.8\textwidth]{../clipart/relational_biases.png}
-      \caption{From \href{https://arxiv.org/pdf/1806.01261.pdf}{Battaglia et al. (2018), ``Relational inductive biases''}}
-    \end{figure}
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../clipart/relational_biases.png}
+    \caption{From \href{https://arxiv.org/pdf/1806.01261.pdf}{Battaglia et al. (2018), ``Relational inductive biases''}}
+  \end{figure}
+\end{frame}
 
-  \end{frame}
 
-  \begin{frame}
-      \frametitle{The Computational Trinity}
-      \setlength{\epigraphwidth}{0.70\textwidth}
-      \epigraph{The Christian doctrine of trinitarianism states that there is one God that is manifest in three persons, the Father, the Son, and the Holy Spirit, who together form the Holy Trinity. The doctrine of computational trinitarianism holds that [...] Logic, Languages, and Categories are but three manifestations of one divine notion of computation.}{--Robert Harper (2011), \href{https://existentialtype.wordpress.com/2011/03/27/the-holy-trinity/}{The Holy Trinity}}
-      \begin{itemize}
-          \item Types are sets
-          \item Proofs are programs
-          \item Categories are graphs
-      \end{itemize}
-  \end{frame}
-
-  \begin{frame}
-    \frametitle{Static versus dynamic graphs}
+\begin{frame}
+    \frametitle{The Computational Trinity}
+    \setlength{\epigraphwidth}{0.72\textwidth}
+    \epigraph{The Christian doctrine of trinitarianism states that there is one God that is manifest in three persons, the Father, the Son, and the Holy Spirit, who together form the Holy Trinity. The doctrine of computational trinitarianism holds that [...] Logic, Languages, and Categories are but three manifestations of one divine notion of computation.}{--Robert Harper (2011), \href{https://existentialtype.wordpress.com/2011/03/27/the-holy-trinity/}{The Holy Trinity}}
     \begin{itemize}
-      \item Sometimes the graph is static (matrix multiplication)
-      \item Just propagate simple values through it (e.g. $\mathcal{T} \in {\mathbb{R, B, Z, C}}$)
-      \item Sometimes the graph is dynamic (tensor contraction)
-      \item Can propagate more complex objects (e.g. $\mathcal{T}^2, \mathcal{T}^3, \mathcal{T}^k$)
-      \item Hyper-graph/edge replacement grammars (HRGs, FGGs, GGs et al.)
+        \item Types $\Leftrightarrow$ sets
+        \item Proofs $\Leftrightarrow$ programs
+        \item Categories $\Leftrightarrow$ graphs
     \end{itemize}
-  \end{frame}
+\end{frame}
 
   \begin{frame}
-    \frametitle{The algebra of graph replacement}
-    \begin{itemize}
-      \item Semiring algebras (Gondran and Minoux)
-      \item Graph grammars (Ariola, Plump et al.)
-      \item Basically generalizes linear algebra to other structures
-    \end{itemize}
+      \frametitle{Semiring algebras}
+      \begin{center}
+      $\mathbf{D}_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Accumulate}}$
+      \end{center}
+
+      \begin{center}
+              \bgroup
+              \def\arraystretch{1.2}
+              \begin{tabular}{c|cc|cc|c}
+                  S                           & $\oplus$ & $\otimes$ & $\circled{0}$ & $\circled{1}$ & Path     \\\hline
+                  $\mathbb R \cup \{\infty\}$ & min      & $+$         &   $\infty$    &      0        & Shortest \\$$
+                  $\mathbb R \cup \{\infty\}$ & max      & $+$         &   $-\infty$   &      0        & Longest  \\
+                  $\mathbb R \cup \{\infty\}$ & max      & min       &       0       &   $\infty$    & Widest   \\
+              \end{tabular}
+              \egroup
+      \end{center}
   \end{frame}
 
-  \begin{frame}
-    \frametitle{Valid and invalid procedures}
-    \begin{itemize}
-      \item Not all procedural text is source code
-      \item Not all source code is syntactically valid / well-formed
-      \item Not all well-formed programs are semantically valid
-      \item Not all semantically valid programs are error-free
-      \item Not all error-free programs terminate
-      \item Not all terminating programs yield the correct answer
-      \item Not only "not all", but uncountably many counterexamples
-      \item Unconstrained sampling is doomed to fail
-    \end{itemize}
-  \end{frame}
+\begin{frame}
+  \frametitle{Static versus dynamic graphs}
+  \begin{itemize}
+    \item Sometimes the graph is static (matrix multiplication)
+    \item Just propagate simple values through it (e.g. $\mathcal{T} \in {\mathbb{R, B, Z, C}}$)
+    \item Sometimes the graph is dynamic (tensor contraction)
+    \item Can propagate more complex objects (e.g. $\mathcal{T}^2, \mathcal{T}^3, \mathcal{T}^k$)
+    \item Hyper-graph/edge replacement grammars (HRGs, FGGs, GGs et al.)
+  \end{itemize}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{Necessary assumptions}
-    \setlength{\epigraphwidth}{0.5\textwidth}
-    \epigraph{The expressive power of a programming language arises from its strictures and not from its affordances.}{Robert Harper}
-    \begin{itemize}
-      \item Bounded depth circuits
-      \item Finite sample space
-      \item All programs terminate
-    \end{itemize}
-  \end{frame}
+\begin{frame}
+  \frametitle{The algebra of graph replacement}
+  \begin{itemize}
+    \item Semiring algebras (Gondran and Minoux)
+    \item Graph grammars (Ariola, Plump et al.)
+    \item Basically generalizes linear algebra to other structures
+  \end{itemize}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{The trouble with pattern recognition: Part I}
-    \begin{itemize}
-      \item Similar functions, dissimilar forms
-      \item P1: Two functions may share the same meaning, but different forms
-      \item E1: two programs may implement the exact same function, but share almost no syntax in common
-      \item Q1: How do we recognize superficially dissimilar structures which share hidden meaning?
-    \end{itemize}
-  \end{frame}
+\begin{frame}
+  \frametitle{Valid and invalid procedures}
+  \begin{itemize}
+    \item Not all procedural text is source code
+    \item Not all source code is syntactically valid / well-formed
+    \item Not all well-formed programs are semantically valid
+    \item Not all semantically valid programs are error-free
+    \item Not all error-free programs terminate
+    \item Not all terminating programs yield the correct answer
+    \item Not only "not all", but uncountably many counterexamples
+    \item Unconstrained sampling is doomed to fail
+  \end{itemize}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{The trouble with pattern recognition: Part II}
-    \begin{itemize}
-      \item Similar forms, dissimilar functions
-      \item P2: Two objects may have a common form, but have vastly different meanings
-      \item E2: two programs may differ by only a few tokens, but have drastically different meanings
-      \item Q2: How do we disambiguate superficially similar structures?
-    \end{itemize}
-  \end{frame}
+\begin{frame}
+  \frametitle{Necessary assumptions}
+  \setlength{\epigraphwidth}{0.5\textwidth}
+  \epigraph{The expressive power of a programming language arises from its strictures and not from its affordances.}{Robert Harper}
+  \begin{itemize}
+    \item Bounded depth circuits
+    \item Finite sample space
+    \item All programs terminate
+  \end{itemize}
+\end{frame}
 
-  \begin{frame}
-    \frametitle{Relations among probability distributions}
-    \begin{itemize}
-      \item Knowledge is accumulated across generations of research
-      \item Patterns have specific names, e.g. ``Gaussian'', ``Dirichlet''...
-      \item Can we recover these relations from first principles?
-    \end{itemize}
-    \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.7\textwidth]{../clipart/distribution_relations.jpeg}
-    \end{figure}
-  \end{frame}
+\begin{frame}
+  \frametitle{The trouble with pattern recognition: Part I}
+  \begin{itemize}
+    \item Similar functions, dissimilar forms
+    \item P1: Two functions may share the same meaning, but different forms
+    \item E1: two programs may implement the exact same function, but share almost no syntax in common
+    \item Q1: How do we recognize superficially dissimilar structures which share hidden meaning?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The trouble with pattern recognition: Part II}
+  \begin{itemize}
+    \item Similar forms, dissimilar functions
+    \item P2: Two objects may have a common form, but have vastly different meanings
+    \item E2: two programs may differ by only a few tokens, but have drastically different meanings
+    \item Q2: How do we disambiguate superficially similar structures?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Relations among probability distributions}
+  \begin{itemize}
+    \item Knowledge is accumulated across generations of research
+    \item Patterns have specific names, e.g. ``Gaussian'', ``Dirichlet''...
+    \item Can we recover these relations from first principles?
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../clipart/distribution_relations.jpeg}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Equivalence checking}
+  \begin{adjustbox}{minipage={.5\textwidth}, height=0.15\textwidth, margin*=0.5cm 0cm 0cm 0.1cm}
+  \bgroup
+  \def\arraystretch{1.2}
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{c|l:l}
+      & \textbf{Deterministic} & \textbf{Probabilistic} \\ \hline
+      \multicolumn{1}{c|}{\textbf{Exact}} & \begin{tabular}[c]{@{}l@{}}
+                                              Type Checking\\ Model Checking
+      \end{tabular} & \begin{tabular}[c]{@{}l@{}}
+                        Variable Elimination\\Probabilistic Circuits
+      \end{tabular} \\\hdashline
+      \multicolumn{1}{c|}{\textbf{Approximate}} & \begin{tabular}[c]{@{}l@{}}
+                                                    Software Testing\\Dynamic Analysis
+      \end{tabular} & \begin{tabular}[c]{@{}l@{}}
+                        Monte Carlo Methods\\Bayesian Networks
+      \end{tabular}
+    \end{tabular}
+  \end{table}
+  \egroup
+  \end{adjustbox}
+\end{frame}
+
+\begin{frame}
+\frametitle{Kernel methods}
+\begin{adjustbox}{minipage={.5\textwidth}, height=0.24\textwidth, margin*=0cm 0cm 0cm 0.1cm}
+  \bgroup
+  \def\arraystretch{1.7}
+  \begin{tabular}{|c|c|c|}
+      \cline{2-3}
+      \multicolumn{1}{c|}{} & $\Delta(f,g)$ & $\varphi(x) $\\\hline
+      % http://www.cs.rpi.edu/~stewart/lec23-post/kernels.pdf#page=14
+%          https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c09_p291-326.pdf#page=5
+      Polynomial & $\big(\mathbf{f}^\intercal\mathbf{g} + r\big)^{q}$ & $\Big[\sqrt{{q \choose \mathbf{n}}r^{n_0}}\prod_{k} x_k^{n_k}\Big]^\intercal_{\mathbf{n} \in \{\mathbf{n}\mid  \mathbf{1^\intercal n} = q\}}$ \\ \hline
+      % https://vikas.sindhwani.org/RandomLaplace.pdf#page=3
+      % https://www.csie.ntu.edu.tw/~cjlin/talks/kuleuven_svm.pdf#page=11
+      Gaussian RBF & $e^{-{\frac {\|\mathbf{f} -\mathbf{g} \|^{2}}{2\sigma ^{2}}}}$ & $e^{-\gamma x^2} \Big[1, \sqrt{\frac{(2\gamma)^i}{i!}}x^i\Big]^\intercal_{i\in (0, \text{dim}(x)-1]}$ \\ \hline
+%          https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c09_p291-326.pdf#page=4
+      Subset & $\prod_{i = 1}^n (f_i g_i + 1)$ & $[\varphi_\textsc{Poly}(x)_A]^\intercal_{A\subseteq [1, n]}$\\ \hline
+%          https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c11_p344-396.pdf
+%          https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c11_p344-396.pdf#page=8
+      Substring & $\sum_{\sigma \in \Sigma^*}(f * \sigma)(g * \sigma)$ & $|\{i \mid \sigma = x_{i..(i+|\sigma|)}\}|$ \\ \hline
+      Subtree & $\Delta_\textsc{WL}(f, g)$ &
+        \[ \begin{cases}
+               \delta_k(t, x) & t \overset{?}{=} x\\
+               \varphi_t(\overset{\leftarrow}{x}) + \varphi_t(\overset{\rightarrow}{x}) & \text{otherwise.} \\
+        \end{cases}
+        \] \\ \hline
+%          https://people.eecs.berkeley.edu/~jordan/kernels/0521813972c11_p344-396.pdf#page=44
+%          https://papers.nips.cc/paper/2009/file/0a49e3c3a03ebde64f85c0bacd8a08e2-Paper.pdf#page=4
+%          https://www.cs.mcgill.ca/~wlh/grl_book/files/GRL_Book.pdf#page=22
+      Subgraph & $\Delta_\textsc{SS}\big(\varphi^{(h)}(f), \varphi^{(h)}(g)\big)$ & $\textsc{Hash}\big(\{\{\varphi^{(i - 1)}(u) \forall u \in \mathcal{N}(x)\}\}\big)$ \\ \hline
+\end{tabular}
+\egroup
+\end{adjustbox}
+\end{frame}
+
+%\begin{frame}
+%  \frametitle{Type reachability}
+%
+%  \definecolor{R}{RGB}{202,65,55}
+%  \definecolor{G}{RGB}{151,216,56}
+%  \definecolor{B}{RGB}{0,0,0}
+%  \definecolor{W}{RGB}{255,255,255}
+%  \definecolor{X}{RGB}{65,65,65}
+%
+%  \newcommand{\TikZRubikFaceLeft}[9]{\def\myarrayL{#1,#2,#3,#4,#5,#6,#7,#8,#9}}
+%  \newcommand{\TikZRubikFaceRight}[9]{\def\myarrayR{#1,#2,#3,#4,#5,#6,#7,#8,#9}}
+%  \newcommand{\TikZRubikFaceTop}[9]{\def\myarrayT{#1,#2,#3,#4,#5,#6,#7,#8,#9}}
+%  \newcommand{\BuildArray}{\foreach \X [count=\Y] in \myarrayL%
+%  {\ifnum\Y=1%
+%  \xdef\myarray{"\X"}%
+%  \else%
+%  \xdef\myarray{\myarray,"\X"}%
+%  \fi}%
+%  \foreach \X in \myarrayR%
+%  {\xdef\myarray{\myarray,"\X"}}%
+%  \foreach \X in \myarrayT%
+%  {\xdef\myarray{\myarray,"\X"}}%
+%  \xdef\myarray{{\myarray}}%
+%  }
+%  \TikZRubikFaceLeft
+%  {X}{W}{W}
+%  {W}{X}{X}
+%  {X}{W}{W}
+%  \TikZRubikFaceRight
+%  {W}{X}{W}
+%  {X}{W}{X}
+%  {W}{X}{W}
+%  \TikZRubikFaceTop
+%  {X}{W}{X}
+%  {W}{W}{X}
+%  {W}{X}{W}
+%  \BuildArray
+%  \pgfmathsetmacro\radius{0.1}
+%  \tdplotsetmaincoords{55}{135}
+%
+%  \showcellnumberfalse
+%
+%  \bgroup
+%  \def\arraystretch{1.2}
+%  \begin{table}[H]
+%    \centering
+%    \begin{tabular}{cc}
+%      \textbf{Typed Graph} & \textbf{Type Tensor} \\
+%      \begin{adjustbox}{minipage={.49\textwidth}, margin*=-0.5cm 0cm -0.5cm 0cm}
+%        \digraph[scale=0.5]{abcext3}{
+%          node[ fontname="CMU Classical Serif" fontsize=20 shape=Mrecord ];
+%          edge[ fontname="CMU Classical Serif" fontsize=18 ];
+%          rankdir=LR;
+%          len=3;
+%
+%          f [ label="g"; ]
+%          a [ label="a"; ]
+%          c [ label="c"; ]
+%          d [ label="‖·‖" fontname="CMU Sans Serif" ]
+%
+%%    a -> a [label="Σ₀"]
+%          f -> d [label="Ω"]
+%          d -> a [label="Ω"]
+%          d -> c [label="Ω"]
+%        }\hspace{-20pt}\digraph[scale=0.5]{abcext4}{
+%          node[ fontname="CMU Classical Serif" fontsize=20 shape=Mrecord ];
+%          edge[ fontname="CMU Classical Serif" fontsize=18 ];
+%          rankdir=LR;
+%          len=3;
+%
+%          f [ label="g"; ]
+%          a [ label="a"; ]
+%          c [ label="c"; ]
+%          d [ label="‖·‖" fontname="CMU Sans Serif" ]
+%
+%%    a -> a [label="Σ₀"]
+%          d -> f [label="ℤ"]
+%          a -> d [label="ℤ⁴"]
+%            c -> d [label="ℤ⁴"]
+%          } \end{adjustbox} & \begin{adjustbox}{minipage={.48\textwidth}}
+%                                \begin{tikzpicture}
+%                                  \clip (-3,-2.5) rectangle (3,2.5);
+%                                  \begin{scope}[tdplot_main_coords]
+%                                    \filldraw [canvas is yz plane at x=1.5] (-1.5,-1.5) rectangle (1.5,1.5);
+%                                    \filldraw [canvas is xz plane at y=1.5] (-1.5,-1.5) rectangle (1.5,1.5);
+%                                    \filldraw [canvas is yx plane at z=1.5] (-1.5,-1.5) rectangle (1.5,1.5);
+%                                    \foreach \X [count=\XX starting from 0] in {-1.5,-0.5,0.5}{
+%                                      \foreach \Y [count=\YY starting from 0] in {-1.5,-0.5,0.5}{
+%                                        \pgfmathtruncatemacro{\Z}{\XX+3*(2-\YY)}
+%                                        \pgfmathsetmacro{\mycolor}{\myarray[\Z]}
+%                                        \draw [thick,canvas is yz plane at x=1.5,shift={(\X,\Y)},fill=\mycolor] (0.5,0) -- ({1-\radius},0) arc (-90:0:\radius) -- (1,{1-\radius}) arc (0:90:\radius) -- (\radius,1) arc (90:180:\radius) -- (0,\radius) arc (180:270:\radius) -- cycle;
+%                                        \ifshowcellnumber
+%                                        \node[canvas is yz plane at x=1.5,shift={(\X+0.5,\Y+0.5)}] {\Z};
+%                                        \fi
+%                                        \pgfmathtruncatemacro{\Z}{2-\XX+3*(2-\YY)+9}
+%                                        \pgfmathsetmacro{\mycolor}{\myarray[\Z]}
+%                                        \draw [thick,canvas is xz plane at y=1.5,shift={(\X,\Y)},fill=\mycolor] (0.5,0) -- ({1-\radius},0) arc (-90:0:\radius) -- (1,{1-\radius}) arc (0:90:\radius) -- (\radius,1) arc (90:180:\radius) -- (0,\radius) arc (180:270:\radius) -- cycle;
+%                                        \ifshowcellnumber
+%                                        \node[canvas is xz plane at y=1.5,shift={(\X+0.5,\Y+0.5)},xscale=-1] {\Z};
+%                                        \fi
+%                                        \pgfmathtruncatemacro{\Z}{2-\YY+3*\XX+18}
+%                                        \pgfmathsetmacro{\mycolor}{\myarray[\Z]}
+%                                        \draw [thick,canvas is yx plane at z=1.5,shift={(\X,\Y)},fill=\mycolor] (0.5,0) -- ({1-\radius},0) arc (-90:0:\radius) -- (1,{1-\radius}) arc (0:90:\radius) -- (\radius,1) arc (90:180:\radius) -- (0,\radius) arc (180:270:\radius) -- cycle;
+%                                        \ifshowcellnumber
+%                                        \node[canvas is yx plane at z=1.5,shift={(\X+0.5,\Y+0.5)},xscale=-1,rotate=-90] {\Z};
+%                                        \fi
+%                                      }
+%                                    }
+%
+%                                    \draw [decorate,decoration={calligraphic brace,amplitude=10pt,mirror},yshift=0pt, line width=1.25pt]
+%                                    (3,0) -- (3,3) node [black,midway,xshift=-8pt, yshift=-14pt] {\footnotesize $\mathcal{T}$};
+%                                    \draw [decorate,decoration={calligraphic brace,amplitude=10pt},yshift=0pt, line width=1.25pt]
+%                                    (3,0) -- (0,-3) node [black,midway,xshift=-16pt, yshift=0pt] {\footnotesize $\mathcal{F}$};
+%                                    \draw [decorate,decoration={calligraphic brace,amplitude=10pt},yshift=0pt, line width=1.25pt]
+%                                    (0,-3) -- (-3,-3) node [black,midway,xshift=-8pt, yshift=14pt] {\footnotesize $\mathcal{T}$};
+%                                  \end{scope}
+%                \end{tikzpicture}
+%        \end{adjustbox}
+%      \end{tabular}
+%    \end{table}
+%    \egroup
+%\end{frame}
 \end{document}
