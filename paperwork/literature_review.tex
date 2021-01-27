@@ -663,8 +663,8 @@
 \AxiomC{$x \sim P(X)$}
 \AxiomC{$y \sim P(Y)$}
 \AxiomC{$z: X \times Y \rightarrow Z$}
-\TrinaryInfC{$P(Z = z(x, y) \mid X = x, Y = y) = \int\int z(x, y)dxdy$}
-\UnaryInfC{$\int_{Y}\int_{X} f(x, y)dxdy = \int_{X}\int_{Y} f(x, y)dydx$}
+\TrinaryInfC{$P(Z = z(x, y) \mid X = x, Y = y) = \iint z(x, y)dxdy$}
+\UnaryInfC{$\int_{Y}\int_{X} z(x, y)dxdy = \int_{X}\int_{Y} z(x, y)dydx$}
 \end{prooftree}
 
 \noindent While generally intractable in higher arity, these integrals can often be simplified by considering the specific dependence relation between the arguments. For instance, the sum of two independent RVs follows a distribution which can be obtained by convolving their respective density functions:
@@ -1335,7 +1335,7 @@ l = sqrt(sum)
 
     \textit{Procedural knowledge} is knowledge designed or discovered to facilitate a process. Unlike \textit{relational knowledge} which may be bidirectional, procedural knowledge has a specific direction or goal. The methods presented in this literature review have broad applications to parsing and indexing procedural knowledge. Given a sequence of \textit{paths}, or \textit{traces} representing discrete steps in a goal-directed process with intermediate results, our research seeks to provide a mechanism for estimating procedural similarity, to synthesize or recommend semantically similar procedures under feasible reorderings. Specifically, our work focuses on the domain of \textit{programming} knowledge.
 
-    Code shares many statistical properties in common with natural language and can be studied using natural language processing~\cite{hindle2012naturalness}. Unlike natural language, all syntactically-valid code has an unambiguous grammar. Furthermore, code primarily consists of \textit{functions} or \textit{procedures} intended to operate a machine. The underlying programming model may be relational, object-oriented or functional, but all mainstream programming languages support some form of procedure which accepts inputs and produces outputs.
+    Code shares many statistical properties in common with natural language and can be studied using natural language processing~\cite{hindle2012naturalness}. Unlike natural language, all syntactically-valid code has an unambiguous grammar. Furthermore, code primarily consists of \textit{functions} or \textit{procedures} intended to operate a machine. The underlying programming model may be relational, object-oriented or functional, but all mainstream programming languages support some form of procedure that accepts inputs and produces outputs.
 
     All procedures in a statically-typed programming language have a \textit{type signature}, for example, \texttt{getHomePhone: Person → PhoneNumber}. This represents a \textit{contract} between the procedure and its caller: if the procedure \texttt{getHomePhone} is called with a \texttt{Person}, it will return a \texttt{PhoneNumber}. All other inputs and outputs are forbidden by the type system. While often beneficial to consider more narrow definitions such as soundness or correctness, for procedural similarity these assumptions are unnecessary.
 
