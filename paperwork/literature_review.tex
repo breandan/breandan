@@ -744,7 +744,7 @@
     \end{tikzpicture}
     \end{figure}
 
-    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly grows quickly intractable in higher dimensions. Various kernels, metrics and pseudometrics on multidimensional distributions have been proposed to alleviate this problem, for example, Jensen-Shannon, Kantorovich-Rubinstein, Kullback-Leibler, Earthmover, et al. In general, approximations such as Gibbs sampling or Markov methods are usually required unless the integral can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
+    \noindent Computing $\int |P_1(X) - P_2(X)| dx$ directly grows quickly intractable in higher dimensions. Various kernels, metrics and pseudometrics on multidimensional distributions have been proposed to alleviate this problem, for example, Kolmogorov-Smirnov, Jensen-Shannon, Kantorovich-Rubinstein, Kullback-Leibler, Earthmover, et al. In general, approximations such as Gibbs sampling or Markov methods are usually required unless the integral can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
@@ -942,7 +942,13 @@ l = sqrt(sum)
 
     \pagebreak\subsection{Distributions are graphs}\label{sec:distributions-graphs}
 
-    Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are a framework for probabilistic inference on distributions whose conditional independence structure may be expressed as a graph, with edges representing dependence relations between RVs. One type of PGM is a directed graphical model (DGM):
+    We can think of a probability distribution as the output of a stochastic function $F$ which can only be accessed through its extensional description $P(X)$, capturing the relative frequency which certain outputs appear in the codomain. The intensional description $F(x)$ can be seen as a graph, whose nodes represent internal states of the system and edges represent the probabilities of transitioning between those states.
+
+    Although we may never access the true graph which generated a given distribution, we can try to reconstruct it by feeding a large number of inputs into a surrogate $\hat F(X;\theta)$ and updating either the graph topology or transition probabilities so as to more closely match the true distribution. Whether or not the intensional descriptions match, if we can do so in a way that causes the extensional descriptions to align, then $F$, $\hat F$ are indistinguishable.
+
+    A neural network can be seen as a differentiable way of generating such a graph, whose architecture represents the space of all possible graphs. As the network is trained, certain edges are discarded and certain edges are strengthened. A trained neural network is a
+
+    Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are another framework for probabilistic inference on distributions whose conditional independence structure may be expressed as a graph, with edges representing dependence relations between RVs. One type of PGM is a directed graphical model (DGM):
 
     \tikzset{latent/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt, draw,circle, inner sep=1pt}, obs/.append style={minimum size=14pt, inner sep=1pt, node distance=10pt, draw,circle, inner sep=1pt}}
     \makeatletter
@@ -1049,40 +1055,40 @@ l = sqrt(sum)
         \end{minipage}
     \end{tabular}
 
-    \noindent Given a BN, we can compile it to a SPN using the following procedure~\cite{butz2019sum}:
-
-    \begin{tabular}{cc}
-        \\
-        \hspace{-1cm}
-        \begin{minipage}[c]{0.5\textwidth}
-            \footnotesize
-        \begin{algorithm}
-            \begin{algorithmic}
-                \Procedure{Translate}{b: BN}: SPN
-                \State c $\leftarrow $\Call{VariableEliminate}{b}
-                \State s $\leftarrow $\Call{RedistributeParameters}{c}
-                \State s $\leftarrow $\Call{CompileMarginalized}{s}
-                \State \Return{\Call{Canonicalize}{s}}
-                \EndProcedure
-            \end{algorithmic}
-            \end{algorithm}
-        \end{minipage}
-        &
-        \hspace{-0.8cm}
-        \begin{minipage}[c]{0.52\textwidth}
-            \footnotesize
-    \begin{algorithm}
-        \begin{algorithmic}
-                \Procedure{Canonicalize}{s$_0$: SPN}: SPN
-                \State s$_1 \leftarrow$ \Call{AddTerminals}{s$_0$}
-                \State s$_1 \leftarrow$ \Call{MergeProducts}{s$_1$}
-                \State $\textbf{if } $s$_0 =$ s$_1$ \textbf{ then return } s$_1$
-                \State $\textbf{else return }$\Call{Canonicalize}{s$_1$}
-                \EndProcedure
-            \end{algorithmic}
-        \end{algorithm}
-    \end{minipage}
-    \end{tabular}
+%    \noindent Given a BN, we can compile it to a SPN using the following procedure~\cite{butz2019sum}:
+%
+%    \begin{tabular}{cc}
+%        \\
+%        \hspace{-1cm}
+%        \begin{minipage}[c]{0.5\textwidth}
+%            \footnotesize
+%        \begin{algorithm}
+%            \begin{algorithmic}
+%                \Procedure{Translate}{b: BN}: SPN
+%                \State c $\leftarrow $\Call{VariableEliminate}{b}
+%                \State s $\leftarrow $\Call{RedistributeParameters}{c}
+%                \State s $\leftarrow $\Call{CompileMarginalized}{s}
+%                \State \Return{\Call{Canonicalize}{s}}
+%                \EndProcedure
+%            \end{algorithmic}
+%            \end{algorithm}
+%        \end{minipage}
+%        &
+%        \hspace{-0.8cm}
+%        \begin{minipage}[c]{0.52\textwidth}
+%            \footnotesize
+%    \begin{algorithm}
+%        \begin{algorithmic}
+%                \Procedure{Canonicalize}{s$_0$: SPN}: SPN
+%                \State s$_1 \leftarrow$ \Call{AddTerminals}{s$_0$}
+%                \State s$_1 \leftarrow$ \Call{MergeProducts}{s$_1$}
+%                \State $\textbf{if } $s$_0 =$ s$_1$ \textbf{ then return } s$_1$
+%                \State $\textbf{else return }$\Call{Canonicalize}{s$_1$}
+%                \EndProcedure
+%            \end{algorithmic}
+%        \end{algorithm}
+%    \end{minipage}
+%    \end{tabular}
 
 
 
