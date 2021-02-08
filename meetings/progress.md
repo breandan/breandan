@@ -13,8 +13,45 @@
   - [ ] Binary matrix API and other semirings
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
-  - [ ] Compile arithmetic circuit to a matrix
-  - [ ] [ISSAC](http://issac-conference.org/2021/) with Alex
+
+## February 8, 2020
+
+- Last week
+  - Reached out to Disha and David
+  - Reached out to Jonathan
+  - Reached out to [RG speakers](https://compcalc.github.io/)
+  - Prepared PyTorch [lecture](https://github.com/compcalc/compcalc.github.io/blob/main/public/pytorch/ad_pytorch.pdf) / [tutorial](https://colab.research.google.com/drive/14KPZmXxa21YkFGKsVe37RV-AiT6YMRao#scrollTo=HJwyjWJn65eJ)
+- This week
+  - Meeting with Xujie
+  - Meeting with Simone
+  - Advisory meetings with IFT 6759 students
+  - Probabilistic programming talk Friday
+- Challenges and questions
+  - Reflecting on academic failure
+  - Practicing effective communication
+  - Time management and respecting deadlines
+  - Prioritization and activity planning
+- Reading
+  - [ProSy: API-Based Synthesis with Probabilistic Model](https://link.springer.com/article/10.1007/s11390-020-0520-4)
+  - [Efficient synthesis of probabilistic programs](https://dl.acm.org/doi/abs/10.1145/2813885.2737982)
+  - [Write, Execute, Assess: Synthesis with a REPL](https://arxiv.org/pdf/1906.04604.pdf)
+
+## February 1, 2020
+
+Last week
+  - Recorded research ideas on program representations
+  - Worked on MDP API for probabilistic synthesis
+  - Send invitations to speakers for reading group
+This week
+  - AD in PyTorch lecture
+  - Write a top-down tree based synthesizer
+Next week
+  - Organizing workshop activities
+  - Sync up with Jonathan and Simone about research ideas
+Reading
+  - [Probabilistic reachability for parametric Markov models](https://link.springer.com/article/10.1007/s11390-020-0520-4)
+  - [Learning to rank typed graph walks: local and global approaches](https://dl.acm.org/doi/abs/10.1145/1348549.1348550)
+  - [Arend Tutorial](https://arend-lang.github.io/documentation/tutorial/PartI/synndef)
 
 ## January 25, 2020
 
