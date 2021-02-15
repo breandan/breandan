@@ -14,6 +14,28 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## February 15, 2020
+
+- Last week
+  - Coordinating guest lectures for RG
+  - Met with Simone about RL for code synthesis
+  - Gave a talk about [probabilistic programming](https://youtu.be/Hw6a8LZg6b4)
+- This week
+  - Writing research proposal for Jin/Xujie collab
+  - RethinkingMLPapers workshop organization
+  - Meeting with Disha and David
+  - IFT 6759 project meetings
+  - Sequent calculus talk Friday
+- Challenges / Questions
+  - Identifying 2021 workshop / conference venues for getting feedback
+  - Do we have a research budget?
+- Reading
+  - [Analyzing Web Search Behavior for Software Engineering Tasks](https://arxiv.org/pdf/1912.09519.pdf)
+  - [Neural Sketch Learning for Conditional Program Generation](https://arxiv.org/pdf/1703.05698.pdf)
+  - [IntelliCode Compose: Code Generation using Transformer](https://arxiv.org/pdf/2005.08025.pdf)
+  - [Mining error-handling specifications for systems software](https://dl.acm.org/doi/abs/10.1145/3236024.3275440)
+  - [Path-based function embedding and its application to error-handling specification mining](https://dl.acm.org/doi/abs/10.1145/3236024.3236059)
+
 ## February 8, 2020
 
 - Last week
