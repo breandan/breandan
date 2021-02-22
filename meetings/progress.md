@@ -14,6 +14,17 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## February 22, 2020
+
+- Last Week
+  - Worked on [research proposal](../paperwork/research_proposal/research_proposal.pdf)
+  - Intro to [sequent calculus](https://www.youtube.com/watch?v=xLRUofFSq5Y)
+  - RethinkingMLPapers workshop organization
+  - Meeting with Disha and David
+- This week
+  - Meeting with Xujie
+  - Meeting with Prakash
+
 ## February 15, 2020
 
 - Last week
