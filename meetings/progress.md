@@ -17,13 +17,31 @@
 ## February 22, 2020
 
 - Last Week
-  - Worked on [research proposal](../paperwork/research_proposal/research_proposal.pdf)
+  - Worked on [research proposal](https://github.com/breandan/breandan/blob/master/paperwork/research_proposal/research_proposal.pdf)
   - Intro to [sequent calculus](https://www.youtube.com/watch?v=xLRUofFSq5Y)
   - RethinkingMLPapers workshop organization
   - Meeting with Disha and David
+  - Reviewing paper for Iarsoslav
 - This week
-  - Meeting with Xujie
-  - Meeting with Prakash
+  - Meeting with Jin + Xujie Wednesday
+  - Meeting with Prakash Friday
+- Challenges / Questions
+  - Narrowing down the scope a bit
+  - How to restrict the action space
+  - Where does the human come in?
+- Reading
+  - [Codebase as Database: Turning the IDE Inside Out with Datalog](https://petevilter.me/post/datalog-typechecking/)
+  - [Expressive and scalable source code queries with graph databases](https://people.inf.elte.hu/kiss/14kor/oopsla13.pdf)
+  - [Dependently typed knowledge graphs](https://arxiv.org/pdf/2003.03785.pdf)
+  - [Wasserstein-based graph alignment](https://arxiv.org/pdf/2003.06048.pdf)
+  - [Compositional Generalization via Neural-Symbolic Stack Machines](https://nips.cc/virtual/2020/protected/poster_12b1e42dc0746f22cf361267de07073f.html)
+  - [Synthesizing Tasks for Block-based Programming](https://nips.cc/virtual/2020/protected/poster_fd9dd764a6f1d73f4340d570804eacc4.html)
+  - [Unsupervised Translation of Programming Languages](https://nips.cc/virtual/2020/protected/poster_ed23fbf18c2cd35f8c7f8de44f85c08d.html)
+  - [PyGlove: Symbolic Programming for Automated Machine Learning](https://nips.cc/virtual/2020/protected/poster_012a91467f210472fab4e11359bbfef6.html)
+  - [Synthesize, Execute and Debug: Learning to Repair for Neural Program Synthesis](https://nips.cc/virtual/2020/protected/poster_cd0f74b5955dc87fd0605745c4b49ee8.html)
+  - [Learning Graph Structure With A Finite-State Automaton Layer](https://nips.cc/virtual/2020/protected/poster_1fdc0ee9d95c71d73df82ac8f0721459.html)
+  - [Learning Compositional Rules via Neural Program Synthesis](https://nips.cc/virtual/2020/protected/poster_7a685d9edd95508471a9d3d6fcace432.html)
+  - [Learning to Execute Programs with Instruction Pointer Attention Graph Neural Networks](https://nips.cc/virtual/2020/protected/poster_62326dc7c4f7b849d6f013ba46489d6c.html)
 
 ## February 15, 2020
 
