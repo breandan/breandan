@@ -1,0 +1,443 @@
+\documentclass[conference]{IEEEtran}
+%\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{textcomp}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{xpatch}
+\usepackage[style=ieee]{biblatex}
+\usepackage[binary-units=true]{siunitx}
+
+\definecolor{navyblue}{rgb}{0.0, 0.0, 0.5}
+\definecolor{burntorange}{rgb}{0.8, 0.33, 0.0}
+\definecolor{forestgreen(web)}{rgb}{0.13, 0.55, 0.13}
+
+\usepackage{fontspec}
+
+\setmonofont[Scale=0.85]{[JetBrainsMono-Regular.ttf]}[
+    Contextuals = Alternate,
+    Ligatures = TeX,
+]
+
+\usepackage{listings}
+
+\lstset{
+    basicstyle = \ttfamily\scriptsize,
+    columns = flexible,
+}
+
+\makeatletter
+\renewcommand*\verbatim@nolig@list{}
+\makeatother
+\usepackage{xcolor}
+
+\lstdefinelanguage{Java}{
+    comment=[l]{//},
+    commentstyle={\color{gray}\ttfamily},
+    emph={},
+    emphstyle={\color{OrangeRed}},
+    identifierstyle=\color{black},
+    keywords={abstract, assert, boolean, break, case, catch, char, class, const, continue, default, do, double, else, enum, extends, false, final, finally, float, for, goto, if, implements, import, instanceof, int, interface, long, native, new, non-sealed, null, package, private, protected, public, return, short, static, strictfp, super, switch, synchronized, this, throw, throws, transient, true, try, void, volatile, while},
+    keywordstyle={\color{navyblue}\bfseries},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]",
+    morestring=[s]{"""*}{*"""},
+    ndkeywords={},
+    ndkeywordstyle={\color{burntorange}\bfseries},
+    sensitive=true,
+    stringstyle={\color{forestgreen(web)}\ttfamily},
+}
+
+\lstdefinelanguage{JavaScript}{
+    comment=[l]{//},
+    commentstyle={\color{gray}\ttfamily},
+    emph={},
+    emphstyle={\color{OrangeRed}},
+    identifierstyle=\color{black},
+    keywords={var, function, return},
+    keywordstyle={\color{navyblue}\bfseries},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]",
+    morestring=[b]',
+    ndkeywords={},
+    ndkeywordstyle={\color{burntorange}\bfseries},
+    sensitive=true,
+  stringstyle={\color{forestgreen(web)}\ttfamily},
+}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\xpatchbibdriver{online}
+  {\printtext[parens]{\usebibmacro{date}}}
+  {\iffieldundef{year}
+    {}
+    {\printtext[parens]{\usebibmacro{date}}}}
+  {}
+  {\typeout{There was an error patching biblatex-ieee (specifically, ieee.bbx's @online driver)}}
+
+\addbibresource[]{references.bib}
+
+\begin{document}
+
+\title{Compilation of mathematical expressions in Kotlin}
+
+\author{\IEEEauthorblockN{Iaroslav Postovalov}
+\IEEEauthorblockA{
+\IEEEauthorblockA{\textit{JetBrains Research (Nuclear Physics Methods group)}}
+Novosibirsk, Russia \\
+ORCID: 0000-0002-7221-365X\\
+postovalovya@gmail.com}
+}
+
+\maketitle
+
+\begin{abstract}
+\textbf{Interpreting mathematical expressions at runtime is a standard task in scientific software engineering. There are different approaches to this problem from creating an embedded domain-specific language (eDSL) with its own parser and interpreter specifically for that task, a full-fledged embedded compiler. This article is dedicated to a middle-ground solution implemented in the KMath library, which uses the Kotlin object builder DSL and its own algebraic abstractions to generate an AST for mathematical operations. This AST is then compiled just-in-time to generate JVM bytecode. A similar approach is tested on other Kotlin platforms, where its performance is compared across a variety of supported platforms.}
+\end{abstract}
+
+\begin{IEEEkeywords}
+Dynamic compiler, Software libraries, Software performance
+\end{IEEEkeywords}
+
+\section{Introduction}
+A common task in scientific software development is the dynamic interpretation of mathematical expressions, where an expression, either defined as source code or an external string, must be evaluated at runtime.
+
+There are broad two approaches to dynamic execution: pure interpretation is more portable but typically slower, and dynamic compilation (i.e. JIT \cite{jit}, or just-in-time compilation) is often faster but more complex. As the goal of this research is to provide a universal and high-performance dynamic execution engine, pure interpretation does not meet our requirements, and implementing a complete JIT compilation cycle is too complex, requiring many tradeoffs between the level of optimization and the performance of compilation. 
+
+Various runtimes offer competitive performance and a mechanism to load the intermediate representation (IR) dynamically, among them, the well-known \textit{Java Virtual Machine} (JVM). In addition to Java, the JVM supports a variety of other languages, including a modern, expressive language called Kotlin \cite{Kotlin}.
+
+A reasonable question to ask is: why implement custom compiler infrastructure instead of using a existing solution? For example, Kotlin provides a scripting engine for compiling expressions on-the-fly. However such general-purpose compilers are limited by their size and complexity (e.g., \texttt{kotlin-compiler-embeddable} is around 40 \si{\mebi\byte}), and the compilation performance is usually slow.
+
+The alternative described in this paper is implemented in a library called \textit{KMath} \cite{doi:10.1063/1.5130103}, \cite{alexander_nozik_2021_4452686}, a Kotlin-based mathematical library, which implements a generic set of elements and algebraic operations over them using abstract algebra.
+
+The approach taken by KMath offers a number of benefits for defining and evaluating mathematical expressions. In particular, users can easily implement expressions on double-precision floating-point numbers and define custom operators on all supported algebraic structures.
+
+\section{KMath Principles}
+
+Mathematical operations in KMath are generally separated from mathematical objects. To perform an operation, say $+$, one needs two generic objects of type \texttt{T} and a polymorphic algebraic context parameterized by \texttt{T}, say \texttt{Space<T>}. Separating operations from objects has several advantages:
+
+\begin{itemize}
+    \item Multiple operations may be valid depending on the application. For geometric applications, a matrix has an elementwise sum but no corresponding operator for multiplication. While NumPy semantics allow elementwise addition, multiplication and other operators, mixing these operations in a single type can lead to confusion and complicate implementation.
+    \item Multiple implementations of the same operation may be possible. For example, \textit{KMath} supports binding to external libraries that may be used interchangeably.
+    \item The context (called \texttt{Algebra} or algebraic context) could store information required to provide additional runtime guarantees. For example, it is possible to guarantee only a specific shape of n-dimensional arrays are valid in a given context or lexical scope.~\cite{Considine2019KotlinAS}
+\end{itemize}
+
+Mathematical contexts have the following hierarchy:
+
+$\texttt{Field <: Ring <: Space <: Algebra}$
+
+These interfaces loosely fulfill the standard mathematical definition indicated by their name:
+
+\begin{enumerate}
+    \item \texttt{Space} defines $+$, additive identity (i.e., $0$), and $\times$.
+    \item \texttt{Ring} adds a multiplicative identity (i.e., $1$).
+    \item \texttt{Field} defines a multiplicative inverse, i.e. $\div$
+\end{enumerate}
+
+A typical implementation of \texttt{Field<T>} is the \texttt{RealField} which works on doubles, and \texttt{VectorSpace} for \texttt{Space<T>}. In some cases, the algebra context can hold additional operations such as exp or sin, which are inherited from the appropriate interface. 
+
+%Also, contexts may have operations, which produce elements outside the context. For example, \texttt{Matrix.dot} operation produces a matrix with new dimensions, which can be incompatible with initial matrix in terms of linear operations.
+
+\section{Design of Expressions API}
+
+The KMath abstract algebra offers additional benefits for expression compilation. One can create a generic expression that uses only operations, provided by an \texttt{Algebra} contract and then use a specific \texttt{Algebra} instance to perform operations and compute the value of the expression. Still, it requires some additional work to make it convenient for dynamic expression compilation.
+
+The first major change of KMath core API is the addition of dynamic operation dispatching to the primary marker interface \texttt{Algebra<T>}. Currently, no algebraic context of KMath declares ternary operations, so only \texttt{unaryOperation} and \texttt{binaryOperation} methods were added to call an operation dynamically by its name and operands. Also, the \texttt{symbol} method has been added so that \texttt{Algebra<T>} could declare constants like the imaginary $i$ in the context of complex numbers. Also, \texttt{unaryOperationFunction} and \texttt{binaryOperationFunction} companion functions have been added with the only difference that they return the Kotlin function type object instead of the value of the operation.
+
+The second stage of implementation was about submitting expressions as an entity in KMath.
+
+In the current API, instances of \texttt{Expression} should declare a function \texttt{invoke} which takes bindings and evaluates the expression.
+
+The most basic implementations of \texttt{Expression} are the so-called \textit{functional expressions}, which are organized as a tree of \texttt{Expression} objects.
+
+\section{The MST Structure}
+\textit{MST} (Mathematical Syntax Tree) is a primitive abstract syntax tree, and it describes a certain set of expressions with only four kinds of nodes:
+
+\begin{itemize}
+    \item terminal numeric node (e.g., $42$),
+    \item terminal symbolic node (e.g., $i$),
+    \item unary operation node (e.g., $\sin{(\text{arg})}$),
+    \item binary operation node (e.g., $\text{left} + \text{right}$).
+\end{itemize}
+
+There are three ways to obtain MST instances:
+
+\begin{enumerate}
+    \item Parse a string using a grammar that can produce a certain set of MST nodes.
+    \item Construct it directly.
+    \item Use a special KMath context where all the operations create an MST.
+\end{enumerate}
+
+The MST can be interpreted by simple recursive traversal, and it is actually the slowest way of expression execution, even slower than functional expressions (as will be seen from the benchmarks' data), and KMath API provides such an interpreter for three reasons: dynamic compilation is restricted in several VM environments, the dynamic compilation is not implemented for Kotlin/Native, and the interpreter is useful for testing reasons.
+
+\texttt{MST} is connected to \texttt{Expression} API with \texttt{MstExpression} class, which is basically a pair of an MST node, and an algebraic structure reference. The only difference between \texttt{MstExpression} and direct \texttt{MST} interpretation is that in \texttt{Expression} implementation symbolic nodes are loaded not only with the constants and literals of the target algebraic context, but also with the expression symbols too.
+
+Four other ways were considered of \texttt{MST} translation. Two turned out to be performance successful and universal in the sense that they can compile \texttt{MST} instances for any algebraic structure---both user-declared and  those loaded from any KMath module.
+
+\section{Java Class Generation}
+
+The goal of \texttt{MST} compilation to Java bytecode is to get and load Java class dynamically from an \texttt{MST} instance. The generated class should implement the \texttt{Expression} interface with valid type parameters, be consistent with the interpreter and delegate all the operations directly to a KMath algebraic structure to be universal.
+
+\textit{ObjectWeb ASM} \cite{ASM} was picked as a bytecode manipulation framework since it is considered to be the most lightweight and is used by many industrial strength languages' compilers.
+
+There were two major problems.
+
+The first one is boxing. Boxing and unboxing type conversions \cite{java11} are often performed in JVM because of type erasure and degrade calculation performance, and since \texttt{Expression} interface is a generic one, boxing conversions are performed there, so the number of these conversions should be minimized. It is possible to optimize out boxing with escape analysis and scalar replacement, but the performance of generated expressions on alternative JVM implementations like GraalVM \cite{GraalVM} has to be investigated.
+
+The second one is the way of acquiring a method signature that will call the needed algebraic operation.
+
+Four options for solving these problems have been considered:
+
+\begin{enumerate}
+    \item The method to invoke is searched within the given \texttt{Algebra} object with Java reflection.
+    \item No direct methods to algebraic operation functions are performed, \texttt{unaryOperation} and \texttt{binaryOperation} routines are called each time.
+    \item Direct calls are inserted but only in the case if the user provides a dictionary, which maps \texttt{Algebra} operation identifiers to method signatures.
+    \item \texttt{unaryOperationFunction} and \texttt{binaryOperationFunction} are used, and the functions they return are stored within the expression object.
+\end{enumerate}
+
+There is a table of the advantages and disadvantages for each of the four options---\ref{calls}.
+
+\begin{table*}
+    \caption{Operations Calling Approaches on JVM}\label{calls}
+    \centering
+    \scriptsize
+    \resizebox{\textwidth}{!}{\begin{tabular}{|c|c|c|c|c|}
+\cline{2-5}
+      \multicolumn{1}{c|}{} & \textbf{Reflection lookup}    & \textbf{Direct dynamic calls}                                                        & \textbf{Method calls by the table}                                                                & \textbf{Indirect dynamic calls}                                                                                                   \\ \hline
+\textbf{Boxing problem}                                                                                  & Only return value is boxed    & \begin{tabular}[c]{@{}c@{}}Both arguments and return \\ value are boxed\end{tabular} & \begin{tabular}[c]{@{}c@{}}Only return value is boxed, \\ or everything is boxed\end{tabular} & \begin{tabular}[c]{@{}c@{}}Both arguments and return\\ value are boxed, \\ but some optimizations\\ will be possible\end{tabular} \\ \hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Fails if operation name doesn't\\ match the method name\end{tabular}} & Yes                           & No                                                                                   & No                                                                                            & No                                                                                                                                \\ \hline
+\textbf{\begin{tabular}[c]{@{}c@{}}An extra parameter should \\ be passed to the compiler\end{tabular}}  & No                            & No                                                                                   & Yes                                                                                           & No                                                                                                                                \\ \hline
+\textbf{\begin{tabular}[c]{@{}c@{}}Performs tableswitch \\ operations lookup\end{tabular}}               & Only if method can't be found & At each call                                                                         & No                                                                                            & Only at compilation                                                                                                               \\ \hline
+    \end{tabular}}
+\end{table*}
+
+There were two attempts to implement Java bytecode generation.
+
+The first one used the reflection lookup; however, it was considered non-universal because it is broken for cases when the operation name doesn't match the name of the function, or the function with that name doesn't perform the same thing as the operation. Implementing this algorithm was also cumbersome because many stack values had to be coerced, reflection had been used actively.
+
+In the second attempt, the third option was accomplished---function type objects were collected from \texttt{unaryOperationFunction} like methods. This algorithm causes a larger boxing allocation overhead; however, it is much more stable and universal.
+
+\begin{figure}[ht]
+    \begin{center}
+    \begin{tabular}{c}
+    \begin{lstlisting}[language=Java]
+import java.util.*;
+
+import scientifik.kmath.asm.internal.*;
+import scientifik.kmath.expressions.*;
+import scientifik.kmath.operations.*;
+
+public final class AsmCompiledExpression_1073786867_0
+        implements Expression<Double> {
+    private final RealField algebra;
+
+    public final Double invoke(
+            Map<String, ? extends Double> arguments) {
+        return (Double) algebra
+                .add(((Double) MapIntrinsics
+                        .getOrFail(arguments, "x"))
+                        .doubleValue(), 2.0D);
+    }
+
+    public AsmCompiledExpression_1073786867_0(
+            RealField algebra) {
+        this.algebra = algebra;
+    }
+}
+    \end{lstlisting}
+    \end{tabular}
+    \end{center}
+    \caption{Legacy bytecode generation result (decompiled)}\label{ls1}
+\end{figure}
+
+\begin{figure}[ht]
+    \begin{center}
+    \begin{tabular}{c}
+    \begin{lstlisting}[language=Java]
+import java.util.*;
+
+import kotlin.jvm.functions.*;
+import kscience.kmath.asm.internal.*;
+import kscience.kmath.expressions.*;
+
+public final class AsmCompiledExpression_45045_0
+        implements Expression<Double> {
+    private final Object[] constants;
+
+    public AsmCompiledExpression_45045_0(
+            Object[] constants) {
+        this.constants = constants;
+    }
+
+    public final Double invoke(
+            Map<Symbol, ? extends Double> arguments) {
+        return (Double) ((Function2) constants[0])
+                .invoke((Double) MapIntrinsics
+                        .getOrFail(arguments, "x"), 2);
+    }
+}
+    \end{lstlisting}
+    \end{tabular}
+    \end{center}
+    \caption{Current bytecode generation result (decompiled)}\label{ls2}
+\end{figure}
+
+Let us compare the bytecode generated by both generation algorithms in decompiled forms: from the legacy one---fig. \ref{ls1}, and from modern one---fig. \ref{ls2}.
+
+Both classes are generated for expression $x+2$ in the context of \texttt{RealField} that implements \texttt{ExtendedField<Double>}, so both classes implement \texttt{Expression<Double>}. The access flags, class name pattern, declared methods, and type signatures (except the key of arguments map is changed to \texttt{Symbol} from \texttt{String}, but it does not matter) are the same. The first difference is stored fields. Old bytecode generator emitted either one or two fields: the first one always stores a reference to \texttt{Algebra} object, the second one stores constants (as \texttt{Object[]}) required by the expression if they can't be placed to the class file's constant pool. New generator emits only one field---\texttt{constants}, which stores dynamic constants as well as  Kotlin function objects produced by \texttt{unaryOperationFunction} and \texttt{binaryOperationFunction} methods. The second difference is the way of constructing the expression sequence: the old code generation has \texttt{Algebra} reference as receiver of all the operations, the new one has elements of the constants array only. Both generated classes are constructed with reflection.
+
+\section{JavaScript Source Code Generation}
+
+Applying Kotlin Multiplatform to the created library it was easy to port MST features to Kotlin/JS (Kotlin for JavaScript) and Kotlin/Native (Kotlin for Native) as well as a feature similar to JVM dynamic compilation.
+
+The development of JavaScript was straightforward. The idea of storing functions instead of \texttt{Algebra} references was derived from the Java bytecode backend---the generated function gets the similar constants array which stores both constant values of expression and function references of operations used in the expression.
+
+As for tooling, estree \cite{estree} as JavaScript AST classes package and astring \cite{astring} as code generation framework were selected, and the only implementation choice was between creating sources by appending fragments to a string or building AST then rendering it.
+
+The MST to JS compiler generates a function then wraps it as a KMath \texttt{Expression}. There is an example of such a function in fig. \ref{ls3}.
+
+\begin{figure}[ht]
+    \begin{center}
+    \begin{tabular}{c}
+    \begin{lstlisting}[language=JavaScript]
+var executable = function (constants, arguments) {
+  return constants[1](constants[0](arguments, "x"), 2);
+};
+    \end{lstlisting}
+    \end{tabular}
+    \end{center}
+    \caption{Example of generated JavaScript function}\label{ls3}
+\end{figure}
+
+\section{WebAssembly IR Generation}
+\textit{WebAssembly} (or WASM) \cite{wasm} is an open standard defining a portable IR for executable programs, and in the context of this study, WebAssembly code generation was considered. However, this way of compiling was much more limited than the generation of JVM bytecode and JS source code.
+
+Since the compilation has to be dynamic, the Kotlin/JS was used for the prototype of this backend, and here are the concrete trade-offs and problems with it:
+
+\begin{enumerate}
+    \item This compilation couldn't be universal because calling JS from WASM interoperability is confirmed to be slow hence Kotlin/JS builtin mathematical functions (which are simply delegated to JavaScript \texttt{Math} object, of course) were not available as well as any opportunities to invoke KMath contexts functions.
+    \item Only \texttt{f64} and \texttt{i32} WebAssembly types were supported because i64 isn't available without experimental V8 feature that maps \texttt{i64} to JavaScript \texttt{bigint} type. \texttt{f32} was not available for a similar reason---JavaScript doesn't have a type for single-precision floating-point format.
+    \item Basic mathematical functions for \texttt{f64} (like \texttt{sin} and \texttt{cos}) required to support operations that \texttt{RealField} does were taken from \texttt{libm} (also known as \texttt{math.h} \cite{ISO:2011:IIIb}) which was compiled to WebAssembly and appended partially to the initial state of WebAssembly module. All the other \texttt{f64} arithmetic is available with WebAssembly opcodes.
+\end{enumerate}
+
+\begin{figure}[ht]
+    \begin{center}
+    \begin{tabular}{c}
+    \begin{lstlisting}
+(func $executable (param $0 f64) (result f64)
+  (f64.add
+    (local.get $0)
+    (f64.const 2)
+  )
+)
+    \end{lstlisting}
+    \end{tabular}
+    \end{center}
+    \caption{Example of emitted WASM IR in the WAT form}\label{ls4}
+\end{figure}
+
+This backend uses \texttt{binaryen} \cite{binaryen} library to simplify IR generation and perform some optimizations.
+
+Actually, the upcoming Kotlin/WASM (Kotlin for WebAssembly) target would be much more suitable because of the lack of interoperability overhead, but it is in early development phase now.
+
+\section{LLVM IR Generation}
+\textit{LLVM} (Low-level Virtual Machine) \cite{1281665} compiler infrastructure project is a set of compiler and toolchain technologies designed around an IR that serves as a portable, high-level assembly language.
+
+LLVM was used as the backend of Kotlin/Native, so it has been investigated as a possible expression compilation target, too.
+
+However, the decision has been made to forgo this feature for two reasons:
+
+\begin{enumerate}
+    \item This generation target couldn't be universal because Kotlin/Native as host platform is hard to interoperate.
+    \item More importantly LLVM is huge and has pitiful compilation performance especially with higher optimization levels, so it is unsuited for dynamic compilation, and it made no point in carrying the LLVM at least for primitive typed computations as for WebAssembly. All the previously mentioned IRs have a lightweight or built-in language runtime generation infrastructure.
+\end{enumerate}
+
+\section{Benchmark Results}
+
+The new expression APIs were microbenchmarked. Two measurements are included in this paper.
+
+\textbf{Environment data:}
+
+\begin{itemize}
+    \item CPU: Intel Core i5 6400, 3.196\,\si{\GHz}, Skylake
+    \item RAM: 15.977\,\si{\gibi\byte}
+    \item OS: Ubuntu 20.10 Groovy
+\end{itemize}
+
+All the tested expressions API implementations calculate the formula below one million times by using double-precision floating-point arithmetic:
+
+\begin{align}
+    2\,x + \frac{2}{x} - \frac{16}{\sin{(x)}}.
+\end{align}
+
+\textbf{Java runtime:}
+
+\begin{enumerate}
+    \item OpenJDK Hotspot (build 11.0.10+9-LTS)
+    \item OpenJDK GraalVM CE 21.0.0 (build 11.0.10+8-jvmci-21.0-b06)
+\end{enumerate}
+
+\textit{JMH} \cite{JMH} (Java Microbenchmark Harness) shipped within the kotlinx-benchmark \cite{kx-bc} tool was used in throughput mode with 5 warm-ups and 5 plain iterations.
+
+JVM hosted measurements are presented in table \ref{bc1}.
+
+\begin{table}[ht]
+    \caption{JVM Hosted Measurements}\label{bc1}
+    \centering
+    \footnotesize
+    \begin{tabular}{c|c|c|c|}
+\cline{2-4}
+\multirow{2}{*}{}                         & \multirow{2}{*}{\textbf{Description}}                                                  & \multicolumn{2}{c|}{\textbf{Average throughput}} \\ \cline{3-4} 
+                                          &                                                                                        & \textbf{Hotspot}    & \textbf{GraalVM}           \\ \hline
+\multicolumn{1}{|c|}{\textbf{functional}} & \begin{tabular}[c]{@{}c@{}}Functional\\ expression\end{tabular}                        & 2.6\,\si{\Hz}       & \textbf{4.003}\,\si{\Hz}   \\ \hline
+\multicolumn{1}{|c|}{\textbf{mst}}        & \begin{tabular}[c]{@{}c@{}}Interpreted MST\\ expression\end{tabular}                   & 0.188\,\si{\Hz}     & \textbf{0.177}\,\si{\Hz}   \\ \hline
+\multicolumn{1}{|c|}{\textbf{asm}}        & \begin{tabular}[c]{@{}c@{}}ASM compiled\\ expression\end{tabular}                      & 2.994\,\si{\Hz}     & \textbf{4.196}\,\si{\Hz}   \\ \hline
+\multicolumn{1}{|c|}{\textbf{raw}}        & \begin{tabular}[c]{@{}c@{}}Statically compiled\\ implementation in Kotlin\end{tabular} & 4.012\,\si{\Hz}     & \textbf{7.864}\,\si{\Hz}   \\ \hline
+    \end{tabular}
+\end{table}
+
+\textbf{JS runtime:}
+
+\begin{enumerate}
+    \item NodeJS 12.16.1 (V8 7.8.279.23-node.31)
+\end{enumerate}
+
+JS hosted measurements are presented in table \ref{bc2}.
+
+\begin{table}[ht]
+    \caption{JS Hosted Measurements}\label{bc2}
+    \centering
+    \footnotesize
+    \begin{tabular}{c|c|c|}
+\cline{2-3}
+\multirow{2}{*}{}                         & \multirow{2}{*}{\textbf{Description}}                                                 & \textbf{Single shot time}   \\ \cline{3-3} 
+                                          &                                                                                       & \textbf{NodeJS}             \\ \hline
+\multicolumn{1}{|c|}{\textbf{functional}} & Functional Expression                                                                 & 3.61\,\si{\second}          \\ \hline
+\multicolumn{1}{|c|}{\textbf{mst}}        & MST Expression                                                                        & 254\,\si{\second}           \\ \hline
+\multicolumn{1}{|c|}{\textbf{wasm}}       & WASM compiled expression                                                              & 4.22\,\si{\second}          \\ \hline
+\multicolumn{1}{|c|}{\textbf{estree}}     & \begin{tabular}[c]{@{}c@{}}ESTree compiled\\ expression\end{tabular}                  & \textbf{3.55}\,\si{\second} \\ \hline
+\multicolumn{1}{|c|}{\textbf{raw}}        & \begin{tabular}[c]{@{}c@{}}Statically written\\ implementation in Kotlin\end{tabular} & 1.59\,\si{\second}          \\ \hline
+    \end{tabular}
+\end{table}
+
+\section{Conclusion}
+The research on the dynamical interpretation and code generation for generic algebras in KMath is a work in progress. There are a lot of things to be done about performance optimization and API clean-up. Still, even current results show the principal possibility of using dynamic expression building even for performance-critical parts. The ASM code generation did not provide a significant performance boost but still is useful for research. 
+
+MST representation was a side-product of this research, but proved to be a valuable tool of its own. Since it is a syntactic tree with the possibility to support symbols, it is possible to use it for simple symbolic computations. For example, there is experimental support for automatic differentiation based on Kotlin$\nabla$ \cite{Considine2019KotlinAS}.
+
+\section{Acknowledgment}
+
+The author would like to thank the members of the KMath development team (Alexander Nozik, Peter Klimai, and Roland Grinis) and Breandan Considine for discussion and revision of the work.
+
+The KMath project is developed in cooperation between MIPT and JetBrains Research.
+
+\printbibliography
+\end{document}
