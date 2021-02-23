@@ -1,5 +1,17 @@
 ## Minutes
 
+## Feb 22, 2020
+
+- Why is this an important problem?
+- Usefulness of the evidence between the context
+- Look at the prior literature
+- Where does the data come from?
+- Send update on Tuesday
+- What kind of data do you want to gather?
+- Assign the new task, maybe code completion
+- Need to compare with current state of art
+- Comparison with SOTA, select a task
+
 ## December 9th, 2020
 
 - Clarify Reseach goals / evidence for ideas rules are learnable
