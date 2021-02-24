@@ -39,11 +39,15 @@ During evaluation, we then measure how well the agent performed. Many loss funct
 
 \section{Method}
 
-MDP / Tries / GNNs / Transformers / REINFORCE
+We fetch a dataset of random repositories on GitHub containing a mixture of filetypes representing both source code and natural language artifacts. Each project is indexed using a variable height radix tree, producing a multimap of prefix strings to a set of artifact, offset $(A, O)$ pairs in linear time.
+
+ We initialize the policy network using a pretrained language model for the target languages. Starting at the site of the prediction task and conditioning on the context, the policy network draws K queries from its latent state. Querying the radix tree produces a set of matching locations within the project, and the process is repeated at each matching location using either a simple BFS traversal, or by expanding a subset of matching locations which are most promising, using MCTS with a finite horizon.
+
+The rollout traces form a graph of related locations inside the project and their corresponding context embeddings, which become the GNN node features. Once the rollout ends, we run message passing on the resulting GNN for a fixed numbers of steps, then decode the graph embedding. Both the decoder, GNN weights, and policy network are trained end-to-end on the downstream task, e.g. code completion, defect detection or correction.
 
 \section{Experiments}
 
-In this work, our primary focus is learning to read software artifacts in a software repository and apply the knowledge contained. Code is a graph database, or knowledge graph whose edges represent semantic relationships between entities. Our research seeks to answer the following research questions. Can the agent can learn to:
+In this work, we attempt to understand the relationship between entities in a software project. Our work seeks to answer the question: which artifacts in a software project are most useful for a given prediction task? We hypothesize that the policy network will learn to use both natural language and source code artifacts. If successful, this can be useful for both the prediction task itself, and knowledge graph extraction. Our research seeks to answer the following research questions. Can the agent can learn to:
 
 \begin{enumerate}
   \item Navigate the project and locate contextually relevant artifacts?
@@ -55,7 +59,7 @@ In our first experiment, we attempt to understand which queries the agent is per
 
 In our second experiment, we try to measure the information contained in various filetypes by ablating results in various filetypes. For trajectories which explore various filetypes such as Markdown or Java, what information gain do resources of these filetypes provide?
 
-Our next steps are to build an RL environment which allows an agent to interact with a knowledge base and runtime environment. We will use an in-memory graph database to store and load project artifacts to and from the knowledge base. To model the agent, we will use the actions described above for navigating the environment, searching for text and reading documents, with a transformer-based internal state, pretrained on a corpus of projects in the same language. Finally, to evaluate the agent, we will generate problem instances and use a JIT to rapidly validate generated code fragments.
+Our next steps are to build an RL environment which allows an agent to interact with a knowledge base and runtime environment. We will use an in-memory graph database to store and load project artifacts to and from the knowledge base. To model the agent, we will use the actions described above for navigating the environment, searching for text and reading documents, with a transformer-based internal state, pretrained on a corpus of projects in the same language. Finally, to evaluate the agent, we will generate problem instances and if necessary, use a JIT to rapidly validate generated code fragments.
 
   \bibliography{research_proposal}
   \bibliographystyle{plain}
