@@ -14,6 +14,23 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## February 28, 2020
+
+- Last Week
+  - Implemented [data loader and BERT](https://github.com/breandan/gym-fs)
+  - Testing pipeline on Compute Canada
+  - Presented [research proposal](../paperwork/research_proposal/research_proposal.pdf) to Jin+Xujie
+  - Meeting with students for IFT6759
+  - Guest lecture with Prakash
+- This week
+  - Dataset and unsupervised learning for code
+  - Meeting with Disha + David Tuesday
+- Reading
+  - [Extracting Knowledge from Web Text with Monte Carlo Tree Search](https://dl.acm.org/doi/pdf/10.1145/3366423.3380010)
+  - [Recursive Top-Down Production for Sentence Generation with Latent Trees](https://arxiv.org/pdf/2010.04704.pdf)
+  - [DAGs with NO TEARS: Continuous Optimization for Structure Learning](https://papers.nips.cc/paper/2018/file/e347c51419ffb23ca3fd5050202f9c3d-Paper.pdf)
+  - [Graphical Normalizing Flows](https://arxiv.org/pdf/2006.02548.pdf)
+
 ## February 22, 2020
 
 - Last Week
