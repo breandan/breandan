@@ -25,6 +25,8 @@
 - This week
   - Dataset and unsupervised learning for code
   - Meeting with Disha + David Tuesday
+- Challenges and Questions
+  - Reached out to Tianqi about [TVM4j artifacts](https://discuss.tvm.apache.org/t/publish-tvm4j-artifact/6861)
 - Reading
   - [Extracting Knowledge from Web Text with Monte Carlo Tree Search](https://dl.acm.org/doi/pdf/10.1145/3366423.3380010)
   - [Recursive Top-Down Production for Sentence Generation with Latent Trees](https://arxiv.org/pdf/2010.04704.pdf)
