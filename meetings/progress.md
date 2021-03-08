@@ -14,6 +14,21 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## March 7, 2020
+
+- Last week
+  - [Programming, learning and reasoning chat](minutes.md#march-2nd-2021)
+- This week
+  - Research updates with Jin + Xujie Wednesday
+  - TA project meeting Wednesday
+  - [Workshop CFP logistics](https://rethinkingmlpapers.github.io/submit/)
+  - Jacques' guest lecture Friday
+- Challenges and Questions
+  - [CUDA debugging](https://github.com/awslabs/djl/discussions/732#discussion-3251967)
+  - [FlappyBird debugging](https://github.com/kingyuluk/RL-FlappyBird/issues/2#issuecomment-791849438)
+- Reading
+  - [Deep Implicit Layers](http://implicit-layers-tutorial.org/)
+
 ## February 28, 2020
 
 - Last Week

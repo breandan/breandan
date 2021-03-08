@@ -1,6 +1,32 @@
 ## Minutes
 
-## Feb 22, 2021
+## March 2nd, 2021
+
+[Learning Compositional Rules via Neural Program Synthesis](https://arxiv.org/pdf/2003.05562.pdf)
+
+- **Only superficial resemblance with Meta-learning**: Disha's initial contention was that the paper's resemblance to metalearning was overstated.
+  - The proposed training process had no outer loop or meta train/test split
+  - Simple encoder-decoder architecture with few metalearning adaptations.
+  - Authors used fundamentally the same task at training and test time.
+  - David remarked the results could be partially explained by the MLE objective.
+- **Sampling procedure / Fairness of evaluation**: There was a considerable amount of skepticism around the validity of the search procedure.
+  - David did some arithmetic and speculated the search procedure was nearly exhaustive for the toy grammar shown. If so, why bother learning at all?
+  - Disha was suspicious of the sharp contrast between search-based and search-free synthesis cross-language generalization, possibly indicative of overfitting.
+  - Breandan questioned the feasibility of performing an apples-to-apples comparison with DeepCoder and other methods due to the unique evaluation strategy.
+  - Breandan asked why didn't the authors use structured prediction or hierarchical sampling techniques? David replied that it might be too inflexible to meet developers' evolving needs.
+  - David suggested using attention / contextual relevance as a mechanism for identifying types. Maybe this could help to reduce the search space by pruning similar branches.
+- **Learnability of specification/grammar relation**: There was some discussion about whether the model was actually generalizing and what the model was learning specifically.
+  - David suggested the model was learning what to discard and said the problem might be unlearnable due to the distributional shift between support and query set.
+  - Breandan suggested partial fulfillment of specifications with a gradient-based sampling procedure, possibly using a form of beam search or MCTS.
+  - Disha made some suggestions including using Gumbel softmax to support differentiable sampling.
+
+In summary, Disha had three primary concerns with the proposed method:
+
+1. Potentially overfitting. Timeout-based termination was impractical.
+2. Not truly meta-learning (no outer loop, train/test tasks were not different).
+3. Unconvincing generalization. What specific component allows for generalization?
+
+## February 22nd, 2021
 
 - Why is this an important problem?
 - Usefulness of the evidence between the context
@@ -12,9 +38,37 @@
 - Need to compare with current state of art
 - Comparison with SOTA, select a task
 
+## February 16th, 2021
+
+[Write, Execute, Assess: Program Synthesis with a REPL](https://arxiv.org/pdf/1906.04604.pdf)
+
+- Reasonability of assumptions
+  - David raised some concerns over the (pp, spec) pair and how it might be unreasonable to be handed a fully-formed specification for each rollout.
+  - Disha raised some concerns about the 0-1 loss and how it would be helpful to have a soft loss that was able to reward partial specification matching.
+  - Breandan was concerned the specification and program synthesizer does not attempt to match human data and might not align with human preferences.
+  - We agreed the paper was a cut-and-dry application of RL to program synthesis. Although somewhat simplistic, it was a good start.
+- Necessity of stochasticity
+  - Disha raised a question regarding the necessity and advantages of stochasticity for learning. What benefit does stochasticity confer for program synthesis?
+  - David mentioned the importance of stochasticity in crossing the sim-to-real gap and learning a controller stable to noise in the environment.
+  - Breandan described the distinction between aleatoric and epistemic uncertainty and how black box deterministic functions look stochastic when viewed externally.
+  - We agreed that Ellis et al. used stochasticity primarily in the specification sampling procedure.
+- Architectural improvements
+  - Breandan proposed giving the transition model freedom to generate nonlocal or context-sensitive edits to the state, possibly increasing expressivity.
+  - David asked whether these edits would break context-freedom of the grammar and proposed learning from context using an LSTM architecture.
+  - Disha asked what alternatives to REINFORCE of policy gradient methods might be useful to consider in the context of program synthesis.
+Future directions
+-   Disha wants to explore using execution-guided synthesis with PO/MDPs and incorporating line-based/sequential synthesis in the style of PCCoder and DeepCoder
+  - David wants to build symbolic representations from subsymbolic parts, exploring composition and reuse in natural language, possibly some alignment with programming.
+  - Breandan wants to use probabilistic programming to write programs to generate functions in a language which are closed over itself and incorporate human preferences.
+  - We agreed there was some alignment between our interests.
+Meeting logistics
+  - We agreed to meet every other week to discuss papers this Spring.
+  - We can rotate reading suggestions depending on the week
+  - Maybe Disha, then David, then Breandan can drive the discussion?
+
 ## December 9th, 2020
 
-- Clarify Reseach goals / evidence for ideas rules are learnable
+- Clarify research goals / evidence for ideas rules are learnable
 - Can we learn the ontology from code?
 - Deriving the rules from code?
 - Which domain are we targeting?
