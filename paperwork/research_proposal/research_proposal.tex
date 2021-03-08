@@ -18,33 +18,40 @@
 
 \section{Introduction}
 
-Humans are adept information foraging agents. We can quickly find relevant information in a large corpus by recognizing and following textual landmarks. Software projects feature a variety of semi-structured documents containing many such clues indicating where contextually relevant information can be found. In this work, we train an agent to navigate and read software artifacts like source code and documentation, in order to facilitate common programming tasks such as code completion or defect prediction.
+Humans are adept information foraging agents. We can quickly find relevant information in a large corpus by recognizing and following textual landmarks. Software projects are composed of a variety of semi-structured documents containing clues where relevant information can be found. In this work, we train an agent to navigate and read software artifacts like source code and documentation, in order to facilitate common programming tasks such as code completion or defect prediction.
 
 Our work broadly falls under the umbrella of text-based reinforcement learning. Prior literature falls under two categories: natural or formal language. Reinforcement learning (RL) in the natural domain typically focuses on question answering~\cite{buck2017ask, chen2019reinforcement}, or interactive text games~\cite{he2015deep,ammanabrolu2018playing,narasimhan2015language,guo2020interactive,ammanabrolu2020graph}. RL techniques have begun to show promising results for program synthesis~\cite{ellis2019write, johnson2020learning, chen2020program}. Our work falls at the intersection of these two domains.
 
-Early work in program learning realized the importance of graph-based representations~\cite{allamanis2017learning} however explicit graph construction requires extensive feature-engineering. More recent work in program synthesis has explored incorporating a terminal~\cite{ellis2019write}, graphical~\cite{walke2020learning} or other user interface to explore the space of valid programs. Adaption to settings where style, terminology and document structure vary remains a challenge. Prior approaches do not consider the scope or variety of artifacts in a software project. Early work has shown the feasibility of learning a graph~\cite{johnson2020learning} from source code, but only locally and still requires an explicit parser to form the initial graph.
+Early work in program learning realized the importance of graph-based representations~\cite{allamanis2017learning} however explicit graph construction requires extensive feature-engineering. More recent work in program synthesis has explored incorporating a terminal~\cite{ellis2019write}, graphical~\cite{walke2020learning} or other user interface to explore the space of valid programs, however do not consider the scope or variety of artifacts in a software project and adapting to settings where style, terminology and document structure vary remains a challenge. Early work has shown the feasibility of learning a graph~\cite{johnson2020learning} from source code, but only locally and still requires an explicit parser to form the initial graph.
 
 Unlike prior work, we consider the whole project and related artifacts. Instead of parsing their contents explicitly, which may be computationally expensive or too large to fit in memory, we allow the agent to construct the graph organically by exploring the filesystem, which can later be used to predict a label or sequence at inference time, depending on the task.
 
-Consider a newly-hired developer, who has some programming experience, but no prior knowledge about a closed-source project. After onboarding, she gets access to the repository and is assigned her first ticket: Fix test broken by \texttt{0fb98be}. After finding the commit and getting familiar the code, she searches on StackOverflow, finds a relevant solution, copies some code into the editor, makes a few changes, presses run, and the test passes.
+Imagine a newly-hired developer, who has programming experience, but no prior knowledge about a closed-source project. After onboarding, she gets access to the team's Git repository and is assigned her first ticket: Fix test broken by \texttt{0fb98be}. After locating the commit and getting familiar the code, she queries StackOverflow, discovers a relevant solution, copies the code into the project, makes a few edits, presses run, and the test passes.
 
 In order to accomplish a similar task, an information-seeking agent must be able to search for resources in a database. Similar to a human developer, it might be able to perform simple actions, like \texttt{search(query)}, \texttt{read(text)}, \texttt{copy(text, from, to)}, and \texttt{runCode()} to navigate relevant documents and source code artifacts. As the agent traverses the project using these primitives, it builds up a project-specific knowledge graph.
 
 \begin{figure*}
   \centering
-  \includegraphics[width=0.85\textwidth]{use_graph}
-  \caption{Random walk trace of locations visited by the policy network by querying the radix tree. These form a graph representing relevant entity links, which can be later used for prediction on a downstream task.}
+  \includegraphics[width=0.8\textwidth]{use_graph}
+  \caption{Software projects consist of many documents related by common keywords. Matching locations form an entity alignment graph, with vertices decorated by the surrounding context, and edges representing the relation type, e.g. an exact match, synthesized query or explicit parse result.}
 \end{figure*}
 
 During evaluation, we measure how well the agent performed. Many loss functions are possible depending on the task in question, from a simple string distance metric over a masked code fragment, to a more complex property (e.g. the presence or absence of an error, or some internal state of the REPL) which must be satisfied by interacting with the runtime environment. Many program analysis and repair tasks are amenable to the setup described, including defect, duplicate or vulnerability detection and correction.
 
 \section{Method}
 
-We fetch a dataset of random repositories on GitHub containing a mixture of filetypes representing both source code and natural language artifacts. Each project is indexed using a variable height radix tree, producing a multimap of prefix strings to a set of artifact, offset $(A, O)$ pairs in linear time.
 
- We initialize the policy network using a pretrained language model. Starting at the site of the prediction task and conditioning on the context, the policy network draws K queries from its latent state. Querying the radix tree produces a set of matching locations within the project, and the process is repeated at each location using either direct BFS traversal, or expanding a subset of most promising locations via finite-horizon MCTS.
+\begin{figure*}
+  \centering
+  \includegraphics[width=0.85\textwidth]{architecture}
+  \caption{The policy network is designed to carve out a subset of the project by selectively querying an index for relevant snippets. Unlike language models which directly learn the data, our model instead learns to search an external database for contextually relevant locations. These locations are scored and selectively expanded using a beam search heuristic.}
+\end{figure*}
 
-The rollout traces form a graph of related locations inside the project and their corresponding context embeddings, which become the GNN node features. Once the rollout ends, we run message passing on the resulting GNN for a fixed numbers of steps, then decode the graph embedding. Both the decoder, GNN weights, and policy network are trained end-to-end on the downstream task, e.g. code completion, defect detection or correction.
+We fetch a dataset of random repositories on GitHub containing a mixture of filetypes representing source code and natural language artifacts. Each project is then indexed using a variable height radix tree, producing a multimap of queries to file, offset $(F, O)$ pairs. Querying the index produces a list of \textit{concordances} whose text matches the query.
+
+ We initialize the policy network using a pretrained language model. Starting at the site of the prediction task and conditioning on its local context, the policy network draws K queries from its latent state and queries the index to retrieve a set of salient locations within the parent project. This same process is repeated at each location using either direct BFS traversal, finite-horizon MCTS or beam search to retrieve a set of contextually relevant locations within the parent project.
+
+The rollout traces form a graph of related locations inside the project and their corresponding context embeddings, which form the GNN node features. Once the rollout ends, we run message passing on the resulting GNN for a fixed numbers of steps, and then decode the graph embedding to produce the task prediction. Both the decoder, GNN weights, and policy network are trained end-to-end on the downstream task, e.g. code completion, defect detection or correction.
 
 \section{Experiments}
 
