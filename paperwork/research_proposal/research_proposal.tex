@@ -18,7 +18,7 @@
 
 \section{Introduction}
 
-Humans are adept information foraging agents. We can quickly find relevant information in a large corpus by recognizing and following textual landmarks. Software projects are composed of a variety of semi-structured documents containing clues where relevant information can be found. In this work, we train an agent to navigate and read software artifacts like source code and documentation, in order to facilitate common programming tasks such as code completion or defect prediction.
+Humans are adept information foraging agents. We can quickly find relevant information in a large corpus by recognizing and following textual landmarks. Software projects are composed of a variety of semi-structured documents containing many such clues where relevant information may be found. In this work, we train an agent to navigate and read software artifacts like source code and documentation, in order to facilitate common programming tasks such as code completion or defect prediction.
 
 Our work broadly falls under the umbrella of text-based reinforcement learning. Prior literature falls under two categories: natural or formal language. Reinforcement learning (RL) in the natural domain typically focuses on question answering~\cite{buck2017ask, chen2019reinforcement}, or interactive text games~\cite{he2015deep,ammanabrolu2018playing,narasimhan2015language,guo2020interactive,ammanabrolu2020graph}. RL techniques have begun to show promising results for program synthesis~\cite{ellis2019write, johnson2020learning, chen2020program}. Our work falls at the intersection of these two domains.
 
@@ -44,10 +44,10 @@ During evaluation, we measure how well the agent performed. Many loss functions 
 \begin{figure*}
   \centering
   \includegraphics[width=0.85\textwidth]{architecture}
-  \caption{The policy network is designed to carve out a subset of the project by selectively querying an index for relevant snippets. Unlike language models which directly learn the data, our model instead learns to search an external database for contextually relevant locations. These locations are scored and selectively expanded using a beam search heuristic.}
+  \caption{Unlike language models which directly learn the data distribution, our model is designed to query an external database only available at test time. The model scores and selectively expands a subset of promising results with the database using a beam search heuristic, then runs message passing over the resulting graph to obtain the final task prediction.}
 \end{figure*}
 
-We fetch a dataset of random repositories on GitHub containing a mixture of filetypes representing source code and natural language artifacts. Each project is then indexed using a variable height radix tree, producing a multimap of queries to file, offset $(F, O)$ pairs. Querying the index produces a list of \textit{concordances} whose text matches the query.
+We fetch a dataset of random repositories on GitHub containing a mixture of filetypes representing source code and natural language artifacts. Each project is then indexed using a variable height radix tree, producing a multimap of queries to file offset $(F, O)$ pairs. Querying the index produces a list of \textit{concordances} whose text matches the query.
 
  We initialize the policy network using a pretrained language model. Starting at the site of the prediction task and conditioning on its local context, the policy network draws K queries from its latent state and queries the index to retrieve a set of salient locations within the parent project. This same process is repeated at each location using either direct BFS traversal, finite-horizon MCTS or beam search to retrieve a set of contextually relevant locations within the parent project.
 
