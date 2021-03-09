@@ -26,9 +26,9 @@ Early work in program learning realized the importance of graph-based representa
 
 Unlike prior work, we consider the whole project and related artifacts. Instead of parsing their contents explicitly, which may be computationally expensive or too large to fit in memory, we allow the agent to construct the graph organically by exploring the filesystem, which can later be used to predict a label or sequence at inference time, depending on the task.
 
-Imagine a newly-hired developer, who has programming experience, but no prior knowledge about a closed-source project. After onboarding, she gets access to the team's Git repository and is assigned her first ticket: Fix test broken by \texttt{0fb98be}. After locating the commit and getting familiar the code, she queries StackOverflow, discovers a relevant solution, copies the code into the project, makes a few edits, presses run, and the test passes.
+Imagine a newly-hired developer, who has programming experience, but no prior knowledge about a closed-source project. She receives access to the team's Git repository and is assigned her first ticket: Fix test broken by \texttt{0fb98be}. After locating the commit and becoming familiar with the code, she queries StackOverflow, discovers a relevant solution, copies the code into the project, makes a few edits, presses run, and the test passes.
 
-In order to accomplish a similar task, an information-seeking agent must be able to search for resources in a database. Similar to a human developer, it might be able to perform simple actions, like \texttt{search(query)}, \texttt{read(text)}, \texttt{copy(text, from, to)}, and \texttt{runCode()} to navigate relevant documents and source code artifacts. As the agent traverses the project using these primitives, it builds up a project-specific knowledge graph.
+In order to accomplish a similar task, an information-seeking agent must be able to explore a database. Similar to a human developer, it might be able to perform simple actions, like \texttt{search(query)}, \texttt{read(text)}, \texttt{copy(text, from, to)}, and \texttt{runCode()} while navigate relevant documents and source code artifacts. As the agent traverses the project using these primitives, it builds up a project-specific knowledge graph.
 
 \begin{figure*}
   \centering
@@ -36,7 +36,7 @@ In order to accomplish a similar task, an information-seeking agent must be able
   \caption{Software projects consist of many documents which share common references. These references form an entity alignment graph, with vertices decorated by the surrounding context, and edges by the relation type, e.g. exact duplicate, fuzzy match or synthetic relation (learned or engineered).}
 \end{figure*}
 
-During evaluation, we measure how well the agent performed. Many loss functions are possible depending on the task in question, from a simple string distance metric over a masked code fragment, to a more complex property (e.g. the presence or absence of an error, or some internal state of the REPL) which must be satisfied by interacting with the runtime environment. Many program analysis and repair tasks are amenable to the setup described, including defect, duplicate or vulnerability detection and correction.
+During evaluation, we measure task performance across search strategies. Depending on the task in question, various loss functions are possible, from a simple string distance metric over a masked code fragment, to more complex properties (e.g. the presence or absence of errors, or some internal state of the REPL) that must be satisfied by interacting with the runtime environment. Many program analysis and repair tasks are also possible, such as defect, duplicate or vulnerability detection and correction.
 
 \section{Method}
 
@@ -49,9 +49,9 @@ During evaluation, we measure how well the agent performed. Many loss functions 
 
 We fetch a dataset of random repositories on GitHub containing a mixture of filetypes representing source code and natural language artifacts. Each project is then indexed using a variable height radix tree, producing a multimap of queries to file offset $(F, O)$ pairs. Querying the index produces a list of \textit{concordances} centered on the query match.
 
- We initialize the policy network using a pretrained language model. Starting at the site of the prediction task and conditioning on its local context, the policy network draws K queries from its latent state, which are fed into the index, and produce a set of matching locations. The model scores and selectively expands a subset of those locations and the process is repeated using finite-horizon MCTS or similar beam search procedure to retrieve a set of contextually relevant locations within the parent project.
+ We initialize the policy network using a pretrained language model. Starting at the site of the prediction task and conditioning on its local context, the policy network draws K queries from its latent state, which are fed into the index to produce a set of matching locations. The model scores and selectively expands a subset of those locations, and the process is repeated using finite-horizon MCTS or similar beam search procedure to retrieve a set of contextually relevant locations within the parent project.
 
-The rollout traces form a graph of related locations inside the project and their corresponding context embeddings, which together form the GNN node features. Once the rollout ends, we run message passing on the resulting GNN for a fixed numbers of steps and decode the graph embedding to obtain a task prediction. The decoder, GNN parameters, and policy network are all trained end-to-end on the downstream task, e.g. code completion, defect detection or correction. After convergence, we compare the results across horizon size and analyze the queries and filetypes which are selected.
+The rollout traces form a graph of related locations inside each project and their corresponding context embeddings, which together form the GNN node features. Once the rollout ends, we run message passing on the resulting GNN for a fixed numbers of steps and decode the graph embedding to obtain a task prediction. The decoder, GNN parameters, and policy network are all trained end-to-end on the downstream task, e.g. code completion, defect detection or correction. After convergence, we compare the results across horizon size and analyze the queries and filetypes which are selected.
 
 \section{Experiments}
 
