@@ -58,7 +58,7 @@ The rollout traces form a graph of related locations inside each project and the
 In this work, we attempt to understand the relationship between entities in a software project. Our research seeks to answer the following questions:
 
 \begin{enumerate}
-  \item Which kinds of artifacts in a software project are visited most often?
+  \item Which contexts in a software project share mutual information?
   \item To what degree can we claim the agent has learned to:\begin{enumerate}
   \item Locate contextually relevant artifacts within a software project?
   \item Comprehend the semantic content of the artifacts traversed?
@@ -68,15 +68,15 @@ In this work, we attempt to understand the relationship between entities in a so
 
 In contrast with classical code completion models which only require a file-local context, our method is designed to navigate an entire project. In the following experiments, we compare completion accuracy with a vanilla sequence prediction model, as well as an AST-structured sequence prediction model trained from a corpus of Java projects on the same task.
 
-We hypothesize that by jointly learning to choose locations in a project over which to attend while solving a downstream prediction task, our model will produce a feature representation which selects semantically relevant locations in a large project and predicts a masked sequence completion task. We evaluate our hypothesis both qualitatively and quantitatively.
+We hypothesize that by jointly learning to choose locations in a project over which to attend while solving a downstream task, such as masked sequence completion, our model will produce a feature representation capable of locating and extracting information from semantically relevant locations. We evaluate our hypothesis both qualitatively and quantitatively.
 
-In our first experiment, we attempt to understand which queries the agent is performing when solving a programming task. Does it search for certain keywords in the context? Are those keywords relevant to the task?
+In our first experiment, we attempt to understand which queries the agent is performing while solving a programming task. Does it search for certain keywords in the context? Are those keywords relevant to the task?
 
-In our second experiment, we try to measure the information gain from various filetypes through ablation. For trajectories containing filetypes such as Markdown or Java, what information gain do these resources provide and which filetypes are are the most salient for the prediction task?
+In our second experiment, we try to understand the approximate relation between project artifacts and measure the information gain from various filetypes through ablation. For trajectories containing filetypes which include Markdown or Java, what kinds of information do these resources provide and which categories are most salient for the assigned prediction task?
 
-In our third experiment, we compare prediction accuracy a variety of hyperparameters, such as search horizon depth, action space, and parameter sharing across query, GNN and decoder networks. Should we constrain the action space (e.g. by only considering query tokens from the surrounding context) for more efficient trajectory sampling, or allow arbitrary queries?
+In our third experiment, we compare prediction accuracy across architectures and datasets. Should we constrain the action space (e.g. only querying tokens from the surrounding context) for more efficient trajectory sampling, or allow arbitrary queries? How well does the model architecture transfer to new repositories, within and across programming languages?
 
-If our hypothesis is correct, the policy network will learn to use both natural language and source code artifacts. If so, this would provide evidence to support the broader hypothesis~\cite{guo2017semantically}, that documentation is a useful source of information. In addition to being useful for the prediction task itself, this could also provide a mechanism for knowledge graph extraction.
+If our hypothesis is correct, the policy network will learn to use both natural language and source code artifacts. If so, this would provide evidence to support the broader hypothesis~\cite{guo2017semantically} that documentation is a useful source of information. In addition to being useful for the prediction task itself, we anticipate our model could also be used for knowledge graph extraction.
 
 \section{Next steps}
 
