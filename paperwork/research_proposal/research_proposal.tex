@@ -66,6 +66,10 @@ In this work, we attempt to understand the relationship between entities in a so
   \end{enumerate}
 \end{enumerate}
 
+In contrast with classical code completion models which only require a file-local context, our method is designed to navigate an entire project. In the following experiments, we compare completion accuracy with a vanilla sequence prediction model, as well as an AST-structured sequence prediction model trained from a corpus of Java projects on the same task.
+
+We hypothesize that by jointly learning to choose locations in a project over which to attend while solving a downstream prediction task, our model will produce a feature representation which selects semantically relevant locations in a large project and predicts a masked sequence completion task. We evaluate our hypothesis both qualitatively and quantitatively.
+
 In our first experiment, we attempt to understand which queries the agent is performing when solving a programming task. Does it search for certain keywords in the context? Are those keywords relevant to the task?
 
 In our second experiment, we try to measure the information gain from various filetypes through ablation. For trajectories containing filetypes such as Markdown or Java, what information gain do these resources provide and which filetypes are are the most salient for the prediction task?
