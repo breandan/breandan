@@ -12,7 +12,7 @@
 \usepackage{mathrsfs}
 
 \newcommand*\circled[1]{\tikz[baseline=-0.1cm]{
-    \node[shape=circle,draw,inner sep=0.5pt] (char) {\fontsize{7}{12}\textsf{#1}};}}
+    \node[shape=circle,draw,inner sep=0.48pt] (char) {\fontsize{7}{12}\textsf{#1}};}}
 
 \usepackage{unicode-math}
 \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
@@ -942,11 +942,11 @@ l = sqrt(sum)
 
     \pagebreak\subsection{Distributions are graphs}\label{sec:distributions-graphs}
 
-    We can think of a probability distribution as the output of a stochastic function $F$ which can only be accessed through its extensional description $P(X)$, capturing the relative frequency which certain outputs appear in the codomain. The intensional description $F(x)$ can be seen as a graph, whose nodes represent internal states of the system and edges represent the probabilities of transitioning between those states.
+    We can think of a probability distribution as the output of a stochastic function $F$ which can only be accessed through its extensional description $P(X)$, approximating the relative frequency which certain outputs appear in the codomain. The intensional description $F(x)$ can be seen as a graph, whose nodes represent internal states of the system and whose edges represent the probabilities of transitioning between those states.
 
-    Although we may never access the true graph which generated a given distribution, we can try to reconstruct it by feeding a large number of inputs into a surrogate $\hat F(X;\theta)$ and updating either the graph topology or transition probabilities so as to more closely match the true distribution. Whether or not the intensional descriptions match, if we can do so in a way that causes the extensional descriptions to align, then $F$, $\hat F$ are indistinguishable.
+    Although we may never access the true graph which generated a given distribution, we can try to reconstruct it by feeding many inputs into a surrogate function $\hat F(X;\theta)$ and updating either the graph topology or transition probabilities so as to more closely match the true distribution. Regardless of whether the intensional descriptions match, if we can do so in a way that causes the extensional descriptions to align, then we say that $F$ and $\hat F$ are \textit{extensionally indistinguishable}.
 
-    A neural network can be seen as a differentiable way of generating such a graph, whose architecture represents the space of all possible graphs. As the network is trained, certain edges are discarded and certain edges are strengthened. A trained neural network is a
+%    A neural network can be seen as a differentiable way of generating such a graph, whose architecture represents the space of all possible graphs. As the network is trained, certain edges are discarded and certain edges are strengthened. A trained neural network is a
 
     Probabilistic graphical models~\cite{jordan2003introduction,koller2009probabilistic} (PGMs) are another framework for probabilistic inference on distributions whose conditional independence structure may be expressed as a graph, with edges representing dependence relations between RVs. One type of PGM is a directed graphical model (DGM):
 

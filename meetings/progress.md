@@ -14,6 +14,24 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## March 14, 2020
+
+- Last week
+  - [Contextual alignment](https://docs.google.com/presentation/d/1-FWM6ZRpj0kL-8yqi3SciqbMo9nOWfNHLh9qtpe6W0s/edit#slide=id.gc6a4a1a18e_1_50) / [Learning to search](https://github.com/breandan/breandan/blob/master/paperwork/research_proposal/research_proposal.pdf)
+  - [Isomorphic subsequence alignment](https://github.com/breandan/kaliningraph/blob/master/src/test/kotlin/edu/mcgill/kaliningraph/rewriting/Isosequences.kt)
+  - Jacques' [Drasil talk](https://www.youtube.com/watch?v=q8l6TpXfJks)
+- This week
+  - Setup experiment pipeline on Calcul Quebec
+  - Discussion with Disha / David
+  - Maria's talk Friday
+- Reading
+  - [Emergent Symbols through Binding in External Memory](https://arxiv.org/pdf/2012.14601.pdf)
+  - [Categorical reparameterization with Gumbel-softmax](https://arxiv.org/pdf/1611.01144.pdf)
+  - [Automatic Reparameterisation of Probabilistic Programs](https://arxiv.org/pdf/1906.03028.pdf)
+  - [Learning static analyses with the GFSA](https://colab.research.google.com/github/google-research/google-research/blob/master/gfsa/notebooks/demo_learning_static_analyses.ipynb#scrollTo=YpCT3cA2P2ON)
+  - [Optimal Transport, old and new](https://ljk.imag.fr/membres/Emmanuel.Maitre/lib/exe/fetch.php?media=b07.stflour.pdf)
+  - [JAX Flows](https://jax-flows.readthedocs.io/en/latest/)
+
 ## March 7, 2020
 
 - Last week
