@@ -107,29 +107,11 @@
 
     \section{From exact to approximate equality}\label{sec:definitions}
 
-    Reason is the source of all human knowledge. In order to understand reason, we need to understand how concepts are related. Next to identity, one of the simplest relations is equality. Equality is like identity for objects that may differ in superficial ways, but are the same in all but name and appearance.
+    Reason is the source of all human knowledge. In order to understand reason, we need to understand how concepts are related. In this section, we will give various definitions of equality
 
-    For such a fundamental concept, the notation for equality is recklessly overloaded in mathematics and computer science. Depending on context, $x = y$ may denote: (1)~define $x$ to be $y$, (2)~$x$ and $y$ are the same, (3)~are $x$ and $y$ the same? (4)~$x$ and $y$ are exchangeable, (5)~assign $y$ to $x$, (6)~assign $x$ to $y$, among other peculiar programming idioms. If two expressions are equal, it should be possible to treat them in the same manner.
+    Next to identity, one of the simplest relations is equality. Equality is like identity for objects that may differ in superficial ways, but are the same in all but name and appearance.
 
-    But this convention does not always hold! Suppose we need to compute the derivative of a logical function with respect to its inputs. The trouble is, logical equality is not differentiable. Consider the Kronecker $δ$-function:
-
-    $$
-    δ_k(x, y) :=
-    \begin{cases}
-        1 \text{ if } x \overset{?}{=} y, \\
-        0 \text{ otherwise }\\
-    \end{cases}
-    $$
-
-    When encountering $δ_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $δ_k^{-1}(B\subset \mathbb{B})$ is not open, thus $δ_k$ is not continuous and $\nablaδ_k$ is undefined. Now consider the Dirac $δ$-function, which is defined as follows:
-
-    $$
-    \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)δ_d(x-a,y-b)d(x, y) \overset{Δ}{=} f(a,b)
-    $$
-
-    Unlike $\nablaδ_k$, it can be shown that $\nablaδ_d$ is well-behaved everywhere on $\mathbb{R}^2$. However we encounter an important distinction between intensional and extensional equality. Unlike elementary functions, there exist many functions which can only be described indirectly, e.g. a probability distribution on a set of measure zero. Nevertheless, these constructions are convenient abstractions for modeling many physical and computational processes.
-
-    Neither $δ_k$ nor $\nablaδ_d$ are a satisfactory basis for logical equality. To allow a more flexible definition of the $\overset{?}{=}$ operator, we require a relation which approximates the logical properties of $δ_k$, but can be made differentiable like $δ_d$. A more general notion is the concept of an \textit{equivalence relation} $\equiv$, a binary relation with the following logical properties:
+     A more general notion is the concept of an \textit{equivalence relation} $\equiv$, a binary relation with the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -168,6 +150,18 @@
         \noLine
         \UnaryInfC{\textit{Congruence}}
     \end{prooftree}
+
+    There are various ways to check for equivalence. Some are decidable, some are undecidable.
+
+    More generally, we have something called a metric, which is like equality but with a score. There are a huge number of metrics with various desirable properties.
+
+    Then we have kernels, which are distance metrics with some additional properties.
+
+    Finally, we have probability metrics and kernels, which are probabilistic distance metrics with some additional properties.
+
+    We can define equivalence on other kinds structures. This is called a morphism, e.g. graph isomorphism.
+
+
 
     \pagebreak\subsection{Decidability}\label{sec:algorithms}
 
@@ -579,7 +573,7 @@
     D_{\textsc{KL}}(P → Q) = \int P(x) \log\frac{P(x)}{Q(x)}dx
     $$
 
-  \noindent Now consider the Kantorovich--Rubinstein, or Earthmover metric.
+  \noindent Now we consider the Kantorovich--Rubinstein, or Earthmover metric.
 
     $$
     d(u, v) = \text{min}\Big\{\sum_{i, j} π[i, j]d(x, y) \Bigm| π[i, j] > 0, \sum_i π[i, j]=B_j, \sum_j π[i, j] = y_j \Big\}
@@ -587,7 +581,11 @@
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
+    A probability distribution is like a random walk on a graph.
 
+    \subsection{Morphisms}
+
+    Equality on other objects is called a \textit{morphism}, e.g. graph isomorphisms.
 
     \pagebreak
 
@@ -1135,11 +1133,11 @@ l = sqrt(sum)
         \UnaryInfC{\textit{Annihilation}}
     \end{prooftree}
 
-    \noindent Using iterated matrix multiplication on semirings, it is possible solve a wide variety of path problems. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{accumulate}. Let $\mathbf D_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $\mathbf D_{st}$, one may run the following procedure on a desired path algebra:
+    \noindent Using iterated matrix multiplication on semirings, it is possible solve a wide variety of path problems. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{update}. Let $\mathbf D_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $\mathbf D_{st}$, one may run the following procedure on a desired path algebra:
 
     \begin{center}
         \begin{tabular}{lc|cr}
-            $\mathbf{D}_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Accumulate}}$ & & &
+            $\mathbf{D}_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Update}}$ & & &
             \bgroup
             \def\arraystretch{1.2}
         \begin{tabular}{c|c{1cm}c{1cm}|c{1cm}c{1cm}|c}
@@ -1246,6 +1244,29 @@ l = sqrt(sum)
 
   \appendix
   \section{Appendix}
+    \subsection{Equality notation}
+    For such a fundamental concept, the notation for equality is recklessly overloaded in mathematics and computer science. Depending on context, $x = y$ may denote: (1)~define $x$ to be $y$, (2)~$x$ and $y$ are the same, (3)~are $x$ and $y$ the same? (4)~$x$ and $y$ are exchangeable, (5)~assign $y$ to $x$, (6)~assign $x$ to $y$, among other peculiar programming idioms. If two expressions are equal, it should be possible to treat them in the same manner.
+
+    But this convention does not always hold! Suppose we need to compute the derivative of a logical function with respect to its inputs. The trouble is, logical equality is not differentiable. Consider the Kronecker $δ$-function:
+
+    $$
+    δ_k(x, y) :=
+    \begin{cases}
+      1 \text{ if } x \overset{?}{=} y, \\
+      0 \text{ otherwise }\\
+    \end{cases}
+    $$
+
+    When encountering $δ_k$, how should we represent its derivative? Since $\mathbb{B}$ is finite, $δ_k^{-1}(B\subset \mathbb{B})$ is not open, thus $δ_k$ is not continuous and $\nablaδ_k$ is undefined. Now consider the Dirac $δ$-function, which is defined as follows:
+
+    $$
+    \forall f \in \mathbb{R}^2 \rightarrow \mathbb{R}, \int_{\mathbb{R}^2} f(x,y)δ_d(x-a,y-b)d(x, y) \overset{Δ}{=} f(a,b)
+    $$
+
+    Unlike $\nablaδ_k$, it can be shown that $\nablaδ_d$ is well-behaved everywhere on $\mathbb{R}^2$. However we encounter an important distinction between intensional and extensional equality. Unlike elementary functions, there exist many functions which can only be described indirectly, e.g. a probability distribution on a set of measure zero. Nevertheless, these constructions are convenient abstractions for modeling many physical and computational processes.
+
+    Neither $δ_k$ nor $\nablaδ_d$ are a satisfactory basis for logical equality. To allow a more flexible definition of the $\overset{?}{=}$ operator, we require a relation which approximates the logical properties of $δ_k$, but can be made differentiable like $δ_d$.
+
   \subsection{Probability notation}\label{subsec:ppl}
 
     Probabilistic inference is a framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference. \\
