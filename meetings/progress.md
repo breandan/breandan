@@ -14,6 +14,11 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## March 21, 2020
+
+- Reading
+  - [Graph Optimal Transport for Cross-Domain Alignment](http://proceedings.mlr.press/v119/chen20e/chen20e.pdf)
+
 ## March 14, 2020
 
 - Last week
