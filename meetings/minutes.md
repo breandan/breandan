@@ -6,16 +6,66 @@
 
 Limitations of the paper:
 
+We first discussed some limitations of the paper.
+
     -David suggested that pre-segmented clean images was too naive, and
-    would have liked to see a single image composed of multiple symbols
+    would liked to have seen a model which learned the task from a 
+    single image composed of multiple symbols.
     -Breandan did not understand why embedding an image of a unicode 
     character was necessary to begin with, if they are just using the 
     clean segmented image.
-    -Disha made the observation that according to the authors, their main 
+    -Disha made the observation that according to the authors, their primary
     contribution was introducing binding and indirection as two separate
     components, but then they later suggest it limits the relations 
     that can be learned.
 
+Model Architecture
+
+We had some confusion about the architecture.
+
+    -Breandan did not understand the architecture and asked for clarification.
+    -David said the key to understanding the architecture was a single
+    sentence, "[we] then pass [the image] embeddings to a sequential model 
+    component f_s..."
+    - Disha asked why the if/else block was necessary in Algorithm 1 and
+    speculated that it corresponded to the author's implementation of the
+    temporal context normalization (TCN)
+    - Someone asked whether the archiecture was trained end-to-end.
+    I later found this sentence on page 4, P2: "All components are trained 
+    end-to-end, including the encoder."
+
+Experiment design and results
+
+We then turned our attention to the task.
+
+    - David wondered whether pattern completion was a reasonable task
+    and what a more realistic task might be? 
+    - Disha suggested maybe using physically-based reasoning, i.e. blocks 
+    and spheres and their relations.
+    - There was some discussion about whether the task could be solved
+    in object space or latent space then decoded to a prediction.
+    - Breandan asked what feature allows the ESBN to converge so quickly?
+    - Disha and David explained that TCN and the model architecture
+    effectively disentangling relations from objects. This forces an 
+    inductive bias, where transformers must learn relations from scratch
+    the ESBN explicitly discriminates between items it has seen before.
+
+Fuzzy ideas
+
+Finally, we shared some philosophical observations about language.
+
+   -David said that symbol construction from pixels was kind of like a
+   monad, with compositional properties.
+   -Disha asked whether we thought the author's view of emergent symbols  
+   was reasonable?
+   -David and Disha shared their thoughts on reuse in language.  
+   -David contrasted "Here is a horse" (instance of category, in English)  
+   and "Here is horse" (category, in Chinese) and suggested some connection  
+   to key-value storage format.
+   -Breandan speculated that externalizing internal thoughts functioned
+   as some kind of loop closure.
+
+Next paper: [Neural production systems](https://arxiv.org/pdf/2103.01937.pdf)?
 
 ## March 2nd, 2021
 
