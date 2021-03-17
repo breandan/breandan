@@ -1,5 +1,22 @@
 ## Minutes
 
+## March 16, 2021
+
+[Emergent Symbols Through Binding in External Memory](https://arxiv.org/pdf/2012.14601.pdf)
+
+Limitations of the paper:
+
+    -David suggested that pre-segmented clean images was too naive, and
+    would have liked to see a single image composed of multiple symbols
+    -Breandan did not understand why embedding an image of a unicode 
+    character was necessary to begin with, if they are just using the 
+    clean segmented image.
+    -Disha made the observation that according to the authors, their main 
+    contribution was introducing binding and indirection as two separate
+    components, but then they later suggest it limits the relations 
+    that can be learned.
+
+
 ## March 2nd, 2021
 
 [Learning Compositional Rules via Neural Program Synthesis](https://arxiv.org/pdf/2003.05562.pdf)
