@@ -16,7 +16,18 @@
 
 ## March 21, 2020
 
+- Last Week
+  - Made progress on [BERT embedding](https://github.com/breandan/gym-fs)
+  - Discussion with [Disha & David](https://github.com/breandan/breandan/blob/master/meetings/minutes.md#march-16-2021)
+  - Maria's reparameterisation talk
+  - RTMLP workshop scheduling
+- This week
+  - Progress update with Jin & Xujie
+  - Scale up training on Compute Canada
+  - Erik's calculus talk on Friday
 - Reading
+  - [Src-d big code datasets](https://github.com/src-d/datasets)
+  - [AutoKG: Constructing Virtual Knowledge Graphs from Unstructured Documents for Question Answering](https://arxiv.org/pdf/2008.08995.pdf)
   - [Graph Optimal Transport for Cross-Domain Alignment](http://proceedings.mlr.press/v119/chen20e/chen20e.pdf)
 
 ## March 14, 2020
