@@ -14,6 +14,26 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## March 29, 2020
+
+- Last week
+  - Rewrote [experimental design](https://github.com/breandan/gym-fs/blob/master/latex/research_proposal.pdf) to incorporate feedback
+  - Comparing distance metrics for edge construction
+- This week
+  - Collecting experimental results
+  - Chat with Disha & David Tuesday
+  - Chat with Jin & Xujie Wednesday
+  - Jacob's tensor talk Thursday
+  - Finalizing RTMLP schedule
+  - Good Friday
+- Challenges
+  - CodeBERT embedding seems to have low recall for semantic search
+  - Reranking by string similarity improves results somewhat
+- Reading
+  - [BERT-kNN: Adding a kNN Search Component to Pretrained Language Models for Better QA](https://arxiv.org/pdf/2005.00766.pdf)
+  - [Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs](https://arxiv.org/pdf/1603.09320.pdf)
+  - [Neural Production Systems](https://arxiv.org/pdf/2103.01937.pdf)
+
 ## March 21, 2020
 
 - Last Week
