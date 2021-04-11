@@ -31,7 +31,8 @@
 - Reading
   - [Assessing the Generalizability of code2vec Token Embeddings](https://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=5496&context=sis_research)
   - [Predicting Program Properties from "Big Code"](https://dl.acm.org/doi/10.1145/2676726.2677009)
-  - [Compositional Generalization via Neural-SymbolicStack Machines](https://proceedings.neurips.cc/paper/2020/file/12b1e42dc0746f22cf361267de07073f-Paper.pdf)
+  - [Compositional Generalization via Neural-Symbolic Stack Machines](https://proceedings.neurips.cc/paper/2020/file/12b1e42dc0746f22cf361267de07073f-Paper.pdf)
+  - [Neural production systems](https://arxiv.org/pdf/2103.01937.pdf)
 
 ## March 29, 2020
 
