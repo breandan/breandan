@@ -14,6 +14,24 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## April 12, 2020
+
+- Last week
+  - Wrote [a plugin](https://github.com/acejump/sourcejump) to search GitHub and collect telemetry
+  - Fixed some bugs affecting the [embedding distance experiments](https://github.com/breandan/gym-fs#semantic-similarity)
+  - Chat with Darcey about [FGGs](https://arxiv.org/pdf/2010.12048.pdf)
+  - Workshop [organization](https://github.com/rethinkingmlpapers/rethinkingmlpapers.github.io/pull/2)
+- This week
+  - Fine-tuning CodeBERT on project
+  - Chat with Disha Tuesday
+  - Chat with Jin & Xujie Wednesday
+- Challenges
+  - How do we get ground truth data to evaluate similarity ranking?
+- Reading
+  - [Assessing the Generalizability of code2vec Token Embeddings](https://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=5496&context=sis_research)
+  - [Predicting Program Properties from "Big Code"](https://dl.acm.org/doi/10.1145/2676726.2677009)
+  - [Compositional Generalization via Neural-SymbolicStack Machines](https://proceedings.neurips.cc/paper/2020/file/12b1e42dc0746f22cf361267de07073f-Paper.pdf)
+
 ## March 29, 2020
 
 - Last week
