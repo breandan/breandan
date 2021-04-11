@@ -19,6 +19,7 @@
 - Last week
   - Wrote [a plugin](https://github.com/acejump/sourcejump) to search GitHub and collect telemetry
   - Fixed some bugs affecting the [embedding distance experiments](https://github.com/breandan/gym-fs#semantic-similarity)
+  - Chat with Disha & David about [neural production systems](https://github.com/breandan/breandan/blob/master/meetings/minutes.md#march-30-2021)
   - Chat with Darcey about [FGGs](https://arxiv.org/pdf/2010.12048.pdf)
   - Workshop [organization](https://github.com/rethinkingmlpapers/rethinkingmlpapers.github.io/pull/2)
 - This week

@@ -1,5 +1,26 @@
 ## Minutes
 
+# March 30, 2021
+
+We discussed Didolkar et al.'s Neural Production Systems. From what I gathered, the main theme of our discussion was how to best employ relational inductive biases to realize a more refined combinatorial representation. Rather than considering all pairwise relations between input variables, can we construct a model which parses the input sequence into a graph "on the fly", whose edges represent correlated symbols, sub-symbols or input features?
+
+The paper proposes to learn a relation between slots, conditions and actions. This follows in the footsteps of several recent architectures for key/value/query attention-based architectures. In the authors' view, slots represent discrete entities or arguments to a function (here, they draw an analogy to variable binding in programming languages). They also draw connections to graph neural networks and cognitive science. Taking inspiration from Lovett & Anderson, they emphasize four important characteristics of production systems:
+
+* **Modularity** - Rules represent a discrete "unit" of knowledge that can be reused independently and interchangeably.
+* **Abstraction** - Rules specify attributes of entities, rather than entities themselves. They argue this feature allows them to more robustly generalize to new entities.
+* **Sparsity** - To effectively make use of resource-constrained hardware, the model must selectively attend to input variables. By imposing a sparsity constraint, they can leverage available resources to greater effect (e.g. longer range dependencies on more complex data).
+* **Causality** - Relations are directed and asymmetric, where each rule represents a condition under which an action should be applied, and the action represents updating an internal state based on learned conditions.
+
+Disha shared two concerns regarding the proposed attention mechanism, and would have liked to have seen a comparison between hard and soft attention. She expressed some confusion about the choice of sequential rule application in spite of its admittedly weak performance and suggested that adding a multi-head attention component could have provided a beneficial effect.
+
+I asked Disha what additional experiments she would have liked to see. She responded that visualizing and interpreting the activations on various tasks would be beneficial. Does addition and multiplication activate certain slots? She also remarked that comparing with other sparse architectures, e.g. Sparse graph attention networks would have been helpful to see.
+
+David remarked that the model's choices aligned with the intuition of some researchers for how the brain works, although he cautioned against relying too heavily on intuition, and advocated for the benefits of writing down code. He also argued for a more explicitly subsymbolic approach. We agreed that intuition can sometimes be misleading when used to justify our own reasoning.
+
+I asked David whether he saw a way to incorporate subsymbols into the authors' scheme of slots of keys, and he proposed a form of energy-based modeling to map subsymbolic representations with symbols, with contrastive divergence for training. We exchanged some thoughts about the computational benefits of sparsity, which I know various software libraries are using.
+
+The high-level theme is that instead of generating a scalar or vector value for each input, these networks attempt to generate a set of relations between slots and rules. In effect, they are learning a mapping between unstructured data and a graph whose edges represent correlated input variables. These graphs are generated directly by propagating the input state forward once, instead of via backpropagation and extraction. The idea appears to be a very active area of research in sequence prediction, programming, and other symbolic reasoning domains.
+
 ## March 16, 2021
 
 [Emergent Symbols Through Binding in External Memory](https://arxiv.org/pdf/2012.14601.pdf)
