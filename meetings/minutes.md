@@ -1,5 +1,34 @@
 ## Minutes
 
+# April 13, 2021
+
+Out of the papers we read this semester, I found Chen et al. (2020) one of the more difficult to follow. The motivation for the paper starts off straightforwardly: the authors want an architecture capable of generalizing to three specific settings (1) novel sequence length (2) novel combinations of previously commands ("template generalization" in the authors nomenclature) and (3) novel contexts for commands seen exactly once in the training set (i.e. "primitive generalization").
+
+To achieve this, they introduce a stack machine with a small instruction set (e.g. push/pop/reduce) which is learned a neural controller to translate an input sequence, such as a natural language command (e.g. "walk left and run"), into a DSL (e.g. "LTURN WALK RUN"). In Figure 2, they provide an example of such an execution trace the neural controller might produce in practice:
+
+![trace](https://user-images.githubusercontent.com/175716/115337065-5afdf780-a16e-11eb-933f-eb4e9be21c2e.png)
+
+Between each step is an instruction produced by an operator predictor to control the stack machine, followed by a resulting state of the stack machine. In order to predict the operator, they predict an intermediate source and target "category" for each token in the source and target language. The authors also provide a separate figure for the architecture of the machine controller:
+
+![diag](https://user-images.githubusercontent.com/175716/115337037-47eb2780-a16e-11eb-97a9-f02a55988afb.png)
+
+The question arose of how latent category predictors were trained. Disha thought there must be some kind of intermediate supervision within each trace. I thought the only supervision was the loss over the final output sequence. This appears to be where the authors' definition of operational equivalence comes into play. The critical paragraph to understand here seems to be:
+
+> ...after the trace search, we collect the non-degenerate operator traces, and compare among different samples within a training batch. If two samples share the same operator trace, we first assign their target sequences with the same target category for training.
+
+
+Although unclear what exactly the authors mean by non-degeneracy here (perhaps it refers to when the predicted target sequence is correct), we turned our attention to the definition of operational equivalence, which became clearer after Disha corrected my initial interpretation:
+
+![opeq](https://user-images.githubusercontent.com/175716/115338538-00b26600-a171-11eb-8344-2445295614c0.png)
+
+Here, the authors are attempting to capture translational equivariance. Consider two correct translation pairs which share the stack machine control sequence: although their source and target sequences might contain different tokens, if the operator traces for translating them are the same, then the source and target tokens within each trace should have the same categories. Disha then brought to my attention a more detailed algorithm from the Appendix, which their NeurIPS camera ready version did not contain.
+
+![alg](https://user-images.githubusercontent.com/175716/115337319-c21bac00-a16e-11eb-99cc-91e3ca3f6495.png)
+
+After spending a frustrating amount of time trying to decipher this algorithm and the surrounding text, we concluded there must be some kind of typo, since the outer index i does not appear in the inner loop. The terminology is difficult to follow, e.g. "lesson" which the authors never clearly define - appears to be analogous to one epoch of training, where a "batch" is a set of pairs of sentences in the source and target language.
+
+Although Chen et al. (2020) has a number of redeeming qualities, including a nice definition of operational equivalence and a more precise definition of compositional generalization in its various forms, we agreed the exposition and algorithmic details leave much to be desired. For the next paper, shall we read Language-Agnostic Representation Learning of Source Code from Structure and Context by Zügner et al.?
+
 # March 30, 2021
 
 We discussed Didolkar et al.'s Neural Production Systems. From what I gathered, the main theme of our discussion was how to best employ relational inductive biases to realize a more refined combinatorial representation. Rather than considering all pairwise relations between input variables, can we construct a model which parses the input sequence into a graph "on the fly", whose edges represent correlated symbols, sub-symbols or input features?
