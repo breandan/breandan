@@ -16,7 +16,6 @@ The question arose of how latent category predictors were trained. Disha thought
 
 > ...after the trace search, we collect the non-degenerate operator traces, and compare among different samples within a training batch. If two samples share the same operator trace, we first assign their target sequences with the same target category for training.
 
-
 Although unclear what exactly the authors mean by non-degeneracy here (perhaps it refers to when the predicted target sequence is correct), we turned our attention to the definition of operational equivalence, which became clearer after Disha corrected my initial interpretation:
 
 ![opeq](https://user-images.githubusercontent.com/175716/115338538-00b26600-a171-11eb-8344-2445295614c0.png)
@@ -27,7 +26,9 @@ Here, the authors are attempting to capture translational equivariance. Consider
 
 After spending a frustrating amount of time trying to decipher this algorithm and the surrounding text, we concluded there must be some kind of typo, since the outer index i does not appear in the inner loop. The terminology is difficult to follow, e.g. "lesson" which the authors never clearly define - appears to be analogous to one epoch of training, where a "batch" is a set of pairs of sentences in the source and target language.
 
-Although Chen et al. (2020) has a number of redeeming qualities, including a nice definition of operational equivalence and a more precise definition of compositional generalization in its various forms, we agreed the exposition and algorithmic details leave much to be desired. For the next paper, shall we read Language-Agnostic Representation Learning of Source Code from Structure and Context by Zügner et al.?
+Although Chen et al. (2020) has a number of redeeming qualities, including a nice definition of operational equivalence and a more precise definition of compositional generalization in its various forms, we agreed the exposition and algorithmic details leave much to be desired.
+
+Next paper: [Language-Agnostic Representation Learning of Source Code from Structure and Context](https://arxiv.org/abs/2103.11318) by Zügner et al.?
 
 # March 30, 2021
 
@@ -104,15 +105,12 @@ Fuzzy ideas
 
 Finally, we shared some philosophical observations about language.
 
-   -David said that symbol construction from pixels was kind of like a
-   monad, with compositional properties.
-   -Disha asked whether we thought the author's view of emergent symbols  
-   was reasonable?
-   -David and Disha shared their thoughts on reuse in language.  
-   -David contrasted "Here is a horse" (instance of category, in English)  
-   and "Here is horse" (category, in Chinese) and suggested some connection  
-   to key-value storage format.
-   -Breandan speculated that externalizing internal thoughts functioned
+    - David said that symbol construction from pixels was kind of like a
+    monad, with compositional properties.
+    - Disha asked whether we thought the author's view of emergent s ymbols  was reasonable?
+    - David and Disha shared their thoughts on reuse in language.  
+    - David contrasted "Here is a horse" (instance of category, in English) and "Here is horse" (category, in Chinese) and suggested some connection to key-value storage format.
+    - Breandan speculated that externalizing internal thoughts functioned
    as some kind of loop closure.
 
 Next paper: [Neural production systems](https://arxiv.org/pdf/2103.01937.pdf)?
