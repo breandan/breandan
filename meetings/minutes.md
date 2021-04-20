@@ -2,9 +2,9 @@
 
 # April 13, 2021
 
-Out of the papers we read this semester, I found Chen et al. (2020) one of the more difficult to follow. The motivation for the paper starts off straightforwardly: the authors want an architecture capable of generalizing to three specific settings (1) novel sequence length (2) novel combinations of previously commands ("template generalization" in the authors nomenclature) and (3) novel contexts for commands seen exactly once in the training set (i.e. "primitive generalization").
+Out of the papers we read this semester, I found Chen et al. (2020) one of the more difficult to follow. The motivation for the paper starts off straightforwardly: the authors want an architecture capable of generalizing to three specific settings (1) novel sequence length (2) novel combinations of previously commands ("template generalization" in the authors' nomenclature) and (3) novel contexts for commands seen exactly once in the training set (i.e. "primitive generalization").
 
-To achieve this, they introduce a stack machine with a small instruction set (e.g. push/pop/reduce) which is learned a neural controller to translate an input sequence, such as a natural language command (e.g. "walk left and run"), into a DSL (e.g. "LTURN WALK RUN"). In Figure 2, they provide an example of such an execution trace the neural controller might produce in practice:
+To achieve this, they introduce a stack machine with a small instruction set (e.g. push/pop/reduce) which is learned by a neural controller to translate an input sequence, such as a natural language command (e.g. "walk left and run"), into a DSL (e.g. "LTURN WALK RUN"). In Figure 2, they provide an example of such an execution trace the neural controller might produce in practice:
 
 ![trace](https://user-images.githubusercontent.com/175716/115337065-5afdf780-a16e-11eb-933f-eb4e9be21c2e.png)
 
@@ -20,7 +20,7 @@ Although unclear what exactly the authors mean by non-degeneracy here (perhaps i
 
 ![opeq](https://user-images.githubusercontent.com/175716/115338538-00b26600-a171-11eb-8344-2445295614c0.png)
 
-Here, the authors are attempting to capture translational equivariance. Consider two correct translation pairs which share the stack machine control sequence: although their source and target sequences might contain different tokens, if the operator traces for translating them are the same, then the source and target tokens within each trace should have the same categories. Disha then brought to my attention a more detailed algorithm from the Appendix, which their NeurIPS camera ready version did not contain.
+Here, the authors are attempting to capture translational equivariance. Consider two correct translation pairs which share the same stack machine control sequence: although their source and target sequences might contain different tokens, if the operator traces for translating them are the same, then the source and target tokens within each trace should have the same categories. Disha then brought to my attention a more detailed algorithm from the Appendix, which their NeurIPS camera ready version did not contain.
 
 ![alg](https://user-images.githubusercontent.com/175716/115337319-c21bac00-a16e-11eb-99cc-91e3ca3f6495.png)
 
