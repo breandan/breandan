@@ -14,6 +14,30 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## April 26, 2020
+
+- Last week
+  - Speed up indexing, now runs considerably faster ~GB/min
+  - Scale up training dataset, now ~100 repositories each ~10MB
+  - Ran similarity and keyword matching experiments on MiniGitHub
+  - Factor Graph Grammars with Darcey Riley @ CCRG
+  - Attended TechAide Montreal conference
+- This week
+  - IFT6759 grading
+  - PLRC with Disha
+  - Torsten at CCRG
+  - RTMLP workshop
+- Challenges
+  - Computing embeddings for all MiniGithub documents is expensive
+  - MGH repos too unrelated; many fetch projects that "use" each other?
+  - As the number of documents increase, KNN index lookups take longer
+  - Migrating to keyword-sharing based graph construction scheme
+  - Should we search inside the parent project alone or across the whole MiniGithub dataset - although keyword lookups are cheap, MGH search results often have poor semantic alignment to the local context
+- Reading
+  - [Language-Agnostic Representation Learning of Source Code from Structure and Context](https://arxiv.org/pdf/2103.11318.pdf)
+  - [Evolving Reinforcement Learning Algorithms](https://arxiv.org/pdf/2101.03958.pdf)
+  - [Getting to the Point](https://arxiv.org/pdf/2104.05372.pdf)
+
 ## April 12, 2020
 
 - Last week

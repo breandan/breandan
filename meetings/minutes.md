@@ -1,5 +1,7 @@
 ## Minutes
 
+# April 27, 2021
+
 # April 13, 2021
 
 Out of the papers we read this semester, I found Chen et al. (2020) one of the more difficult to follow. The motivation for the paper starts off straightforwardly: the authors want an architecture capable of generalizing to three specific settings (1) novel sequence length (2) novel combinations of previously commands ("template generalization" in the authors' nomenclature) and (3) novel contexts for commands seen exactly once in the training set (i.e. "primitive generalization").
