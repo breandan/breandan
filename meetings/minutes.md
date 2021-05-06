@@ -1,5 +1,13 @@
 ## Minutes
 
+# May 5, 2021
+
+- I presented some examples of compositional generalization in natural and programming languages, and gave a demo of a tool for [regular language induction](https://en.wikipedia.org/wiki/Induction_of_regular_languages). This can be used to construct a regex matching a set of example strings. [Grammar induction](https://en.wikipedia.org/wiki/Grammar_induction) has been used for document classification and I believe is an important conceptual framework for modeling how developers [forage for information](https://web.eecs.utk.edu/~azh/blog/informationforaging.html).
+- Jin raised some concerns about alignment with the downstream task. How do we assess whether our model is retrieving information that meets the information needs of the end user? This is related to how we define our context, and how we perform masking. We settled on a single-token prediction task like variable or method name prediction, which is similar to masked language modeling.
+- I felt it was important that our model have the same "interface" for interacting with the search engine as a regular user would, i.e. our model should be able compress its contextual knowledge into a search query which retrieves relevant code snippets. Instead of computing an alignment with all documents, can we learn how to write a query to fetch the information, just like a human would?
+- Xujie recommended looking into sketch-based program synthesis. He raised the point that prior work uses a graph or AST-based representation for source code. He also said that the project was large and suggested separating the project into smaller pieces, i.e. (1) source code recommendation part and (2) code-adaption. I agreed with Xujie that this was a good idea and would consider it.
+- Jin asked me what I would like to achieve at the end of the summer. I would like to train a model that can learn to retrieve useful code snippets. I would also like to submit a paper to an [ML conference](https://jackietseng.github.io/conference_call_for_paper/conferences.html) this summer, possibly ICPR (July 10) or ICMLA (July 3). Finally, I would also like to update my [comprehensive exam](https://github.com/breandan/breandan/blob/master/paperwork/comp_exam/literature_review.pdf) to address the committee's [concerns](https://github.com/breandan/breandan/blob/master/paperwork/comp_exam/committee_letter.pdf).
+
 # April 27, 2021
 
 # April 13, 2021
