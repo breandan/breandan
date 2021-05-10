@@ -18,7 +18,7 @@
 
 - Last week
   - IFT-6759 project presentations
-  - Co-chaired Rethinking ML Papers workshop
+  - Co-chaired [RTMLP](http://rethinkingmlpapers.github.io/rethinkingmlpapers.github.io/) workshop
   - Implemented distance-based grammar induction based on [Blue Fringe](https://www.ibisc.univ-evry.fr/~janodet/pub/tjs04.pdf)
   - Implemented Kantorovich optimal coupling for code embeddings
   - Looked into [DFA/RE translation](https://github.com/LearnLib/learnlib/issues/75)
@@ -33,11 +33,12 @@
   - What metrics can we use to evaluate? (e.g. NDCG, MAP@k...)
 - Reading
   - [GraphCodeBERT: Pre-training Code Representations with Data Flow](https://arxiv.org/abs/2009.08366), Guo et al. (2021)
-  - [Web Question Answering with Neurosymbolic Program Synthesis](https://arxiv.org/pdf/2104.07162.pdf), Chen et al. (2017)
   - [Learning Regular Sets from Queries and Counterexamples](https://omereingold.files.wordpress.com/2017/06/angluin87.pdf), Angluin (1987)
+  - [Extracting Automata from Recurrent Neural Networks Using Queries and Counterexamples](https://arxiv.org/pdf/1711.09576.pdf), Weiss et al. (2020)
   - [Enumerating Regular Expressions and Their Languages](https://cs.uwaterloo.ca/~shallit/Papers/ciaa-04.pdf), Lee & Shallit (2004)
-  - [Learning to Rank](https://en.wikipedia.org/wiki/Learning_to_rank#List_of_methods)
+  - [Supervised Tree-Wasserstein Distance](https://arxiv.org/pdf/2101.11520.pdf), Takezawa et al. (2021)
   - [BLUE*: a Blue-Fringe Procedure for Learning DFA with Noisy Data](https://www.ibisc.univ-evry.fr/~janodet/pub/tjs04.pdf), Sebban et al. (2004)
+  - [Web Question Answering with Neurosymbolic Program Synthesis](https://arxiv.org/pdf/2104.07162.pdf), Chen et al. (2017)
   - [Ologs: a categorical framework for knowledge representation](https://arxiv.org/abs/1102.1889)
   - [Algebraic Property Graphs](https://arxiv.org/pdf/1909.04881.pdf), Shinavier & Wisnesky (2020)
   - [L.V. Kantorovich and Linear Programming](https://arxiv.org/pdf/0707.0491.pdf), Vershik (2007)
