@@ -14,6 +14,34 @@
   - [ ] Implement term rewriting in Kaliningraph
   - [ ] Implement doubly-linked graph API
 
+## May 9, 2020
+
+- Last week
+  - IFT-6759 project presentations
+  - Co-chaired Rethinking ML Papers workshop
+  - Implemented distance-based grammar induction based on [Blue Fringe](https://www.ibisc.univ-evry.fr/~janodet/pub/tjs04.pdf)
+  - Implemented Kantorovich optimal coupling for code embeddings
+  - Looked into [DFA/RE translation](https://github.com/LearnLib/learnlib/issues/75)
+- This week
+  - Meeting with Mirco/Aaron about final grades
+  - CRL meet and greet Tuesday
+  - Jin/Xujie update Wednesday
+- Questions/Challenges
+  - How can we take advantage of traditional search engines?
+  - Is learning to synthesize a RE-based query feasible?
+  - Is optimal transport a useful framework for codesearch?
+  - What metrics can we use to evaluate? (e.g. NDCG, MAP@k...)
+- Reading
+  - [GraphCodeBERT: Pre-training Code Representations with Data Flow](https://arxiv.org/abs/2009.08366), Guo et al. (2021)
+  - [Web Question Answering with Neurosymbolic Program Synthesis](https://arxiv.org/pdf/2104.07162.pdf), Chen et al. (2017)
+  - [Learning Regular Sets from Queries and Counterexamples](https://omereingold.files.wordpress.com/2017/06/angluin87.pdf), Angluin (1987)
+  - [Enumerating Regular Expressions and Their Languages](https://cs.uwaterloo.ca/~shallit/Papers/ciaa-04.pdf), Lee & Shallit (2004)
+  - [Learning to Rank](https://en.wikipedia.org/wiki/Learning_to_rank#List_of_methods)
+  - [BLUE*: a Blue-Fringe Procedure for Learning DFA with Noisy Data](https://www.ibisc.univ-evry.fr/~janodet/pub/tjs04.pdf), Sebban et al. (2004)
+  - [Ologs: a categorical framework for knowledge representation](https://arxiv.org/abs/1102.1889)
+  - [Algebraic Property Graphs](https://arxiv.org/pdf/1909.04881.pdf), Shinavier & Wisnesky (2020)
+  - [L.V. Kantorovich and Linear Programming](https://arxiv.org/pdf/0707.0491.pdf), Vershik (2007)
+
 ## April 26, 2020
 
 - Last week
