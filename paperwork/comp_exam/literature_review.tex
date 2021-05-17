@@ -576,7 +576,7 @@
   \noindent Now we consider the Kantorovich--Rubinstein, or Earthmover metric.
 
     $$
-    d(u, v) = \text{min}\Big\{\sum_{i, j} π[i, j]d(x, y) \Bigm| π[i, j] > 0, \sum_i π[i, j]=B_j, \sum_j π[i, j] = y_j \Big\}
+    d_{w_1}(u, v) = \text{minmize}\Big\{\sum_{i \in u, j \in v} π[i, j]d(x, y) \Bigm| π[i, j] > 0, \sum_i π[i, j]=B_j, \sum_j π[i, j] = y_j \Big\}
     $$
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.

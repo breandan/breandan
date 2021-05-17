@@ -10,11 +10,31 @@
   - [ ] Describe higher order/rank derivatives
   - [ ] Describe automatic vs. symbolic difference
   - [ ] Describe code generation / macro approach
-  - [ ] Binary matrix API and other semirings
   - [ ] Implement term rewriting in Kaliningraph
-  - [ ] Implement doubly-linked graph API
 
-## May 9, 2020
+## May 16th, 2021
+
+- Last week
+  - Showed some rudimentary results on [regular language induction](https://docs.google.com/presentation/d/1-FWM6ZRpj0kL-8yqi3SciqbMo9nOWfNHLh9qtpe6W0s/present#slide=id.gd9a1d9cdb7_1_57)
+  - Presented [GraphCodeBERT](https://docs.google.com/presentation/d/1kxKw2GkSaIfNYAY0LA2Au_vZDgsQqfm4ugz4f4vtzW8/edit?usp=sharing) at CRL RG
+  - Behrouz's talk on [constraint programming](https://doi.org/10.1007/978-3-030-58475-7_2)
+  - Attended [PyCon Typing Summit](https://us.pycon.org/2021/summits/typing/)
+  - Attended Alya and Andrei's [internship presentation](https://www.youtube.com/watch?v=0H99wUs0xTM)
+- This week
+  - Running code search experiments
+  - Update the literature review
+- Challenges and Questions
+  - How do we evaluate 'interpretability'?
+  - ICSE submission timeline / deliverables
+- Reading
+  - Linear programming tools: [Gurobi](https://github.com/Gurobi/modeling-examples) / [OR-Tools](https://developers.google.com/optimization) / [MiniCP](https://github.com/acouvreur/miniCP)
+  - [KeyBERT](https://github.com/MaartenGr/KeyBERT) - Minimal keyword extraction using BERT
+  - [Googling for Software Development: What Developers Search For and What They Find](https://homepages.dcc.ufmg.br/~andrehora/pub/2021-msr-googling-for-development.pdf), Hora (2021)
+  - [Supervised Tree-Wasserstein Distance](https://arxiv.org/pdf/2101.11520.pdf), Takezawa et al. (2021)
+  - [Familia: Unifying Interfaces, Type Classes, and Family Polymorphism](https://www.cs.cornell.edu/andru/papers/familia/familia.pdf), Zhang and Myesers (2017)
+  - [Getting F-Bounded Polymorphism into Shape](https://www.cs.cornell.edu/~blg59/resources/doc/effing-bound-polymorphism.pdf), Greenman et al. (2014)
+
+## May 9, 2021
 
 - Last week
   - IFT-6759 project presentations
@@ -43,7 +63,7 @@
   - [Ologs: a categorical framework for knowledge representation](https://arxiv.org/abs/1102.1889)
   - [Algebraic Property Graphs](https://arxiv.org/pdf/1909.04881.pdf), Shinavier & Wisnesky (2020)
 
-## April 26, 2020
+## April 26, 2021
 
 - Last week
   - Speed up indexing, now runs considerably faster ~GB/min
@@ -67,7 +87,7 @@
   - [Evolving Reinforcement Learning Algorithms](https://arxiv.org/pdf/2101.03958.pdf)
   - [Getting to the Point](https://arxiv.org/pdf/2104.05372.pdf)
 
-## April 12, 2020
+## April 12, 2021
 
 - Last week
   - Wrote [a plugin](https://github.com/acejump/sourcejump) to search GitHub and collect telemetry
@@ -87,7 +107,7 @@
   - [Compositional Generalization via Neural-Symbolic Stack Machines](https://proceedings.neurips.cc/paper/2020/file/12b1e42dc0746f22cf361267de07073f-Paper.pdf)
   - [Neural production systems](https://arxiv.org/pdf/2103.01937.pdf)
 
-## March 29, 2020
+## March 29, 2021
 
 - Last week
   - Rewrote [experimental design](https://github.com/breandan/gym-fs/blob/master/latex/research_proposal.pdf) to incorporate feedback
@@ -107,7 +127,7 @@
   - [Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs](https://arxiv.org/pdf/1603.09320.pdf)
   - [Neural Production Systems](https://arxiv.org/pdf/2103.01937.pdf)
 
-## March 21, 2020
+## March 21, 2021
 
 - Last Week
   - Made progress on [BERT embedding](https://github.com/breandan/gym-fs)
@@ -123,7 +143,7 @@
   - [AutoKG: Constructing Virtual Knowledge Graphs from Unstructured Documents for Question Answering](https://arxiv.org/pdf/2008.08995.pdf)
   - [Graph Optimal Transport for Cross-Domain Alignment](http://proceedings.mlr.press/v119/chen20e/chen20e.pdf)
 
-## March 14, 2020
+## March 14, 2021
 
 - Last week
   - [Contextual alignment](https://docs.google.com/presentation/d/1-FWM6ZRpj0kL-8yqi3SciqbMo9nOWfNHLh9qtpe6W0s/edit#slide=id.gc6a4a1a18e_1_50) / [Learning to search](https://github.com/breandan/breandan/blob/master/paperwork/research_proposal/research_proposal.pdf)
@@ -141,7 +161,7 @@
   - [Optimal Transport, old and new](https://ljk.imag.fr/membres/Emmanuel.Maitre/lib/exe/fetch.php?media=b07.stflour.pdf)
   - [JAX Flows](https://jax-flows.readthedocs.io/en/latest/)
 
-## March 7, 2020
+## March 7, 2021
 
 - Last week
   - [Programming, learning and reasoning chat](minutes.md#march-2nd-2021)
@@ -156,7 +176,7 @@
 - Reading
   - [Deep Implicit Layers](http://implicit-layers-tutorial.org/)
 
-## February 28, 2020
+## February 28, 2021
 
 - Last Week
   - Implemented [data loader and BERT](https://github.com/breandan/gym-fs)
@@ -175,7 +195,7 @@
   - [DAGs with NO TEARS: Continuous Optimization for Structure Learning](https://papers.nips.cc/paper/2018/file/e347c51419ffb23ca3fd5050202f9c3d-Paper.pdf)
   - [Graphical Normalizing Flows](https://arxiv.org/pdf/2006.02548.pdf)
 
-## February 22, 2020
+## February 22, 2021
 
 - Last Week
   - Worked on [research proposal](https://github.com/breandan/breandan/blob/master/paperwork/research_proposal/research_proposal.pdf)
@@ -204,7 +224,7 @@
   - [Learning Compositional Rules via Neural Program Synthesis](https://nips.cc/virtual/2020/protected/poster_7a685d9edd95508471a9d3d6fcace432.html)
   - [Learning to Execute Programs with Instruction Pointer Attention Graph Neural Networks](https://nips.cc/virtual/2020/protected/poster_62326dc7c4f7b849d6f013ba46489d6c.html)
 
-## February 15, 2020
+## February 15, 2021
 
 - Last week
   - Coordinating guest lectures for RG
@@ -226,7 +246,7 @@
   - [Mining error-handling specifications for systems software](https://dl.acm.org/doi/abs/10.1145/3236024.3275440)
   - [Path-based function embedding and its application to error-handling specification mining](https://dl.acm.org/doi/abs/10.1145/3236024.3236059)
 
-## February 8, 2020
+## February 8, 2021
 
 - Last week
   - Reached out to Disha and David
@@ -248,7 +268,7 @@
   - [Efficient synthesis of probabilistic programs](https://dl.acm.org/doi/abs/10.1145/2813885.2737982)
   - [Write, Execute, Assess: Synthesis with a REPL](https://arxiv.org/pdf/1906.04604.pdf)
 
-## February 1, 2020
+## February 1, 2021
 
 Last week
   - Recorded research ideas on program representations
@@ -265,7 +285,7 @@ Reading
   - [Learning to rank typed graph walks: local and global approaches](https://dl.acm.org/doi/abs/10.1145/1348549.1348550)
   - [Arend Tutorial](https://arend-lang.github.io/documentation/tutorial/PartI/synndef)
 
-## January 25, 2020
+## January 25, 2021
 
 - Last week
   - [Lit review](https://raw.githubusercontent.com/breandan/breandan/master/paperwork/literature_review.pdf)
@@ -280,7 +300,7 @@ Reading
   - [Relational inductive biases](https://arxiv.org/pdf/1806.01261.pdf)
   - [Path problems in networks](https://www.morganclaypool.com/doi/abs/10.2200/S00245ED1V01Y201001CNT003)
 
-## Jan 18th, 2020
+## Jan 18th, 2021
 
 - Progress
   - Define procedural knowledge as a directed knowledge graph
