@@ -12,6 +12,29 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## May 24th, 2021
+
+- Last week
+  - Presented probabilistic symbolic automata idea
+  - Implemented disintegration and MC w/ memory
+  - Reading [ICSE](https://conf.researchr.org/program/icse-2021/program-icse-2021/)/[MSR](https://2021.msrconf.org/program/program-msr-2021)/[PLDI](https://pldi21.sigplan.org/program/program-pldi-2021) proceedings
+  - Chat with Shawn about backprop / CCRG
+  - Chat with Ben and Fabian about type families
+  - Chat with Aidan about compressionism
+- This week
+  - Prep work for USA trip
+  - Register for comp exam round #2
+  - CRL reading group with David
+- Challenges
+  - Going deep on automata extraction
+- Reading
+  - [Smoothing with backprop](https://blog.wtf.sg/posts/2021-03-14-smoothing-with-backprop/) [Torch-Struct paper](https://arxiv.org/pdf/2002.00876.pdf) / [code](https://github.com/harvardnlp/pytorch-struct)
+  - [TRANSREGEX: Multi-modal Regular Expression Synthesis by Generate-and-Repair](https://arxiv.org/pdf/2012.15489.pdf), Li et al.
+  - [Exact Bayesian Inference by Symbolic Disintegration](https://homes.sice.indiana.edu/ccshan/rational/disintegrator.pdf), Shan and Ramsey (2017)
+  - [Exact Symbolic Inference in Probabilistic Programs via Sum-Product Representations](https://arxiv.org/pdf/2010.03485v1.pdf)
+  - [Resouces on Symbolic Automata](https://pages.cs.wisc.edu/~loris/symbolicautomata.html), D'Antoni
+  - [Symbolic Automata for Static Specification Mining](https://cseweb.ucsd.edu/~hpeleg/sas2013.pdf), Peleg et al.
+
 ## May 16th, 2021
 
 - Last week
