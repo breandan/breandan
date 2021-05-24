@@ -15,23 +15,24 @@
 ## May 24th, 2021
 
 - Last week
-  - Presented probabilistic symbolic automata idea
+  - Presented probabilistic symbolic automata [idea](https://docs.google.com/presentation/d/1-FWM6ZRpj0kL-8yqi3SciqbMo9nOWfNHLh9qtpe6W0s/edit#slide=id.g7b41169283_4_112)
   - Implemented disintegration and MC w/ memory
   - Reading [ICSE](https://conf.researchr.org/program/icse-2021/program-icse-2021/)/[MSR](https://2021.msrconf.org/program/program-msr-2021)/[PLDI](https://pldi21.sigplan.org/program/program-pldi-2021) proceedings
   - Chat with Shawn about backprop / CCRG
   - Chat with Ben and Fabian about type families
   - Chat with Aidan about compressionism
 - This week
-  - Prep work for USA trip
+  - Prep for USA trip
   - Register for comp exam round #2
   - CRL reading group with David
 - Challenges
   - Going deep on automata extraction
 - Reading
+  - [Example-Centric Programming: Integrating Web Search into the Development Environment](https://hci.stanford.edu/publications/2009/blueprintTR/brandt_blueprint_techreport.pdf), Brandt et al. (2009)
   - [Smoothing with backprop](https://blog.wtf.sg/posts/2021-03-14-smoothing-with-backprop/) [Torch-Struct paper](https://arxiv.org/pdf/2002.00876.pdf) / [code](https://github.com/harvardnlp/pytorch-struct)
-  - [TRANSREGEX: Multi-modal Regular Expression Synthesis by Generate-and-Repair](https://arxiv.org/pdf/2012.15489.pdf), Li et al.
+  - [TRANSREGEX: Multi-modal Regular Expression Synthesis by Generate-and-Repair](https://arxiv.org/pdf/2012.15489.pdf), Li et al. (2021)
   - [Exact Bayesian Inference by Symbolic Disintegration](https://homes.sice.indiana.edu/ccshan/rational/disintegrator.pdf), Shan and Ramsey (2017)
-  - [Exact Symbolic Inference in Probabilistic Programs via Sum-Product Representations](https://arxiv.org/pdf/2010.03485v1.pdf)
+  - [Exact Symbolic Inference in Probabilistic Programs via Sum-Product Representations](https://arxiv.org/pdf/2010.03485v1.pdf), Saad et al. (2021)
   - [Resouces on Symbolic Automata](https://pages.cs.wisc.edu/~loris/symbolicautomata.html), D'Antoni
   - [Symbolic Automata for Static Specification Mining](https://cseweb.ucsd.edu/~hpeleg/sas2013.pdf), Peleg et al.
 
@@ -54,7 +55,7 @@
   - [KeyBERT](https://github.com/MaartenGr/KeyBERT) - Minimal keyword extraction using BERT
   - [Googling for Software Development: What Developers Search For and What They Find](https://homepages.dcc.ufmg.br/~andrehora/pub/2021-msr-googling-for-development.pdf), Hora (2021)
   - [Supervised Tree-Wasserstein Distance](https://arxiv.org/pdf/2101.11520.pdf), Takezawa et al. (2021)
-  - [Familia: Unifying Interfaces, Type Classes, and Family Polymorphism](https://www.cs.cornell.edu/andru/papers/familia/familia.pdf), Zhang and Myesers (2017)
+  - [Familia: Unifying Interfaces, Type Classes, and Family Polymorphism](https://www.cs.cornell.edu/andru/papers/familia/familia.pdf), Zhang and Myers (2017)
   - [Getting F-Bounded Polymorphism into Shape](https://www.cs.cornell.edu/~blg59/resources/doc/effing-bound-polymorphism.pdf), Greenman et al. (2014)
 
 ## May 9, 2021
