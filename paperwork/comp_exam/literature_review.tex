@@ -543,7 +543,7 @@
 
     % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
 
-    \noindent So far, we have seen various notions of exact and approximate equivalence on deterministic functions. We now turn our attention to the probabilistic setting. It is seldom the case two distributions are exactly equal, but rather align in some places and diverge in others. Rather than verify equality, what is needed is a way to measure similarity. We need a \textit{probability metric}.\\
+    \noindent So far, we have seen various definitions of exact and approximate equivalence on deterministic functions. Let us now turn our attention to the probabilistic setting. It is seldom the case two distributions are exactly equal, but rather agree in some places and disagree in others. Rather than verify equality, we need a way to measure similarity. We need a \textit{probability metric}.\\
 
     \hspace*{-0.6cm}\begin{tabular}{cccc}
     \begin{tikzpicture}[scale=0.6]
@@ -581,17 +581,7 @@
     Frequency & & & Displacement
     \end{tabular} \\
 
-
-
-
-  \noindent The Kullback–Leibler (KL) divergence is one way to quantifying the distance between two distributions. Though not a proper metric due to asymmetry, it is computationally efficient to evaluate, and may be defined as follows.
-
-    $$
-    δ_{\textsc{KL}}(P → Q) = \int P(x) \log\frac{P(x)}{Q(x)}dx
-    $$
-
-
-    \noindent Unlike the KL, the Kantorovich--Rubinstein (KR) metric is a proper metric. Not only do we care about the ``vertical'' distance or relative frequency, but also the ``horizontal'' distance, or \textit{displacement}. In the 1D discrete case, it can be seen as an optimal assignment problem, where $Π$ is the set of all mass-conserving reassignments between two probability vectors $u$ and $v$:
+    \noindent Not only do we care about the ``vertical'' distance or relative frequency, but also the ``horizontal'' distance, or \textit{displacement}. First, let us consider the Kantorovich--Rubinstein (KR) metric. In the one-dimensional discrete case, it can be seen as an optimal assignment problem, where $Π$ is the set of all mass-conserving reassignments between two probability vectors $u$ and $v$:
 
     $$
     δ_{\textsc{KR}}(u, v) = \min_{π\in Π}\Big\{\sum_{i, j} π[i, j]d(x, y) \Bigm| \sum_i π[i, j]=v[j], \sum_j π[i, j] = u[i] \Big\}
@@ -603,7 +593,14 @@
     δ_{\textsc{KR}}(u, v) = \inf_{π\in Π(u, v)}\int_{E\times E} δ(x, y)dπ(i, j)
     $$
 
-   \noindent Computing $δ_\textsc{KR}$ directly grows quickly intractable in higher dimensions. Various kernels, metrics and pseudometrics on multidimensional distributions have been proposed to alleviate this problem, e.g. Kolmogorov--Smirnov, Jensen--Shannon, Lévy--Prokhorov, et al. Approximations such as Gibbs sampling or Markov methods are often employed unless the integral in question can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
+    \noindent The Kullback–Leibler (KL) divergence is computationally more efficient, but distinguishes poorly between distributions with non-overlapping support. While asymmetric, it can be symmetrized into the Jensen-Shannon (JS).
+
+   \begin{align*}
+    δ_{\textsc{KL}}(P → Q) &= \int P(x) \log\frac{P(x)}{Q(x)}dx \\
+    δ_{\textsc{JS}}(P, Q) &= \frac{1}{2}δ_{\textsc{KL}}(P → M) + \frac{1}{2}δ_{\textsc{KL}}(Q → M)
+   \end{align*}
+
+    \noindent Computing these integrals directly grows quickly intractable in higher dimensions. Various approximations such as Gibbs sampling or Markov methods have been developed to alleviate this problem, and are often employed unless the integral in question can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
