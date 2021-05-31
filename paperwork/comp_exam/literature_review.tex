@@ -23,9 +23,8 @@
 \usepackage{pgfplots}
 \usepgfplotslibrary{fillbetween}
 \usetikzlibrary{patterns}
-\pgfmathdeclarefunction{gauss}{2}{%
-\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
-}
+\pgfmathdeclarefunction{gauss}{2}{\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}}
+\pgfmathdeclarefunction{nil}{1}{\pgfmathparse{0.001}}
 
 \usepackage{arydshln}
 \usepackage{adjustbox}
@@ -392,7 +391,7 @@
 
     \pagebreak\subsection{Observational equivalence}
 
-    As presented, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence require an external definition of equality to satisfy. One solution to this problem, known as \textit{observational equivalence}~\cite{morris1969lambda}, allows a language $\mathcal{L}$ to implement an internal mechanism to verify equality. Given $\mathcal{L}$, a term $t$, and one-hole context $C[\![\cdot]\!]$, our job is to check for termination: if $C[\![t]\!]$ is both well-defined and halts, we write $C[\![t]\!]\Downarrow$, otherwise $C[\![t]\!]\Uparrow$.
+    As presented, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence require an external definition of equality to satisfy. One solution to this problem, known as \textit{observational} or \textit{contextual equivalence}~\cite{morris1969lambda}, allows a language $\mathcal{L}$ to implement an internal mechanism to verify equality. Given $\mathcal{L}$, a term $t$, and one-hole context $C[\![\cdot]\!]$, our job is to check for termination: if $C[\![t]\!]$ is both well-defined and halts, we write $C[\![t]\!]\Downarrow$, otherwise $C[\![t]\!]\Uparrow$.
 
     \begin{prooftree}
         \AxiomC{$Γ \vdash C[\![t]\!]\Downarrow \iff C[\![t']\!]\Downarrow$ $\forall$ $C[\![\cdot]\!] \in \mathcal{L}$}
@@ -410,13 +409,17 @@
 
     We can think of this definition as dual to computational equivalence: instead of searching for inputs which distinguish functions, we search for contexts which distinguish terms, or a proof that no such context exists. Two terms $t$ and $t'$ are contextually equivalent with respect to $\mathcal{L}$ if we can prove that for all contexts $C[\![\cdot]\!]$ in $\mathcal{L}$, $C[\![t]\!]$ halts if and only if $C[\![t']\!]$ halts -- if no such proof can be found, the test is inconclusive. While this definition does not admit a decision procedure, many promising SDPs exist.
 
-%    $P(w_t = a | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b | w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
+    A similar notion also appears in natural language. ``You shall know a word by the company it keeps''. If two different words can be exchanged in all contexts, they are called \textit{synonyms}. Based on this definition, we can define a context as a probabilistic description of the surrounding environment.
 
-%    We can define semantic equality in our setting using word embeddings.
+    $P(w_t = a \mid w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b \mid w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
 
-    \subsection{Approximate equivalence}\label{sec:ap-eq}
+    We can define semantic equality in our setting using word embeddings.
 
-    Though precise, boolean equality is far too rigid for many applications. The spaces involved either lack formal semantics or are intractable to verify, leaving decidability out of reach. We can relax this definition by introducing a generalized equivalence relation for reasoning on continuous spaces, called a \textit{distance metric}, $δ: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$. This has the following logical properties:
+    \pagebreak\subsection{Approximate equivalence}\label{sec:ap-eq}
+
+%    How do we know when we are approaching equality? We can use a distance metric.
+
+    Though precise, boolean equality is far too rigid for many applications. The spaces involved either lack formal semantics or are intractable to verify, leaving decidability out of reach. Furthermore, we would like to provide more granular way to distinguish objects. This can be achieved by introducing a new relation for reasoning in discrete and continuous spaces, called a \textit{distance metric}, $δ: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$. It has the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -446,6 +449,23 @@
         \UnaryInfC{}
         \noLine
         \UnaryInfC{\textit{Triangularity}}
+    \end{prooftree}
+
+    \noindent An \textit{approximate equivalence relation} is a binary relation $\mathcal{A} \subset \mathcal (\mathcal X → \mathcal Y)^2$,~ e.g. $f \approx_{d} g \Leftrightarrow \mathbb δ(f, g) \leq d$. For example, consider a dataset $X := [x^{(i)}]_{i=1}^n$, $Y := [f(x^{(i)})]_{i=1}^n$ and a program $g: \mathcal{X} → \mathcal{Y}$, we could use the extensional approach to evaluate $δ_X: (f, g) \mapsto δ_Y(Y, [g(x^{(i)})]_{i=1}^n)$ directly.
+
+    Alternately, given an intensional descriptor $\varphi_θ(\cdot): (\mathcal X → \mathcal Y) → \mathcal Z$ we could construct a synthetic kernel $\Delta_θ: (f, g) \mapsto \left<\varphi_θ(f), \varphi_θ(g)\right>$, seeking $θ^* = \text{argmin}_θ\big(\Delta_θ(f, g) - \Delta_X(f, g)\big)^2$ over $f, g \overset{iid}{\sim} P(\mathcal X → \mathcal Y), X \overset{iid}{\sim} P(\mathcal X^n)$ via gradient descent. The problem then becomes: how do we match the distribution of naturally-arising programs?
+
+    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta → Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
+
+    \begin{prooftree}
+        \AxiomC{$Γ \vdash f \circ g, f: Z → Y, g: X → Z, B: := P_\text{Train}[i]$}
+        \RightLabel{\textsc{SGD}}
+        \UnaryInfC{$Γ \vdash t \equiv_{\mathcal{L}} t'$}
+        \DisplayProof
+        \vskip 1em
+%        \AxiomC{$Γ \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
+%        \RightLabel{\textsc{ERM}}
+%        \UnaryInfC{$Γ \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
     \end{prooftree}
 
     \noindent A \textit{kernel function} $Δ: (\mathcal{X}\rightarrow\mathcal{Y})^2\rightarrow \mathbb{R}_{\geq 0}$ can be defined as a metric on $\mathcal{Z}$ with some additional structure. Specifically for every kernel function, there exists a feature map $\varphi: (\mathcal{X}→\mathcal{Y}) → \mathcal{Z}$ such that $Δ: (f, g) \mapsto \left<\varphi(f), \varphi(g)\right>$. Given a feature map $\symbf\varphi: \mathbb{R}^m → \mathbb{R}^n$, constructing a kernel corresponds to finding $\Delta \in \mathbb{R}^{m \times m}$ symmetric PSD, i.e. $\Delta^\intercal = \Delta$, and $0 \leq \mathbf{x}^\intercal \Delta \mathbf{x}$ for all $\mathbf{x} \in \mathbb{R}^m$~\cite{mercer1909functions}. Consider the complexity of evaluating the inner product $\left<\symbf\varphi(f), \symbf\varphi(g)\right>$ in feature space. The computational benefit of a kernel becomes apparent when $m \ll n$. Rather than applying $\symbf\varphi$, then evaluating $\left<f^\intercal\symbf\varphi, g^\intercal\symbf\varphi\right>$, we may apply $\Delta(f, g)$ directly for a $\Theta(m^2 - n^2)$ speedup. Known as the \textit{kernel trick}, this shortcut may be easier to see categorically, where $f, g: \mathcal{X}→\mathcal{Y}$.
@@ -519,31 +539,14 @@
     \end{center}
     \egroup
 
-    \noindent An \textit{approximate equivalence relation} is a binary relation $\mathcal{A} \subset \mathcal (\mathcal X → \mathcal Y)^2$,~ e.g. $f \approx_{d} g \Leftrightarrow \mathbb \Delta(f, g) \leq d$. Given a dataset $X := [x^{(i)}]_{i=1}^n$, $Y := [f(x^{(i)})]_{i=1}^n$ and a program $g: \mathcal{X} → \mathcal{Y}$, we could use the extensional approach to evaluate $\Delta_X: (f, g) \mapsto \Delta_Y(Y, [g(x^{(i)})]_{i=1}^n)$ directly. Alternately, given an intensional descriptor $\varphi_θ(\cdot): (\mathcal X → \mathcal Y) → \mathcal Z$ we could construct a synthetic kernel $\Delta_θ: (f, g) \mapsto \left<\varphi_θ(f), \varphi_θ(g)\right>$, seeking $θ^* = \text{argmin}_θ\big(\Delta_θ(f, g) - \Delta_X(f, g)\big)^2$ over $f, g \overset{iid}{\sim} P(\mathcal X → \mathcal Y), X \overset{iid}{\sim} P(\mathcal X^n)$ via gradient descent. The problem then becomes: how do we match the distribution of naturally-arising programs?
-
-%    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta → Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
-
-%    \begin{prooftree}
-%        \AxiomC{$Γ \vdash f \circ g, f: Z → Y, g: X → Z, B: := P_\text{Train}[i]$}
-%        \RightLabel{\textsc{SGD}}
-%        \UnaryInfC{$Γ \vdash t \equiv_{\mathcal{L}} t'$}
-%        \DisplayProof
-%        \vskip 1em
-%%        \AxiomC{$Γ \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
-%%        \RightLabel{\textsc{ERM}}
-%%        \UnaryInfC{$Γ \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
-%    \end{prooftree}
-
 
     \pagebreak\subsection{Probabilistic equivalence}\label{sec:pr-eq}
 
     % However, what is needed is a way to quantify the probability a certain output is produced, or the likelihood of observing a representable function in the wild, given some prior knowledge. To do this properly, we need a language for propagating uncertainty through a computation.
 
-%    How do we know when we are approaching equality? We can use a distance metric.
-
     % https://towardsdatascience.com/beyond-weisfeiler-lehman-approximate-isomorphisms-and-metric-embeddings-f7b816b75751
 
-    \noindent So far, we have seen various definitions of exact and approximate equivalence on deterministic functions. Let us now turn our attention to the probabilistic setting. It is seldom the case two distributions are exactly equal, but rather agree in some places and disagree in others. Rather than verify equality, we need a way to measure similarity. We need a \textit{probability metric}.\\
+    \noindent So far, we have seen various definitions of exact and approximate equivalence on deterministic functions. We now turn our attention to the probabilistic setting, where two distributions are seldom exactly equal, but rather agree in some places and disagree in others. How could we measure their similarity? %We need a \textit{probability metric}.\\
 
     \hspace*{-0.6cm}\begin{tabular}{cccc}
     \begin{tikzpicture}[scale=0.6]
@@ -554,7 +557,7 @@
             y axis line style={draw=none},
             xticklabels={,,},
             enlargelimits=upper] % extend the axes a bit to the right and top
-            \addplot[name path=F] {gauss(0,0.38)};
+            \addplot[name path=F] {gauss(0.0,0.38)};
             \addplot[name path=G] {gauss(0.0,0.65)};
             \addplot[pattern=vertical lines, pattern color=gray!50]fill between[of=F and G, soft clip={domain=-2.0:1.8}];
         \end{axis}
@@ -581,34 +584,59 @@
     Frequency & & & Displacement
     \end{tabular} \\
 
-    \noindent Not only do we care about the ``vertical'' distance or relative frequency, but also the ``horizontal'' distance, or \textit{displacement}. First, let us consider the Kantorovich--Rubinstein (KR) metric. In the one-dimensional discrete case, it can be seen as an optimal assignment problem, where $Π$ is the set of all mass-conserving reassignments between two probability vectors $u$ and $v$:
+    \noindent We need a way to quantify the ``vertical'' distance or \textit{relative frequency}, as well as the ``horizontal'' distance, or \textit{displacement} between distributions. One family of functions, known as the R\'enyi divergences, estimate the relative frequency of two distributions, $P$ and $Q$ by comparing their relative entropy. For example, consider the Kullback-Leibler (KL) divergence:
+
+    \begin{align*}
+%        δ_{\textsc{TV}}(P, Q) &= \int |P(X) - Q(X)|dx
+        δ_{\textsc{KL}}(P → Q) &= \int P(X) \log\frac{P(X)}{Q(X)}dx
+%        δ_{\textsc{JS}}(P, Q) &= \frac{1}{2}δ_{\textsc{KL}}(P → M) + \frac{1}{2}δ_{\textsc{KL}}(Q → M)
+    \end{align*}
+
+    \noindent Although not strictly metrics, these functions are computationally tractable to estimate, although distinguish poorly between distributions which do not share overlapping support, such as in the following scenario:\\\\
+
+    \begin{tikzpicture}[scale=0.5]
+        \begin{axis}[x=2cm, y=2cm, every axis plot post/.append style={
+        mark=none,domain=-2:7.5,samples=50,smooth},
+            axis x line*=bottom, % no box around the plot, only x and y axis
+            ticks=none,
+            y axis line style={draw=none},
+            xticklabels={,,},
+            enlargelimits=upper] % extend the axes a bit to the right and top
+            \addplot[name path=F] {gauss(0.0,0.5)};
+            \addplot[name path=G] {gauss(3.0,0.5)};
+            \addplot[name path=H] {gauss(6.0,0.5)};
+            \addplot[name path=N] {nil(0)};
+            \addplot[pattern=vertical lines, pattern color=gray!50]fill between[of=G and N, soft clip={domain=1:5}];
+            \addplot[pattern=vertical lines, pattern color=gray!50]fill between[of=H and N, soft clip={domain=4:7.5}];
+        \end{axis}
+        \node [xshift=57pt, yshift=7pt] {\footnotesize $P_1(X)$};
+        \node [xshift=142pt, yshift=7pt] {\footnotesize $P_2(X)$};
+        \node [xshift=227pt, yshift=7pt] {\footnotesize $P_3(X)$};
+    \end{tikzpicture} \\
+
+    \noindent Notice how $δ_{\textsc{KL}}(P_1 → P_2) \approx δ_{\textsc{KL}}(P_1 → P_3)$, despite $P_3$ being nearly twice as ``far'' as $P_2$. Can we somehow quantify this? Let us now consider the Kantorovich--Rubinstein (KR) metric, a proper metric. Viewed as an optimal transport problem, $Π$ is the set of all mass-conserving transportation plans between two probability distributions $μ$ and $ν$, on a sample space $Ω$:
 
     $$
-    δ_{\textsc{KR}}(u, v) = \min_{π\in Π}\Big\{\sum_{i, j} π[i, j]d(x, y) \Bigm| \sum_i π[i, j]=v[j], \sum_j π[i, j] = u[i] \Big\}
+    δ_{\textsc{KR}}(μ, ν) = \inf_{π\in Π(μ, ν)}\int_{Ω\times Ω} δ(x, y)dπ(x, y)
     $$
 
-    \noindent We seek $π^*\in Π$ minimizing the total displacement. Generally, $Π$ is a set of feasible assignments or \textit{transport plans} between two distributions $μ$ and $ν$.
+%    In the one-dimensional discrete case, it can be seen as an optimal assignment problem,
+%
+%    $$
+%    δ_{\textsc{KR}}(u, v) = \min_{π\in Π}\Big\{\sum_{i, j} π[i, j]d(x, y) \Bigm| \sum_i π[i, j]=v[j], \sum_j π[i, j] = u[i] \Big\}
+%    $$
 
-    $$
-    δ_{\textsc{KR}}(u, v) = \inf_{π\in Π(u, v)}\int_{E\times E} δ(x, y)dπ(i, j)
-    $$
-
-    \noindent The Kullback–Leibler (KL) divergence is computationally more efficient, but distinguishes poorly between distributions with non-overlapping support. While asymmetric, it can be symmetrized into the Jensen-Shannon (JS).
-
-   \begin{align*}
-    δ_{\textsc{KL}}(P → Q) &= \int P(x) \log\frac{P(x)}{Q(x)}dx \\
-    δ_{\textsc{JS}}(P, Q) &= \frac{1}{2}δ_{\textsc{KL}}(P → M) + \frac{1}{2}δ_{\textsc{KL}}(Q → M)
-   \end{align*}
-
-    \noindent Computing these integrals directly grows quickly intractable in higher dimensions. Various approximations such as Gibbs sampling or Markov methods have been developed to alleviate this problem, and are often employed unless the integral in question can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
+    \noindent The distance between $μ$ and $ν$ is given by $π^*\in Π$ minimizing the total displacement. Clearly, integrating these quantities grows computationally intractable in higher dimensions. Various approximations such as Gibbs sampling or Markov methods have been developed to mitigate this problem. % are often employed unless the integral in question can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
-    A probability distribution is like a random walk on a graph...
 
-%    \subsection{Morphisms}
-%
-%    Equality on other objects is called a \textit{morphism}, e.g. graph isomorphisms.
+    \subsection{Morphisms}
+
+
+    Many objects we would like to compare cannot be reduced into a canonical form, making equality challenging. We can define a relation on these objects is called a \textit{morphism}, e.g. graph sequence, morphisms, equivariance. For example, consider two different graphs with the same topology, but different labels. Is there a way to identify equality in this setting?
+
+    Query languages. For strings, we have automata. For relational databases, we have SQL. For code, we have CodeQL / symbolic automata. For graphs we have WL kernels.
 
     \pagebreak
 
@@ -635,8 +663,7 @@
 
     The graph sum emerges naturally, however there are multiple valid ways to define a graph product. As we will now see, this simple data structure can be used to describe many fundamental computational processes.
 
-
-    \subsection{Programs are graphs}\label{sec:program-graphs}
+    \pagebreak\subsection{Programs are graphs}\label{sec:program-graphs}
 
     Programs are graphical structures with a rich denotational and operational semantics~\cite{henkel2018code}. To effectively reason about programs in semantically similar but syntactically diverse settings requires models which incorporate features from the call graph~\cite{liu2019neural} and surrounding typing context~\cite{allamanis2017learning}. Many semantic structures, such as data and control flow~\cite{si2018learning} can be represented as a directed acyclic graph, which admits linear-time solutions to a variety of graph problems, including topological sorting, single-source shortest path and reachability queries. Many useful graph representations have been proposed in the literature, including call graphs, dataflow graphs, computation graphs~\citep{breuleux2017automatic}, e-Graphs~\citep{willsey2020egg} down to boolean and arithmetic circuits~\citep{miller1988efficient}.
 
@@ -797,6 +824,9 @@ l = sqrt(sum)
         \end{tabular}
     \end{table}
     \egroup
+
+    Effectively a program is a kind of typed attribute graph. A type is a unique string identifying a set of things which each node accepts. In category theory this is called a commutative diagram, i.e. the transitive closure of a type graph.
+
 %    \begin{enumerate}
 %        \item \url{https://people.cs.kuleuven.be/~luc.deraedt/Francqui4ab.pdf#page=71}
 %        \item \url{http://www.mit.edu/~kepner/GraphBLAS/GraphBLAS-Math-release.pdf#page=11}
@@ -804,7 +834,7 @@ l = sqrt(sum)
 
     \pagebreak\subsection{Distributions are graphs}\label{sec:distributions-graphs}
 
-    We can think of a probability distribution as function $P(X)$ measuring the relative frequency which certain values appear in the output of a black box stochastic function $F$, whose internal properties we can only guess by external observation. The intensional description $\hat F(x)$ can be seen as a graph, whose vertices represent the internal states of some dynamical system, and edges represent the probabilities of transitioning between those states.
+    A probability distribution is like a random walk on a graph. We can think of a probability distribution as function $P(X)$ measuring the relative frequency which certain values appear in the output of a black box stochastic function $F$, whose internal properties we can only guess by external observation. The intensional description $\hat F(x)$ can be seen as a graph, whose vertices represent the internal states of some dynamical system, and edges represent the probabilities of transitioning between those states.
 
 %    Although we may never access the true graph which generated a given distribution, we can try to reconstruct it by feeding many inputs into a surrogate function $\hat F(X;\theta)$ and updating either the graph topology or transition probabilities so as to more closely match the true distribution. Regardless of whether the intensional descriptions match, if we can do so in a way that causes the extensional descriptions to align, then we say that $F$ and $\hat F$ are \textit{extensionally indistinguishable}.
 
@@ -1268,9 +1298,28 @@ l = sqrt(sum)
   \appendix
   \section{Appendix}
     \subsection{Equality notation}
-    For such a fundamental concept, the notation for equality is recklessly overloaded in mathematics and computer science. Depending on context, $x = y$ may denote: (1)~define $x$ to be $y$, (2)~$x$ and $y$ are the same, (3)~are $x$ and $y$ the same? (4)~$x$ and $y$ are exchangeable, (5)~assign $y$ to $x$, (6)~assign $x$ to $y$, among other peculiar programming idioms. If two expressions are equal, it should be possible to treat them in the same manner.
 
-    But this convention does not always hold! Suppose we need to compute the derivative of a logical function with respect to its inputs. The trouble is, logical equality is not differentiable. Consider the Kronecker $δ$-function:
+    For such a fundamental concept, the notation for equality is recklessly overloaded in mathematics and computer science. Depending on the surrounding context, the expression $x = y$ may be used to denote:
+
+    \begin{enumerate}
+    \item Define x to be y, e.g. ``Let $x = y$''.
+    \item x and y are the same, e.g. ``\ldots therefor, $x = y$''.
+    \item For all $x$, $x$ and $y$ are the same, e.g. $a^2 = a\cdot a$
+    \item There exists an $x$ such that $x$ and $y$ are the same, e.g. $x^2 = 4$
+    \item Store the value of \texttt{y} in the register \texttt{x}, e.g. \texttt{val x = y}
+    \item Are x and y the same? e.g. \texttt{if(x = y)}
+    \end{enumerate}
+
+%    https://math.stackexchange.com/a/2517357/533073
+%    https://math.stackexchange.com/q/1100140/533073
+
+    Identity vs. equality vs. isomorphism
+
+    Thus, we say that the semantics of the expression $x= y$ are \textit{context sensitive}.
+
+    If either (1-3) apply, it should be possible to treat them in the same manner.
+
+    Suppose we need to compute the derivative of a logical function with respect to its inputs (6). The trouble is, logical equality is not differentiable. Consider the Kronecker $δ$-function:
 
     $$
     δ_k(x, y) :=
