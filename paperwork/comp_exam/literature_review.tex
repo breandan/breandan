@@ -103,14 +103,13 @@
 
     In this work, we first  define exact and approximate equality and cover some deterministic and probabilistic algorithms for deciding it (\S~\ref{sec:definitions}). We then describe a few graph representations for encoding approximate procedural knowledge (\S~\ref{sec:graphs}). Finally, we will discuss some opportunities for applying these ideas to search-based software engineering, in particular, documentation alignment, code search, synthesis and DSL generation (\S~\ref{sec:applications}).
 
+    \section{From exact to approximate knowledge}\label{sec:definitions}
 
-    \section{From exact to approximate equality}\label{sec:definitions}
+    Reason is the source of all human knowledge. To understand and reason about knowledge, we must first understand how concepts are formed and related. To do so, we must start from first principles: how do humans distill concepts from unstructured data and match new data to prior concepts?
 
-    Reason is the source of all human knowledge. In order to understand reason, we need to understand how concepts are related. In this section, we will review some useful definitions of equivalence in various settings.
+    Indispensable to this process is the ability to cross between a sea of smoothly varying quantities and continuous relations, and a land of discrete structures and finite relations. To navigate these shores, we must be able to distinguish that which is \textit{known} from that which is \textit{unknown}. How do we know what is known if the same knowledge can take many different forms? We must be able to recognize when two forms are the same or alike.
 
-    Next to identity, one of the simplest relations is equality. Equality is like identity for objects that may differ in superficial ways, but are the same in all but name and appearance.
-
-     A more general notion is the concept of an \textit{equivalence relation} $\equiv$, a binary relation with the following logical properties:
+    Next to identity, one of the simplest relations is a binary relation known as equality. Equality is like identity for forms that may differ in superficial ways, but are the same in all but name and appearance. More precisely, we may care about equality modulo certain properties, like size, orientation or color. We can generalize this to form an \textit{equivalence relation} $\equiv$, i.e. any binary relation which shares the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -150,17 +149,11 @@
         \UnaryInfC{\textit{Congruence}}
     \end{prooftree}
 
-    There are various ways to check for equivalence. Some are decidable, some are undecidable.
+    Although it might seem trivial, deciding equivalence is often far from it. Depending on the objects and properties under comparison, equivalence can be undecidable (\S~\ref{sec:algorithms}). In order to carve out decidable fragments, various definitions and decision procedures have been proposed, e.g. intensional (\S~\ref{sec:in-eq}), computational (\S~\ref{sec:comp-eq}), or observational equivalence (\S~\ref{sec:obs-eq}).
 
-    More generally, we have something called a metric, which is like equality but with a score. There are a huge number of metrics with various desirable properties.
+    More generally, we have something called a metric, which like equality, takes two objects, but instead returns a numerical score. There are a huge number of useful metrics with various desirable properties (\S~\ref{sec:ap-eq}). Then we have kernels, which are distance metrics with some additional useful properties. Finally, we have probability metrics and kernels, which are probabilistic distance metrics on probability measures (\S~\ref{sec:pr-eq}).
 
-    Then we have kernels, which are distance metrics with some additional properties.
-
-    Finally, we have probability metrics and kernels, which are probabilistic distance metrics with some additional properties.
-
-    We can define equivalence on other kinds structures. This is called a morphism, e.g. graph isomorphism.
-
-
+    We can also define equivalence on other kinds of structures, such as strings or graphs, called a morphism, e.g. graph isomorphism (\S~\ref{sec:morph}).
 
     \pagebreak\subsection{Decidability}\label{sec:algorithms}
 
@@ -204,7 +197,7 @@
 
     In the following section, we will introduce a few compatible theories corresponding to intensional and extensional equality, then build on those definitions to include recent approaches to exact and approximate equality in the determinsitic and probabilistic setting. In so doing, we will see there is a delicate tradeoff between complexity, sensitivity and specificity.
 
-    \subsection{Intensional equivalence}\label{subsec:in-eq}
+    \subsection{Intensional equivalence}\label{sec:in-eq}
 
     Let $Ω \subseteq \mathcal{F} \times \mathcal{F}$ be a relation on representable functions which are closed under composition. We say two representations $f, g \in \mathcal{X} \rightarrow \mathcal{Y}$ are intensionally equal under $Ω$ if we can establish that $g \in Ω^n(f)$ for some $n \in \mathbb{N}$.
 
@@ -281,9 +274,9 @@
 
     \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|f \equiv g]$ is more tractable. However termination is not necessarily guaranteed, e.g. $Ω' := \{(a, 1a)\}$. Equality and termination under arbitrary $Ω$ are known to be undecidable~\citep{baader1999term}.
 
-    \subsection{Computational equivalence}\label{subsec:comp-eq}
+    \subsection{Computational equivalence}\label{sec:comp-eq}
 
-    Clearly, the procedure defined in \S~\ref{subsec:in-eq} is highly sensitive to $|\mathcal{X}|$ and $Ω$. While equality may be tractable, disequality is definitely an obstacle. In the computational setting, we will see the opposite holds, ceteris paribus. %Two values $r, r': \mathcal{Y}$ share a normal form in which equality is trivial.
+    Clearly, the procedure defined in \S~\ref{sec:in-eq} is highly sensitive to $|\mathcal{X}|$ and $Ω$. While equality may be tractable, disequality is definitely an obstacle. In the computational setting, we will see the opposite holds, ceteris paribus. %Two values $r, r': \mathcal{Y}$ share a normal form in which equality is trivial.
 
     \begin{prooftree}
         \AxiomC{$fg: \mathcal{X} \rightarrow \mathcal{Y}, Ω: \{\mathcal{X}\rightarrow \mathcal{Y}\}\rightarrow \mathcal{Y} \in Γ$}
@@ -389,9 +382,9 @@
 %    Metamorphic testing
 
 
-    \pagebreak\subsection{Observational equivalence}
+    \pagebreak\subsection{Observational equivalence}\label{sec:obs-eq}
 
-    As presented, both intensional (\S~\ref{subsec:in-eq}) and computational (\S~\ref{subsec:comp-eq}) equivalence require an external definition of equality to satisfy. One solution to this problem, known as \textit{observational} or \textit{contextual equivalence}~\cite{morris1969lambda}, allows a language $\mathcal{L}$ to implement an internal mechanism to verify equality. Given $\mathcal{L}$, a term $t$, and one-hole context $C[\![\cdot]\!]$, our job is to check for termination: if $C[\![t]\!]$ is both well-defined and halts, we write $C[\![t]\!]\Downarrow$, otherwise $C[\![t]\!]\Uparrow$.
+    As presented, both intensional (\S~\ref{sec:in-eq}) and computational (\S~\ref{sec:comp-eq}) equivalence require an external definition of equality to satisfy. One solution to this problem, known as \textit{observational} or \textit{contextual equivalence}~\cite{morris1969lambda}, allows a language $\mathcal{L}$ to implement an internal mechanism to verify equality. Given $\mathcal{L}$, a term $t$, and one-hole context $C[\![\cdot]\!]$, our job is to check for termination: if $C[\![t]\!]$ is both well-defined and halts, we write $C[\![t]\!]\Downarrow$, otherwise $C[\![t]\!]\Uparrow$.
 
     \begin{prooftree}
         \AxiomC{$Γ \vdash C[\![t]\!]\Downarrow \iff C[\![t']\!]\Downarrow$ $\forall$ $C[\![\cdot]\!] \in \mathcal{L}$}
@@ -409,11 +402,15 @@
 
     We can think of this definition as dual to computational equivalence: instead of searching for inputs which distinguish functions, we search for contexts which distinguish terms, or a proof that no such context exists. Two terms $t$ and $t'$ are contextually equivalent with respect to $\mathcal{L}$ if we can prove that for all contexts $C[\![\cdot]\!]$ in $\mathcal{L}$, $C[\![t]\!]$ halts if and only if $C[\![t']\!]$ halts -- if no such proof can be found, the test is inconclusive. While this definition does not admit a decision procedure, many promising SDPs exist.
 
-    A similar notion also appears in natural language. ``You shall know a word by the company it keeps''. If two different words can be exchanged in all contexts, they are called \textit{synonyms}. Based on this definition, we can define a context as a probabilistic description of the surrounding environment.
+    A similar concept also appears in natural languages: ``You shall know a word by the company it keeps''. If two different words can be exchanged in all contexts, they are called \textit{synonyms}. Based on this definition, we can define a context as a probabilistic description of the surrounding environment:
 
-    $P(w_t = a \mid w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)\overset{?}{\approx} P(w_t = b \mid w_{t-1}, w_{t-2}\ldots, w_{t+1}, w_{t+2}, \ldots)$
+    $$
+    C[\![\cdot]\!] = P(w_i = \cdot \mid w_{i-n}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+n})
+    $$
 
-    We can define semantic equality in our setting using word embeddings.
+    Thus, to determine whether two words $a$ and $b$ have the same meaning in some language $\mathcal L$, we must show that for all sentences $C[\![\cdot]\!] $, $a$ and $b$ have the same probability, i.e. $\forall C[\![\cdot]\!] \in \mathcal L, C[\![a]\!] \approx C[\![b]\!]$. Alternatively, to show $a$ and $b$ have a different meaning, we need only provide a single sentence where their probability significantly differs, i.e. $\exists C[\![\cdot]\!] \in \mathcal L$ such that $C[\![a]\!] \not\approx C[\![b]\!]$.
+
+    We can define semantic equality in our setting using word embeddings. Interchangable words are semantically equivalent.~\citep{clark2020electra}
 
     \pagebreak\subsection{Approximate equivalence}\label{sec:ap-eq}
 
@@ -451,7 +448,7 @@
         \UnaryInfC{\textit{Triangularity}}
     \end{prooftree}
 
-    \noindent An \textit{approximate equivalence relation} is a binary relation $\mathcal{A} \subset \mathcal (\mathcal X → \mathcal Y)^2$,~ e.g. $f \approx_{d} g \Leftrightarrow \mathbb δ(f, g) \leq d$. For example, consider a dataset $X := [x^{(i)}]_{i=1}^n$, $Y := [f(x^{(i)})]_{i=1}^n$ and a program $g: \mathcal{X} → \mathcal{Y}$, we could use the extensional approach to evaluate $δ_X: (f, g) \mapsto δ_Y(Y, [g(x^{(i)})]_{i=1}^n)$ directly.
+    An \textit{approximate equivalence relation} is a relation $\mathcal{A} \subset \mathcal (\mathcal X → \mathcal Y)^2$,~ e.g. $f \approx_{d} g \Leftrightarrow \mathbb δ(f, g) \leq d$. For example, consider a dataset $X := [x^{(i)}]_{i=1}^n$, $Y := [f(x^{(i)})]_{i=1}^n$ and a program $g: \mathcal{X} → \mathcal{Y}$, we could use the extensional approach to evaluate $δ_X: (f, g) \mapsto δ_Y(Y, [g(x^{(i)})]_{i=1}^n)$ directly.
 
     Alternately, given an intensional descriptor $\varphi_θ(\cdot): (\mathcal X → \mathcal Y) → \mathcal Z$ we could construct a synthetic kernel $\Delta_θ: (f, g) \mapsto \left<\varphi_θ(f), \varphi_θ(g)\right>$, seeking $θ^* = \text{argmin}_θ\big(\Delta_θ(f, g) - \Delta_X(f, g)\big)^2$ over $f, g \overset{iid}{\sim} P(\mathcal X → \mathcal Y), X \overset{iid}{\sim} P(\mathcal X^n)$ via gradient descent. The problem then becomes: how do we match the distribution of naturally-arising programs?
 
@@ -626,12 +623,12 @@
 %    δ_{\textsc{KR}}(u, v) = \min_{π\in Π}\Big\{\sum_{i, j} π[i, j]d(x, y) \Bigm| \sum_i π[i, j]=v[j], \sum_j π[i, j] = u[i] \Big\}
 %    $$
 
-    \noindent The distance between $μ$ and $ν$ is given by $π^*\in Π$ minimizing the total displacement. Clearly, integrating these quantities grows computationally intractable in higher dimensions. Various approximations such as Gibbs sampling or Markov methods have been developed to mitigate this problem. % are often employed unless the integral in question can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
+    \noindent The distance between $μ$ and $ν$ is given by $π^*\in Π$ minimizing the total displacement. However integrating these quantities grows computationally intractable in higher dimensions. Various approximations such as Gibbs sampling or Markov methods have been developed to mitigate this problem. % are often employed unless the integral in question can be decomposed into lower-dimensional sums and products of conditionally independent random variables (cf. \S~\ref{sec:distributions-graphs}).
 
 %    During test time, we query a dataset for the $k$ most similar functions, and try to unify them computationally and intensionally. We can train a metric $M_\theta$ and discriminator $D_\theta$ on pairs of random functions $f_1$ and $f_2$, to predict their similarity. During inference, we let the discriminator sample random inputs $\hat i_1 \ldots n \sim D_\theta(\hat i \mid f_1, f_2)$ from its latent distribution, conditioning on the structure of $f_1$ and $f_2$. In other words, we want a model that predicts similarity and outputs values which are likely to demonstrate instances of inequality.
 
 
-    \subsection{Morphisms}
+    \subsection{Morphisms}\label{sec:morph}
 
 
     Many objects we would like to compare cannot be reduced into a canonical form, making equality challenging. We can define a relation on these objects is called a \textit{morphism}, e.g. graph sequence, morphisms, equivariance. For example, consider two different graphs with the same topology, but different labels. Is there a way to identify equality in this setting?
@@ -984,7 +981,7 @@ l = sqrt(sum)
 
 
 
-    \pagebreak\subsection{Knowledge is a graph}\label{subsec:kgs}
+    \pagebreak\subsection{Knowledge is a graph}\label{sec:kgs}
 
     \textit{Abduction} is the process of knowledge distillation: recognizing \textit{patterns} or \textit{motifs} in raw data, forming discrete \textit{categories} or \textit{types} of objects which share similar attributes, and adding edges representing abstract relations between types, such as composition, causation, or subsumption. The key idea is moving from the space of unstructured data to a structured domain containing abstract concepts and their relations. This domain is a graph.
 
@@ -1278,7 +1275,7 @@ l = sqrt(sum)
 
     In this proposal, we have seen a number of procedures for generating, or synthesizing a short procedure from a space of valid procedures. Various approaches are presented for determining the equivalence of valid procedures and sampling from a constrained space of representable functions to produce a higher-order probabilistic function, satisfying a set of constraints.
 
-    Our initial approach described in~\S\ref{subsec:kgs}, simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in a codebase. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is to be composed with another. Given a grammar and type system, we would like a way of sampling novel programs according to the distribution of programs which occur in some desired codebase.
+    Our initial approach described in~\S\ref{sec:kgs}, simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in a codebase. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is to be composed with another. Given a grammar and type system, we would like a way of sampling novel programs according to the distribution of programs which occur in some desired codebase.
 
     \subsection{DSL generation}\label{subsec:gen}
 
