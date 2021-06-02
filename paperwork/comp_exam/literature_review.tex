@@ -107,7 +107,7 @@
 
     Reason is the source of all human knowledge. To understand and reason about knowledge, we must first understand how concepts are formed and related. To do so, we must start from first principles: how do humans distill concepts from unstructured data and match new data to prior concepts?
 
-    Indispensable to this process is the ability to cross between a sea of smoothly varying quantities and continuous relations, and a land of discrete structures and finite relations. To navigate these shores, we must be able to distinguish that which is \textit{known} from that which is \textit{unknown}. How do we know what is known if the same knowledge can take many different forms? We must be able to recognize when two forms are the same or alike.
+    Data is a sea of smoothly varying quantities and continuous relations, but knowledge is a land of discrete structures and finite relations. To navigate these shores, we must distinguish what is \textit{known} from what is \textit{unknown}. How do we know what is known if the same knowledge can take many forms? We must be able to recognize when two forms are the same or alike.
 
     Next to identity, one of the simplest relations is a binary relation known as equality. Equality is like identity for forms that may differ in superficial ways, but are the same in all but name and appearance. More precisely, we may care about equality modulo certain properties, like size, orientation or color. We can generalize this to form an \textit{equivalence relation} $\equiv$, i.e. any binary relation which shares the following logical properties:
 
@@ -151,7 +151,7 @@
 
     Although it might seem trivial, deciding equivalence is often far from it. Depending on the objects and properties under comparison, equivalence can be undecidable (\S~\ref{sec:algorithms}). In order to carve out decidable fragments, various definitions and decision procedures have been proposed, e.g. intensional (\S~\ref{sec:in-eq}), computational (\S~\ref{sec:comp-eq}), or observational equivalence (\S~\ref{sec:obs-eq}).
 
-    More generally, we have something called a metric, which like equality, takes two objects, but instead returns a numerical score. There are a huge number of useful metrics with various desirable properties (\S~\ref{sec:ap-eq}). Then we have kernels, which are distance metrics with some additional useful properties. Finally, we have probability metrics and kernels, which are probabilistic distance metrics on probability measures (\S~\ref{sec:pr-eq}).
+    More generally, we have something called a \textit{metric}, which like equality, takes two objects, but instead returns a numerical score. There are a huge number of metrics with various desirable properties (\S~\ref{sec:ap-eq}). Then we have \textit{kernels}, which are metrics with some additional useful properties, e.g. closure under linear combination. Finally, we have probability kernels and metrics, which are distance metrics on probability measures (\S~\ref{sec:pr-eq}).
 
     We can also define equivalence on other kinds of structures, such as strings or graphs, called a morphism, e.g. graph isomorphism (\S~\ref{sec:morph}).
 
@@ -190,10 +190,10 @@
 
     Tractability may be related to, but is not contingent upon decidability. When decidable, equality may be intractable in practice, and languages where equality is undecidable may have decidable fragments. But even when exact equality is intractable, we may be able to construct a probabilistic decision procedure (PDP) or semidecision procedure (SDP) terminating for all practical purposes. The latter approaches fall into two broad categories:
 
-    \begin{itemize}
+    \begin{enumerate}
         \item Execute: Evaluate the program by running it on a small set of inputs
-        \item Sample: Build a probabilistic model and sample from its distribution
-    \end{itemize}
+        \item Sample: Build a probabilistic model and sample from its posterior
+    \end{enumerate}
 
     In the following section, we will introduce a few compatible theories corresponding to intensional and extensional equality, then build on those definitions to include recent approaches to exact and approximate equality in the determinsitic and probabilistic setting. In so doing, we will see there is a delicate tradeoff between complexity, sensitivity and specificity.
 
@@ -210,7 +210,7 @@
         \hskip 1em
         \AxiomC{$Γ^{n}_{g} \vdash E \subseteq \mathcal{F}, G \subseteq E \times E$}
         \RightLabel{\textsc{Sub}}
-        \UnaryInfC{$Γ^{n+1}_{g} \vdash \bigcup\limits_{\substack{e \in E\\\sigma \in Ω}}e'\leftarrow e[\sigma_1\rightarrow\sigma_2], (e, e')$}
+        \UnaryInfC{$Γ^{n+1}_{g} \vdash \bigcup\limits_{\substack{e \in E\\ω \in Ω}}e'\leftarrow e[ω_1\rightarrow ω_2], (e, e')$}
         \DisplayProof
         \vskip 1em
         \AxiomC{$Γ^n_{g} \vdash E, G$}
@@ -226,7 +226,7 @@
         \TrinaryInfC{$Γ^{n+1}_{g} \vdash f \not\equiv_Ω g$}
     \end{prooftree}
 
-    \noindent For example, suppose we are given $f: \{a, b, c\} \mapsto a b c, g: \{a, b, c\} \mapsto c b a$ and $Ω := \{(a, a), (ab, ba)\}$. Indeed, $\textsc{Eq}[f, g]$ can be established as follows:
+    \noindent For example, suppose we are given $f: \{a, b, c\} \mapsto a b c, g: \{a, b, c\} \mapsto c b a$ and $Ω := \{(σ, σ), (στ, τσ)\}$. Indeed, $\textsc{Eq}[f, g]$ can be established as follows:
 
     \vspace{-10pt}\begin{prooftree}
         \def\fCenter{\ := \ }
@@ -272,7 +272,7 @@
 
     $$\mathcal{O}_{\textsc{Eq}} = \underset{i \leq n}{\text{max }}\underset{n}{\text{argmin}}\{|G| \mid Γ^i_{g} \vdash G, Γ_{g}^n = Γ_{g}^{n+1}\}$$ % \text{, or } \Theta_{\textsc{Eq}}(|\mathcal{X}|!) \text{ for } Ω.$$
 
-    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|f \equiv g]$ is more tractable. However termination is not necessarily guaranteed, e.g. $Ω' := \{(a, 1a)\}$. Equality and termination under arbitrary $Ω$ are known to be undecidable~\citep{baader1999term}.
+    \noindent Assuming termination, $\mathcal{O}_{\textsc{Eq}} = \Theta_{\textsc{Neq}}$ although $\mathbb{E}[\Theta_\textsc{Eq}|f \equiv g]$ is more tractable. However termination is not necessarily guaranteed, e.g. $Ω' := \{(σ, 1σ)\}$. Equality and termination under arbitrary $Ω$ are known to be undecidable~\citep{baader1999term}.
 
     \subsection{Computational equivalence}\label{sec:comp-eq}
 
@@ -402,13 +402,13 @@
 
     We can think of this definition as dual to computational equivalence: instead of searching for inputs which distinguish functions, we search for contexts which distinguish terms, or a proof that no such context exists. Two terms $t$ and $t'$ are contextually equivalent with respect to $\mathcal{L}$ if we can prove that for all contexts $C[\![\cdot]\!]$ in $\mathcal{L}$, $C[\![t]\!]$ halts if and only if $C[\![t']\!]$ halts -- if no such proof can be found, the test is inconclusive. While this definition does not admit a decision procedure, many promising SDPs exist.
 
-    A similar concept also appears in natural languages: ``You shall know a word by the company it keeps''. If two different words can be exchanged in all contexts, they are called \textit{synonyms}. Based on this definition, we can define a context as a probabilistic description of the surrounding environment:
+    A similar concept also arises in natural languages: ``You shall know a word by the company it keeps''. If two different words can be exchanged in all contexts, they are called \textit{synonyms}. Based on this definition, we can define a context as a probabilistic description of the surrounding environment:
 
     $$
-    C[\![\cdot]\!] = P(w_i = \cdot \mid w_{i-n}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+n})
+    C[\![\cdot]\!] := P(w_i = \cdot \mid w_{i-n}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+n})
     $$
 
-    Thus, to determine whether two words $a$ and $b$ have the same meaning in some language $\mathcal L$, we must show that for all sentences $C[\![\cdot]\!] $, $a$ and $b$ have the same probability, i.e. $\forall C[\![\cdot]\!] \in \mathcal L, C[\![a]\!] \approx C[\![b]\!]$. Alternatively, to show $a$ and $b$ have a different meaning, we need only provide a single sentence where their probability significantly differs, i.e. $\exists C[\![\cdot]\!] \in \mathcal L$ such that $C[\![a]\!] \not\approx C[\![b]\!]$.
+    Thus, to determine whether two words $a$ and $b$ have the same meaning in some language $\mathcal L$, we must show that for all contexts $C[\![\cdot]\!] $, $a$ and $b$ have the same probability, i.e. $\forall C[\![\cdot]\!] \in \mathcal L, C[\![a]\!] \approx C[\![b]\!]$. Alternatively, to show $a$ and $b$ have a different meaning, we need only demonstrate a single context where their probability significantly differs, i.e. $\exists C[\![\cdot]\!] \in \mathcal L$ such that $C[\![a]\!] \not\approx C[\![b]\!]$.
 
     We can define semantic equality in our setting using word embeddings. Interchangable words are semantically equivalent.~\citep{clark2020electra}
 
@@ -416,7 +416,7 @@
 
 %    How do we know when we are approaching equality? We can use a distance metric.
 
-    Though precise, boolean equality is far too rigid for many applications. The spaces involved either lack formal semantics or are intractable to verify, leaving decidability out of reach. Furthermore, we would like to provide more granular way to distinguish objects. This can be achieved by introducing a new relation for reasoning in discrete and continuous spaces, called a \textit{distance metric}, $δ: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$. It has the following logical properties:
+    Though precise, boolean equality is far too rigid for many applications. The spaces involved either lack formal semantics or are intractable to verify, leaving decidability out of reach. Furthermore, we would like to provide a more granular way to distinguish objects. This can be achieved by introducing a new relation for reasoning in discrete and continuous spaces, called a \textit{distance metric}, $δ: \mathcal{Z}\times\mathcal{Z}\rightarrow\mathbb{R}_{\geq 0}$. It has the following logical properties:
 
     \begin{prooftree}
         \bottomAlignProof
@@ -448,22 +448,22 @@
         \UnaryInfC{\textit{Triangularity}}
     \end{prooftree}
 
-    An \textit{approximate equivalence relation} is a relation $\mathcal{A} \subset \mathcal (\mathcal X → \mathcal Y)^2$,~ e.g. $f \approx_{d} g \Leftrightarrow \mathbb δ(f, g) \leq d$. For example, consider a dataset $X := [x^{(i)}]_{i=1}^n$, $Y := [f(x^{(i)})]_{i=1}^n$ and a program $g: \mathcal{X} → \mathcal{Y}$, we could use the extensional approach to evaluate $δ_X: (f, g) \mapsto δ_Y(Y, [g(x^{(i)})]_{i=1}^n)$ directly.
+    An \textit{approximate equivalence relation} is a relation $\mathcal{A} \subset \mathcal (\mathcal X → \mathcal Y)^2$,~ e.g. $f \approx_{d} g \Leftrightarrow \mathbb δ_X(f, g) \leq d$, where $X\subseteq \mathcal X$. For example, consider a dataset $X := [x^{(i)}]_{i=1}^n$, $Y := [f(x^{(i)})]_{i=1}^n$ and a program $g: \mathcal{X} → \mathcal{Y}$. We could use the extensional approach to evaluate $δ_X: (f, g) \mapsto δ_Y(Y, [g(x^{(i)})]_{i=1}^n)$ directly.
 
-    Alternately, given an intensional descriptor $\varphi_θ(\cdot): (\mathcal X → \mathcal Y) → \mathcal Z$ we could construct a synthetic kernel $\Delta_θ: (f, g) \mapsto \left<\varphi_θ(f), \varphi_θ(g)\right>$, seeking $θ^* = \text{argmin}_θ\big(\Delta_θ(f, g) - \Delta_X(f, g)\big)^2$ over $f, g \overset{iid}{\sim} P(\mathcal X → \mathcal Y), X \overset{iid}{\sim} P(\mathcal X^n)$ via gradient descent. The problem then becomes: how do we match the distribution of naturally-arising programs?
+%    Alternately, given an intensional descriptor $\varphi_θ(\cdot): (\mathcal X → \mathcal Y) → \mathcal Z$ we could construct a synthetic kernel $\Delta_θ: (f, g) \mapsto \left<\varphi_θ(f), \varphi_θ(g)\right>$, seeking $θ^* = \text{argmin}_θ\big(\Delta_θ(f, g) - \Delta_X(f, g)\big)^2$ over $f, g \overset{iid}{\sim} P(\mathcal X → \mathcal Y), X \overset{iid}{\sim} P(\mathcal X^n)$ via gradient descent. The problem then becomes: how do we match the distribution of naturally-arising programs?
 
-    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta → Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:...
+    It is often the case we are given a dataset $P_{\text{Train}}, P_{\text{Test}}: (X \times Y)^n$ sampled from an inaccessible distribution $P^{(1..n)} \overset{iid}{\sim} P_\text{Gen}(X, Y)$, and want to compare a deterministic computer program $\hat p: X \times \Theta → Y$ approximating $P_\text{Gen}$ to detect errors with respect to that dataset. One mechanism for doing so can be described as follows:\ldots
 
-    \begin{prooftree}
-        \AxiomC{$Γ \vdash f \circ g, f: Z → Y, g: X → Z, B: := P_\text{Train}[i]$}
-        \RightLabel{\textsc{SGD}}
-        \UnaryInfC{$Γ \vdash t \equiv_{\mathcal{L}} t'$}
-        \DisplayProof
-        \vskip 1em
-%        \AxiomC{$Γ \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
-%        \RightLabel{\textsc{ERM}}
-%        \UnaryInfC{$Γ \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
-    \end{prooftree}
+%    \begin{prooftree}
+%        \AxiomC{$Γ \vdash f \circ g, f: Z → Y, g: X → Z, B: := P_\text{Train}[i]$}
+%        \RightLabel{\textsc{SGD}}
+%        \UnaryInfC{$Γ \vdash t \equiv_{\mathcal{L}} t'$}
+%        \DisplayProof
+%        \vskip 1em
+%%        \AxiomC{$Γ \vdash \exists C[\![\cdot]\!]\in \mathcal{L} \mid C[\![t]\!]\Uparrow $ and $ C[\![t']\!]\Downarrow$, or $C[\![t]\!]\Downarrow $ and $ C[\![t']\!]\Uparrow$}
+%%        \RightLabel{\textsc{ERM}}
+%%        \UnaryInfC{$Γ \vdash t \not\equiv_{\mathcal{L}} t'$ by $C[\![\cdot]\!]$}
+%    \end{prooftree}
 
     \noindent A \textit{kernel function} $Δ: (\mathcal{X}\rightarrow\mathcal{Y})^2\rightarrow \mathbb{R}_{\geq 0}$ can be defined as a metric on $\mathcal{Z}$ with some additional structure. Specifically for every kernel function, there exists a feature map $\varphi: (\mathcal{X}→\mathcal{Y}) → \mathcal{Z}$ such that $Δ: (f, g) \mapsto \left<\varphi(f), \varphi(g)\right>$. Given a feature map $\symbf\varphi: \mathbb{R}^m → \mathbb{R}^n$, constructing a kernel corresponds to finding $\Delta \in \mathbb{R}^{m \times m}$ symmetric PSD, i.e. $\Delta^\intercal = \Delta$, and $0 \leq \mathbf{x}^\intercal \Delta \mathbf{x}$ for all $\mathbf{x} \in \mathbb{R}^m$~\cite{mercer1909functions}. Consider the complexity of evaluating the inner product $\left<\symbf\varphi(f), \symbf\varphi(g)\right>$ in feature space. The computational benefit of a kernel becomes apparent when $m \ll n$. Rather than applying $\symbf\varphi$, then evaluating $\left<f^\intercal\symbf\varphi, g^\intercal\symbf\varphi\right>$, we may apply $\Delta(f, g)$ directly for a $\Theta(m^2 - n^2)$ speedup. Known as the \textit{kernel trick}, this shortcut may be easier to see categorically, where $f, g: \mathcal{X}→\mathcal{Y}$.
 
@@ -585,7 +585,7 @@
 
     \begin{align*}
 %        δ_{\textsc{TV}}(P, Q) &= \int |P(X) - Q(X)|dx
-        δ_{\textsc{KL}}(P → Q) &= \int P(X) \log\frac{P(X)}{Q(X)}dx
+        δ_{\textsc{KL}}(P → Q) &:= \int P(X) \log\frac{P(X)}{Q(X)}dx
 %        δ_{\textsc{JS}}(P, Q) &= \frac{1}{2}δ_{\textsc{KL}}(P → M) + \frac{1}{2}δ_{\textsc{KL}}(Q → M)
     \end{align*}
 
@@ -611,10 +611,10 @@
         \node [xshift=227pt, yshift=7pt] {\footnotesize $P_3(X)$};
     \end{tikzpicture} \\
 
-    \noindent Notice how $δ_{\textsc{KL}}(P_1 → P_2) \approx δ_{\textsc{KL}}(P_1 → P_3)$, despite $P_3$ being nearly twice as ``far'' as $P_2$. Can we somehow quantify this? Let us now consider the Kantorovich--Rubinstein (KR) metric, a proper metric. Viewed as an optimal transport problem, $Π$ is the set of all mass-conserving transportation plans between two probability distributions $μ$ and $ν$, on a sample space $Ω$:
+    \noindent Notice how $δ_{\textsc{KL}}(P_1 → P_2) \approx δ_{\textsc{KL}}(P_1 → P_3)$, despite $P_3$ being nearly twice as ``far'' as $P_2$. Can we somehow quantify this? Let us now consider the Kantorovich--Rubinstein (KR) metric. Viewed as an optimal transport problem, $δ_{KR}$ minimizes over $Π$, the set of all mass-conserving transportation plans between two probability distributions $μ$ and $ν$, on a sample space $Ω$:
 
     $$
-    δ_{\textsc{KR}}(μ, ν) = \inf_{π\in Π(μ, ν)}\int_{Ω\times Ω} δ(x, y)dπ(x, y)
+    δ_{\textsc{KR}}(μ, ν) := \inf_{π\in Π(μ, ν)}\int_{Ω\times Ω} δ(x, y)dπ(x, y)
     $$
 
 %    In the one-dimensional discrete case, it can be seen as an optimal assignment problem,
@@ -1292,6 +1292,7 @@ l = sqrt(sum)
     \bibliography{exam_proposal}
     \bibliographystyle{plain}
 
+  \pagebreak
   \appendix
   \section{Appendix}
     \subsection{Equality notation}
@@ -1336,6 +1337,7 @@ l = sqrt(sum)
 
     Neither $δ_k$ nor $\nablaδ_d$ are a satisfactory basis for logical equality. To allow a more flexible definition of the $\overset{?}{=}$ operator, we require a relation which approximates the logical properties of $δ_k$, but can be made differentiable like $δ_d$.
 
+  \pagebreak
   \subsection{Probability notation}\label{subsec:ppl}
 
     Probabilistic inference is a framework for reasoning about uncertainty. In this section, we define a denotational and operational semantics for probabilistic inference. \\
