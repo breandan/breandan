@@ -641,9 +641,9 @@
 
     % https://en.wikipedia.org/wiki/Duality_(optimization)
 
-%    Many optimization problems can be seen as dual to each other: KKT and SVM duality. Duality occurs in automatic differentiation with dual number arithmetic. Duality also arises in computer science. One famous example is the duality between code and data: in \textit{homoiconic} languages, we can treat code as data and data as code. Is there a common way to represent both?
+    Many optimization problems can be seen as dual to each other: KKT and SVM duality. Duality occurs in automatic differentiation with dual number arithmetic. Duality also arises in computer science. One well-known example is the duality between code and data: in \textit{homoiconic} languages, we can treat code as data and data as code. Is there a common way to represent both?
 
-%    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define a the graph as an algebraic object.
+    One way to view automatic differentiation is that it allows us to compute the sensitivity of numerical values in a fixed computation graph. What we wanted to compute sensitivities with respect to changes in the computation graph itself? For that, we need to define the graph as an algebraic object.
 
     Graphs are algebraic structures~\cite{weisfeiler1968reduction} capable of representing a wide variety of procedural and relational information. A graph can be represented as a matrix $\{\mathbb{B}, \mathbb{N}, \mathbb{R}\}^{n\times n}$, with entries describing the presence, label, or distance between vertices. Linear algebra provides a unifying framework for studying many graph algorithms and program analysis tasks~\citep{kepner2011graph}. Graphs can also be defined algebraically, using an algebraic data type~\cite{erwig2001inductive, mokhov2017algebraic}, e.g.:\\
 
@@ -659,6 +659,105 @@
 
 
     The graph sum emerges naturally, however there are multiple valid ways to define a graph product. As we will now see, this simple data structure can be used to describe many fundamental computational processes.
+
+    \subsection{Algebraic graphs}\label{subsec:algebraic-graphs}
+
+    The connection between algebra and graphs runs deep, unifying many seemingly disparate topics. It is possible to implement many fundamental computer science algorithms in a much simpler way as iterated matrix multiplication on a semiring algebra. A commutative monoid $(S, •, \circled{1})$ is a set $S$ with a binary operator $•: S \times S → S$ which has the following properties:
+
+    \begin{prooftree}
+        \bottomAlignProof
+        \AxiomC{$a • (b • c)$}
+        \UnaryInfC{$(a • b) • c$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Associativity}}
+        \DisplayProof
+        \hskip 2.5em
+        \bottomAlignProof
+        \AxiomC{$a • \circled 1$}
+        \UnaryInfC{$a$\vphantom{$()$}}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Neutrality}}
+        \DisplayProof
+        \hskip 2.5em
+        \bottomAlignProof
+        \AxiomC{$a • b$}
+        \UnaryInfC{$b • a$\vphantom{$()$}}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Commutativity}}
+    \end{prooftree}
+
+    \noindent A semiring algebra, denoted $(S, \oplus, \otimes, \circled{0}, \circled{1})$, is a set together with two binary operators $\oplus, \otimes: S \times S → S$ such that $(S, \oplus, \circled{0})$ is a commutative monoid and $(S, \otimes, \circled{1})$ is a monoid. It has the following additional properties:
+
+    \begin{prooftree}
+        \bottomAlignProof
+        \AxiomC{$a \otimes (b \oplus c)$}
+        \UnaryInfC{$(a \otimes b) \oplus (a \otimes c)$}
+        \noLine
+        \UnaryInfC{}
+        \AxiomC{$(a \oplus b) \otimes c$}
+        \UnaryInfC{$(a \otimes c) \oplus (b \otimes c)$}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \BinaryInfC{\textit{Distributivity}}
+        \DisplayProof
+        \hskip 2.5em
+        \bottomAlignProof
+        \AxiomC{$a \otimes \circled 0$}
+        \UnaryInfC{$\circled 0$\vphantom{$()$}}
+        \noLine
+        \UnaryInfC{}
+        \noLine
+        \UnaryInfC{\textit{Annihilation}}
+    \end{prooftree}
+
+    \noindent At is possible solve a wide variety of path problems using iterated matrix multiplication on semirings. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{update}. Let $δ_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $δ_{st}$, one may run the following procedure on a desired path algebra until convergence:
+
+    \begin{center}
+        \begin{tabular}{lc|cr}
+            $δ_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Update}}$ & & &
+            \bgroup
+            \def\arraystretch{1.2}
+            \begin{tabular}{c|c{1cm}c{1cm}|c{1cm}c{1cm}|c}
+                S                           & $\oplus$ & $\otimes$ & $\circled{0}$ & $\circled{1}$ & Path     \\\hline
+                $\mathbb R \cup \{\infty\}$ & min      & +         &   $\infty$    &      0        & Shortest \\
+                $\mathbb R \cup \{\infty\}$ & max      & +         &   $-\infty$   &      0        & Longest  \\
+                $\mathbb R \cup \{\infty\}$ & max      & min       &       0       &   $\infty$    & Widest   \\
+            \end{tabular}
+            \egroup
+        \end{tabular}
+    \end{center}
+
+    \noindent Many dynamic programming algorithms, including Bellman-Ford, Floyd-Warshall, Dijkstra, belief, constraint, error and expectation propagation, Markov chains, and others can all be neatly expressed as message passing on a semiring algebra. We refer the curious reader to~\cite{gondran2008graphs,baras2010path} for a more complete summary of the algebraic path problem and its many wonderful applications.
+
+    According to the Perron-Frobenius theorem, if $\mathbf M: \mathbb{R}^{n \times n}_{>0}$ then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Assuming $\mathcal{T}$, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant.
+
+    $f(x, y) = \begin{bmatrix} \frac{cos^2(x+2y)}{x} & 0.2 \\ 0.2 & \frac{sin^2(x-2y)}{y} \end{bmatrix} * \begin{bmatrix}x\\y\end{bmatrix} = \begin{bmatrix}cos^2(x+2y)\\sin^2(x-2y)\end{bmatrix}$
+
+    \begin{tikzpicture}
+        \begin{axis}[
+            xmin = -5, xmax = 5,
+            ymin = -1.5, ymax = 1.5,
+            axis equal image,
+            view = {0}{90},
+        ]
+            \addplot3[
+            quiver = {
+                u = {sqrt(cos(deg(x+2*y))^2)+0.2*y},
+                v = {sqrt(sin(deg(x-2*y))^2)+0.2*x},
+            },
+            -stealth,
+            samples=40,
+            quiver/scale arrows=0.3
+            ] {0};
+        \end{axis}
+    \end{tikzpicture}
 
     \pagebreak\subsection{Programs are graphs}\label{sec:program-graphs}
 
@@ -1125,106 +1224,6 @@ l = sqrt(sum)
 %    \end{prooftree}
 %
 %    \noindent To increase the speed of type inference, we can precompute the congruence $C[\![\cdot]\!]$ and preimage closure $C^{-1}[\![\cdot]\!]$ so that $\textsc{Infer}$ and $\textsc{Fill}$ are both $\mathcal{O}(1)$. The type tensor simply enumerates paths between types in our type system, but does not tell us how likely a given path is to occur in an arbitrary program. To compute this probability, we need a stochastic transition matrix between functions, $\mathcal{F}\times\mathcal{F}$ representing the probability that some function is mapped to another. We plan to discuss this aspect in future work.
-
-    \subsection{Algebraic graphs}\label{subsec:algebraic-graphs}
-
-    The connection between algebra and graphs runs deep, unifying many seemingly disparate topics. A commutative monoid $(S, •, \circled{1})$ is a set $S$ with a binary operator $•: S \times S → S$ which has the following properties:
-
-    \begin{prooftree}
-        \bottomAlignProof
-        \AxiomC{$a • (b • c)$}
-        \UnaryInfC{$(a • b) • c$}
-        \noLine
-        \UnaryInfC{}
-        \noLine
-        \UnaryInfC{\textit{Associativity}}
-        \DisplayProof
-        \hskip 2.5em
-        \bottomAlignProof
-        \AxiomC{$a • \circled 1$}
-        \UnaryInfC{$a$\vphantom{$()$}}
-        \noLine
-        \UnaryInfC{}
-        \noLine
-        \UnaryInfC{\textit{Neutrality}}
-        \DisplayProof
-        \hskip 2.5em
-        \bottomAlignProof
-        \AxiomC{$a • b$}
-        \UnaryInfC{$b • a$\vphantom{$()$}}
-        \noLine
-        \UnaryInfC{}
-        \noLine
-        \UnaryInfC{\textit{Commutativity}}
-    \end{prooftree}
-
-    \noindent A semiring algebra, denoted $(S, \oplus, \otimes, \circled{0}, \circled{1})$, is a set together with two binary operators $\oplus, \otimes: S \times S → S$ such that $(S, \oplus, \circled{0})$ is a commutative monoid and $(S, \otimes, \circled{1})$ is a monoid. It has the following additional properties:
-
-    \begin{prooftree}
-        \bottomAlignProof
-        \AxiomC{$a \otimes (b \oplus c)$}
-        \UnaryInfC{$(a \otimes b) \oplus (a \otimes c)$}
-        \noLine
-        \UnaryInfC{}
-        \AxiomC{$(a \oplus b) \otimes c$}
-        \UnaryInfC{$(a \otimes c) \oplus (b \otimes c)$}
-        \noLine
-        \UnaryInfC{}
-        \noLine
-        \BinaryInfC{\textit{Distributivity}}
-        \DisplayProof
-        \hskip 2.5em
-        \bottomAlignProof
-        \AxiomC{$a \otimes \circled 0$}
-        \UnaryInfC{$\circled 0$\vphantom{$()$}}
-        \noLine
-        \UnaryInfC{}
-        \noLine
-        \UnaryInfC{\textit{Annihilation}}
-    \end{prooftree}
-
-    \noindent Using iterated matrix multiplication on semirings, it is possible solve a wide variety of path problems. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{update}. Let $\mathbf D_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $\mathbf D_{st}$, one may run the following procedure on a desired path algebra:
-
-    \begin{center}
-        \begin{tabular}{lc|cr}
-            $\mathbf{D}_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Update}}$ & & &
-            \bgroup
-            \def\arraystretch{1.2}
-        \begin{tabular}{c|c{1cm}c{1cm}|c{1cm}c{1cm}|c}
-            S                           & $\oplus$ & $\otimes$ & $\circled{0}$ & $\circled{1}$ & Path     \\\hline
-            $\mathbb R \cup \{\infty\}$ & min      & +         &   $\infty$    &      0        & Shortest \\
-            $\mathbb R \cup \{\infty\}$ & max      & +         &   $-\infty$   &      0        & Longest  \\
-            $\mathbb R \cup \{\infty\}$ & max      & min       &       0       &   $\infty$    & Widest   \\
-        \end{tabular}
-            \egroup
-        \end{tabular}
-    \end{center}
-
-    \noindent Many dynamic programming algorithms, including Bellman-Ford, Floyd-Warshall, Dijkstra, error, belief and expectation propagation, Markov chains, and others can all be neatly expressed as message passing with a semiring algebra. We refer the curious reader to explore~\cite{gondran2008graphs,baras2010path} for a more complete summary of the algebraic path problem and its many wonderful applications.
-
-%    Suppose $\mathbf M$ is a positive matrix, such that $\mathbf M_{ij}$ is strictly positive. According to the Perron-Frobenius theorem, if $\mathbf M \in \mathcal T^{n \times n}$, then $\mathbf M$ has a unique largest eigenvalue $\lambda \in \mathcal T$ and dominant eigenvector $\mathbf{q} \in \mathcal T^{n}$. Assuming $\mathcal{T}$, $\lim_{i\rightarrow \infty} \mathbf{M}^i \mathbf{v} = c\mathbf{q}$ where $c$ is a constant.
-
-%    $f(x, y) = \begin{bmatrix} \frac{cos(x+2y)}{x} & 0 \\ 0 & \frac{sin(x-2y)}{y} \end{bmatrix} * \begin{bmatrix}x\\y\end{bmatrix} = \begin{bmatrix}cos(x+2y)\\sin(x-2y)\end{bmatrix}$
-%
-%    \begin{tikzpicture}
-%        \begin{axis}[
-%            xmin = -4, xmax = 4,
-%            ymin = -4, ymax = 4,
-%            zmin = 0, zmax = 1,
-%            axis equal image,
-%            view = {0}{90},
-%        ]
-%            \addplot3[
-%            quiver = {
-%                u = {-x},
-%                v = {y},
-%            },
-%            -stealth,
-%            domain = -4:4,
-%            domain y = -4:4,
-%            ] {0};
-%        \end{axis}
-%    \end{tikzpicture}
 
     \pagebreak\section{From code to procedural knowledge}\label{sec:applications}
 
