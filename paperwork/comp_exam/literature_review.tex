@@ -402,15 +402,17 @@
 
     We can think of this definition as dual to computational equivalence: instead of searching for inputs which distinguish functions, we search for contexts which distinguish terms, or a proof that no such context exists. Two terms $t$ and $t'$ are contextually equivalent with respect to $\mathcal{L}$ if we can prove that for all contexts $C[\![\cdot]\!]$ in $\mathcal{L}$, $C[\![t]\!]$ halts if and only if $C[\![t']\!]$ halts -- if no such proof can be found, the test is inconclusive. While this definition does not admit a decision procedure, many promising SDPs exist.
 
-    A similar concept also arises in natural languages: ``You shall know a word by the company it keeps''. If two different words can be exchanged in all contexts, they are called \textit{synonyms}. Based on this definition, we can define a context as a probabilistic description of the surrounding environment:
+    A similar concept also arises in natural languages under the familiar maxim, ``You shall know a word by the company it keeps.'' Two words which always share the same contexts are semantically equivalent. Two terms which are equiprobable in all contexts, are called \textit{interchangeable}. We can view a context as a probabilistic description of the surrounding environment, e.g., a one-holed linear context can be defined as a stochastic function which accepts a term and returns the probability of its occurrence\footnote{A similar definition may be found in~\cite{clark2020electra}.}:
 
     $$
-    C[\![\cdot]\!] := P(w_i = \cdot \mid w_{i-n}, \ldots, w_{i-1}, w_{i+1}, \ldots, w_{i+n})
+    C[\![\cdot]\!] := P_{\mathcal L}(s = \cdot \mid \overset{←}{s}, \overset{→}{s} = [\![, ]\!])
     $$
 
-    Thus, to determine whether two words $a$ and $b$ have the same meaning in some language $\mathcal L$, we must show that for all contexts $C[\![\cdot]\!] $, $a$ and $b$ have the same probability, i.e. $\forall C[\![\cdot]\!] \in \mathcal L, C[\![a]\!] \approx C[\![b]\!]$. Alternatively, to show $a$ and $b$ have a different meaning, we need only demonstrate a single context where their probability significantly differs, i.e. $\exists C[\![\cdot]\!] \in \mathcal L$ such that $C[\![a]\!] \not\approx C[\![b]\!]$.
+    Thus, to determine whether two terms $a$ and $b$ share a common meaning in some language $\mathcal L$, we must show that for all contexts $C[\![\cdot]\!] $, $a$ and $b$ are approximately equiprobable, i.e. $\forall C[\![\cdot]\!] \in \mathcal L, C[\![a]\!] \approx C[\![b]\!]$. Alternatively, to show $a$ and $b$ have different meanings, we need only demonstrate some context in which their probability significantly varies, i.e. $\exists C[\![\cdot]\!] \in \mathcal L$ such that $C[\![a]\!] \not\approx C[\![b]\!]$. In the following section, we will try to provide a more precise semantics to this logical operator, $\approx$.
 
-    We can define semantic equality in our setting using word embeddings. Interchangable words are semantically equivalent.~\citep{clark2020electra}
+    %However this proposal only works if we have access to $P_{\mathcal L}$, an intractable assumption. Instead we are often in the low-data regime, where we only have an approximation $\hat P_{\mathcal L}$, from which we must reconstruct $P_{\mathcal L}$.
+
+%    We can define semantic equality in our setting using word embeddings.
 
     \pagebreak\subsection{Approximate equivalence}\label{sec:ap-eq}
 
@@ -1288,7 +1290,7 @@ l = sqrt(sum)
 
     The author wishes to thank his advisor Jin Guo, Xujie Si and Fuyuan Lyu, for providing several helpful comments on this proposal and Torsten Scholak, David Yu-Tung Hui, Disha Shrivastava, Jordi Armengol-Estap\'e, Matt Rice, Dave Keenan, and John Tromp for various miscellaneous feedback.
 
-    \bibliography{exam_proposal}
+    \bibliography{literature_review}
     \bibliographystyle{plain}
 
   \pagebreak
