@@ -12,6 +12,22 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## June 7th, 2021
+
+- Last week
+  - Worked on [lit review/exam syllabus](../paperwork/comp_exam/literature_review.pdf)
+  - Worked on [AIPLANS proposal](https://github.com/aiplans/aiplans.github.io/blob/main/_drafts/workshop/workshop.pdf)
+  - Applied to TA for Fall '21
+  - Applied to attend OPLSS '21
+  - NeurIPS paper bidding
+- This week
+  - [Discovering Reinforcement Learning Algorithms](https://arxiv.org/pdf/2007.08794.pdf) with David Tuesday
+  - Workshop organizers meeting Tuesday
+  - Symbolic automata on Wednesday
+- Reading
+  - [Contrastive Representation Learning](https://lilianweng.github.io/lil-log/2021/05/31/contrastive-representation-learning.html), Weng (2021)
+  - [The Power of Interoperability: Why Objects Are Inevitable](http://www.cs.cmu.edu/~aldrich/papers/objects-essay.pdf), Aldrich (2013
+
 ## May 24th, 2021
 
 - Last week
