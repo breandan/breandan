@@ -1,0 +1,178 @@
+%! Author = breandan
+%! Date = 6/7/21
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{unicode-math}
+\usepackage{amssymb}
+
+\usepackage{float}
+\usepackage{tikz}
+
+% Document
+\title{A Concatenative Theory of Language}
+\author{Breandan Considine}
+\begin{document}
+\maketitle
+\section{Introduction}
+
+Language is linear data structure composed of atomic symbols which can be concatenated to form new words and phrases. For example, this document. Natural language has very flexible set of rules for composition which are learned by example and can adapt over time to the needs of its users.
+
+Artificial languages are also languages, but with a precise set of rules. By design, the rules for composing these languages are much more rigid to enable their mechanical interpretation. A vast number of domain-specific languages, called programming languages, have emerged in recent years.
+
+The distinction between natural and artificial languages are not discontinuous, but rather fall along a spectrum of minimum description length. Linguists have developed various taxonomies for languages based on their algorithmic and information complexity. In practice, most examples are at worst, weakly linear context free due to physical constraints.
+
+The early question arose, is there a superset of all computable languages? Various equivalent definitions have been proposed from Peano's arithmetic, to Turing's machines, to Sch\"onfinkel's combinatory logic, to Church's $λ$-calculus. Although complete, these languages were shown to be inconsistent (G\"odel). However, Presburger (1929) proposes a language which is both complete and consistent, $P ::= 0 \mid 1$, with the following semantics:
+
+\begin{enumerate}
+   \item $¬(0 = x + 1)                 $
+   \item $x + 1 = y + 1 → x = y        $
+   \item $x + 0 = x                    $
+   \item $x + (y + 1) = (x + y) + 1    $
+   \item $(P(0) ∧ ∀x(P(x) → P(x + 1))) → ∀y P(y)$
+\end{enumerate}
+
+More recently, a new kind of programming language based on combinatory logic has emerged, called concatenative programming. Syntactically, it resembles natural language. It usually takes the following form:
+
+\begin{enumerate}
+  \item $S ::= $ $\texttt{A} \mid \ldots \mid \texttt{Z}$
+  \item $W ::= S \mid SS$
+  \item $F ::= W \mid W \textvisiblespace W$
+  \item $D ::= W \textvisiblespace\texttt{:=}\textvisiblespace F$
+\end{enumerate}
+
+If we consider a slight variation of concatenative programming:
+
+\begin{enumerate}
+  \item $C ::= $ $! \mid \ldots \mid \sim$
+  \item $C ::= CC$
+\end{enumerate}
+
+This is similar to a Kleene algebra, except there is no multiplication operator as we wish to remain consistent. Note that $C$ is still expressive enough to encode finite-length ASCII text.
+
+It can encode $P$ using the successor representation, $0 ::= 1$, $x+1 ::= 1x$. $C$ can encode $P$ using $xy ::= x+y$. Thus, $P$ and $C$ are equivalent. $\blacksquare$
+
+In practice unary encoding is inefficient, so we can make an exception and permit lowering to ordinary integer arithmetic during implementation.
+
+Via staging, we can embed any ASCII programming language in $C$. For example, consider the programming language...
+
+What about types? Since $C$ is both complete and consistent, we have boolean judgements. Judgemental equality is simply string equality.
+
+In concatenative programming, words typically denote function application in the point-free style. What if we took a more granular approach and allowed each symbol to be a higher-order function?
+
+Mirroring probabilistic semantics, individual symbols are functions which accept and return a continuation, representing the contextual semantics.
+
+This continuation can be approximated by a multidimensional array, i.e. a tensor. Type checking and inference are performed via tensor contraction. Eliminating repetition is equivalent to factorization.
+
+TODO: discuss type system
+
+\pagebreak
+  \section{Symbolic automata}
+
+  Syntactically our language can be compiled into a graph. Given a sequence $S\in C$, we first perform a byte pair encoding to compress the sequence. Then we have the following semantics:
+
+\begin{enumerate}
+  \item $\texttt{car cdr}, G ::= S_0 S_{1\ldots n}, \{\}$
+  \item $\texttt{car cdr}, G \vdash \texttt{cdr}, G \oplus (\texttt{car}, \texttt{cdr.car})$
+\end{enumerate}
+
+  Concatenation of two graphs $G, G': V\times E \times V$ we define as:
+
+\begin{enumerate}
+  \item $G \oplus G' ::= (V\cup V')\times (E\cup E') $
+\end{enumerate}
+
+  For example, suppose we have the following two graphs, $G, G'$:\\
+\begin{figure}[H]
+ \centering
+\begin{tikzpicture}
+  \node[shape=circle,draw=black] (A) at (0,2.5)  {\texttt{A}};
+  \node[shape=circle,draw=black] (B) at (2.5,4)  {\texttt{B}};
+  \node[shape=circle,draw=black] (C) at (2.5,1)  {\texttt{C}};
+
+  \node[shape=circle,draw=black] (D) at (6.5,2.5){\texttt{D}};
+  \node[shape=circle,draw=black] (E) at (4,4)    {\texttt{B}};
+  \node[shape=circle,draw=black] (F) at (4,1)    {\texttt{C}};
+
+  \path [->] (A) edge node[left] {} (B);
+  \path [->](A) edge node[left] {} (C);
+  \path [->](C) edge node[top] {} (B);
+
+  \path [->] (D) edge node[left] {} (E);
+  \path [->](D) edge node[left] {} (F);
+  \path [->](E) edge node[top] {} (F);
+\end{tikzpicture}\\
+\end{figure}
+
+$G\oplus G'$ can be visualized by stitching together the nodes and edges:\\
+
+
+\begin{figure}[H]
+  \centering
+\begin{tikzpicture}
+  \node[shape=circle,draw=black] (A) at (0,2.5) {\texttt{A}};
+  \node[shape=circle,draw=black] (B) at (2.5,4) {\texttt{B}};
+  \node[shape=circle,draw=black] (C) at (2.5,1) {\texttt{C}};
+
+  \node[shape=circle,draw=black] (D) at (5,2.5) {\texttt{D}};
+
+  \path [->] (A) edge node[left] {} (B);
+  \path [->](A) edge node[left] {} (C);
+  \path [->](C) edge [bend left] node[top] {} (B);
+  \path [->](B) edge [bend left] node[top] {} (C);
+
+  \path [->] (D) edge node[left] {} (B);
+  \path [->](D) edge node[left] {} (C);
+\end{tikzpicture}
+\end{figure}
+
+  \pagebreak Now suppose we have a property graph with typed edges, we can take the union of the edge types. This procedure can be depicted as follows:
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[shape=circle,draw=black] (A) at (0,2.5)  {\texttt{A}};
+    \node[shape=circle,draw=black] (B) at (2.5,4)  {\texttt{B}};
+    \node[shape=circle,draw=black] (C) at (2.5,1)  {\texttt{C}};
+
+    \node[shape=circle,draw=black] (D) at (6.5,2.5){\texttt{D}};
+    \node[shape=circle,draw=black] (E) at (4,4)    {\texttt{B}};
+    \node[shape=circle,draw=black] (F) at (4,1)    {\texttt{C}};
+
+    \path [->] (A) edge node[left] {} (B);
+    \path [->](A) edge node[left] {} (C);
+    \path [->](C) edge node[top] {\texttt{ a}} (B);
+
+    \path [->] (D) edge node[left] {} (E);
+    \path [->](D) edge node[left] {} (F);
+    \path [->](F) edge node[top] {\texttt{ b}} (E);
+  \end{tikzpicture}\\
+\end{figure}
+
+$G\oplus G'$ can be visualized by stitching together the nodes and unioning the edges:\\
+
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[shape=circle,draw=black] (A) at (0,2.5) {\texttt{A}};
+    \node[shape=circle,draw=black] (B) at (2.5,4) {\texttt{B}};
+    \node[shape=circle,draw=black] (C) at (2.5,1) {\texttt{C}};
+
+    \node[shape=circle,draw=black] (D) at (5,2.5) {\texttt{D}};
+
+    \path [->] (A) edge node[left] {} (B);
+    \path [->](A) edge node[left] {} (C);
+    \path [->](C) edge node[top] {\texttt{a}$\cup$\texttt{b}} (B);
+
+    \path [->] (D) edge node[left] {} (B);
+    \path [->](D) edge node[left] {} (C);
+  \end{tikzpicture}
+\end{figure}
+
+  This is essentially the idea behind symbolic automata. Instead of adding a bunch of edges corresponding to each individual ASCII symbol, we collapse all edges into the union. Each edge represents an algebraic data type in the Kleene algebra.
+
+\end{document}
