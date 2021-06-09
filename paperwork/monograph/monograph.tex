@@ -25,7 +25,7 @@ Artificial languages are also languages, but with a precise set of rules. By des
 
 The distinction between natural and artificial languages are not discontinuous, but rather fall along a spectrum of minimum description length. Linguists have developed various taxonomies for languages based on their algorithmic and information complexity. In practice, most examples are at worst, weakly linear context free due to physical constraints.
 
-The early question arose, is there a superset of all computable languages? Various equivalent definitions have been proposed from Peano's arithmetic, to Turing's machines, to Sch\"onfinkel's combinatory logic, to Church's $λ$-calculus. Although complete, these languages were shown to be inconsistent (G\"odel). However, Presburger (1929) proposes a language which is both complete and consistent, $P ::= 0 \mid 1$, with the following semantics:
+The natural question arose, is there a superset of all computable languages? Various equivalent definitions were proposed from Peano's arithmetic, to Turing's machines, to Sch\"onfinkel's combinatory logic, to Church's $λ$-calculus. Although complete, these languages were shown to be inconsistent (G\"odel). However, Presburger (1929) proposes a language which is both complete and consistent, $P ::= 0 \mid 1$, with the following semantics:
 
 \begin{enumerate}
    \item $¬(0 = x + 1)                 $
@@ -35,7 +35,7 @@ The early question arose, is there a superset of all computable languages? Vario
    \item $(P(0) ∧ ∀x(P(x) → P(x + 1))) → ∀y P(y)$
 \end{enumerate}
 
-More recently, a new kind of programming language based on combinatory logic has emerged, called concatenative programming. Syntactically, it resembles natural language. It usually takes the following form:
+More recently, a new kind of programming language, with ties to combinatory logic, emerged: concatenative programming. Syntactically, it resembles natural language. It usually takes the following form:
 
 \begin{enumerate}
   \item $S ::= $ $\texttt{A} \mid \ldots \mid \texttt{Z}$
@@ -53,9 +53,7 @@ If we consider a slight variation of concatenative programming:
 
 This is similar to a Kleene algebra, except there is no multiplication operator as we wish to remain consistent. Note that $C$ is still expressive enough to encode finite-length ASCII text.
 
-It can encode $P$ using the successor representation, $0 ::= 1$, $x+1 ::= 1x$. $C$ can encode $P$ using $xy ::= x+y$. Thus, $P$ and $C$ are equivalent. $\blacksquare$
-
-In practice unary encoding is inefficient, so we can make an exception and permit lowering to ordinary integer arithmetic during implementation.
+We note $C → P$ using the successor representation, $0 ::= 1$, $x+1 ::= 1x$.\footnote{In practice unary encoding is inefficient, so we can make an exception and permit lowering to ordinary integer arithmetic during implementation.} Furthermore, $P \rightarrow C$ using $xy ::= x+y$. Thus, $P$ and $C$ are equivalent. $\blacksquare$
 
 Via staging, we can embed any ASCII programming language in $C$. For example, consider the programming language...
 
@@ -89,13 +87,13 @@ TODO: discuss type system
 \begin{figure}[H]
  \centering
 \begin{tikzpicture}
-  \node[shape=circle,draw=black] (A) at (0,2.5)  {\texttt{A}};
-  \node[shape=circle,draw=black] (B) at (2.5,4)  {\texttt{B}};
-  \node[shape=circle,draw=black] (C) at (2.5,1)  {\texttt{C}};
+  \node[shape=circle,draw=black] (A) at (0,2.5)  {$s_1$};
+  \node[shape=circle,draw=black] (B) at (2.5,4)  {$s_2$};
+  \node[shape=circle,draw=black] (C) at (2.5,1)  {$s_3$};
 
-  \node[shape=circle,draw=black] (D) at (6.5,2.5){\texttt{D}};
-  \node[shape=circle,draw=black] (E) at (4,4)    {\texttt{B}};
-  \node[shape=circle,draw=black] (F) at (4,1)    {\texttt{C}};
+  \node[shape=circle,draw=black] (D) at (6.5,2.5){$s_4$};
+  \node[shape=circle,draw=black] (E) at (4,4)    {$s_2$};
+  \node[shape=circle,draw=black] (F) at (4,1)    {$s_3$};
 
   \path [->] (A) edge node[left] {} (B);
   \path [->](A) edge node[left] {} (C);
@@ -113,11 +111,11 @@ $G\oplus G'$ can be visualized by stitching together the nodes and edges:\\
 \begin{figure}[H]
   \centering
 \begin{tikzpicture}
-  \node[shape=circle,draw=black] (A) at (0,2.5) {\texttt{A}};
-  \node[shape=circle,draw=black] (B) at (2.5,4) {\texttt{B}};
-  \node[shape=circle,draw=black] (C) at (2.5,1) {\texttt{C}};
+  \node[shape=circle,draw=black] (A) at (0,2.5) {$s_1$};
+  \node[shape=circle,draw=black] (B) at (2.5,4) {$s_2$};
+  \node[shape=circle,draw=black] (C) at (2.5,1) {$s_3$};
 
-  \node[shape=circle,draw=black] (D) at (5,2.5) {\texttt{D}};
+  \node[shape=circle,draw=black] (D) at (5,2.5) {$s_4$};
 
   \path [->] (A) edge node[left] {} (B);
   \path [->](A) edge node[left] {} (C);
@@ -134,13 +132,13 @@ $G\oplus G'$ can be visualized by stitching together the nodes and edges:\\
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}
-    \node[shape=circle,draw=black] (A) at (0,2.5)  {\texttt{A}};
-    \node[shape=circle,draw=black] (B) at (2.5,4)  {\texttt{B}};
-    \node[shape=circle,draw=black] (C) at (2.5,1)  {\texttt{C}};
+    \node[shape=circle,draw=black] (A) at (0,2.5)  {$s_1$};
+    \node[shape=circle,draw=black] (B) at (2.5,4)  {$s_2$};
+    \node[shape=circle,draw=black] (C) at (2.5,1)  {$s_3$};
 
-    \node[shape=circle,draw=black] (D) at (6.5,2.5){\texttt{D}};
-    \node[shape=circle,draw=black] (E) at (4,4)    {\texttt{B}};
-    \node[shape=circle,draw=black] (F) at (4,1)    {\texttt{C}};
+    \node[shape=circle,draw=black] (D) at (6.5,2.5){$s_4$};
+    \node[shape=circle,draw=black] (E) at (4,4)    {$s_2$};
+    \node[shape=circle,draw=black] (F) at (4,1)    {$s_3$};
 
     \path [->] (A) edge node[left] {} (B);
     \path [->](A) edge node[left] {} (C);
@@ -154,15 +152,14 @@ $G\oplus G'$ can be visualized by stitching together the nodes and edges:\\
 
 $G\oplus G'$ can be visualized by stitching together the nodes and unioning the edges:\\
 
-
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}
-    \node[shape=circle,draw=black] (A) at (0,2.5) {\texttt{A}};
-    \node[shape=circle,draw=black] (B) at (2.5,4) {\texttt{B}};
-    \node[shape=circle,draw=black] (C) at (2.5,1) {\texttt{C}};
+    \node[shape=circle,draw=black] (A) at (0,2.5) {$s_1$};
+    \node[shape=circle,draw=black] (B) at (2.5,4) {$s_2$};
+    \node[shape=circle,draw=black] (C) at (2.5,1) {$s_3$};
 
-    \node[shape=circle,draw=black] (D) at (5,2.5) {\texttt{D}};
+    \node[shape=circle,draw=black] (D) at (5,2.5) {$s_4$};
 
     \path [->] (A) edge node[left] {} (B);
     \path [->](A) edge node[left] {} (C);
@@ -173,6 +170,16 @@ $G\oplus G'$ can be visualized by stitching together the nodes and unioning the 
   \end{tikzpicture}
 \end{figure}
 
-  This is essentially the idea behind symbolic automata. Instead of adding a bunch of edges corresponding to each individual ASCII symbol, we collapse all edges into the union. Each edge represents an algebraic data type in the Kleene algebra.
+  This is essentially the idea behind symbolic automata. Instead of adding a bunch of edges corresponding to each individual ASCII symbol, we collapse all edges into the union. Each edge represents an algebraic data type in the Kleene algebra. The same idea works on any typed property graph, whose nodes or edges have a summable type.
+
+  \newpage
+
+  \section{Algebra on Languages}
+
+We recall that a language is just a set of strings, i.e. a finite-length sequences of symbols. The concatenation of two languages is essentially the Cartesian product over strings:
+
+$X \circ Y := \{xy \mid x \in X, y \in Y\}$.
+
+It is known that all recursive languages are closed under concatenation, union and intersection. As a recursive language, Presburger arithmetic too, falls under this category.
 
 \end{document}
