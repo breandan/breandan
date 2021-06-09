@@ -55,7 +55,7 @@ This is similar to a Kleene algebra, except there is no multiplication operator 
 
 We note $C → P$ using the successor representation, $0 ::= 1$, $x+1 ::= 1x$.\footnote{In practice unary encoding is inefficient, so we can make an exception and permit lowering to ordinary integer arithmetic during implementation.} Furthermore, $P \rightarrow C$ using $xy ::= x+y$. Thus, $P$ and $C$ are equivalent. $\blacksquare$
 
-Via staging, we can embed any ASCII programming language in $C$. For example, consider the programming language...
+Via staging, we can embed any ASCII-based language in $C$. For example, consider the programming language...
 
 What about types? Since $C$ is both complete and consistent, we have boolean judgements. Judgemental equality is simply string equality.
 
@@ -70,23 +70,24 @@ TODO: discuss type system
 \pagebreak
   \section{Symbolic automata}
 
-  Syntactically our language can be compiled into a graph. Given a sequence $S\in C$, we first perform a byte pair encoding to compress the sequence. Then we have the following semantics:
+Syntactically our language can be compiled into a graph. Given a sequence $S\in C$, we first perform a byte pair encoding to compress the sequence. Then we have the following semantics:
 
 \begin{enumerate}
   \item $\texttt{car cdr}, G ::= S_0 S_{1\ldots n}, \{\}$
   \item $\texttt{car cdr}, G \vdash \texttt{cdr}, G \oplus (\texttt{car}, \texttt{cdr.car})$
 \end{enumerate}
 
-  Concatenation of two graphs $G, G': V\times E \times V$ we define as:
+Concatenation of two graphs $G_1, G_2: V\times E \times V$ we define as:
 
 \begin{enumerate}
-  \item $G \oplus G' ::= (V\cup V')\times (E\cup E') $
+  \item $G_1 \oplus G_2 ::= (V_1\cup V_2)\times (E_1\cup E_2) $
 \end{enumerate}
 
-  For example, suppose we have the following two graphs, $G, G'$:\\
+For example, suppose we have the following two graphs, $G_1, G_2$. $G_1 \oplus G_2$ can be visualized by gluing together the nodes and edges:\\
+
 \begin{figure}[H]
  \centering
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.8]
   \node[shape=circle,draw=black] (A) at (0,2.5)  {$s_1$};
   \node[shape=circle,draw=black] (B) at (2.5,4)  {$s_2$};
   \node[shape=circle,draw=black] (C) at (2.5,1)  {$s_3$};
@@ -101,16 +102,10 @@ TODO: discuss type system
 
   \path [->] (D) edge node[left] {} (E);
   \path [->](D) edge node[left] {} (F);
-  \path [->](E) edge node[top] {} (F);
-\end{tikzpicture}\\
-\end{figure}
-
-$G\oplus G'$ can be visualized by stitching together the nodes and edges:\\
-
-
-\begin{figure}[H]
-  \centering
-\begin{tikzpicture}
+  \path [->](F) edge node[top] {} (E);
+\end{tikzpicture}
+→
+\begin{tikzpicture}[scale=0.8]
   \node[shape=circle,draw=black] (A) at (0,2.5) {$s_1$};
   \node[shape=circle,draw=black] (B) at (2.5,4) {$s_2$};
   \node[shape=circle,draw=black] (C) at (2.5,1) {$s_3$};
@@ -119,15 +114,21 @@ $G\oplus G'$ can be visualized by stitching together the nodes and edges:\\
 
   \path [->] (A) edge node[left] {} (B);
   \path [->](A) edge node[left] {} (C);
-  \path [->](C) edge [bend left] node[top] {} (B);
-  \path [->](B) edge [bend left] node[top] {} (C);
+  \path [->](C) edge node[top] {} (B);
 
   \path [->] (D) edge node[left] {} (B);
   \path [->](D) edge node[left] {} (C);
 \end{tikzpicture}
 \end{figure}
 
-  \pagebreak Now suppose we have a property graph with typed edges, we can take the union of the edge types. This procedure can be depicted as follows:
+  \pagebreak Now suppose we have an edge-labeled graph: we could either take the product or union of the edge labels.
+
+Concatenation of two edge-labeled graphs $LG_1, LG_2: (V \times E \times Σ^* \times V)$:
+
+\begin{enumerate}
+  \item $G_1 \oplus G_2 ::= (V_1 \cup V_2) \times (Σ_1^* \cup Σ_2^*) \times (E_1\cup E_2) $
+  \item $G_1 \oplus G_2 ::= (V_1 \cup V_2) \times \Big((E_1 \cup E_2) ⋊ (Σ^*_1 \cup Σ_2^*)\Big) $
+\end{enumerate}
 
 \begin{figure}[H]
   \centering
@@ -142,15 +143,15 @@ $G\oplus G'$ can be visualized by stitching together the nodes and edges:\\
 
     \path [->] (A) edge node[left] {} (B);
     \path [->](A) edge node[left] {} (C);
-    \path [->](C) edge node[top] {\texttt{ a}} (B);
+    \path [->](C) edge node[top] {\colorbox{white}{\texttt{ab}}} (B);
 
     \path [->] (D) edge node[left] {} (E);
     \path [->](D) edge node[left] {} (F);
-    \path [->](F) edge node[top] {\texttt{ b}} (E);
+    \path [->](F) edge node[top] {\colorbox{white}{\texttt{bc}}} (E);
   \end{tikzpicture}\\
 \end{figure}
 
-$G\oplus G'$ can be visualized by stitching together the nodes and unioning the edges:\\
+$G\oplus_1 G'$ repeats shared edges with unique labels. $G\oplus_2 G'$ combines shared edges, and unions the labels.
 
 \begin{figure}[H]
   \centering
@@ -163,7 +164,91 @@ $G\oplus G'$ can be visualized by stitching together the nodes and unioning the 
 
     \path [->] (A) edge node[left] {} (B);
     \path [->](A) edge node[left] {} (C);
-    \path [->](C) edge node[top] {\texttt{a}$\cup$\texttt{b}} (B);
+
+    \path [->](C) edge [bend left] node[top] {\colorbox{white}{\texttt{ab}}} (B);
+    \path [->](C) edge [bend right] node[top] {\colorbox{white}{\texttt{bc}}} (B);
+
+    \path [->] (D) edge node[left] {} (B);
+    \path [->](D) edge node[left] {} (C);
+  \end{tikzpicture}
+  \begin{tikzpicture}
+    \node[shape=circle,draw=black] (A) at (0,2.5) {$s_1$};
+    \node[shape=circle,draw=black] (B) at (2.5,4) {$s_2$};
+    \node[shape=circle,draw=black] (C) at (2.5,1) {$s_3$};
+
+    \node[shape=circle,draw=black] (D) at (5,2.5) {$s_4$};
+
+    \path [->] (A) edge node[left] {} (B);
+    \path [->](A) edge node[left] {} (C);
+
+    \path [->](C) edge node[top] {\colorbox{white}{\texttt{ab, bc}}} (B);
+
+    \path [->] (D) edge node[left] {} (B);
+    \path [->](D) edge node[left] {} (C);
+  \end{tikzpicture}
+\end{figure}
+
+\newpage
+
+We can also add symbolic automata. Not only must we merge the nodes and edges, we must also consider the merger of edge languages.
+
+Concatenation of two symbolic automata $SA_1, SA_2: (V \times E \times \mathcal{L} \times V)$:
+
+\begin{enumerate}
+  \item $SA_1 \oplus SA_2 ::= (V_1 \cup V_2)\times (\mathcal L_1 \cup \mathcal L_2) \times (E_1\cup E_2) $
+  \item $SA_1 \oplus SA_2 ::= (V_1 \cup V_2) \times \Big((E_1 \cup E_2) ⋊ (\mathcal L_1 \cup \mathcal L_2)\Big) $
+\end{enumerate}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[shape=circle,draw=black] (A) at (0,2.5)  {$s_1$};
+    \node[shape=circle,draw=black] (B) at (2.5,4)  {$s_2$};
+    \node[shape=circle,draw=black] (C) at (2.5,1)  {$s_3$};
+
+    \node[shape=circle,draw=black] (D) at (6.5,2.5){$s_4$};
+    \node[shape=circle,draw=black] (E) at (4,4)    {$s_2$};
+    \node[shape=circle,draw=black] (F) at (4,1)    {$s_3$};
+
+    \path [->] (A) edge node[left] {} (B);
+    \path [->](A) edge node[left] {} (C);
+    \path [->](C) edge node[top] {\colorbox{white}{$\mathcal L_1$}} (B);
+
+    \path [->] (D) edge node[left] {} (E);
+    \path [->](D) edge node[left] {} (F);
+    \path [->](F) edge node[top] {\colorbox{white}{$\mathcal L_2$}} (E);
+  \end{tikzpicture}\\
+\end{figure}
+
+
+$G\oplus G'$ can be visualized by stitching together the nodes and unioning the edges:\\
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[scale=0.9]
+    \node[shape=circle,draw=black] (A) at (0,2.5) {$s_1$};
+    \node[shape=circle,draw=black] (B) at (2.5,4) {$s_2$};
+    \node[shape=circle,draw=black] (C) at (2.5,1) {$s_3$};
+
+    \node[shape=circle,draw=black] (D) at (5,2.5) {$s_4$};
+
+    \path [->] (A) edge node[left] {} (B);
+    \path [->](A) edge node[left] {} (C);
+    \path [->](C) edge node[top] {\colorbox{white}{$\mathcal L_1 \cup \mathcal L_2$}} (B);
+
+    \path [->] (D) edge node[left] {} (B);
+    \path [->](D) edge node[left] {} (C);
+  \end{tikzpicture}
+  \begin{tikzpicture}[scale=0.9]
+    \node[shape=circle,draw=black] (A) at (0,2.5) {$s_1$};
+    \node[shape=circle,draw=black] (B) at (2.5,4) {$s_2$};
+    \node[shape=circle,draw=black] (C) at (2.5,1) {$s_3$};
+
+    \node[shape=circle,draw=black] (D) at (5,2.5) {$s_4$};
+
+    \path [->] (A) edge node[left] {} (B);
+    \path [->](A) edge node[left] {} (C);
+    \path [->](C) edge node[top] {\colorbox{white}{$\mathcal L_1 \circ \mathcal L_2$}} (B);
 
     \path [->] (D) edge node[left] {} (B);
     \path [->](D) edge node[left] {} (C);
