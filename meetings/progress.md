@@ -12,6 +12,23 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## June 13th, 2021
+
+- Last week
+  - Put together [AIPLANS proposal](https://github.com/aiplans/aiplans.github.io/blob/main/_drafts/workshop/workshop.pdf)
+  - Gave intro to [concatenative langauges](https://github.com/breandan/breandan/blob/master/paperwork/monograph/monograph.pdf)
+- This week
+  - [Vox populi@OPLSS](https://www.cs.uoregon.edu/research/summerschool/summer21/topics.php#hsu)
+  - Prepare syllabus and update SOCS paperwork
+  - Chat with Behrouz Tuesday
+  - Chat with Louis-Edouard Wednesday
+  - Submit workshop proposal Friday
+- Challenges
+  - Need to work on making concrete research progress
+- Reading
+  - [Limitations of Autoregressive Models and Their Alternatives](https://arxiv.org/abs/2010.11939)
+  - [End-to-End Training of Neural Retrievers for Open-Domain Question Answering](https://arxiv.org/abs/2101.00408)
+
 ## June 7th, 2021
 
 - Last week
