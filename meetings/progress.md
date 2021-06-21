@@ -12,6 +12,27 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## June 21st, 2021
+
+- Last week
+  - Submitted [AIPLANS proposal](https://github.com/aiplans/aiplans.github.io/blob/main/_drafts/workshop/workshop.pdf)
+  - Chat with Behrouz about probabilistic logic
+  - Moderna vaccine + CDC travel passport
+  - Vox Populi @ OPLSS
+- This week
+  - Look into model selection and interpretability
+  - Present progress with Jin/Xujie Wednesday
+  - CRL reading group + AIPLANS sync-up Tuesday
+  - Attending OPLSS/PLDI
+  - Planning to take next week off
+- Challenges
+  - My computer died
+- Reading
+  - [Is sparse attention interpretable?](https://arxiv.org/pdf/2106.01087.pdf), Meister et al. (2021)
+  - [Thinking Like Transformers](https://arxiv.org/pdf/2106.06981.pdf), Weiss et al. (2021)
+  - [Symbolic Boolean Derivatives](https://www.microsoft.com/en-us/research/uploads/prod/2020/08/MSR-TR-2020-25.pdf), Stanford et al. (2020)
+  - [Algorithms for learning to induce programs](file:///Users/breandan/Downloads/1241081869-MIT.pdf), Ellis et al. (2021)
+
 ## June 13th, 2021
 
 - Last week
