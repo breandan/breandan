@@ -12,6 +12,19 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## June 27th, 2021
+
+- Last week
+  - Presented code snippet normalization procedure
+  - Thanked AIPLANS invitees for their support
+  - OPLSS lectures wrap up and emailed organizers
+  - Emailed Ann about exam retake, awaiting reply
+  - Experiments table, will update before going offline
+- This week
+  - Offline Tue-Sun
+- Reading
+  - [Algebras for Weighted Search](https://doisinkidney.com/pdfs/algebras-for-weighted-search.pdf), Kidney & Wu (2021)
+
 ## June 21st, 2021
 
 - Last week
