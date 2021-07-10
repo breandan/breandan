@@ -12,6 +12,20 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## July 11th, 2021
+
+- Last week
+  - Discussed language model probing experiments
+  - Wrote up procedure for evaluating models
+  - Reviewed three NeurIPS workshop submissions
+- This week
+  - Implement model evaluation test bench
+- Challenges
+  - Travel & immigration situation
+- Reading
+  - [Empirical study of transformers for source code](https://arxiv.org/pdf/2010.07987.pdf)
+  - [Evaluating large language models trained on code](https://arxiv.org/pdf/2107.03374.pdf)
+
 ## June 27th, 2021
 
 - Last week
