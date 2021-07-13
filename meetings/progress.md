@@ -16,11 +16,13 @@
 
 - Last week
   - Discussed language model probing experiments
-  - Wrote up procedure for evaluating models
+  - Wrote up intro/procedure for evaluating models
   - Reviewed three NeurIPS workshop submissions
   - Provided [feedback](https://github.com/github/copilot-preview/discussions/401) on GitHub Copilot suggestions
 - This week
-  - Implement model evaluation test
+  - Implement model evaluation test bench
+  - Prepare syllabus for Aug. 6th submission deadline
+  - NeurIPS main conference reviewing
 - Challenges
   - Travel & immigration situation: ["fully vaccinated"](https://www.mcgill.ca/internationalstudents/covid-19/entering-canada#Quarantine%20Exemption%20for%20fully%20vaccinated%20travellers) only 14 days after full dosage
 - Reading
