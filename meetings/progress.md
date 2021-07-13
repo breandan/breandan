@@ -18,13 +18,16 @@
   - Discussed language model probing experiments
   - Wrote up procedure for evaluating models
   - Reviewed three NeurIPS workshop submissions
+  - Provided [feedback](https://github.com/github/copilot-preview/discussions/401) on GitHub Copilot suggestions
 - This week
-  - Implement model evaluation test bench
+  - Implement model evaluation test
 - Challenges
-  - Travel & immigration situation
+  - Travel & immigration situation: ["fully vaccinated"](https://www.mcgill.ca/internationalstudents/covid-19/entering-canada#Quarantine%20Exemption%20for%20fully%20vaccinated%20travellers) only 14 days after full dosage
 - Reading
   - [Empirical study of transformers for source code](https://arxiv.org/pdf/2010.07987.pdf)
   - [Evaluating large language models trained on code](https://arxiv.org/pdf/2107.03374.pdf)
+  - [Can You Learn an Algorithm? Generalizing from
+Easy to Hard Problems with Recurrent Networks](https://arxiv.org/pdf/2106.04537.pdf), Schwarzschild et al.
 
 ## June 27th, 2021
 
@@ -58,7 +61,7 @@
   - [Is sparse attention interpretable?](https://arxiv.org/pdf/2106.01087.pdf), Meister et al. (2021)
   - [Thinking Like Transformers](https://arxiv.org/pdf/2106.06981.pdf), Weiss et al. (2021)
   - [Symbolic Boolean Derivatives](https://www.microsoft.com/en-us/research/uploads/prod/2020/08/MSR-TR-2020-25.pdf), Stanford et al. (2020)
-  - [Algorithms for learning to induce programs](file:///Users/breandan/Downloads/1241081869-MIT.pdf), Ellis et al. (2021)
+  - [Algorithms for learning to induce programs](https://dspace.mit.edu/bitstream/handle/1721.1/130184/1241081869-MIT.pdf?sequence=1&isAllowed=y), Ellis et al. (2021)
 
 ## June 13th, 2021
 
