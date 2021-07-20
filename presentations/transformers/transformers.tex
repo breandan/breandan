@@ -97,16 +97,17 @@
 
   \begin{frame}
     \frametitle{RASP: Restricted Access Sequence Processing}
-    A curious argument:
-    Not saying that transformers are RASPs, but \textit{for problems we can solve}, they often share the same compiled representation.
+    If transformers are a series of operators applied to an input sequence in parallel, what operations could they be performing?\linebreak
 
-    How do we do pack useful compute into matrix/vector arithmetic?
+    Not saying transformers are RASPs, but \textit{for problems with known solutions}, they often share a curiously similar representation\ldots\linebreak
+
+    How do we do pack useful compute into matrix/vector arithmetic? Array programming seems to be a surprisingly good fit.\linebreak
 
     \begin{itemize}
       \item Data types: $\{\mathbb{R, N, B}, \Sigma\}^n, \mathbb{B}^{n\times n}$
       \item Elementwise ops: $\{+, \times, \texttt{pow}\}: \mathbb{N}^n \rightarrow \mathbb{N}^n$ (e.g. $\mathbf{x} + \mathbf{1}$)
       \item Predicates: $\{\mathbb{R, N}, \Sigma\}^n → \mathbb{B}^n$
-      \item Lazily-evaluated functions: \texttt{indices}$:\Sigma^n→\mathbb{N}^n$
+      \item Standard functions: \texttt{indices}$:\Sigma^n→\mathbb{N}^n$, \texttt{tokens}$:\mathbb{N}^n→\Sigma^n$,
     \end{itemize}
   \end{frame}
 
@@ -115,7 +116,7 @@
     Takes a key, query and predicate, and returns a selection matrix: \\
 
       $$
-      \texttt{select}: \big(\underbrace{(*→\mathbb{N}^n)}_{key} \times \underbrace{(*→\mathbb{N}^n)}_{query} \times \underbrace{(\mathbb{N} \times \mathbb{N} \rightarrow \mathbb{B})}_{predicate} \big)\rightarrow \mathbb{B}^{n\times n}
+      \texttt{select}: \big(\underbrace{\mathbb{N}^n}_{key} \times \underbrace{\mathbb{N}^n}_{query} \times \underbrace{(\mathbb{N} \times \mathbb{N} \rightarrow \mathbb{B})}_{predicate}\big)\rightarrow \mathbb{B}^{n\times n}
       $$
 
     \noindent\rule{\textwidth}{1pt}
@@ -149,7 +150,7 @@
       \frametitle{Aggregate}
       Takes a selection matrix, a list, and averages the selected values:\\
       $$
-      \texttt{aggregate}: \big((*→\mathbb{B}^{n\times n}) \times \underbrace{(*→\mathbb{N}^n)}_{list}\big) → \mathbb{R}^n
+      \texttt{aggregate}: (\mathbb{B}^{n\times n} \times \underbrace{\mathbb{N}^n}_{list}) → \mathbb{R}^n
       $$
         \noindent\rule{\textwidth}{1pt}
     \begin{align*}
@@ -170,6 +171,36 @@
         10 & 15 & 20
       \end{bmatrix}
       \end{align*}
+  \end{frame}
+
+  \begin{frame}
+    \frametitle{Selector width}
+    Takes a selection matrix, a string and returns the histogram:
+    $$
+    \texttt{selector\_width}: \mathbb{B}^{n\times n} → \Sigma^n → \mathbb{N}^n
+    $$
+    \noindent\rule{\textwidth}{1pt}
+    \begin{align*}
+      &\texttt{selector\_width(same\_token)(}
+      \begin{bmatrix}
+        \texttt{h} & \texttt{e} & \texttt{l} & \texttt{l} & \texttt{o}
+      \end{bmatrix}\texttt{)}\\
+      &=
+      \begin{bmatrix}
+        \textbf{T} & F & F & F & F \\
+        F & \textbf{T} & F & F & F \\
+        F & F & \textbf{T} & \textbf{T} & F \\
+        F & F & \textbf{T} & \textbf{T} & F \\
+        F & F & F & F & \textbf{T} \\
+      \end{bmatrix}
+      \begin{bmatrix}
+        \texttt{h} & \texttt{e} & \texttt{l} & \texttt{l} & \texttt{o}
+      \end{bmatrix}\\
+      &=
+      \begin{bmatrix}
+        1 & 1 & 2 & 2 & 1
+      \end{bmatrix}
+    \end{align*}
   \end{frame}
 
   \begin{frame}
@@ -210,6 +241,7 @@
 
   \begin{frame}
     \frametitle{Experiment #1: Compiling RASP to transformers}
+    Can we force a transformer to implement RASP selectors?
     \begin{center}
       \includegraphics[scale=0.6]{rasp_vs_attention}
     \end{center}
@@ -217,6 +249,7 @@
 
   \begin{frame}
     \frametitle{Experiment #2: Can it be learned / does it learn the same thing?}
+    So there exists a feasible solution. Can it be learned from scratch?
     \begin{center}
       \includegraphics[scale=0.45]{table1}
     \end{center}
@@ -225,26 +258,40 @@
 
   \begin{frame}
     \frametitle{Experiment #3: How tight are the L, H bounds?}
+    Is the RASP-implied depth/width necessary and/or sufficient?
     \begin{center}
       \includegraphics[scale=0.3]{table2}
     \end{center}
   \end{frame}
 
   \begin{frame}
+    \frametitle{What is this paper trying to say?}
+    \begin{itemize}
+      \item Array programming a good model for thinking about transformer reasoning
+      \item Can logical matrices be interpreted as the fixed points of transformer learning (for certain problems)?
+      \item Given a solution, can we predict sufficient hyperparameters (e.g. depth, width) required to learn it?
+      \item
+    \end{itemize}
+  \end{frame}
+
+  \begin{frame}
     \frametitle{Threats to validity}
     \begin{itemize}
       \item How do we know whether RASP solutions are learnable? What do the L, H bounds really tell us?
-      \item Do transformers really think this way? Or are we just selecting problems which we can force a transformer to reproduce or which are relatively ``learnable''?
-      \item Are there tasks for which the RASP-implied bounds do not predict learnability in practice?
+      \item Do transformers really think this way? Or are we just selecting problems which we can force a transformer to reproduce that are relatively ``learnable''?
+      \item Are there ``unlearnable'' tasks for which the RASP-implied bounds do not predict learnability in practice?
       \item What other evidence could be shown to demonstrate transformers actually think this way?
-      \item What can we say about uniqueness? Is there a way to canonicalize attention?
+      \item What does these results really mean if we need to know a RASP solution exists a priori? If we knew it to begin with, would we really need a transformer to find it?
+      \item Still, not a huge leap to think, \textit{if} a human solution might exist and could be learned, maybe it could be decoded\ldots
     \end{itemize}
   \end{frame}
 
   \begin{frame}
     \frametitle{Unanswered questions/Future work}
     \begin{itemize}
-      \item Is there a way to ``scale up'' to longer sequences? How would you ``upsample'' a RASP heatmap?
+      \item How does ordering work? If selectors can be merged, how do you align attention heatmaps with selectors?
+      \item What can we say (if anything) about uniqueness? Is there a way to canonicalize attention/selector order?
+      \item Is there a way to ``scale up'' to longer sequences? How do/can you ``upsample'' a RASP heatmap?
       \item Would it be possible to extract RASP source code from a pretrained transformer?
       \item What other evidence could be shown to demonstrate transformers actually think this way?
       \item What can we say about uniqueness? Is there a way to canonicalize attention?
