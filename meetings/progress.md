@@ -12,6 +12,22 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+ ## July 19th, 2021
+
+- Last week
+  - Reviewed three NeurIPS conference submissions
+  - Worked on synthetic source code transformations
+  - Improvements to Markov chain generator
+- Challenges
+  - Need to speed up implementation
+- This week
+  - Implement AST transformations and document
+  - Polish syllabus for Aug. 6th submission deadline
+  - Respond to AIPLANS proposal feedback
+- Reading
+  - [Thinking Like Transformers](https://arxiv.org/pdf/2106.06981.pdf), Weiss et al. (2021)  - [Thinking Like Transformers](https://arxiv.org/pdf/2106.06981.pdf), Weiss et al. (2021)
+
+
 ## July 11th, 2021
 
 - Last week
