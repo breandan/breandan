@@ -12,7 +12,23 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
- ## July 19th, 2021
+## July 26th, 2021
+
+- Last week
+  - Code transformation comparison between pretrained models
+  - Prepared draft schedule for AIPLANS
+  - Presented Weiss et al.'s [Thinking Like Transformers](../presentations/transformers/transformers.pdf)
+- This week
+  - Look into a task-specific comparison between pretrained models
+  - Write up experiments and comparison procedure in Overleaf
+  - Compare embedding distribution using whole-dataset metrics
+  - Look into alternate source code transformations
+  - Put together and announce a CFP for AIPLANS
+- Reading
+  - [CodeXGLUE: A Machine Learning Benchmark Dataset for Code Understanding and Generation](https://arxiv.org/pdf/2102.04664.pdf), Lu et al. (2021)
+  - [How to Build Static Checking Systems Using Orders of Magnitude Less Code](https://dl.acm.org/doi/pdf/10.1145/2872362.2872364), Brown et al. (2016)
+
+## July 19th, 2021
 
 - Last week
   - Reviewed three NeurIPS conference submissions
@@ -26,7 +42,6 @@
   - Respond to AIPLANS proposal feedback
 - Reading
   - [Thinking Like Transformers](https://arxiv.org/pdf/2106.06981.pdf), Weiss et al. (2021)  - [Thinking Like Transformers](https://arxiv.org/pdf/2106.06981.pdf), Weiss et al. (2021)
-
 
 ## July 11th, 2021
 
