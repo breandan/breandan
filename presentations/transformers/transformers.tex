@@ -267,17 +267,17 @@
   \begin{frame}
     \frametitle{What is this paper trying to say?}
     \begin{itemize}
-      \item Array programming a good model for thinking about transformer reasoning
-      \item Can logical matrices be interpreted as the fixed points of transformer learning (for certain problems)?
-      \item Given a solution, can we predict sufficient hyperparameters (e.g. depth, width) required to learn it?
-      \item
+      \item Array programming provides an intuitive model for thinking about transformer reasoning
+      \item Can logical matrices be interpreted as the fixed points of self attention (for certain problems)?
+      \item The [optimal?] RASP solution a human constructs often matches the solution a transformer discovers
+      \item Given a known solution, we can predict sufficient hyperparameters (e.g. depth, width) needed to learn it
     \end{itemize}
   \end{frame}
 
   \begin{frame}
     \frametitle{Threats to validity}
     \begin{itemize}
-      \item How do we know whether RASP solutions are learnable? What do the L, H bounds really tell us?
+      \item How do we know whether RASP solutions are learnable? What do the L, H bounds tell us?
       \item Do transformers really think this way? Or are we just selecting problems which we can force a transformer to reproduce that are relatively ``learnable''?
       \item Are there ``unlearnable'' tasks for which the RASP-implied bounds do not predict learnability in practice?
       \item What other evidence could be shown to demonstrate transformers actually think this way?
@@ -294,15 +294,19 @@
       \item Is there a way to ``scale up'' to longer sequences? How do/can you ``upsample'' a RASP heatmap?
       \item Would it be possible to extract RASP source code from a pretrained transformer?
       \item What other evidence could be shown to demonstrate transformers actually think this way?
-      \item What can we say about uniqueness? Is there a way to canonicalize attention?
     \end{itemize}
   \end{frame}
 
   \begin{frame}
-    \frametitle{References}
+    \frametitle{References on Formal Language Induction / Recognition}
     \begin{itemize}
       \item Weiss et al., \href{https://arxiv.org/pdf/2009.11264v2.pdf}{Thinking Like Transformers} (2021)
+      \item Weiss et al., \href{https://arxiv.org/pdf/1805.04908.pdf}{On the Practical Computational Power of Finite Precision RNNs for Language Recognition} (2018)
+      \item Weiss et al., \href{https://arxiv.org/pdf/1910.13895.pdf}{Learning Deterministic Weighted Automata with Queries and Counterexamples} (2019)
+      \item Weiss et al., \href{http://proceedings.mlr.press/v80/weiss18a/weiss18a.pdf}{Extracting Automata from Recurrent Neural Networks
+      Using Queries and Counterexamples} (2018)
       \item Bhattamishra et al., \href{https://arxiv.org/pdf/2009.11264v2.pdf}{On the Ability and Limitations of Transformers to Recognize Formal Languages} (2020)
+      \item Bhattamishra et al., \href{https://arxiv.org/pdf/2011.03965.pdf}{On the Practical Ability of Recurrent Neural Networks to Recognize Hierarchical Languages} (2020)
     \end{itemize}
   \end{frame}
 
