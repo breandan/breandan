@@ -12,6 +12,32 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## Aug. 2nd, 2021
+
+- Last week
+  - Collected human-labeled data from [SStuBs dataset](https://github.com/mast-group/mineSStuBs) - just what we need!
+  - Implement binary classifier to examine effects of distributional shift / source code transformations
+  - Prepared [AIPLANS workshop website](https://aiplans.github.io/)
+  - Looked into [bidirectional/invertible parsing](https://github.com/h0tk3y/better-parse/discussions/45) (e.g. TXL et al.)
+  - Looked into [probabilistic sketching algorithms](https://github.com/apache/datasketches-java/issues/357)
+  - Reached out NeurIPS workshop about co-scheduling
+  - COVID exam & travel bureaucracy
+- This week
+  - Compare pretrained performance on manual and synthetic dataset
+  - Present results on evaluating pretrained language models
+  - Draft AIPLANS call for reviewers and promote to research groups
+  - Finish literature review for comprehensive exam
+  - Follow up with Maria about AIPLANS/DiffProgramming collaboration
+- Challenges
+  - How to conduct a fair comparison between synthetic and natural data
+  - Running experiments in time constraints
+- Reading
+  - [Program Synthesis with Pragmatic Communication](https://proceedings.neurips.cc/paper/2020/file/99c83c904d0d64fbef50d919a5c66a80-Paper.pdf), Pu et al. (2020)
+  - [Invertible Syntax Descriptions:
+Unifying Parsing and Pretty Printing](https://www.informatik.uni-marburg.de/~rendel/unparse/rendel10invertible.pdf), Rendel and Osterman (2010)
+  - [Demystifying Neural Language Models' Insensitivity to Word-Order](https://arxiv.org/pdf/2107.13955.pdf), Clouatre (2021)
+  - [Mergeable summaries](https://www.cs.utah.edu/~jeffp/papers/merge-summ.pdf), Agarwal et al. (2012)
+
 ## July 26th, 2021
 
 - Last week

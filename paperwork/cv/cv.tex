@@ -1,0 +1,216 @@
+%-------------------------
+% Resume in Latex
+% Author : Sourabh Bajaj
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{fontawesome}
+\usepackage{ragged2e}
+\usepackage[english]{babel}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{\textbf{#1}{ #2 }}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \item
+  \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & #2 \\
+    \textit{\small#3} & \textit{\small #4} \\
+  \end{tabular*}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}}
+
+\renewcommand\labelitemi{{\boldmath$\cdot$}}
+
+\begin{document}
+
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}cccccr}
+\textbf{\href{https://brea.ndan.co/}{\Large Breandan Considine}} & \textbf{\Large\textperiodcentered} & 3855 Main St. Bethlehem, NH 03574-5101 & \textbf{\Large\textperiodcentered} & \href{tel:+1-802-438-3573}{+1-802-438-3573} & \textbf{\Large\textperiodcentered} & \href{mailto:bre@ndan.co}{bre@ndan.co}\\
+\end{tabular*}
+
+
+\begin{justify}
+\section{Research Statement}
+\item How do we use software to build more intelligent systems, and how can we use intelligent systems to help us write better software? My research studies the relationship between software and machine learning, to reason about the behavior of real-world programs and use those insights to build more intelligent programming tools for developers.
+
+\section{Education}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://www.cs.mcgill.ca/}{McGill University}}{-- Ph.D. Student in Computer Science (2019--est. 2023), Supervisor: Dr. \href{https://www.cs.mcgill.ca/~jguo/}{Jin Guo}}
+\resumeSubItem{\href{https://diro.umontreal.ca}{Universit\'e de Montr\'eal}}{-- \href{http://breandan.net/public/udem_diploma.pdf}{M.S. in Computer Science (2017--2020)}, Co-supervisors: Drs. \href{http://liampaull.ca/}{Liam Paull} and \href{https://michalis.famelis.info/}{Michalis Famelis}}
+\resumeSubItem{\href{https://www.cs.rit.edu/}{Rochester Institute of Technology}}{-- \href{http://breandan.net/public/rit_diploma.pdf}{B.S. in Computer Science}, Minoring in Chinese Language (2008--2012)}
+\resumeSubItem{\href{https://isc.sjtu.edu.cn}{Shanghai Jiaotong University}}{-- \href{http://breandan.net/public/sjtu_completion.pdf}{Certificate of Completion in Chinese Language Studies} (2010--2011)}
+\resumeSubHeadingListEnd
+
+\section{Experience}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://www.aptiv.com/}{nuTonomy/Aptiv}}{(Summer 2018) -- Autonomous Vehicle Intern. Responsible for software reproducibility and developer operations. Created container-based infrastructure for automated training and evaluation of machine learning models.}
+\resumeSubItem{\href{https://www.jetbrains.com/}{JetBrains}}{(2014--2016) -- Developer Advocate. Wrote and recorded tutorials, spoke at conferences, companies and universities, created and curated the \href{https://blog.jetbrains.com/idea/tag/java-annotated/}{Java Annotated Monthly newsletter} and built several IDE plugins for the IntelliJ Platform.}
+\resumeSubItem{\href{https://www.onespot.com/}{OneSpot}}{(2012--2013) -- Software Engineer. Designed and launched a real-time bidder to match ads, sites and visitors using Bayesian inference. Patented techniques in data mining and high-frequency transaction processing for online auctions.}
+\resumeSubItem{\href{https://www.garnethill.com/}{Garnet Hill}}{(Summer 2009, Summer 2010) -- Data Analysis Intern. Built and optimized SQL Server routines to liquidate surplus inventory by modeling demand elasticity and dynamically repricing overstock merchandise during seasonal sales.}
+\resumeSubItem{\href{https://www.firstinspires.org/}{FIRST Robotics Team \#2523}}{(2007--2008) -- Co-founder, Lead Programmer. Wrote our team's winning \$15k NASA grant application. Designed and wrote a PID controller, leading our team to the New England regionals in our first year.}
+\resumeSubHeadingListEnd
+
+\section{Selected Publications}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://iclr.cc/Conferences/2021/}{ICLR}} {(2021) -- \href{https://arxiv.org/abs/2104.02646}{$\nabla$Sim: Differentiable simulation for system identification and visuomotor control}}
+\resumeSubItem{Universit\'e de Montr\'eal, Master's Thesis} {(2020) -- \href{http://breandan.net/public/masters_thesis.pdf}{Programming Tools for Intelligent Systems}}
+\resumeSubItem{\href{https://program-transformations.github.io/}{PTML Workshop at NeurIPS}} {(2019) -- \href{https://openreview.net/forum?id=SkluMSZ08H}{Kotlin$\nabla$: A shape-safe DSL for differentiable programming}}
+\resumeSubItem{\href{https://popl19.sigplan.org/event/lafi-2019-kotlin-differentiable-functional-programming-with-algebraic-data-types}{POPL, LAFI (n\'e PPS)}} {(2019) -- \href{https://github.com/breandan/kotlingrad}{Kotlin$\nabla$: Differentiable Functional Programming with Algebraic Data Types}}
+\resumeSubItem{\href{https://github.com/breandan/kotlingrad/blob/master/latex/cser/cser_pres.pdf}{CSER/SEMLA}} {(2019) -- \href{https://github.com/breandan/kotlingrad}{Kotlin$\nabla$: A Shape Safe eDSL for Differentiable Functional Programming}}
+\resumeSubItem{\href{https://icml.cc/Conferences/2019/}{ICML}} {(2019) -- \href{https://arxiv.org/abs/1901.08680}{Multi-objective training of Generative Adversarial Networks with multiple discriminators}}
+\resumeSubItem{NeurIPS Competition Track} {(\href{https://arxiv.org/abs/1903.02503}{2018}, 2019) -- \href{https://www.duckietown.org/research/ai-driving-olympics}{The AI Driving Olympics}}
+\resumeSubItem{\href{https://www.cs.cmu.edu/~lerrelp/AutomatingRobotExperiments/}{IROS, Automating Robot Experiments}} {(2018) -- Duckietown: Software Infrastructure for Autonomous Robotics}
+\href{https://arxiv.org/abs/1806.00683}{\resumeSubItem{arXiv preprint} {(2018) -- Deep Pepper: Expert Iteration based Chess agent in the Reinforcement Learning Setting}}
+\href{https://patentimages.storage.googleapis.com/03/e4/38/07fc2e00f8529c/US20140244405A1.pdf}{\resumeSubItem{US Patent Application US20140244405A1} {(2014) -- Automatic Generation of Digital Advertisements (OneSpot)}}
+\resumeSubHeadingListEnd
+
+\section{Leadership}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://speakerdeck.com/breandan}{Conference Speaker}} {-- Teaching about programming tools, machine learning, type systems and speech recognition.
+\href{https://oracle.com/javaone}{JavaOne Shanghai} (2013),
+\href{https://www.vtcodecamp.org/}{Vermont Code Camp} (2014),
+\href{http://houstontechfest.com/}{Houston TechFest} (2014),
+\href{https://svcc.mobi/}{Silicon Valley Code Camp} (2014, 2016),
+%Stanford Career Fair (2015),
+\href{http://gwtcreate.com/}{GWT.Create} (2015),
+\href{https://www.bostoncodecamp.com/}{Boston Code Camp} (2015),
+\href{https://www.droidcon.com/}{DroidCon Montreal} (2015),
+\href{http://www.andevcon.com/}{AnDevCon Boston} (2015),
+\href{https://oracle.com/javaone}{JavaOne Brazil} (2015, 2016),
+\href{https://oracle.com/javaone}{JavaOne San Fransisco} (2015, 2016),
+\href{https://devnexus.com/}{DevNexus} (2016, 2017),
+\href{https://confoo.ca}{ConFoo} (2016, 2017),
+\href{https://www.eclipsecon.org/na2016}{EclipseCon} (2016),
+\href{https://www.developersummit.com/}{Great Indian Developer Summit} (2016, 2017),
+\href{https://python.ie}{PyCon Ireland} (2016),
+\href{https://devoxx.com/}{Devoxx Belgium} (2016),
+\href{https://devoxx.com/}{Devoxx US} (2017),
+\href{https://www.oracle.co.jp/events/javaday/2017/}{Java Day Tokyo} (2017),
+\href{http://montrealaisymposium.com/}{Montr\'eal AI Symposium} (2018, 2019),
+\href{https://roscon.ros.org}{ROSCon} (2018),
+\href{https://www.cs.uoregon.edu/research/summerschool/summer19/topics.php}{OPLSS} (2019),
+\href{https://kotlinconf.com/}{KotlinConf} (2019)
+}
+\resumeSubItem{\href{https://mila.quebec/}{Mila Lab Rep}} {(2018--2019) -- Elected as a first year master's student to represent the student body. Advised colleagues and staff during the merger of Montr\'eal's two largest AI labs, hosted Thanksgiving dinner, and ran the 2019 election.}
+\resumeSubItem{\href{https://www.sjtu.edu.cn/}{Shanghai Jiaotong University}} {(2010--2011) -- Student Ambassador. Coordinated extracurricular activities for foreign language students, and helped promote cultural exchange between Chinese and international students in Shanghai.}
+\resumeSubItem{\href{https://www.rit.edu/sg/badminton/}{RIT Badminton}} {-- Student athlete (2008--2010) and President (2011--2012). Recruited talented athletes, organized fundraisers and tournaments, ran weekly practices and lead the expansion of RIT's intercollegiate badminton program.}
+\resumeSubItem{\href{https://www.stjacademy.org/academics/library}{Grace Stuart Orcutt Library}} {(2007--2008) -- Archivist. Collected, cataloged, preserved and archived \textit{The Newell Collection}, an anthology of ancient manuscripts from Vermont State Senator and Latin instructor, Graham Newell.}
+\resumeSubHeadingListEnd
+
+\section{Teaching}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://speechbrain.github.io}{Speech Processing}}{(Winter 2021) -- TA. Prepared lecture on AD, gave project guidance and helped with grading.}
+\resumeSubItem{\href{https://github.com/jin-guo/COMP598_Fall2020}{Software Engineering for Intelligent Systems}}{(2020) -- TA. Delivered recitations, project advice and grading.}
+\resumeSubItem{\href{https://admission.umontreal.ca/cours-et-horaires/cours/IFT-6759/}{Advanced Projects in Machine Learning}}{(2020) -- TA. Gave project guidance, technical support and grading.}
+\resumeSubItem{\href{https://duckietown.org/}{Duckietown}}{(2018) -- TA. Wrote code and documentation, taught ROS and containers, provided technical support to students and contributed to software infrastructure and build automation for the first AI Driving Olympics.}
+\resumeSubItem{\href{https://www.rit.edu}{Rochester Institute of Technology}}{(2009) -- TA. Student counselor for First Year Enrichment class.}
+\resumeSubHeadingListEnd
+
+\section{Selected Coursework}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://cs.mcgill.ca/~wlh/comp766/}{COMP 766, Graph Representation Learning}}{(McGill University, Spring 2020) -- William Hamilton, A}
+\resumeSubItem{\href{https://mitliagkas.github.io/ift6085-dl-theory-class/}{IFT 6085, Deep Learning Theory}}{(Universit\'e de Montr\'eal, Winter 2018) -- Ioannis Mitliagkas, A}
+\resumeSubItem{\href{https://www.cs.mcgill.ca/~dprecup/courses/rl.html}{COMP 767, Reinforcement Learning}}{(McGill University, Winter 2018) -- Doina Precup, A+}
+\resumeSubItem{\href{https://www.cs.mcgill.ca/~jpineau/comp551/index.html}{COMP 551, Applied Machine Learning}}{(McGill University, Fall 2017) -- J\"oelle Pineau, A+}
+\resumeSubItem{\href{http://liampaull.ca/courses/duckietown/index.html}{IFT 6080, Autonomous Vehicles}}{(Universit\'e de Montr\'eal, Fall 2017) -- Liam Paull, A}
+\resumeSubHeadingListEnd
+
+\section{Academic Awards}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://www.cs.mcgill.ca/academic/ta/awards/winners/}{McGill University, Computer Science Teaching Assistant Award}}{(2020) -- Honorary Award}
+\resumeSubItem{\href{https://www.mcgill.ca/expmed/funding-and-awards/differential-fee-waivers}{McGill University, Differential Fee Waiver}}{(2019--2021) -- \$12,000 CAD per year}
+\resumeSubItem{\href{https://www.cs.uoregon.edu/research/summerschool/summer19/}{Oregon Programming Languages Summer School} Fellowship}{(2019) -- \$994 USD}
+\resumeSubItem{Universit\'e de Montr\'eal, \href{https://esp.umontreal.ca/english/what-you-need-to-know/international/scholarship/}{FESP Scholarship}}{(2018--2019) -- \$6,991 CAD per trimester}
+\resumeSubItem{Rochester Institute of Technology, \href{https://www.rit.edu/admissions/aid/merit-based-scholarships}{Presidential Scholarship}}{(2009--2010, 2011--2012) -- \$10,000 USD per year}
+\resumeSubItem{Rochester Institute of Technology, Deans List}{(2009, 2010, 2011) -- Dean's List}
+\resumeSubItem{St. Johnsbury Academy}{(2004--2008) -- Honor Roll}
+\resumeSubItem{\href{https://www.nle.org/}{National Latin Examination}}{-- Magna Cum Laude (2005), Summa Cum Laude (2006)}
+\resumeSubHeadingListEnd
+
+\section{Recent Service}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://aiplans.github.io/}{AIPLANS Workshop at NeurIPS}}{(2021) Virtual -- Lead co-organizer}
+\resumeSubItem{\href{https://rethinkingmlpapers.github.io/}{Rethinking ML Papers Workshop at ICLR}}{(2021) Virtual -- Co-organizer}
+\resumeSubItem{\href{https://compcalc.github.io/}{Mila Computer Calculus Reading Group}}{(2021) Virtual -- Organizer}
+\resumeSubItem{\href{http://rldm.org/}{Multidisciplinary Conference on RL and Decision Making}}{(2019) Montr\'eal, Canada -- Student Volunteer}
+\resumeSubItem{\href{https://admission.umontreal.ca/en/summer-immersion-program/a-summer-in-montreal/}{Universit\'e de Montr\'eal Summer Immersion Program}}{(2019) Montr\'eal, Canada -- Volunteer Instructor}
+\resumeSubItem{\href{https://www.icra2019.org/}{International Conference on Robotics and Automation}}{(2019)  Montr\'eal, Canada -- Student Volunteer}
+\resumeSubItem{\href{https://iclr.cc/Conferences/2019}{International Conference on Learning Representations}}{(2019) New Orleans, U.S.A. -- Student Volunteer}
+\resumeSubItem{\href{https://www.duckietown.org/research/ai-driving-olympics}{Neural Information Processing Systems, AI Driving Olympics}}{(2018) Montr\'eal, Canada -- Student Volunteer}
+\resumeSubItem{ReWork Deep Learning Summit}{(2017) Montr\'eal, Canada -- Volunteer Scribe}
+\resumeSubItem{\href{https://sites.grenadine.co/sites/forumiaresponsableumontreal/fr/forumiaresponsableumontreal}{Forum Intelligence Artificielle Responsable}}{(2017) Montr\'eal, Canada -- Volunteer}
+\resumeSubItem{\href{https://aiforgood.itu.int/}{Artificial Intelligence for Social Good Summit}}{(2017) Geneva, Switzerland -- Delegate}
+\resumeSubItem{O'Reilly Open Source Convention}{(2017) Austin, U.S.A -- Volunteer}
+\resumeSubHeadingListEnd
+
+\section{Selected Open Source Projects}
+\resumeSubHeadingListStart
+\resumeSubItem{\href{https://github.com/breandan/gym-fs}{Code Search Tools}}{(2021) -- Tools and experiments for information retrieval on code.}
+\resumeSubItem{\href{https://github.com/acejump/sourcejump}{SourceJump}}{(2021) -- IDE plugin for finding contextually similar OSS code.}
+\resumeSubItem{\href{https://github.com/breandan/markovian}{Markovian}}{(2020) -- DSL for symbolic integration and probabilistic programming.}
+\resumeSubItem{\href{https://github.com/breandan/kaliningraph}{Kaliningraph}}{(2020) -- DSL for constructing graphs and visualizing the behavior of graph algorithms.}
+\resumeSubItem{\href{https://github.com/breandan/pantograph}{Pantograph}}{(2020) -- Runtime accessible intermediate representation for reified computation graphs.}
+\resumeSubItem{\href{https://github.com/acejump/tracejump}{TraceJump}}{(2019) -- Annotating screenshots with visual trace links.}
+\resumeSubItem{\href{https://github.com/breandan/tracelink}{TraceLink}}{(2019) -- Trace link prediction from documentation to source code and vis versa.}
+\resumeSubItem{\href{https://github.com/breandan/gym-pc}{GymPC}}{(2019) -- Reinforcement learning environment for command line interfaces.}
+\resumeSubItem{\href{https://github.com/breandan/kotlingrad}{Kotlin$\nabla$}}{(2019) -- An attempt to port recent advancements in automatic differentiation (AD) to the Kotlin language. It introduces several novel ideas, including shape-safety, algebraic expression rewriting, numerical stability checking with property-based testing, and provides an algebraically-grounded implementation of AD for shape-safe tensor operations.}
+\resumeSubItem{\href{https://github.com/duckietown/hatchery}{Hatchery}}{(2018) -- Provides development support and programming assistance for building robotics applications.}
+\resumeSubItem{\href{https://github.com/OpenASR/idear}{idear}}{(2016) -- A general-purpose voice user interface for handsfree programming using HMM-based speech recognition.}
+\resumeSubItem{\href{https://github.com/acejump/AceJump}{AceJump}}{(2015) -- An editor plugin that supports rapid navigation of large text files with minimal user input.}
+\resumeSubHeadingListEnd
+
+\section{Excellence}
+People-oriented programmer with a passion for languages. Fluent in Java, Kotlin, Python and C/C++. Fast algorithms with a track record in open source collaboration. Results-driven engineer with experience in machine learning and embedded systems. Strongly consistent and referentially transparent (references available on request).
+\end{justify}
+
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}ccccccccccr}
+\faParagraph & \href{https://brea.ndan.co}{brea.ndan.co} & \faGithub & \href{https://github.com/breandan}{github.com/breandan} & \faStackOverflow & \href{https://stackoverflow.com/users/1772342/breandan}{so.ndan.co} & \faGraduationCap & \href{https://scholar.google.ca/citations?user=bC-gapAAAAAJ}{gs.ndan.co} & \faTwitter & \href{https://twitter.com/breandan}{twitter.com/breandan}\\
+\end{tabular*}
+
+\end{document}
