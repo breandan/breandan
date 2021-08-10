@@ -22,6 +22,8 @@
 - Challenges
   - Make a plan to wrap up summer experiments and prepare results
   - Need to complete one full research cycle from start to finish
+- Reading
+  - [InterpreT: An Interactive Visualization Tool for Interpreting Transformers](https://aclanthology.org/2021.eacl-demos.17.pdf), Lal et al. (2021)
 
 ## Aug. 2nd, 2021
 
