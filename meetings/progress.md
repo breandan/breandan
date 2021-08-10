@@ -12,6 +12,17 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## Aug. 10th, 2021
+
+- Last week
+  - Comparing embedding distance between manual and synthetic code
+  - Chat with Jon and Olga from [moderne.io](https://moderne.io/)
+- This week
+  - Prepare [literature review](../paperwork/comp_exam_v2/literature_review.pdf) for resubmission
+- Challenges
+  - Make a plan to wrap up summer experiments and prepare results
+  - Need to complete one full research cycle from start to finish
+
 ## Aug. 2nd, 2021
 
 - Last week
