@@ -10,6 +10,7 @@
 \usepackage{amssymb}
 \usepackage{mathrsfs}
 \usepackage{tikz}
+\usepackage{listings}
 
 \newcommand*\circled[1]{\tikz[baseline=-0.1cm]{\node[shape=circle,draw,inner sep=0.48pt] (char) {\fontsize{7}{12}\textsf{#1}};}}
 
@@ -67,19 +68,44 @@ For nearly all practical programming languages, the space of valid programs can 
 
 For example, many useful programs belong to the class of context free languages. Sampling is possible using a probabilistic grammar, but at what cost? The number of distinct parse trees grows super-exponentially with height. Various strategies have been designed to inhibit this growth, but even with judicious pruning, the topology of many languages does not admit an efficient beam search, or the cost required may be prohibitive. Yet humans are able to solve many computationally hard search problems with deceptive ease. How?
 
-One possibility is that humans possess more computational resources than might we give them credit for, and a similarly-enriched neural-guided search would be equally capable. Another hypothesis is that we are not \textit{searching} for programs as such, or at least thinking about this process in the wrong terms. When someone is painting a portrait or writing a novel, we do not call this search. Likewise, programming is not always about searching for an answer, but finding the right question to ask, of understanding, exploring and visualizing the design space, for which there is no specification. The program acquires a meaning of its own as the medium for a dialog between human and machine. In the following sections, we explore two contrasting models for this dialog, one where the human is the teacher~(\S\ref{sec:automatic-and-declarative-programming}), and one where the IPT is the teacher~(\S\ref{sec:computer-aided-reasoning-tools}).
+One possibility is that humans possess more computational resources than might we give them credit for, and a similarly-enriched neural-guided search would be equally capable. Another hypothesis is that we are not \textit{searching} for programs as such: when painting a portrait or writing a novel, we do not call this search. Likewise, programming is not necessarily about searching for an answer, but finding the right question, of exploring a design space which has no specification at all, or whose specification is a consequence, not the catalyst of design. The program itself could merely be an artifact of an ephemeral dialog between a human and a machine, not the end result. In the following sections, we explore two contrasting models for this dialog, one where the human is the teacher~(\S\ref{sec:automatic-and-declarative-programming}), and one where the IPT is the teacher~(\S\ref{sec:computer-aided-reasoning-tools}).
 
-  \section{Automatic and Declarative Programming}\label{sec:automatic-and-declarative-programming}
+  \section{Declarative and Automatic Programming}\label{sec:automatic-and-declarative-programming}
 
-In The Art of Computer Programming~\cite{knuth1997art}, Donald Knuth memorably writes, ``Programs are meant to be read by humans and only incidentally for computers to execute.'' Taking this perspective, one may be tempted to ask, ``Why must programming languages be so difficult that we need IPTs to write down our ideas in the first place?'' If we consider programming a matter of communicating human intent to machines, language designers should take great pains to simplify the language so that users may convey their intent in an effortless manner, then harness machine intelligence in the service of fulfilling their intent, rather than force them to specify how to accomplish it in painstaking detail. Known as declarative programming, this approach has been well-studied in languages like SQL, Prolog and miniKanren, among others.
+In The Art of Computer Programming~\cite{knuth1997art}, Donald Knuth memorably writes, ``Programs are meant to be read by humans and only incidentally for computers to execute.'' Taking this perspective, one may be tempted to ask, ``Why must programming languages be so difficult that we need IPTs to write down our ideas in the first place?'' If we consider programming a matter of communicating human intent to machines, language designers should take great pains to simplify the language so that users may convey their intent in an effortless manner, then harness machine intelligence in the service of fulfilling that intent, rather than force the user to describe how it should be accomplished. Known as declarative programming, this approach has been well-studied in languages like SQL, Prolog and miniKanren, among others.
 
-The idea of what is today known as declarative programming can be traced back to the 1940s when researchers started applying the tools of constraint programming to what is today known as operations research. In this early work, programmers would first state their intent as a minimization problem on a system of inequalities, such as a linear or quadratic program. The Soviets used this technique to study many problems related to optimal transport and economic planning. It also turns out to be useful as a means of defining metrics on graphs and probability distributions.
+The essence of declarative programming can be traced back to the 1940s when researchers started applying tools from mathematical optimization to what is today known as operations research~\cite{kantorovich1960mathematical}. In this early work, programmers would first state their intent as a solution to a system of inequalities, such as a linear or quadratic program. The Soviets used this technique to study many practical problems related to optimal transport and economic planning. More recently, it has found important theoretical applications for defining metrics on graphs and probability distributions, the construction of which are essential to representation learning. Metrics provide a means of biasing learning algorithms towards solutions of a certain form, and thus are a mechanism for indirectly ``programming'' machine learning models.
 
-Our primary interest in declarative programming is twofold: (1) it is the basis of the first successful attempt to popularize gradient-based learning~\cite{baydin2018automatic}, and (2) is a practical framework for realizing the once-scorned~\cite{dijkstra1979foolishness} but now increasingly plausible~\cite{chen2021evaluating} idea of natural language programming.
+Not only can declarative programming be used produce numerical solutions to a system of equations, but the same ideas can be applied more generally to synthesizing higher-order functions, and by extension, other programs. Given an existing procedure $\mathcal P$, and a set of declarative constraints in the form of valid program transformations, we could construct an \textit{adjoint} program $\mathcal P'$ by applying those transformations. For example, we might sample outputs from the program probabilistically or compute its derivative with respect to one of the inputs. This set of techniques is broadly known as automatic programming.
 
-Not only can constraint programming produce numerical solutions, but the same tools can be applied to programming in a more general manner. By considering different algebras, we can compute different properties objects. These things are called algebraic path problems and have many useful applications in combinatorial optimization.
+Our primary interest in automatic programming is twofold: (1) as the basis for the first successful software implementation of gradient-based learning~\cite{baydin2018automatic}, and (2) as a practical framework for realizing the once-scorned~\cite{dijkstra1979foolishness} but now increasingly plausible~\cite{chen2021evaluating} idea of natural language programming. For example, consider the following specification:
 
-It is possible to implement many fundamental computer science algorithms in a much simpler way as iterated matrix multiplication on a semiring algebra. A commutative monoid $(S, •, \circled{1})$ is a set $S$ with a binary operator $•: S \times S → S$ which has the following properties:
+\begin{lstlisting}[basicstyle=\small\ttfamily]
+  fun transformStringIntoListOfUniqueWords(s: String) = TODO()
+\end{lstlisting}
+
+This is the output from Codex~\cite{chen2021evaluating}, a recent IPT from OpenAI:
+
+\begin{lstlisting}[basicstyle=\small\ttfamily]
+  fun transformStringIntoListOfUniqueWords(s: String) =
+     s.toLowerCase().replace(Regex("[^a-zA-Z]"), " ").trim()
+     .split("\\s+".toRegex()).filter { it.isNotBlank() }.toSet()
+\end{lstlisting}
+
+The problem with automatic programming is that the only means of feedback to the user is by outputting a correct solution, or failing that, producing lots of heat. It would be nice to have a more interpretable mechanism.
+
+\section{Computer-Aided Reasoning Tools}\label{sec:computer-aided-reasoning-tools}
+
+The programmer is not the teacher, the programmer is actually the student.
+
+When programmers ask for an intelligent programming tool, what they really want is not a genie who grants wishes without question, but a teacher who rapidly gives them feedback about the implications of their design choices within the confines of a well-defined language. This is one advantage of a type system: not only does it provide highly precise feedback, but also allows us to sample a space of semantically constrained programs. Thus the interaction is bidirectional - the user provides a partial program sketch, and asks the type system to infer the missing thing.
+
+
+\section{Semiring Programming}\label{sec:semiring-programming}
+
+By considering different algebras, we can compute different properties on graphical objects. These things are called algebraic path problems and have many useful applications in combinatorial optimization.
+
+It is possible to implement many fundamental computer science algorithms in a much simpler way as iterated matrix multiplication on a semiring algebra. A commutative monoid $(S, •, \circled{1})$ is a set $S$ with a binary operator $•: S \times S → S$ which has the following additional properties:
 
   \begin{prooftree}
     \bottomAlignProof
@@ -134,7 +160,7 @@ A semiring algebra, denoted $(S, \oplus, \otimes, \circled{0}, \circled{1})$, is
     \UnaryInfC{\textit{Annihilation}}
   \end{prooftree}
 
-It is possible solve a rich family of search problems using iterated matrix multiplication on semirings. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{update}. Let $δ_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $δ_{st}$, one may run the following procedure on a desired path algebra until convergence (a few examples are provided for reference):
+It is possible solve a rich family of optimization problems using iterated matrix multiplication on semirings. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{update}. Let $δ_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $δ_{st}$, one may run the following procedure on a desired path algebra until convergence (a few examples are provided for illustration):
 
   \begin{center}
     \begin{tabular}{lc|cr}
@@ -153,17 +179,6 @@ It is possible solve a rich family of search problems using iterated matrix mult
 
   \noindent Many dynamic programming algorithms, including Bellman-Ford, Floyd-Warshall, Dijkstra, belief, constraint, error and expectation propagation, Markov chains, and others can all be neatly expressed as message passing on a semiring algebra. We refer the curious reader to~\cite{gondran2008graphs,baras2010path} for a more complete summary of the algebraic path problem and its many wonderful applications.
 
-
-  For example, one could use ADTs to represent higher-order functions, i.e. for program synthesis if they so desired.
-
-
-The problem with automatic programming is that the only means of feedback to the user is by outputting a solution, or failing that, producing lots of heat. It would be nice to have a more interactive mechanism.
-
-  \section{Computer-Aided Reasoning Tools}\label{sec:computer-aided-reasoning-tools}
-
-  The programmer is not the teacher, the programmer is actually the student.
-
-When programmers ask for an intelligent programming tool, what they really want is not a genie who grants wishes without question, but a teacher who rapidly gives them feedback about the implications of their design choices within the confines of a well-defined language. This is one advantage of a type system: not only does it provide highly precise feedback, but also allows us to sample a space of semantically constrained programs. Thus the interaction is bidirectional - the user provides a partial program sketch, and asks the type system to infer the missing thing.
 
   \section{Future Directions of Computer Programming}
 
