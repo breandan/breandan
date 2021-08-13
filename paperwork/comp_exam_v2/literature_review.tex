@@ -6,6 +6,21 @@
 
 % Packages
 \usepackage{amsmath}
+\usepackage[pdf]{graphviz}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+
+\newcommand*\circled[1]{\tikz[baseline=-0.1cm]{\node[shape=circle,draw,inner sep=0.48pt] (char) {\fontsize{7}{12}\textsf{#1}};}}
+
+\usepackage{unicode-math}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\usepackage{cancel}
+\newcommand{\nDownarrow}{\ensuremath{\text{ }\cancel{\Downarrow}\text{ }}}
+\usepackage{centernot}
+
+\usepackage{bussproofs}
+\usepackage{tabularx}
 
 \usepackage{hyperref}
 \renewcommand{\sectionautorefname}{\S}
@@ -52,17 +67,95 @@ For nearly all practical programming languages, the space of valid programs can 
 
 For example, many useful programs belong to the class of context free languages. Sampling is possible using a probabilistic grammar, but at what cost? The number of distinct parse trees grows super-exponentially with height. Various strategies have been designed to inhibit this growth, but even with judicious pruning, the topology of many languages does not admit an efficient beam search, or the cost required may be prohibitive. Yet humans are able to solve many computationally hard search problems with deceptive ease. How?
 
-One possibility is that humans possess more computational resources than might we give them credit for, and a similarly-enriched neural-guided search would be equally capable. Another hypothesis is that we are not \textit{searching} for programs as such, or at least thinking about this process in the wrong terms. When someone is painting a portrait or writing a novel, we do not call this search. Likewise, programming is not always about searching for an answer, but finding the right question to ask, of understanding, exploring and visualizing the design space, for which there is no specification. The program acquires a meaning of its own as the medium for a dialog between human and machine. In the following sections, we explore two contrasting models for this dialog, one where the human is the teacher~\ref{sec:automatic-and-declarative-programming}, and one where the IPT is the teacher~\ref{sec:computer-aided-reasoning-tools}.
+One possibility is that humans possess more computational resources than might we give them credit for, and a similarly-enriched neural-guided search would be equally capable. Another hypothesis is that we are not \textit{searching} for programs as such, or at least thinking about this process in the wrong terms. When someone is painting a portrait or writing a novel, we do not call this search. Likewise, programming is not always about searching for an answer, but finding the right question to ask, of understanding, exploring and visualizing the design space, for which there is no specification. The program acquires a meaning of its own as the medium for a dialog between human and machine. In the following sections, we explore two contrasting models for this dialog, one where the human is the teacher~(\S\ref{sec:automatic-and-declarative-programming}), and one where the IPT is the teacher~(\S\ref{sec:computer-aided-reasoning-tools}).
 
   \section{Automatic and Declarative Programming}\label{sec:automatic-and-declarative-programming}
 
-In The Art of Computer Programming~\cite{knuth1997art}, Donald Knuth memorably writes, ``Programs are meant to be read by humans and only incidentally for computers to execute.'' Taking this perspective, one may be tempted to ask, ``Why must programming languages be so difficult that we need IPTs to write down our ideas in the first place?'' If we consider programming chiefly a matter of communicating human intent to machines, language designers should make every effort to simplify the language so that users may express their intent in a more natural way, then harness machine intelligence in the service of fulfilling those goals. Known as automatic programming, this approach has been well-studied in languages like SQL, Prolog and miniKanren.
+In The Art of Computer Programming~\cite{knuth1997art}, Donald Knuth memorably writes, ``Programs are meant to be read by humans and only incidentally for computers to execute.'' Taking this perspective, one may be tempted to ask, ``Why must programming languages be so difficult that we need IPTs to write down our ideas in the first place?'' If we consider programming a matter of communicating human intent to machines, language designers should take great pains to simplify the language so that users may convey their intent in an effortless manner, then harness machine intelligence in the service of fulfilling their intent, rather than force them to specify how to accomplish it in painstaking detail. Known as declarative programming, this approach has been well-studied in languages like SQL, Prolog and miniKanren, among others.
 
-The idea of what is today known as declarative programming began as early as the 1950s, when researchers applied the tools of mathematical logic to study optimization. In this early work, programmers would first state their problem in a mathematical language, such as a linear or quadratic program with a set of constraints. The Soviets used it to study many questions related to optimal transport and control. It also turns out to be very useful for other things.
+The idea of what is today known as declarative programming can be traced back to the 1940s when researchers started applying the tools of constraint programming to what is today known as operations research. In this early work, programmers would first state their intent as a minimization problem on a system of inequalities, such as a linear or quadratic program. The Soviets used this technique to study many problems related to optimal transport and economic planning. It also turns out to be useful as a means of defining metrics on graphs and probability distributions.
 
-The same tools can be applied to programming in a more general manner. What other kinds of things can automatic programming languages generate? Not only can automatic programming produce numerical solutions. By considering the same techniques over different algebras, we can generate differently-shaped objects, e.g. graphs, trees and so forth. These things are called algebraic data types. For example, we could use ADTs to represent a higher-order functions, i.e. for program synthesis if we so desired.
+Our primary interest in declarative programming is twofold: (1) it is the basis of the first successful attempt to popularize gradient-based learning~\cite{baydin2018automatic}, and (2) is a practical framework for realizing the once-scorned~\cite{dijkstra1979foolishness} but now increasingly plausible~\cite{chen2021evaluating} idea of natural language programming.
 
-Our primary interest in automatic programming is twofold: (1) it is basis of the first successful approach to wide-scale gradient-based learning~\cite{baydin2018automatic}, and (2) as a practical framework for realizing the once-ridiculed~\cite{dijkstra1979foolishness} idea of natural language programming, now increasingly plausible through powerful language models.
+Not only can constraint programming produce numerical solutions, but the same tools can be applied to programming in a more general manner. By considering different algebras, we can compute different properties objects. These things are called algebraic path problems and have many useful applications in combinatorial optimization.
+
+It is possible to implement many fundamental computer science algorithms in a much simpler way as iterated matrix multiplication on a semiring algebra. A commutative monoid $(S, •, \circled{1})$ is a set $S$ with a binary operator $•: S \times S → S$ which has the following properties:
+
+  \begin{prooftree}
+    \bottomAlignProof
+    \AxiomC{$a • (b • c)$}
+    \UnaryInfC{$(a • b) • c$}
+    \noLine
+    \UnaryInfC{}
+    \noLine
+    \UnaryInfC{\textit{Associativity}}
+    \DisplayProof
+    \hskip 2.5em
+    \bottomAlignProof
+    \AxiomC{$a • \circled 1$}
+    \UnaryInfC{$a$\vphantom{$()$}}
+    \noLine
+    \UnaryInfC{}
+    \noLine
+    \UnaryInfC{\textit{Neutrality}}
+    \DisplayProof
+    \hskip 2.5em
+    \bottomAlignProof
+    \AxiomC{$a • b$}
+    \UnaryInfC{$b • a$\vphantom{$()$}}
+    \noLine
+    \UnaryInfC{}
+    \noLine
+    \UnaryInfC{\textit{Commutativity}}
+  \end{prooftree}
+
+A semiring algebra, denoted $(S, \oplus, \otimes, \circled{0}, \circled{1})$, is a set together with two binary operators $\oplus, \otimes: S \times S → S$ such that $(S, \oplus, \circled{0})$ is a commutative monoid and $(S, \otimes, \circled{1})$ is a monoid. It has the following additional properties:
+
+  \begin{prooftree}
+    \bottomAlignProof
+    \AxiomC{$a \otimes (b \oplus c)$}
+    \UnaryInfC{$(a \otimes b) \oplus (a \otimes c)$}
+    \noLine
+    \UnaryInfC{}
+    \AxiomC{$(a \oplus b) \otimes c$}
+    \UnaryInfC{$(a \otimes c) \oplus (b \otimes c)$}
+    \noLine
+    \UnaryInfC{}
+    \noLine
+    \BinaryInfC{\textit{Distributivity}}
+    \DisplayProof
+    \hskip 2.5em
+    \bottomAlignProof
+    \AxiomC{$a \otimes \circled 0$}
+    \UnaryInfC{$\circled 0$\vphantom{$()$}}
+    \noLine
+    \UnaryInfC{}
+    \noLine
+    \UnaryInfC{\textit{Annihilation}}
+  \end{prooftree}
+
+It is possible solve a rich family of search problems using iterated matrix multiplication on semirings. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{update}. Let $δ_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $δ_{st}$, one may run the following procedure on a desired path algebra until convergence (a few examples are provided for reference):
+
+  \begin{center}
+    \begin{tabular}{lc|cr}
+      $δ_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Update}}$ & & &
+      \bgroup
+      \def\arraystretch{1.2}
+      \begin{tabular}{c|c{1cm}c{1cm}|c{1cm}c{1cm}|c}
+        S                           & $\oplus$ & $\otimes$ & $\circled{0}$ & $\circled{1}$ & Path     \\\hline
+        $\mathbb R \cup \{\infty\}$ & min      & +         &   $\infty$    &      0        & Shortest \\
+        $\mathbb R \cup \{\infty\}$ & max      & +         &   $-\infty$   &      0        & Longest  \\
+        $\mathbb R \cup \{\infty\}$ & max      & min       &       0       &   $\infty$    & Widest   \\
+      \end{tabular}
+      \egroup
+    \end{tabular}
+  \end{center}
+
+  \noindent Many dynamic programming algorithms, including Bellman-Ford, Floyd-Warshall, Dijkstra, belief, constraint, error and expectation propagation, Markov chains, and others can all be neatly expressed as message passing on a semiring algebra. We refer the curious reader to~\cite{gondran2008graphs,baras2010path} for a more complete summary of the algebraic path problem and its many wonderful applications.
+
+
+  For example, one could use ADTs to represent higher-order functions, i.e. for program synthesis if they so desired.
+
 
 The problem with automatic programming is that the only means of feedback to the user is by outputting a solution, or failing that, producing lots of heat. It would be nice to have a more interactive mechanism.
 
@@ -70,7 +163,7 @@ The problem with automatic programming is that the only means of feedback to the
 
   The programmer is not the teacher, the programmer is actually the student.
 
-When programmers ask for an intelligent programming tool, what they really want is not a subservient genie who grants wishes without question, but a teacher who rapidly gives them feedback about the implications of their design choices within the confines of a well-defined language. This is one advantage of a type system: not only does it provide highly precise feedback, but also allows us to sample the space of constrained programs which is semantically correct. Thus the interaction is bidirectional.
+When programmers ask for an intelligent programming tool, what they really want is not a genie who grants wishes without question, but a teacher who rapidly gives them feedback about the implications of their design choices within the confines of a well-defined language. This is one advantage of a type system: not only does it provide highly precise feedback, but also allows us to sample a space of semantically constrained programs. Thus the interaction is bidirectional - the user provides a partial program sketch, and asks the type system to infer the missing thing.
 
   \section{Future Directions of Computer Programming}
 
