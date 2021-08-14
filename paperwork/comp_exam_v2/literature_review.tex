@@ -34,31 +34,30 @@
 
 \begin{document}
   \maketitle
-  \section{Introduction}
+  \tableofcontents
+  \pagebreak\section{Introduction}
 
 Since the invention of modern computers in the mid 20th century, computer programming has undergone a number of paradigm shifts. From the rise of functional programming, to dynamic, object-oriented, and type-level programming, to the availability of myriad tools and frameworks -- its practitioners have witnessed a veritable Renaissance in the art of computer programming. With each of these paradigm shifts, programmers have realized new conceptual frameworks for reasoning and expressing their ideas more clearly and concisely.
 
-Over the last few years, another paradigm shift has been set in motion, with significant implications for how we think about and write programs in the coming century. By most measures, computers have grown steadily more intelligent and capable of assisting programmers with mentally taxing chores. For example, intelligent programming tools (IPTs) powered by neural language models have this year helped over 10 million people program computers. As IPTs help digitally illiterate communities to discover their innate aptitude for computer programming, this population will continue to increase.
+Over the last few years, another paradigm shift has been set in motion, with significant implications for how we think about and write programs in the coming century. By most measures, computers have grown steadily more intelligent and capable of assisting programmers with mentally taxing chores. For example, intelligent programming tools (IPTs) powered by neural language models have this year helped over 10 million people program computers. As IPTs help digitally illiterate communities to discover their innate aptitude for programming, this population will continue to increase.
 
 Computer programming is a uniquely creative exercise among the range of human activities. It channels our innate linguistic, logical, imaginative, and social abilities to bring abstract ideas into reality, and ultimately, gives humans the freedom to create new realities of their own design. In collaboration with other humans and the increasing participation of IPTs, vast and elaborate virtual worlds are being manufactured, where the majority of humankind now chooses to spend their daily lives. With the expanding opportunities these new digital frontiers promise, their population too will continue to grow.
 
-Today IPTs share an equal role in shaping many aspects of computer programming, from knowledge discovery to API design, and program synthesis to validation and verification. However, this balance is shifting beneath our feet. Once its creators, programmers are now primarily consumers of information provided by an IPT, and increasingly rely on them to perform their daily work. With the unique opportunities and risks this partnership presents, what division of labor should exist between humans and our new coding collaborators? This is the question we have set out to understand in the following literature review.
+Today IPTs share an equal role in shaping many aspects of computer programming, from knowledge discovery to API design, and program synthesis to validation and verification. However, this balance is shifting beneath our feet. \textbf{Once its creators, programmers are now primarily consumers of information provided by an IPT, and increasingly rely on them to perform their daily work.} With the unique opportunities and risks this partnership presents, what division of labor should exist between humans and our new coding collaborators? This is the question we have set out to understand in the following literature review.
 
-  \section{Neural Language Models for Source Code}\label{sec:autocompletion}
+\pagebreak\section{Code Completion and Neural Code Search}\label{sec:autocompletion}
 
-  Programming researchers have long held an interest in using intelligent tools to help them write programs~\cite{bras1993artificial}. Due to fundamental limitations in data and processing power, many of these ambitions have come to pass only recently, thanks to the availability of \textit{big code}~\cite{allamanis2018survey}, the development of differentiable programming libraries for gradient-based learning~\cite{baydin2018automatic}, and attention-based language models~\cite{vaswani2017attention}, among other technical achievements. Armed with this new repertoire, programming researchers have revisited their interest in IPTs. Naturally, one of the first applications considered was code completion.
+Programming researchers have long held an interest in using intelligent tools to help them write programs~\cite{bras1993artificial}. Due to fundamental limitations in data and processing power, many of these ambitions have come to pass only recently, thanks to the availability of \textit{big code}~\cite{allamanis2018survey}, the development of differentiable programming libraries for gradient-based learning~\cite{baydin2018automatic}, and attention-based language models~\cite{vaswani2017attention}, among other technical achievements. Armed with this new repertoire, programming researchers have revisited their interest in IPTs. Naturally, one of the first applications considered was code completion.
 
- Following their initial success in natural language, rapid progress continues to be made in the application and specialization of transformers to source code, as well as industrial transfer where this technology is now trained and deployed on millions of programmers worldwide~\cite{chen2021evaluating}. Given a natural language description of an incomplete method, these models are capable of inferring programmer intent and completing multiline code snippets. Progress is expected to improve.
+Following their initial success in natural language, rapid progress continues to be made in the application and specialization of transformers to source code, as well as industrial transfer where this technology is now trained and deployed on millions of programmers worldwide~\cite{chen2021evaluating}. Given a natural language description of an incomplete method, these models are capable of inferring programmer intent and completing multiline code snippets. Progress is expected to improve.
 
 The problem comes down to a question of grammar induction. Based on empirical results, fixed-precision transformers (e.g. GPT-2, BERT) are thought capable of recognizing the class of counter languages~\cite{bhattamishra2020ability}, i.e. somewhere between context-free and context-sensitive, although this characterization requires a more careful theoretical analysis. For source code typically stored on GitHub, this class would appear to suffice -- models trained on such datasets are currently capable of sketching rudimentary programs and boilerplate code templates, however more complex fragments require additional oversight.
 
-An important shortcoming of imitation learning is the question of data provenance and validation: even if the training data is syntactically well-formed, constraints on the class of valid programs are ill-posed. As a consequence, a large fragment of languages generated may be syntactically valid but semantically unsound, i.e. may throw undesired runtime errors, or appear to work at first, but are in fact broken in a subtle manner. Like most language models of its kind, performance is highly sensitive to the dataset quality, as common errors in the training data are prone to be inherited and reproduced by an IPT.
+An important shortcoming of imitation learning is the question of data provenance: even if the training data is syntactically well-formed, constraints on the class of valid programs are ill-posed. As a result, a large fragment of languages generated may be syntactically valid but semantically unsound, i.e. may throw runtime errors, or appear to work at first, but are in fact broken in a subtle manner. Like most language models of its kind, performance is highly sensitive to the dataset quality, as common errors in the training data are prone to be inherited and reproduced by an IPT.
 
-The vast majority of modern programming consists of writing ceremonial boilerplate, tasks for which neural language models are well-suited. A tremendous amount of human labor is spent on such chores, and reallocating those resources towards more intellectually stimulating tasks may encourage a larger demographic to become programmers who would otherwise lack the patience or interest. By removing these barriers to entry, programmers can more quickly arrive at the rewarding parts of program design and implementation.
+The vast majority of modern programming consists of writing ceremonial boilerplate, tasks for which neural language models are well-suited. A tremendous amount of human labor is spent on such chores, and redirecting attention towards more intellectually stimulating tasks may encourage a larger demographic to become programmers who would otherwise lack the patience or interest. By removing these technical barriers, programmers can more quickly arrive at the rewarding parts of program design and implementation.
 
 Nevertheless, mere imitation is a somewhat dissatisfying approximation to programming from a computer-scientific perspective -- lacking in some essential aspect the qualities its practitioners aspire to fulfill. Helpful though it may be for tedious chores, the art of programming is not reading gigabytes of code and minimizing a cross-entropy loss. Programming requires imagination, creativity, problem-solving -- qualities which cannot be conferred by simply scaling existing language models with more data and parameters. What could be missing?
-
-\section{Knowledge Discovery and Neural Code Search}\label{sec:code-search}
 
   For decades, computer scientists have pondered the nature of search. Search is an indispensable tool in the working programmer's repertoire and goes to the heart of many fundamental problems in artificial intelligence, from classical to statistical optimization, and information retrieval to computational linguistics. Programming itself can be seen as a kind of search-based optimization problem~\cite{alur2018search}, consistent with its original mathematical interpretation, e.g., linear or stochastic programming. Coupled with a grammatical template, one could imagine searching through the space of valid programs to produce a higher-order function satisfying some criteria. Indeed, this exact setup is routinely-studied in the annual syntax-guided synthesis (SyGuS) competition~\cite{alur2016sygus}.
 
@@ -68,13 +67,13 @@ For nearly all practical programming languages, the space of valid programs can 
 
 For example, many useful programs belong to the class of context free languages. Sampling is possible using a probabilistic grammar, but at what cost? The number of distinct parse trees grows super-exponentially with height. Various strategies have been designed to inhibit this growth, but even with judicious pruning, the topology of many languages does not admit an efficient beam search, or the cost required may be prohibitive. Yet humans are able to solve many computationally hard search problems with deceptive ease. How?
 
-One possibility is that humans possess more computational resources than might we give them credit for, and a similarly-enriched neural-guided search would be equally capable. Another hypothesis is that we are not \textit{searching} for programs per se: when painting a portrait or writing a novel, we do not call this search. Likewise, programming is not necessarily about searching for an answer, but finding the right question, of exploring a design space which has no specification, or whose specification is a consequence, not a catalyst of the design. The program itself could merely be an artifact of an ephemeral dialog between a human and a machine, not the end result. In the following sections, we explore two contrasting models for this dialog, one where the human is the teacher~(\S\ref{sec:automatic-and-declarative-programming}), and one where the IPT is the teacher~(\S\ref{sec:computer-aided-reasoning-tools}).
+One possibility is that humans possess more computational resources than might we give them credit for, and a similarly-enriched neural-guided search would be equally capable. Another hypothesis is that we are not \textit{searching} for programs per se: when painting a portrait or writing a novel, we do not call this search. Likewise, \textbf{programming is not necessarily about searching for an answer, but finding the right question, of exploring a design space whose specification is a consequence, not a catalyst of the design process.} The program's source code could merely be an artifact of an ephemeral dialog between a human and a machine, not the final result. In the following section, we explore two contrasting models for this dialog, one where the human is the teacher and one where the IPT is the teacher.
 
-  \section{Declarative and Automatic Programming}\label{sec:automatic-and-declarative-programming}
+\section{Declarative and Automatic Programming}\label{sec:automatic-and-declarative-programming}
 
-In The Art of Computer Programming~\cite{knuth1997art}, Donald Knuth memorably writes, ``Programs are meant to be read by humans and only incidentally for computers to execute.'' Taking this perspective, one may be tempted to ask, ``Why must programming languages be so difficult that we need IPTs to write down our ideas in the first place?'' If we consider programming to be simply a matter of communicating human intent to machines, language designers should take great pains to simplify the language so that users may convey their intent in an effortless manner, then harness machine intelligence in the service of fulfilling that intent, rather than force the user to describe exactly how it should be implemented. Known as \textit{declarative programming}, this approach can be found in popular languages like SQL, Prolog, miniKanren, and others.
+In The Art of Computer Programming~\cite{knuth1997art}, Donald Knuth memorably writes, ``Programs are meant to be read by humans and only incidentally for computers to execute.'' Taking this perspective, one may be tempted to ask, ``\textbf{Why must programming languages be so difficult that we need IPTs to write down our ideas in the first place?}'' If we consider programming to be simply a matter of communicating human intent to machines, language designers should take great pains to simplify the language so that users may convey their intent in an effortless manner, then harness machine intelligence in the service of fulfilling that intent, rather than force the user to describe exactly how it should be implemented. Known as \textit{declarative programming}, this approach can be found in popular languages like SQL, Prolog, miniKanren, and others.
 
-The essence of declarative programming can be traced back to the 1940s when researchers started applying tools from mathematical optimization to what is today known as operations research~\cite{kantorovich1960mathematical}. In this early work, programmers would first state their intent as a solution to a system of inequalities, such as a linear or quadratic program, e.g., for optimal transport or economic planning. More recently, it has found important applications for defining metrics on graphs and probability distributions, the construction of which are an essential aspect of machine learning. Metrics provide a means of biasing learning algorithms towards solutions of a certain form, and thus can be seen as a mechanism for indirectly ``programming'' machine learning models.
+The essence of declarative programming can be traced back to the 1940s when researchers started applying tools from mathematical optimization to what is today known as operations research~\cite{kantorovich1960mathematical}. In this early work, programmers would first state their intent as a solution to a system of inequalities, such as a linear or quadratic program, e.g., for optimal transport or economic planning. More recently, it has found important applications for defining metrics on graphs and probability distributions, the construction of which are an essential aspect of machine learning. Metrics provide a means of biasing learning algorithms towards solutions of a certain form, and thus can be seen as a mechanism for indirectly programming machine learning models.
 
 Not only can declarative programming be used to produce numerical solutions to systems of equations, but the same ideas can be applied to synthesize other kinds of programs. Given some existing program $\mathcal P$ and a set of declarative constraints in the form of program transformations, we could construct an \textit{adjoint} program $\mathcal P'$ by applying the transformations recursively. For example, this might allow us to compute a density function by sampling outputs from the program probabilistically, or compute its derivative with respect to one or more inputs. This set of techniques is broadly known as \textit{automatic programming}.
 
@@ -94,96 +93,93 @@ Our interest in automatic programming is twofold: (1) as the basis for the first
 
 \noindent The problem with automatic programming is that it assumes the specification is (1) infallible and (2) faithfully represents its author's intent. If either assumption fails, the result could be nonsensical, or appear to work but contain a subtle error. How could we provide earlier feedback if the specification were ill-posed?
 
-\section{Computer-Aided Reasoning Tools}\label{sec:computer-aided-reasoning-tools}
+As adept as human programmers are at certain tasks, they can be surprisingly short-sighted at others. The larger a program grows, the more likely its author is to make a mistake due to combinatorial explosion. This is why simplicity is so highly prized in language design -- whenever a new feature is added, it has the potential to interact with every other feature in unpredictable ways, a challenge which has come to be known as the feature-interaction problem~\cite{apel2013exploring}. Taking this perspective, the programmer is not an all-knowing oracle, but actually a student who proposes ideas to the IPT, and in return, receives feedback about its consequences in the context of a \textit{type system}.
 
-As adept as human programmers are at certain tasks, they can be surprisingly short-sighted at others. The larger a program grows, the more likely its author is to make a mistake due to combinatorial explosion. This is why simplicity is so highly prized in language design -- whenever a new feature is added, it has the potential to interact with every other feature in unpredictable ways, a challenge which has come to be known as the feature-interaction problem~\cite{apel2013exploring}. Taking this perspective, the programmer is not an all-knowing oracle, but actually a student who proposes ideas to the IPT, and in return, receives feedback about their consequences in the context of a \textit{type system}.
-
-When programmers ask for an intelligent programming tool, what they really want is not a subordinate who blindly follows orders, but a teacher who rapidly gives them feedback about the implications of their design choices within the constraints of a well-defined language. This is the advantage of having a type system: not only does it give relevant feedback, but allows us to constrain the space of semantically valid programs. The interaction model is bidirectional: the user provides a typed program sketch. If the program is valid, the type is witnessed by an inhabitant. And if the program is inconsistent, the type system provides feedback to the user as to where and how.
+\textbf{When programmers ask for an intelligent programming tool, what they really want is not a subordinate who blindly follows orders, but a teacher who rapidly give feedback about the implications of their design choices.} This is the advantage of having a type system: not only does it give relevant feedback, but allows us to constrain the space of semantically valid programs. The interaction model is bidirectional: the user provides a typed program sketch. If the program is valid, the type is witnessed by an inhabitant. And if the program is inconsistent, the type system provides feedback to the user as to where and how.
 
 For example, all procedures in a statically-typed programming language have a \textit{type signature}, e.g., \texttt{getHomePhone: Person → PhoneNumber}. This represents a \textit{contract} between the procedure and its caller: if the procedure \texttt{getHomePhone} is called with a \texttt{Person}, it will return a \texttt{PhoneNumber}. All other inputs and outputs are forbidden by the type system.
 
 What if we could encode the type system constraints into our neural language model -- how could we do that? One way is to use neural guided search, where we do beam search over a generative language model and discard the programs which are not well-typed. The second way is more difficult, but the morally ``correct'' solution: we learn a probability distribution on the space of semantically correct programs from the very outset, so the result is always guaranteed to be valid and search becomes unnecessary. Broadly speaking, this approach is known as type-safe probabilistic programming, and has been considered in various settings~\cite{murali2017bayesian}.
 
-\pagebreak\section{Semiring Programming}\label{sec:semiring-programming}
+%\pagebreak\section{Semiring Programming}\label{sec:semiring-programming}
+%
+%By considering different algebras, we can compute different properties on graphical objects. These things are called algebraic path problems and have many useful applications in combinatorial optimization.
+%
+%It is possible to implement many fundamental computer science algorithms in a much simpler way as iterated matrix multiplication on a semiring algebra. A commutative monoid $(S, •, \circled{1})$ is a set $S$ with a binary operator $•: S \times S → S$ which has the following additional properties:
+%
+%  \begin{prooftree}
+%    \bottomAlignProof
+%    \AxiomC{$a • (b • c)$}
+%    \UnaryInfC{$(a • b) • c$}
+%    \noLine
+%    \UnaryInfC{}
+%    \noLine
+%    \UnaryInfC{\textit{Associativity}}
+%    \DisplayProof
+%    \hskip 2.5em
+%    \bottomAlignProof
+%    \AxiomC{$a • \circled 1$}
+%    \UnaryInfC{$a$\vphantom{$()$}}
+%    \noLine
+%    \UnaryInfC{}
+%    \noLine
+%    \UnaryInfC{\textit{Neutrality}}
+%    \DisplayProof
+%    \hskip 2.5em
+%    \bottomAlignProof
+%    \AxiomC{$a • b$}
+%    \UnaryInfC{$b • a$\vphantom{$()$}}
+%    \noLine
+%    \UnaryInfC{}
+%    \noLine
+%    \UnaryInfC{\textit{Commutativity}}
+%  \end{prooftree}
+%
+%A semiring algebra, denoted $(S, \oplus, \otimes, \circled{0}, \circled{1})$, is a set together with two binary operators $\oplus, \otimes: S \times S → S$ such that $(S, \oplus, \circled{0})$ is a commutative monoid and $(S, \otimes, \circled{1})$ is a monoid. It has the following additional properties:
+%
+%  \begin{prooftree}
+%    \bottomAlignProof
+%    \AxiomC{$a \otimes (b \oplus c)$}
+%    \UnaryInfC{$(a \otimes b) \oplus (a \otimes c)$}
+%    \noLine
+%    \UnaryInfC{}
+%    \AxiomC{$(a \oplus b) \otimes c$}
+%    \UnaryInfC{$(a \otimes c) \oplus (b \otimes c)$}
+%    \noLine
+%    \UnaryInfC{}
+%    \noLine
+%    \BinaryInfC{\textit{Distributivity}}
+%    \DisplayProof
+%    \hskip 2.5em
+%    \bottomAlignProof
+%    \AxiomC{$a \otimes \circled 0$}
+%    \UnaryInfC{$\circled 0$\vphantom{$()$}}
+%    \noLine
+%    \UnaryInfC{}
+%    \noLine
+%    \UnaryInfC{\textit{Annihilation}}
+%  \end{prooftree}
+%
+%It is possible solve a rich family of optimization problems using iterated matrix multiplication on semirings. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{update}. Let $δ_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $δ_{st}$, one may run the following procedure on a desired path algebra until convergence (a few examples are provided for illustration):
+%
+%  \begin{center}
+%    \begin{tabular}{lc|cr}
+%      $δ_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Update}}$ & & &
+%      \bgroup
+%      \def\arraystretch{1.2}
+%      \begin{tabular}{c|c{1cm}c{1cm}|c{1cm}c{1cm}|c}
+%        S                           & $\oplus$ & $\otimes$ & $\circled{0}$ & $\circled{1}$ & Path     \\\hline
+%        $\mathbb R \cup \{\infty\}$ & min      & +         &   $\infty$    &      0        & Shortest \\
+%        $\mathbb R \cup \{\infty\}$ & max      & +         &   $-\infty$   &      0        & Longest  \\
+%        $\mathbb R \cup \{\infty\}$ & max      & min       &       0       &   $\infty$    & Widest   \\
+%      \end{tabular}
+%      \egroup
+%    \end{tabular}
+%  \end{center}
+%
+%  \noindent Many dynamic programming algorithms, including Bellman-Ford, Floyd-Warshall, Dijkstra, belief, constraint, error and expectation propagation, Markov chains, and others can all be neatly expressed as message passing on a semiring algebra. We refer interested readers to Gondran and Baras~\cite{gondran2008graphs,baras2010path} for a more complete summary of the algebraic path problem and its many wonderful applications.
 
-By considering different algebras, we can compute different properties on graphical objects. These things are called algebraic path problems and have many useful applications in combinatorial optimization.
-
-It is possible to implement many fundamental computer science algorithms in a much simpler way as iterated matrix multiplication on a semiring algebra. A commutative monoid $(S, •, \circled{1})$ is a set $S$ with a binary operator $•: S \times S → S$ which has the following additional properties:
-
-  \begin{prooftree}
-    \bottomAlignProof
-    \AxiomC{$a • (b • c)$}
-    \UnaryInfC{$(a • b) • c$}
-    \noLine
-    \UnaryInfC{}
-    \noLine
-    \UnaryInfC{\textit{Associativity}}
-    \DisplayProof
-    \hskip 2.5em
-    \bottomAlignProof
-    \AxiomC{$a • \circled 1$}
-    \UnaryInfC{$a$\vphantom{$()$}}
-    \noLine
-    \UnaryInfC{}
-    \noLine
-    \UnaryInfC{\textit{Neutrality}}
-    \DisplayProof
-    \hskip 2.5em
-    \bottomAlignProof
-    \AxiomC{$a • b$}
-    \UnaryInfC{$b • a$\vphantom{$()$}}
-    \noLine
-    \UnaryInfC{}
-    \noLine
-    \UnaryInfC{\textit{Commutativity}}
-  \end{prooftree}
-
-A semiring algebra, denoted $(S, \oplus, \otimes, \circled{0}, \circled{1})$, is a set together with two binary operators $\oplus, \otimes: S \times S → S$ such that $(S, \oplus, \circled{0})$ is a commutative monoid and $(S, \otimes, \circled{1})$ is a monoid. It has the following additional properties:
-
-  \begin{prooftree}
-    \bottomAlignProof
-    \AxiomC{$a \otimes (b \oplus c)$}
-    \UnaryInfC{$(a \otimes b) \oplus (a \otimes c)$}
-    \noLine
-    \UnaryInfC{}
-    \AxiomC{$(a \oplus b) \otimes c$}
-    \UnaryInfC{$(a \otimes c) \oplus (b \otimes c)$}
-    \noLine
-    \UnaryInfC{}
-    \noLine
-    \BinaryInfC{\textit{Distributivity}}
-    \DisplayProof
-    \hskip 2.5em
-    \bottomAlignProof
-    \AxiomC{$a \otimes \circled 0$}
-    \UnaryInfC{$\circled 0$\vphantom{$()$}}
-    \noLine
-    \UnaryInfC{}
-    \noLine
-    \UnaryInfC{\textit{Annihilation}}
-  \end{prooftree}
-
-It is possible solve a rich family of optimization problems using iterated matrix multiplication on semirings. Known as \textit{propagation} or \textit{message passing}, this procedure consists of two steps: \textit{aggregate} and \textit{update}. Let $δ_{st}$ denote some distance metric on a path between two vertices $s$ and $t$ in a graph. To obtain $δ_{st}$, one may run the following procedure on a desired path algebra until convergence (a few examples are provided for illustration):
-
-  \begin{center}
-    \begin{tabular}{lc|cr}
-      $δ_{st} = \overbrace{\underset{P\in P_{st}^*}{\bigoplus}\underbrace{\underset{e\in P}{\bigotimes}W_{e}}_{\text{Aggregate}}}^{\text{Update}}$ & & &
-      \bgroup
-      \def\arraystretch{1.2}
-      \begin{tabular}{c|c{1cm}c{1cm}|c{1cm}c{1cm}|c}
-        S                           & $\oplus$ & $\otimes$ & $\circled{0}$ & $\circled{1}$ & Path     \\\hline
-        $\mathbb R \cup \{\infty\}$ & min      & +         &   $\infty$    &      0        & Shortest \\
-        $\mathbb R \cup \{\infty\}$ & max      & +         &   $-\infty$   &      0        & Longest  \\
-        $\mathbb R \cup \{\infty\}$ & max      & min       &       0       &   $\infty$    & Widest   \\
-      \end{tabular}
-      \egroup
-    \end{tabular}
-  \end{center}
-
-  \noindent Many dynamic programming algorithms, including Bellman-Ford, Floyd-Warshall, Dijkstra, belief, constraint, error and expectation propagation, Markov chains, and others can all be neatly expressed as message passing on a semiring algebra. We refer interested readers to Gondran and Baras~\cite{gondran2008graphs,baras2010path} for a more complete summary of the algebraic path problem and its many wonderful applications.
-
-
-\noindent\section{Future Directions of Computer Programming}
+\pagebreak\section{Future Directions of Computer Programming}
 
 Historically, most knowledge was stored as natural language. A growing portion is now \textit{code}~\cite{allamanis2018survey}. The majority of code is procedural knowledge, written by a human and intended to operate a machine. Though it shares many statistical properties in common with natural language~\cite{hindle2012naturalness}, code has an unambiguous grammar and well-defined semantics~\cite{pierce2010software}. We can use these properties to precisely reason about operational or procedural correctness.
 
@@ -253,11 +249,11 @@ In knowledge engineering, approximate equality is known as entity \textit{alignm
 
 \pagebreak \section{Conclusion}
 
-The last few years have shown us a variety of different interaction models between humans and IPTs. One potential future is that human beings will be eventually left behind in the race for higher forms of intelligence (computer scientists are largely divided over this topic). Regardless whether such a thing will come to pass, we will need new tools for humans to communicate their values and preferences effectively. How can we convince machines to use their intelligence in service of our mutual good, whilst giving them agency to explore solutions that we may not understand? This question is broadly known as the AI alignment problem and is attracting the interest of researchers from both the computing sciences and humanities.
+The last few years have shown us a variety of different interaction models between humans and IPTs. One potential future is that human beings will be eventually left behind in the race for higher forms of intelligence (computer scientists are largely divided over this topic). Regardless whether such a thing will come to pass, we will need new tools for humans to communicate their values and preferences effectively. How can we convince machines to use their intelligence in service of our mutual good, whilst giving them agency to explore solutions that we may not understand? This question is broadly known as the AI alignment problem~\cite{kim2018mimetic, christian2020alignment, gabriel2020artificial} and is attracting the interest of researchers from both the computing sciences and humanities.
 
-\textit{Our position is that alignment will require a much closer collaboration between computer science and humanities than historically practiced, and this partnership will be an invigorating exercise for both disciplines.}
+\textbf{Our position is that alignment will require a closer collaboration between computer science and humanities than historically practiced, and this partnership will be invigorating for both disciplines.}
 
-One way of ensuring that our values are faithfully encoded by machines is through \textit{programming}. In this literature review, we give examples of various programming models that have been envisioned, e.g. autocompletion (\S\ref{sec:autocompletion}), code search (\S\ref{sec:code-search}), autoprogramming (\S\ref{sec:automatic-and-declarative-programming}), and type inference (\S\ref{sec:computer-aided-reasoning-tools}). Another way to imbue human values is by teaching the humanities: arts, language, culture, history and philosophy. By keeping these traditions alive, we transmit our cultural heritage to future generations so that they, by studying the lessons of our past, may take some inspiration. These individuals will soon be able to share our knowledge with computers using their mother tongue.
+One way of ensuring that our values are faithfully encoded by machines is through \textit{programming}. In this literature review, we give examples of various programming models that have been envisioned, e.g. from autocompletion and code search (\S\ref{sec:autocompletion}), to autoprogramming and type inference (\S\ref{sec:automatic-and-declarative-programming}). Another way to imbue human values is by teaching the humanities: arts, language, culture, history and philosophy. By keeping these traditions alive, we transmit our cultural heritage to future generations so that they, by studying the lessons of our past, may avoid repeating our past mistakes. These individuals will soon be able to share our knowledge with computers using their mother tongue.
 
 \pagebreak \section{Acknowledgements}
 
