@@ -19,12 +19,13 @@
     \maketitle
     \noindent This is the first assignment of COMP 597: Automated Reasoning with ML.
 
+
     \section{SAT Encoding}
 
-    The following solutions can be obtained using a solver of your choice. Please show all work. Only solutions obtained with a SAT solver will receive credit.\\
+    The following solutions can be obtained using a solver of your choice. Please show all work. Only solutions obtained using a SAT solver will receive credit.\\
 
     % https://www.cs.rochester.edu/u/kautz/Courses/244autumn2008/Papers/cook-mitchell-1997.pdf
-    \noindent \textbf{Palindromic primes} (20 points): A prime palindrome is a natural number with exactly two factors which are the same written forwards or backwards. Let $1802201963_{10} = PQR$. What are its factors in base-2? What is the largest $M=PQR$ whose factors are all distinct binary palindromes you can find in an hour? Please describe your solution and its SAT encoding.\\
+    \noindent \textbf{Palindromic primes} (20 points): A palprime is a natural number with exactly two factors which are the same written forwards or backwards. Let $1802201963_{10} = PQR$. What are its factors in base-2? What is the largest value $M=PQR$ whose factors are all distinct binary palindromes you can find in one hour? Please describe your solution and its SAT encoding.\\
 
     \noindent \textbf{Bonus question} (10 points): Every alphanumeric character in the following ciphertext maps to a single case-insensitive letter in the English alphabet. Every plaintext word can be found in the English 10k dictionary.\footnote{\url{https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt}}\\
 
@@ -32,24 +33,28 @@
 
     \noindent What is the plaintext and who originally wrote this? Please describe how you solved it, provide the key and SAT encoding in a language of your choice.
 
-    \pagebreak\section{Problem 2: DIY SAT Solving}
+    \pagebreak
+
+
+    \section{Problem 2: DIY SAT Solving}
 
     \noindent \textbf{Programming exercise} (40 points): Please select one of the following two options, write a short report, and submit your source code. Please provide instructions for how reproduce your findings and a few test cases.
 
     \begin{enumerate}
-    \item Write a SAT solver from scratch by implementing an existing algorithm such as DPLL, unit propagation or two-watched literals, describe your implementation and evaluate it on a few toy SAT problems.
-    \item Make a substantive improvement to a competitive SAT solver (e.g. Kissat~\footnote{\url{http://fmv.jku.at/kissat/}} or MiniSat~\footnote{\url{http://minisat.se/}}) which measurably increases performance on a standard benchmark~\footnote{\url{https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html}}, and document your approach and findings.
+        \item Write a SAT solver from scratch by implementing an existing algorithm such as DPLL, unit propagation or two-watched literals, describe your implementation and evaluate it on a few toy SAT problems.
+        \item Make a substantive improvement to a competitive SAT solver (e.g. Kissat~\footnote{\url{http://fmv.jku.at/kissat/}} or MiniSat~\footnote{\url{http://minisat.se/}}) which measurably increases performance on a standard benchmark~\footnote{\url{https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html}}, and document your approach and findings.
     \end{enumerate}
 
     % https://courses.cs.washington.edu/courses/cse599a2/15wi/
     \section {Problem 3: Uninterpreted function equivalence}
 
-    \noindent \textbf{SMT exercise} (40 points): Encode the following problems as SMT instances and report your answers. Please show all work:\\
+    \noindent \textbf{SMT exercise} (40 points): Please encode the following problems using your favorite SMT solver. Answers must show all work to receive full credit.\\
 
     \begin{enumerate}
-    \item For what values of $w, x, y, z \in \mathbb{Z}$ does $w = x^3+y^3+z^3$ hold?
-    \item For what values of $w, x, y, z \in \mathbb{N}$ does $w^3 + x^3 = y^3+z^3$ hold?
-    \item A nonnegative matrix is called doubly-stochastic if its rows and columns all sum to the same number. Find three distinct matrices $a, b, c: \mathbb{Z}_3^{3\times 3}$ such that $a, b, c$ are doubly stochastic.
+        \item A diophantine equation is a polynomial equation whose coefficients and solutions are integers. Let $w, x, y, z \in \mathbb{N}$ and report your solver's three largest solutions found to each of the following diophantine equations: (a) $w = x^3+y^3+z^3$ (b) $w^3 + x^3 = y^3+z^3$ (c) $w^z + x^z = y^z + z$.
+        \item Prove that matrix multiplication is associative.
+        \item A nonnegative matrix is called bistochastic if its rows and columns all sum to the same number. Find three nontrivial matrices $a, b, c: \mathbb{Z}_3^{3\times 3}$ such that $a, b, c$ are bistochastic.
+        \item Give a nontrivial example of a matrix field and prove it.
     \end{enumerate}
 
 \end{document}
