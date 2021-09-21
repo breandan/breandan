@@ -10,7 +10,11 @@
 \usepackage{amsfonts}
 
 % Document
-\title{COMP 597: Assignment \#1\\\vspace{10pt}\small{Instructor: Xujie Si, TA: Breandan Considine}}
+\author{Instructor: Xujie Si, TA: Breandan Considine}
+\date{Due: }
+\title{A comprehensive treatise on everything\vspace{-2ex}% to see the effect
+}
+\title{COMP 597: Assignment \#1}
 \begin{document}
     \maketitle
     \noindent This is the first assignment of COMP 597: Automated Reasoning with ML.
@@ -30,11 +34,11 @@
 
     \pagebreak\section{Problem 2: DIY SAT Solving}
 
-    \noindent \textbf{Programming exercise} (40 points): Choose one of the following two options, write about it, and submit your source code. Give instructions for how to run it and a few test cases.
+    \noindent \textbf{Programming exercise} (40 points): Please select one of the following two options, write a short report, and submit your source code. Please provide instructions for how reproduce your findings and a few test cases.
 
     \begin{enumerate}
-    \item Implement your own solver. Either DPLL, UP or two-watched literals.
-    \item Hack into MiniSat/Kissat. Make improvement. Report your findings.
+    \item Write a SAT solver from scratch by implementing an existing algorithm such as DPLL, unit propagation or two-watched literals, describe your implementation and evaluate it on a few toy SAT problems.
+    \item Make a substantive improvement to a competitive SAT solver (e.g. Kissat~\footnote{\url{http://fmv.jku.at/kissat/}} or MiniSat~\footnote{\url{http://minisat.se/}}) which measurably increases performance on a standard benchmark~\footnote{\url{https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html}}, and document your approach and findings.
     \end{enumerate}
 
     % https://courses.cs.washington.edu/courses/cse599a2/15wi/
@@ -43,10 +47,10 @@
     \noindent \textbf{SMT exercise} (40 points): Implement an uninterpreted function solver and test it on the following questions:\\
 
     \begin{enumerate}
-    \item $a * (b + c + d) \overset{?}{=} a * b + a * c + a * d$
     \item For what values of $w, x, y, z \in \mathbb{Z}$ does $w = x^3+y^3+z^3$ hold?
-    \item A matrix is called doubly-stochastic if its rows and columns all sum to the same number. Find three distinct matrices $a, b, c: \mathbb{Z}_3^{3\times 3}$ such that $a, b, c$ are doubly stochastic.
-        \item For what values $m, n$ does the Ackermann function $A(m, n)$...
+    \item More diophantine equations\ldots
+    \item For what values $m, n$ does the Ackermann function $A(m, n)$...
+    \item A nonnegative matrix is called doubly-stochastic if its rows and columns all sum to the same number. Find three distinct matrices $a, b, c: \mathbb{Z}_3^{3\times 3}$ such that $a, b, c$ are doubly stochastic.
     \end{enumerate}
 
 \end{document}
