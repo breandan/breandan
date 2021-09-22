@@ -36,26 +36,26 @@
     \pagebreak
 
 
-    \section{Problem 2: DIY SAT Solving}
+    \section{Problem 2: Build or Improve a SAT Solver}
 
     \noindent \textbf{Programming exercise} (40 points): Please select one of the following two options, write a short report, and submit your source code. Please provide instructions for how reproduce your findings and a few test cases.
 
     \begin{enumerate}
         \item Write a SAT solver from scratch by implementing an existing algorithm such as DPLL, unit propagation or two-watched literals, describe your implementation and evaluate it on a few toy SAT problems.
-        \item Make a substantive improvement to a competitive SAT solver (e.g. Kissat or MiniSat which measurably increases performance on a standard benchmark, and document your approach and findings.
+        \item Make a substantive improvement to a competitive SAT solver (e.g. Kissat or MiniSat) which measurably increases performance on a standard benchmark, and document your approach and findings.
     \end{enumerate}
 
     % https://courses.cs.washington.edu/courses/cse599a2/15wi/
     \section {Problem 3: Uninterpreted function equivalence}
 
-    \noindent \textbf{SMT exercise} (40 points): Please encode the following problems using your favorite SMT solver. Answers must show all work to receive full credit.\\
+    \noindent \textbf{SMT exercise} (40 points): Please typeset a proof sketch using \LaTeX, then translate the proof into your favorite SMT solver to construct a specific example or counterexample. Answers must show all work to receive full credit.\\
 
     \begin{enumerate}
         \item A \textit{diophantine equation} is a polynomial equation whose coefficients and solutions are integers. Let $w, x, y, z \in \mathbb{N}$ and report your solver's three largest solutions found to each of the following diophantine equations: (a) $w = x^3+y^3+z^3$ (b) $w^3 + x^3 = y^3+z^3$ (c) $w^z + x^z = y^z + z$.
         \item Prove that $\mathbb{Z}^{n\times n}$ is associative over $\otimes$ and distributive over $\oplus$ for some large $n$. \textbf{Bonus} (5 points): Give an example of a nontrivial finite commutative semiring whose elements are matrices and prove it.
-        \item A nonnegative matrix is called \textit{bistochastic} iff its rows and columns all add up to the same number. Find distinct examples $M_{1, 2}: \mathbb{Z}^{n\times n}$ for some large $n$ such that $M_{1,2}$ are nontrivial bistochastic matrices. \textbf{Bonus} (5 points): Prove $M_i M_j$ is bistochastic for all bistochastic $M_{i, j}$.
-        \item Consider the polynomial kernel $\Delta: (\mathbf{f}, \mathbf{g})\mapsto (\mathbf{f}\cdot\mathbf{g} + r)^q$ where $\mathbf{f, g}: \mathbb{Z}^d$. Prove the kernel trick for some large $d, q \in \mathbb{N}$. What can we say about its computational complexity? Is this kernel a metric? Prove it.
-        \item Prove that 1D discrete convolution, $*: (f, g)[n] \mapsto \sum_{i \in S}f[n-i]g[i]$, over a finite set $S=[-j, j]^{k}$ for some large $j$ and $k$ is translation equivariant. \textbf{Bonus} (20 points): Prove the 2D case for MNIST images.
+        \item A nonnegative matrix is called \textit{bistochastic} iff its rows and columns all add up to the same number. Find distinct examples $M_{1, 2}: \mathbb{Z}^{n\times n}$ for some large $n$ such that $M_{1,2}$ are nontrivial bistochastic matrices. \textbf{Bonus} (5 points): Is $M_i M_j$ is bistochastic for all bistochastic $M_{i, j}$?
+        \item Consider the polynomial kernel $\Delta: (\mathbf{f}, \mathbf{g})\mapsto (\mathbf{f}\cdot\mathbf{g} + r)^q$ where $\mathbf{f, g}: \mathbb{Z}^d$. Prove the kernel trick for some large $r, d, q: \mathbb{N}$. What can we say about its computational complexity? Is $\Delta$ a metric? Prove or disprove it.
+        \item Prove that 1D discrete convolution, $*: (f, g)[n] \mapsto \sum_{i \in S}f[n-i]g[i]$, over a finite set $S=[-j, j]^{k}$ for some large $j, k: \mathbb{N}$ is translation equivariant. \textbf{Bonus} (10 points): Prove the 2D case for MNIST images.
     \end{enumerate}
 
     \noindent Please submit your answers as a PDF and supplemental work as a ZIP file.
