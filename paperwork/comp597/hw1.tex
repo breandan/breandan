@@ -52,10 +52,11 @@
 
     \begin{enumerate}
         \item A diophantine equation is a polynomial equation whose coefficients and solutions are integers. Let $w, x, y, z \in \mathbb{N}$ and report your solver's three largest solutions found to each of the following diophantine equations: (a) $w = x^3+y^3+z^3$ (b) $w^3 + x^3 = y^3+z^3$ (c) $w^z + x^z = y^z + z$.
-        \item Prove that matrix multiplication is associative.
-        \item A nonnegative matrix is called bistochastic if its rows and columns all sum to the same number. Find three nontrivial matrices $a, b, c: \mathbb{Z}_3^{3\times 3}$ such that $a, b, c$ are bistochastic.
-        \item Give an example of a semiring whose elements are matrices and prove it.
+        \item Prove that multiplication on $\mathbb{Z}^{n\times n}$ is associative and distributive over $\oplus$ for some large $n$. \textbf{Bonus} (5 points): Give an example of a nontrivial finite commutative semiring whose elements are matrices and prove it.
+        \item A nonnegative matrix is called bistochastic iff its rows and columns all add up to the same number. Find distinct examples $M_{1, 2}: \mathbb{Z}^{n\times n}$ for some large $n$ such that $M_{1,2}$ are nontrivial bistochastic matrices. \textbf{Bonus} (5 points): Prove $M_i M_j$ is bistochastic for all bistochastic $M_{i, j}$.
+        \item Prove the kernel trick for some high-degree polynomial embedding.
+        \item Prove that 1D discrete convolution, $*: (f, g)[n] \mapsto \sum_{i \in s}f[n-i]g[i]$, over a finite set $S=[-j, j]^{k}$ for some large $j$ and $k$ is translation equivariant. \textbf{Bonus} (20 points): Prove the 2D case for MNIST images.
     \end{enumerate}
 
-    \textbf{Bonus} Give an example of a field whose elements are matrices and prove it.
+    \noindent Please submit your answers as a PDF and supplemental work as a ZIP file.
 \end{document}
