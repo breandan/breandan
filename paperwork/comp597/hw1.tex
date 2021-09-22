@@ -11,7 +11,7 @@
 
 % Document
 \author{Instructor: Xujie Si, TA: Breandan Considine}
-\date{Due: Oct. 18th before class}
+\date{Due: Oct. 4th before class}
 \title{A comprehensive treatise on everything\vspace{-2ex}% to see the effect
 }
 \title{COMP 597: Assignment \#1}
@@ -25,7 +25,7 @@
     The following solutions can be obtained using a solver of your choice. Please show all work. Only solutions obtained using a SAT solver will receive credit.\\
 
     % https://www.cs.rochester.edu/u/kautz/Courses/244autumn2008/Papers/cook-mitchell-1997.pdf
-    \noindent \textbf{Palindromic primes} (20 points): A palprime is a natural number with exactly two factors which are the same written forwards or backwards. Let $1802201963_{10} = PQR$. What are its factors in base-2? What is the largest value $M=PQR$ whose factors are all distinct binary palindromes you can find in one hour? Please describe your solution and its SAT encoding.\\
+    \noindent \textbf{Palindromic primes} (20 points): A \textit{palprime} is a natural number with exactly two factors which are the same written forwards or backwards. Let $1802201963_{10} = PQR$. What are its factors in base-2? What is the largest value $M=PQR$ whose factors are all distinct binary palindromes you can find in one hour? Please describe your solution and its SAT encoding.\\
 
     \noindent \textbf{Bonus question} (10 points): Every alphanumeric character in the following ciphertext maps to a single case-insensitive letter in the English alphabet. Every plaintext word can be found in the English 10k dictionary.\footnote{\url{https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt}}\\
 
@@ -42,7 +42,7 @@
 
     \begin{enumerate}
         \item Write a SAT solver from scratch by implementing an existing algorithm such as DPLL, unit propagation or two-watched literals, describe your implementation and evaluate it on a few toy SAT problems.
-        \item Make a substantive improvement to a competitive SAT solver (e.g. Kissat~\footnote{\url{http://fmv.jku.at/kissat/}} or MiniSat~\footnote{\url{http://minisat.se/}}) which measurably increases performance on a standard benchmark~\footnote{\url{https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html}}, and document your approach and findings.
+        \item Make a substantive improvement to a competitive SAT solver (e.g. Kissat or MiniSat which measurably increases performance on a standard benchmark, and document your approach and findings.
     \end{enumerate}
 
     % https://courses.cs.washington.edu/courses/cse599a2/15wi/
@@ -51,11 +51,11 @@
     \noindent \textbf{SMT exercise} (40 points): Please encode the following problems using your favorite SMT solver. Answers must show all work to receive full credit.\\
 
     \begin{enumerate}
-        \item A diophantine equation is a polynomial equation whose coefficients and solutions are integers. Let $w, x, y, z \in \mathbb{N}$ and report your solver's three largest solutions found to each of the following diophantine equations: (a) $w = x^3+y^3+z^3$ (b) $w^3 + x^3 = y^3+z^3$ (c) $w^z + x^z = y^z + z$.
-        \item Prove that multiplication on $\mathbb{Z}^{n\times n}$ is associative and distributive over $\oplus$ for some large $n$. \textbf{Bonus} (5 points): Give an example of a nontrivial finite commutative semiring whose elements are matrices and prove it.
-        \item A nonnegative matrix is called bistochastic iff its rows and columns all add up to the same number. Find distinct examples $M_{1, 2}: \mathbb{Z}^{n\times n}$ for some large $n$ such that $M_{1,2}$ are nontrivial bistochastic matrices. \textbf{Bonus} (5 points): Prove $M_i M_j$ is bistochastic for all bistochastic $M_{i, j}$.
-        \item Prove the kernel trick for some high-degree polynomial embedding.
-        \item Prove that 1D discrete convolution, $*: (f, g)[n] \mapsto \sum_{i \in s}f[n-i]g[i]$, over a finite set $S=[-j, j]^{k}$ for some large $j$ and $k$ is translation equivariant. \textbf{Bonus} (20 points): Prove the 2D case for MNIST images.
+        \item A \textit{diophantine equation} is a polynomial equation whose coefficients and solutions are integers. Let $w, x, y, z \in \mathbb{N}$ and report your solver's three largest solutions found to each of the following diophantine equations: (a) $w = x^3+y^3+z^3$ (b) $w^3 + x^3 = y^3+z^3$ (c) $w^z + x^z = y^z + z$.
+        \item Prove that $\mathbb{Z}^{n\times n}$ is associative over $\otimes$ and distributive over $\oplus$ for some large $n$. \textbf{Bonus} (5 points): Give an example of a nontrivial finite commutative semiring whose elements are matrices and prove it.
+        \item A nonnegative matrix is called \textit{bistochastic} iff its rows and columns all add up to the same number. Find distinct examples $M_{1, 2}: \mathbb{Z}^{n\times n}$ for some large $n$ such that $M_{1,2}$ are nontrivial bistochastic matrices. \textbf{Bonus} (5 points): Prove $M_i M_j$ is bistochastic for all bistochastic $M_{i, j}$.
+        \item Consider the polynomial kernel $\Delta: (\mathbf{f}, \mathbf{g})\mapsto (\mathbf{f}\cdot\mathbf{g} + r)^q$ where $\mathbf{f, g}: \mathbb{Z}^d$. Prove the kernel trick for some large $d, q \in \mathbb{N}$. What can we say about its computational complexity? Is this kernel a metric? Prove it.
+        \item Prove that 1D discrete convolution, $*: (f, g)[n] \mapsto \sum_{i \in S}f[n-i]g[i]$, over a finite set $S=[-j, j]^{k}$ for some large $j$ and $k$ is translation equivariant. \textbf{Bonus} (20 points): Prove the 2D case for MNIST images.
     \end{enumerate}
 
     \noindent Please submit your answers as a PDF and supplemental work as a ZIP file.
