@@ -1,0 +1,68 @@
+%! Author = breandanconsidine
+%! Date = 9/19/21
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{listings}
+
+% Document
+\author{Instructor: Xujie Si, TA: Breandan Considine}
+\date{Due: Nov. 3rd}
+\title{COMP 597: Assignment \#2}
+\begin{document}
+    \maketitle
+    \noindent This is the 2\textsuperscript{nd} assignment of COMP 597: Automated Reasoning with ML.
+
+    \section{Implement your own FlashFill (45 points)}
+
+    Develop your own FlashFill, which supports String and integer arithmetic.
+
+    \begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
+E ::= Var | Const | (E + E) | (E - E) | (E * E) | If B then E else E
+B ::= E < E | E == E | E > E | NOT B
+Const ::= IntConst | StrConst
+IntConst ::= 0 | 1 | 2 | …
+Str ::= a | ... | z | IntConst | StrStr
+StrConst ::= "a" | "hello" | …
+    \end{lstlisting}
+
+    \noindent Should you like, you may design your own internal syntax, but the synthesized program (i.e., the output of your synthesizer) should follow the syntax described above. The semantics of your DSL should resemble the semantics of Python expressions. Special attention is requried for handling multiplication between a string and integer and addition on strings, which are both allowed in Python. An example of the input specification is provided below:
+
+    \begin{lstlisting}[basicstyle=\ttfamily\tiny]
+{
+  "Task-1": [
+    { "Input": [2, 2], "Output": 4 },
+    { "Input": [3, 5], "Output": 15 }
+  ],
+  "Task-2": [
+    { "Input": ["a", "b", "b"], "Output": "aaabb" },
+    { "Input": ["aa", "d", "b"], "Output": "aaaaaadb" }
+  ],
+  "Task-3": [
+    { "Input": ["hello", 4, 2], "Output": "hellohello" },
+    { "Input": ["world", 1, 0], "Output": "world" },
+    { "Input": ["hi", 3, 3], "Output": "" }
+  ],
+  "Task-4": [
+    { "Input": ["plus", 2, 3], "Output": 5 },
+    { "Input": ["minus", 5, 3], "Output": 2 },
+    { "Input": ["hi", 2, 3], "Output": 0 }
+  ]
+}
+    \end{lstlisting}
+
+    \noindent For full credit, please provide your source code and instructions to run it.
+
+    \section{Adapt an existing synthesizer (35 points)}
+
+    Can you solve (or partially solve) the above problems using an existing program synthesizer? For example, you may use a simple enumerative solver~\footnote{\url{https://bitbucket.org/abhishekudupa/eusolver/src/master/}} or more sophisticated baseline. A dataset of test cases for string-based program synthesis~\footnote{\url{https://github.com/SyGuS-Org/benchmarks/tree/master/comp/2017/PBE_Strings_Track}} may be reused from previous years of the SyGuS~\footnote{htps://sygus.org/artifacts/} competition. Please show all work to receive full credit.
+
+    \section{Compare and contrast (20 points)}
+
+    Please compare your synthesizer with prior work, discuss the pros and cons (qualatitively) and use concrete examples and performance measurements (quantatively). Your written report should strive to well-written, empirically sound and demontrate a clear understanding of the program synthesis algorithms you have choosen to implement and compare against. The written report should be about 2-3 pages in length with tables and pseudocode.
+\end{document}
