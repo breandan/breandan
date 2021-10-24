@@ -12,6 +12,27 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## Oct 24th, 2021
+
+- Last week
+  - Coordinate and released AIPLANS feedback
+  - Released COMP 597 / Homework 2
+  - Modal logic brainstorming session with David
+  - Finalize Sebastijan's talk at ML4Code
+  - Attended [Neural Scaling Laws Workshop](https://sites.google.com/mila.quebec/scaling-laws-workshop/home)
+  - Attended Koustuv's thesis proposal talk
+  - Wrote [letter of recommendation](../paperwork/letters/rebecca_letter.pdf) for Rebecca
+- This week
+  - Supervisory committee invitation letters
+  - Update table for NIER experiments
+  - Finish grading Homework 1 and release
+  - Justine's talk at ML4Code on Tuesday
+- Challenges
+  - Need to speed up research, already third year and no first author papers
+  - Research is lacking novelty / depth, need to find a topic and dive deep
+  - Push for first author papers this year, maybe SPLASH/OOPLSA?
+  - Be more responsive to Slack messages
+
 ## Aug. 10th, 2021
 
 - Last week
@@ -46,8 +67,7 @@
   - Running experiments in time constraints
 - Reading
   - [Program Synthesis with Pragmatic Communication](https://proceedings.neurips.cc/paper/2020/file/99c83c904d0d64fbef50d919a5c66a80-Paper.pdf), Pu et al. (2020)
-  - [Invertible Syntax Descriptions:
-Unifying Parsing and Pretty Printing](https://www.informatik.uni-marburg.de/~rendel/unparse/rendel10invertible.pdf), Rendel and Osterman (2010)
+  - [Invertible Syntax Descriptions: Unifying Parsing and Pretty Printing](https://www.informatik.uni-marburg.de/~rendel/unparse/rendel10invertible.pdf), Rendel and Osterman (2010)
   - [Demystifying Neural Language Models' Insensitivity to Word-Order](https://arxiv.org/pdf/2107.13955.pdf), Clouatre (2021)
   - [Mergeable summaries](https://www.cs.utah.edu/~jeffp/papers/merge-summ.pdf), Agarwal et al. (2012)
 
