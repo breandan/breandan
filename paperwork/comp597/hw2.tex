@@ -12,7 +12,7 @@
 
 % Document
 \author{Instructor: Xujie Si, TA: Breandan Considine}
-\date{Due: Nov. 3rd}
+\date{Due: Nov. 10th}
 \title{COMP 597: Assignment \#2}
 \begin{document}
     \maketitle
@@ -20,18 +20,18 @@
 
     \section{Implement your own FlashFill (45 points)}
 
-    Develop your own FlashFill, which supports String and integer arithmetic.
+    Develop your own FlashFill, which supports string and integer arithmetic.
 
     \begin{lstlisting}[basicstyle=\ttfamily\footnotesize]
 E ::= Var | Const | (E + E) | (E - E) | (E * E) | If B then E else E
 B ::= E < E | E == E | E > E | NOT B
 Const ::= IntConst | StrConst
-IntConst ::= 0 | 1 | 2 | …
-Str ::= a | ... | z | IntConst | StrStr
-StrConst ::= "a" | "hello" | …
+IntConst ::= 0 | 1 | 2 | ... | 9 | IntConstIntConst
+StrLit ::= a | ... | z | _ | IntConst | StrLitStrLit
+StrConst ::= "StrLit"
     \end{lstlisting}
 
-    \noindent Should you like, you may design your own internal syntax, but the synthesized program (i.e., the output of your synthesizer) should follow the syntax described above. The semantics of your DSL should resemble the semantics of Python expressions. Special attention is requried for handling multiplication between a string and integer and addition on strings, which are both allowed in Python. An example of the input specification is provided below:
+    \noindent You may design your own internal syntax if you wish, however the synthesized program (i.e., output by your synthesizer) should follow the syntax described above. The semantics of your DSL should resemble the semantics of Python expressions. Special attention is requried for handling multiplication between a string and an integer, as well as addition of two strings, both of which are permitted in Python. An example input is provided below:
 
     \begin{lstlisting}[basicstyle=\ttfamily\tiny]
 {
@@ -60,7 +60,7 @@ StrConst ::= "a" | "hello" | …
 
     \section{Adapt an existing synthesizer (35 points)}
 
-    Can you solve (or partially solve) the above problems using an existing program synthesizer? For example, you may use a simple enumerative solver~\footnote{\url{https://bitbucket.org/abhishekudupa/eusolver/src/master/}} or more sophisticated baseline. A dataset of test cases for string-based program synthesis~\footnote{\url{https://github.com/SyGuS-Org/benchmarks/tree/master/comp/2017/PBE_Strings_Track}} may be reused from previous years of the SyGuS~\footnote{htps://sygus.org/artifacts/} competition. Please show all work to receive full credit.
+    Can you solve (or partially solve) the problems in the above grammar using an existing program synthesizer? For example, you may use a simple enumerative solver~\footnote{\url{https://bitbucket.org/abhishekudupa/eusolver/src/master/}} or more sophisticated baseline of your choice. A dataset of test cases for string-based program synthesis~\footnote{\url{https://github.com/SyGuS-Org/benchmarks/tree/master/comp/2017/PBE_Strings_Track}} may be reused from previous years of the SyGuS~\footnote{\url{https://sygus.org/artifacts/}} competition. Please show all work to receive full credit.
 
     \section{Compare and contrast (20 points)}
 
