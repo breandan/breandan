@@ -15,6 +15,28 @@
 ## Oct 24th, 2021
 
 - Last week
+  - Finished grading Assignment #1 for COMP 597
+  - Gave feedback to students about their project proposals
+  - AIPLANS reviewer appreciation and invite contributed talks
+  - Attended Jacob's talk on PGMs and Tensor Networks
+  - Attended Conal's talk on [tensor programming](https://github.com/conal/talk-2021-can-tensor-programming-be-liberated)
+  - Supervisory [committee](../paperwork/letters/sc_invitation_tarlow.pdf) [invitations](../paperwork/letters/sc_invitation_robillard.pdf) and update MyProgress
+- This week
+  - Qualitative analysis of code snippets from NIER experiments ranked by test loss
+  - [AST traceability](https://github.com/JetBrains-Research/astminer/discussions/195) and tree transformations
+  - Figure out AIPLANS prerecording process and invite contributed talks / panelists
+- Challenges
+  - Unexpected McGill fee changes, tuition increase by $6k+ CAD with amortized DFW
+- Reading
+  - [Masked Language Modeling and the Distributional Hypothesis: Order Word Matters Pre-training for Little](https://arxiv.org/pdf/2104.06644.pdf), Sinha et al. (2021)
+  - [Reassessing Automatic Evaluation Metrics for Code Summarization Tasks](https://sarahfakhoury.com/2021-FSE-Summarization-Metrics.pdf), Roy et al. (2021)
+  - [APLicative Programming with Naperian Functors](https://www.cs.ox.ac.uk/people/jeremy.gibbons/publications/aplicative.pdf), Gibbons (2016)
+  - [Edit-Based Diffs for Large Trees](https://github.com/DatabaseGroup/apted), Pawlik et al. (2020)
+  - [FastAD: Expression Template-Based C++ Library for Fast and Memory-Efficient Automatic Differentiation](https://arxiv.org/abs/2102.03681), Yang (2021)
+
+## Oct 24th, 2021
+
+- Last week
   - Coordinate and released AIPLANS feedback
   - Released COMP 597 / Homework 2
   - Modal logic brainstorming session with David
