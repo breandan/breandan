@@ -12,7 +12,26 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
-## Oct 24th, 2021
+## Nov. 7th, 2021
+
+- Last Week
+  - Improvements to source code transformation tools
+  - Chat with Tali from Wolfram Research
+  - Went to Vijay's SAT talk on Friday
+  - Listened to the AGI debate
+  - Haircut and installed winter tires for the bike
+- This Week
+  - David's talk on Tuesday
+  - AIPLANS poster session logistics
+- Challenges
+  - Statistical measurement is tricky
+  - Need to conduct a thorough qualitative analysis
+- Reading
+  - [Paraphrase Generation from Latent-Variable PCFGs for Semantic Parsing](https://arxiv.org/pdf/1601.06068.pdf), Narayan et al.
+  - [Adversarial Robustness for Code](http://proceedings.mlr.press/v119/bielik20a/bielik20a.pdf), Bielik and Vechev (2020)
+  - [AIPLANS Papers](https://aiplans.github.io/papers/)
+
+## Oct. 24th, 2021
 
 - Last week
   - Finished grading Assignment #1 for COMP 597
@@ -34,7 +53,7 @@
   - [Edit-Based Diffs for Large Trees](https://github.com/DatabaseGroup/apted), Pawlik et al. (2020)
   - [FastAD: Expression Template-Based C++ Library for Fast and Memory-Efficient Automatic Differentiation](https://arxiv.org/abs/2102.03681), Yang (2021)
 
-## Oct 24th, 2021
+## Oct. 24th, 2021
 
 - Last week
   - Coordinate and released AIPLANS feedback
