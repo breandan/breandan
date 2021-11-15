@@ -12,15 +12,39 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## Nov. 14th, 2021
+
+- Last week
+  - Started using [Spoon](https://github.com/INRIA/spoon/issues/2554) for parsing / SCT
+  - Updated AIPLANS [website](aiplans.github.io/), recruited some volunteers
+  - Went to David's talk on neurosymbolic agents
+  - Went to Uri Alon's talk on [GATv2](https://github.com/tech-srl/how_attentive_are_gats)
+  - Registered for UdeM graduation ceremony (Dec. 16th)
+  - Applied as a volunteer for POPL
+  - Started reading about [homotopy type theory](https://homotopytypetheory.org/book/)
+- This week
+  - Automate code snippet diff rendering for annotation
+  - Collect and annotate more code snippets for annotation
+  - Update ROUGE score computation to reflect F-measure
+  - Finish grading few project proposals for COMP 597
+  - Chat with David about contextual representations
+  - Chat with Tali about quiver geometry and computation
+  - Follow up with Prof. Tenenbaum about AIPLANS talk
+  - Follow up with Prof. Blanchette about tuition fees
+- Challenges
+  - The space of all possible source code transformations is too large
+  - How to define path equivalence between source code transformations?
+  - How do we select which transformations to apply in a given context?
+
 ## Nov. 7th, 2021
 
-- Last Week
+- Last week
   - Improvements to source code transformation tools
   - Chat with Tali from Wolfram Research
   - Went to Vijay's SAT talk on Friday
   - Listened to the AGI debate
   - Haircut and installed winter tires for the bike
-- This Week
+- This week
   - David's talk on Tuesday
   - AIPLANS poster session logistics
 - Challenges
