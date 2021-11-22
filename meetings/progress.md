@@ -12,6 +12,23 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## Nov. 22nd, 2021
+
+- Last week
+  - Autogenerate LaTeX comparison and add more examples to [the doc](https://github.com/breandan/cstk/blob/master/latex/notes/all_synthetic_docs.pdf)
+  - Adjustments to evaluation and scoring procedure
+  - Finished grading project proposals for COMP 597
+  - Went over Compute Canada workflow with Xiaojie
+- This week
+  - Look into prior literature to determine how they implement/evaluate doc synthesis
+  - Write a preprocessor for the CodeBERT / GraphCodeBERT dataset
+  - Tie up loose ends for AIPLANS workshop and finalize talks
+  - [Google Brain Offsite](https://sites.google.com/view/mila-brain-offsite-2021/talks?authuser=0)
+  - [Sebastijan's talk](https://www.cs.mcgill.ca/events/297/) at CS Colloquium
+- Challenges
+  - Need to focus on the research project and avoid unnecessary distractions
+  - Upcoming: PhD Research proposal must be completed by 2021-12-31?
+
 ## Nov. 14th, 2021
 
 - Last week
