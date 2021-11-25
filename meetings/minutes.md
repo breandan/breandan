@@ -1,5 +1,17 @@
 ## Minutes
 
+# November 24, 2021
+
+- We went over the CodeBERT and CodeXGlue papers together
+- We decided to use the CodeSearchNet dataset and looked at the [schema](https://github.com/github/CodeSearchNet#human-relevance-judgements) (query/docstring/code)
+- What are the limitations of prior models? (e.g. sequence length, encoding/decoding, beam search)
+- Need to have a very clear understanding of input/output, parameters and doc generation procedure
+- Look at `source_length` , `target_length` and replicate CodeXGlue [Code-to-Text pipeline](https://github.com/microsoft/CodeXGLUE/tree/main/Code-Text/code-to-text#pipeline-codebert)
+- Xujie raised some skepticism that the code summarization task is meaningful, given lack of examples
+- Jin suggested I look at the [ten tasks](https://github.com/microsoft/CodeXGLUE#tasks-and-datasets) from CodeXGlue and choose one additional task
+- Next few months are critical period for PhD, I need to make progress
+- Potential collaboration with [FSoft](https://gst.fsoft.com.vn/) pending results on this project
+
 # November 17, 2021
 
 - Jin mentioned that document synthesis should be JavaDoc comments, not inline comments
