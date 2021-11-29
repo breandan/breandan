@@ -1,5 +1,21 @@
 ## Minutes
 
+# November 27, 2021
+
+- Went over the parameters and document generation procedure
+- Discussed the beam search procedure for multiple-token decoding
+- Potential collaboration
+- Discussed the venv / pip / PyTorch / HuggingFace workflow with Xiaojie
+
+### Action items
+
+- How many CSN methods fit into the context window?
+- How do CodeXGlue tokenize and transform the input?
+- Describe the tokenization procedure more carefully.
+- Reproduce a cell/column of the CodeXGlue Code-Text table
+- See the exact tokenization and encoding for each snippet
+- Focus on two tasks: code-to-text and code search
+
 # November 24, 2021
 
 - We went over the CodeBERT and CodeXGlue papers together

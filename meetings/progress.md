@@ -12,6 +12,26 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+
+## Nov. 29th, 2021
+
+- Last week
+  - Looked into CodeXGlue benchmarks
+  - Thanksgiving, part II
+  - Went to Joey's talk at GRL RG
+  - Chat with Tali about quiver geometry
+  - Went over PyTorch with Xiaojie
+  - Scraped some alternate git repos
+- This week
+  - Action items from [Friday meeting](https://github.com/breandan/breandan/blob/master/meetings/minutes.md#november-24-2021)
+  - Attend Miltos' talk on Tuesday
+  - Brainstorm session with David
+  - Follow up on potential collaborations
+  - AIPLANS technical meeting with SlidesLive
+  - Finish COMP 597 assignment grading
+- Challenges
+  - Need to carve out solid blocks of time for research
+
 ## Nov. 22nd, 2021
 
 - Last week
