@@ -16,6 +16,19 @@
 - Reproduce Java column of the [CodeXGlue Code-to-Text results table](https://github.com/microsoft/CodeXGLUE/tree/main/Code-Text/code-to-text#result)
 - Clearly explain the tokenization, encoding and embedding for CodeBERT
 
+# November 29, 2021
+
+- Publicity for authors and talks, this would be a good week to promote (Chinwei)
+- Pending the above, gather panel questions from Twitter and PCs (Disha)
+- Send invitation to PL mailing lists soliciting workshop attendees (Breandan)
+- Remind authors and attendees that they must register to attend (Breandan)
+- Remind Josh and Marie about prerecording (Breandan + Disha)
+- Invite volunteers to attend SlidesLive technical session on Thursday (Shawn)
+- Instructions to volunteers about roles and responsibilities (Breandan)
+- Update our website with BibTeX information from emails (David)
+  - Let's migrate assets off OpenReview to our website to avoid confusion?
+- Co-promote Miltos' talk at ML4Code RG tomorrow on AIPLANS Twitter (Breandan)
+
 # November 27, 2021
 
 - Went over the parameters and document generation procedure
@@ -43,6 +56,15 @@
 - Jin suggested I look at the [ten tasks](https://github.com/microsoft/CodeXGLUE#tasks-and-datasets) from CodeXGlue and choose one additional task
 - Next few months are critical period for PhD, I need to make progress
 - Potential collaboration with [FSoft](https://gst.fsoft.com.vn/) pending results on this project
+
+# November 22, 2021
+
+- Shawn booked a meeting with the technician on Dec. 2nd at 10 AM EST (thanks Shawn)
+- Workshop publicity: Chinwei agreed to start promoting the talks on social media (thanks Chinwei)
+- Disha will remind the authors to submit their materials, e.g., recordings, camera-ready papers, posters (thanks Disha)
+- Disha expressed she would like to see more engagement from the PL community, Breandan agreed to send some emails
+- David suggested running some kind of sweepstakes on social media for free registration (thanks David)
+- There will be a Mila [offsite](https://sites.google.com/view/mila-brain-offsite-2021/talks?authuser=0) today, a [talk](https://www.cs.mcgill.ca/events/297/) from Sebastijan Friday and talk from Miltos at [#ml4code](https://mila-umontreal.slack.com/archives/C02CJKYLL0H) next Monday
 
 # November 17, 2021
 
