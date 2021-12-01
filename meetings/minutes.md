@@ -1,5 +1,21 @@
 ## Minutes
 
+# December 1st, 2021
+
+## Minutes
+
+- I must take concrete steps towards achieving own research goals
+- Dedicate 3+ days per week towards this project, block off schedule
+- Need to prioritize research over contributions to all other activities
+- Good ideas (rewriting getting more attention), poor execution (few results)
+- We discussed how CodeBERT truncates input data to fit self-attention context
+- I showed some histograms illustrating method length and number of tokens
+
+## Action Items
+
+- Reproduce Java column of the [CodeXGlue Code-to-Text results table](https://github.com/microsoft/CodeXGLUE/tree/main/Code-Text/code-to-text#result)
+- Clearly explain the tokenization, encoding and embedding for CodeBERT
+
 # November 27, 2021
 
 - Went over the parameters and document generation procedure
