@@ -9,7 +9,7 @@
 - Let `bpe: Σ*→ℤ*` be an encoder that maps strings `Σ*` to a list of integers `ℤ*`.
 - `bpe` is defined as follows: `bpe(s) := dict(s[1..p]) ⊕ bpe(s[p+1..|s|])` where `p = max { i in ℤ | s[1..i] in dict }` and `⊕` is list concatenation.
 - `dict` has the following property: `∀ s ∈ Σ*`, `bpe(s) = [i₁, i₂, ..., iₙ]` implies `dict⁻¹(i₁) ⊕ dict⁻¹(i₂) ⊕ dict⁻¹(...) ⊕ dict⁻¹(iₙ) = s`.
-- Furthermore, `dict` typically has the additional property that `|bpe(s)| << |s|` for all `s ∈ L ⊂ Σ*` where `L` is a language in `Σ*` (e.g., NL or PL).
+- Furthermore, `dict` typically has the additional property that `𝔼[|bpe(s)|] << 𝔼[|s|]` over `s ∈ L ⊂ Σ*` where `L` is a language in `Σ*` (e.g., NL or PL).
 
 ### Minutes
 
