@@ -1,8 +1,8 @@
-## Minutes
+#  Minutes
 
-# December 3rd, 2021
+##  December 3rd, 2021
 
-## Tokenization
+### Tokenization
 
 - Let `Σ` be any alphabet (in practice CodeBERT uses `UTF-8`).
 - Let `dict ⊂ Σ*↔ℤ` be a bijection between certain strings over `Σ` and integers.
@@ -11,7 +11,7 @@
 - `dict` has the following property: `∀ s ∈ Σ*`, `bpe(s) = [i₁, i₂, ..., iₙ]` implies `dict⁻¹(i₁) ⊕ dict⁻¹(i₂) ⊕ dict⁻¹(...) ⊕ dict⁻¹(iₙ) = s`.
 - Furthermore, `dict` typically has the additional property that `|bpe(s)| << |s|` for all `s ∈ L ⊂ Σ*` where `L` is a language in `Σ*` (e.g., NL or PL).
 
-## Minutes
+### Minutes
 
 - I was able to (partially) reproduce the Java column of the CodeXGlue Code-to-Text results table.
 - Jin asked me to provide some examples of results on the code summarization task.
@@ -23,14 +23,14 @@
 - I attempted to describe the tokenization procedure unsuccessfully (please see a more precise description above)
 - Xiaojie and I went over how to reproduce experiments and discussed possible sources of variance
 
-## Action items
+### Action items
 
 -   I will give examples of results on the code summarization task as requested by Jin
 -   I will fix the dev/test set issue mentioned by Xujie
 
-# December 1st, 2021
+##  December 1st, 2021
 
-## Minutes
+### Minutes
 
 - I must take concrete steps towards achieving own research goals
 - Dedicate 3+ days per week towards this project, block off schedule
@@ -39,12 +39,12 @@
 - We discussed how CodeBERT truncates input data to fit self-attention context
 - I showed some histograms illustrating method length and number of tokens
 
-## Action Items
+### Action Items
 
 - Reproduce Java column of the [CodeXGlue Code-to-Text results table](https://github.com/microsoft/CodeXGLUE/tree/main/Code-Text/code-to-text#result)
 - Clearly explain the tokenization, encoding and embedding for CodeBERT
 
-# November 29, 2021
+##  November 29, 2021
 
 - Publicity for authors and talks, this would be a good week to promote (Chinwei)
 - Pending the above, gather panel questions from Twitter and PCs (Disha)
@@ -57,7 +57,7 @@
   - Let's migrate assets off OpenReview to our website to avoid confusion?
 - Co-promote Miltos' talk at ML4Code RG tomorrow on AIPLANS Twitter (Breandan)
 
-# November 27, 2021
+##  November 27, 2021
 
 - Went over the parameters and document generation procedure
 - Discussed the beam search procedure for multiple-token decoding
@@ -73,7 +73,7 @@
 - See the exact tokenization and encoding for each snippet
 - Focus on two tasks: code-to-text and code search
 
-# November 24, 2021
+##  November 24, 2021
 
 - We went over the CodeBERT and CodeXGlue papers together
 - We decided to use the CodeSearchNet dataset and looked at the [schema](https://github.com/github/CodeSearchNet#human-relevance-judgements) (query/docstring/code)
@@ -85,7 +85,7 @@
 - Next few months are critical period for PhD, I need to make progress
 - Potential collaboration with [FSoft](https://gst.fsoft.com.vn/) pending results on this project
 
-# November 22, 2021
+##  November 22, 2021
 
 - Shawn booked a meeting with the technician on Dec. 2nd at 10 AM EST (thanks Shawn)
 - Workshop publicity: Chinwei agreed to start promoting the talks on social media (thanks Chinwei)
@@ -94,7 +94,7 @@
 - David suggested running some kind of sweepstakes on social media for free registration (thanks David)
 - There will be a Mila [offsite](https://sites.google.com/view/mila-brain-offsite-2021/talks?authuser=0) today, a [talk](https://www.cs.mcgill.ca/events/297/) from Sebastijan Friday and talk from Miltos at [#ml4code](https://mila-umontreal.slack.com/archives/C02CJKYLL0H) next Monday
 
-# November 17, 2021
+##  November 17, 2021
 
 - Jin mentioned that document synthesis should be JavaDoc comments, not inline comments
 - Jin suggested recomputing the aggregation/comparison method using statistical hypothesis testing
@@ -107,7 +107,7 @@
 - We discussed the importance of careful experimental research and conducting a fair comparison
 
 
-# May 5, 2021
+##  May 5, 2021
 
 - I presented some examples of compositional generalization in natural and programming languages, and gave a demo of a tool for [regular language induction](https://en.wikipedia.org/wiki/Induction_of_regular_languages). This can be used to construct a regex matching a set of example strings. [Grammar induction](https://en.wikipedia.org/wiki/Grammar_induction) has been used for document classification and I believe is an important conceptual framework for modeling how developers [forage for information](https://web.eecs.utk.edu/~azh/blog/informationforaging.html).
 - Jin raised some concerns about alignment with the downstream task. How do we assess whether our model is retrieving information that meets the information needs of the end user? This is related to how we define our context, and how we perform masking. We settled on a single-token prediction task like variable or method name prediction, which is similar to masked language modeling.
@@ -115,7 +115,7 @@
 - Xujie recommended looking into sketch-based program synthesis. He raised the point that prior work uses a graph or AST-based representation for source code. He also said that the project was large and suggested separating the project into smaller pieces, i.e. (1) source code recommendation part and (2) code-adaption. I agreed with Xujie that this was a good idea and would consider it.
 - Jin asked me what I would like to achieve at the end of the summer. I would like to train a model that can learn to retrieve useful code snippets. I would also like to submit a paper to an [ML conference](https://jackietseng.github.io/conference_call_for_paper/conferences.html) this summer, possibly ICPR (July 10) or ICMLA (July 3). Finally, I would also like to update my [comprehensive exam](https://github.com/breandan/breandan/blob/master/paperwork/comp_exam/literature_review.pdf) to address the committee's [concerns](https://github.com/breandan/breandan/blob/master/paperwork/comp_exam/committee_letter.pdf).
 
-# April 13, 2021
+##  April 13, 2021
 
 Out of the papers we read this semester, I found Chen et al. (2020) one of the more difficult to follow. The motivation for the paper starts off straightforwardly: the authors want an architecture capable of generalizing to three specific settings (1) novel sequence length (2) novel combinations of previously commands ("template generalization" in the authors' nomenclature) and (3) novel contexts for commands seen exactly once in the training set (i.e. "primitive generalization").
 
@@ -145,7 +145,7 @@ Although Chen et al. (2020) has a number of redeeming qualities, including a nic
 
 Next paper: [Language-Agnostic Representation Learning of Source Code from Structure and Context](https://arxiv.org/abs/2103.11318) by Zügner et al.?
 
-# March 30, 2021
+##  March 30, 2021
 
 We discussed Didolkar et al.'s Neural Production Systems. From what I gathered, the main theme of our discussion was how to best employ relational inductive biases to realize a more refined combinatorial representation. Rather than considering all pairwise relations between input variables, can we construct a model which parses the input sequence into a graph "on the fly", whose edges represent correlated symbols, sub-symbols or input features?
 
