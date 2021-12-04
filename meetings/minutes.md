@@ -1,5 +1,33 @@
 ## Minutes
 
+# December 3rd, 2021
+
+## Tokenization
+
+- Let `Σ` be any alphabet (in practice CodeBERT uses `UTF-8`).
+- Let `dict ⊂ Σ*↔ℤ` be a bijection between certain strings over `Σ` and integers.
+- Let `bpe: Σ*→ℤ*` be an encoder that maps strings `Σ*` to a list of integers `ℤ*`.
+- `bpe` is defined as follows: `bpe(s) := dict(s[1..p]) ⊕ bpe(s[p+1..|s|])` where `p = max { i in ℤ | s[1..i] in dict }` and `⊕` is list concatenation.
+- `dict` has the following property: `∀ s ∈ Σ*`, `bpe(s) = [i₁, i₂, ..., iₙ]` implies `dict⁻¹(i₁) ⊕ dict⁻¹(i₂) ⊕ dict⁻¹(...) ⊕ dict⁻¹(iₙ) = s`.
+- Furthermore, `dict` typically has the additional property that `|bpe(s)| << |s|` for all `s ∈ L ⊂ Σ*` where `L` is a language in `Σ*` (e.g., NL or PL).
+
+## Minutes
+
+- I was able to (partially) reproduce the Java column of the CodeXGlue Code-to-Text results table.
+- Jin asked me to provide some examples of results on the code summarization task.
+- I described the procedure used to fine tune the models and obtain the scores.
+- Xujie clarified that the score we obtained was the dev set, not the test set.
+- Xujie and I went through smoothed BLEU score implementation. The authors pasted this from elsewhere:
+  - <https://github.com/salesforce/CodeT5/blob/main/evaluator/smooth_bleu.py>
+  - <https://github.com/microsoft/CodeXGLUE/blob/main/Code-Text/code-to-text/evaluator/evaluator.py>
+- I attempted to describe the tokenization procedure unsuccessfully (please see a more precise description above)
+- Xiaojie and I went over how to reproduce experiments and discussed possible sources of variance
+
+## Action items
+
+-   I will give examples of results on the code summarization task as requested by Jin
+-   I will fix the dev/test set issue mentioned by Xujie
+
 # December 1st, 2021
 
 ## Minutes
