@@ -4,12 +4,12 @@
 
 ### Tokenization
 
-- Let `Σ` be any alphabet (in practice CodeBERT uses `UTF-8`).
+- Let `Σ` be any alphabet (in practice, CodeBERT [uses](https://github.com/microsoft/CodeBERT/blob/f01b02dfdae8e14f4a0ba61cbe92ba72060c7c76/CodeBERT/codesearch/process_data.py#L1) `UTF-8` although it is possible to encode Chinese by switching to `UTF-16`).
 - Let `dict ⊂ Σ*↔ℤ` be a bijection between certain strings over `Σ` and integers.
 - Let `bpe: Σ*→ℤ*` be an encoder that maps strings `Σ*` to a list of integers `ℤ*`.
-- `bpe` is defined as follows: `bpe(s) := dict(s[1..p]) ⊕ bpe(s[p+1..|s|])` where `p = max { i in ℤ | s[1..i] in dict }` and `⊕` is list concatenation.
-- `dict` has the following property: `∀ s ∈ Σ*`, `bpe(s) = [i₁, i₂, ..., iₙ]` implies `dict⁻¹(i₁) ⊕ dict⁻¹(i₂) ⊕ dict⁻¹(...) ⊕ dict⁻¹(iₙ) = s`.
-- Furthermore, `dict` typically has the additional property that `𝔼[|bpe(s)|] << 𝔼[|s|]` over `s ∈ L ⊂ Σ*` where `L` is a language in `Σ*` (e.g., NL or PL).
+- `bpe` is defined as follows: `bpe(s) := dict(s[1:p]) ⊕ bpe(s[p+1:|s|])` where `p = max { i in (1,|p|] | s[1:i] in dict }`, `⊕` denotes list concatenation and `s[a:b]` denotes the substring of `s` between indices `a` and `b` using 1-based indexing.
+- `dict` has the following property: `∀ s ∈ Σ*`, `bpe(s) = [i₁, i₂, ..., iₙ]` implies `dict⁻¹(i₁) ⊕ dict⁻¹(i₂) ⊕ dict⁻¹(...) ⊕ dict⁻¹(iₙ) = s`, i.e., `bpe` is a [lossless compression scheme](https://en.wikipedia.org/wiki/Lossless_compression)
+- Furthermore, `dict` typically has the property that `𝔼[|bpe(s)|] << 𝔼[|s|]` over `s ∈ L ⊂ Σ*` where `L` is a language (e.g., NL or PL) in `Σ*`, n.b. this is untrue if `L=Σ*` due to the pigeonhole principle
 
 ### Minutes
 
