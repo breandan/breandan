@@ -13,6 +13,30 @@
   - [ ] Implement term rewriting in Kaliningraph
 
 
+## December 9th, 2021
+
+- Last week
+  - Worked on CodeXGlue Code-to-Text and tokenization
+  - Chat with Xiaojie about reproducing CodeXGlue experiments
+  - AIPLANS livestream logistics with Anastiasia and action items
+  - Chat with Disha about prompt programming and interactive fiction
+  - Chat with Tali about hypergraph symmetry and rewriting systems
+  - Confirmed POPL volunteering availability (Jan. 16-22nd)
+  - Migrated Kaliningraph to multiplatform
+- Next week
+  - Task evaluation and CodeXGlue follow-up on Friday
+  - Chat with Alex about software/ML4Code
+  - Differential programming workshop on Monday
+  - AIPLANS workshop all day on Tuesday
+  - Meeting with FSoft/Mila Wednesday morning
+  - Research meeting Wednesday afternoon
+  - UdeM graduation/convocation on Thursday
+  - Travel back home on Friday (unavailable)
+- Challenges
+  - Critical to make research progress in the coming months
+  - Must devote sufficient time to research activities
+  - [Petition SOCS for financial transparency](https://docs.google.com/document/d/19aNFcn3-cEmkIkq-s3TvURl4a3SDcwlx5_Og_QxsDQQ/edit?usp=sharing)
+
 ## Nov. 29th, 2021
 
 - Last week

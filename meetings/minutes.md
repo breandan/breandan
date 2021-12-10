@@ -1,6 +1,19 @@
 #  Minutes
 
-##  December 3rd, 2021
+## December 9th
+
+### Action Items
+
+- What are the tasks used by other recent papers? (e.g. Cloze, code summarization, code completion, document generation, code search)
+  - Build a table to summarize the recent tasks and the papers which use them
+  - Do we think the task is useful? If so, describe use case in practice (application) and use case for evaluation purposes (research)
+  - What are people doing in this domain
+- What does it mean for a model to be robust on a certain task? What mutations affect task performance? What are the effects of a mutation on a given task?
+  - Our research should explore how meaningful certain mutations are and the meaning of robustness in context of software engineering
+  - Survey definitions of robustness in recent published works (e.g. how do they define, what mutations they use, how they measure robustness)
+- Use their script and apply our data transformations to their test set and re-evaluate to get the Java cell on GraphCodeBERT/CodeBERT
+
+## December 3rd, 2021
 
 ### Tokenization
 
