@@ -2,8 +2,7 @@ I am a student in the School of Computer Science at McGill University, under the
 
 ### Libraries :books:
 
-- [Markovian](https://github.com/breandan/markovian) - :game_die: A Kotlin DSL for probabilistic programming
-- [Kaliningraph](https://github.com/breandan/kaliningraph) - :spider_web: Graph neural networks and visualizing the behavior of graph algorithms
+- [Kaliningraph](https://github.com/breandan/galoisenne) - :spider_web: Graphs, finite fields and discrete dynamical systems
 - [Kotlin∇](https://github.com/breandan/kotlingrad) - 🧩 Shape-Safe Symbolic Differentiation with Algebraic Data Types
 - [Picograd](https://github.com/breandan/picograd) - 🦠 The tiniest possible autograd
 - [Pantograph](https://github.com/breandan/pantograph) - :triangular_ruler: Runtime accessible intermediate representation for reified computation graphs
