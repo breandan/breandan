@@ -12,6 +12,23 @@
   - [ ] Describe code generation / macro approach
   - [ ] Implement term rewriting in Kaliningraph
 
+## May 17th, 2022
+
+- Short term actions
+  - Recover the original parse tree
+  - Comparison between existing tools
+    - Compare with Sketch-based synthesis (Armando S.L.)
+  - Applications (e.g., OCaml, code completion)
+    - Find a specific task and a dataset <- Focus this week
+    - Improve scaleability on our application of choice
+- Medium/long term
+  - Increase expressivity (e.g., context sensitive grammars)
+  - Stochastic grammars (e.g. probabilistic CFGs, STS)
+  - Edit distance minimization (e.g. Levenshtein, tree distance)
+- Completed
+  - Nonterminal synthesizer
+  - Design OCaml grammar
+  - Wrote an IDE plugin
 
 ## December 9th, 2021
 

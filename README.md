@@ -16,6 +16,7 @@ I am a student in the School of Computer Science at McGill University, under the
 
 ### Applications :gear:
 
+- [Tidyparse](https://github.com/breandan/tidyparse) - :broom: Error-correcting context free grammar parser plugin
 - [Hatchery](https://github.com/duckietown/hatchery) - :hatching_chick: An IDE for building ROS applications
 - [SourceJump](https://github.com/acejump/SourceJump) - :card_index: Find contextually similar OSS code without leaving your IDE!
 - [AceJump](https://github.com/acejump/AceJump) - :a: single character search, select, and jump
