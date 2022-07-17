@@ -1,0 +1,55 @@
+%! Author = breandan
+%! Date = 7/17/22
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage[table]{xcolor}
+\usepackage{array}
+
+\newcolumntype{P}[1]{>{\raggedright\vrule height4ex width 0pt}p{#1}<{\vrule depth 2.5ex width 0pt}}
+
+\usepackage{pgfgantt}
+
+\begin{document}
+    Here is my upcoming research schedule:\\
+
+    \begin{ganttchart}[
+        y unit title=0.5cm,
+        y unit chart=1cm,
+        x unit =0.75cm,
+        vgrid,hgrid,
+        title height=1,
+        title/.style={fill=none},
+        title label font=\footnotesize,
+        bar/.style={fill=gray},
+        bar height=1,
+        bar top shift=0,
+        progress label text={},
+        group right shift=0,
+        group height=.6,
+        group peaks width={0.2},
+        inline,
+        bar label node/.style={text width=3.5cm,
+        align=right,
+        anchor=east,
+        font=\small}
+    ]{1}{10}
+
+        \gantttitle{2022}{5}
+        \gantttitle{2023}{5} \\
+
+        \gantttitle{Aug}{1} \gantttitle{Sep}{1} \gantttitle{Oct}{1} \gantttitle{Nov}{1} \gantttitle{Dec}{1}
+        \gantttitle{Jan}{1} \gantttitle{Feb}{1} \gantttitle{Mar}{1} \gantttitle{Apr}{1} \gantttitle{May}{1} \\
+
+        \ganttbar[progress=100,inline=false] {LIVE Paper} {1}{1}\\
+        \ganttbar[progress=100,inline=false] {PLDI 2023} {2}{4}\\
+        \ganttbar[progress=100,inline=false] {SPLASH/OOPSLA} {5}{5} \\
+        \ganttbar[progress=100,inline=false] {NeurIPS 2023} {6}{8}\\
+        \ganttbar[progress=100,inline=false] {Write \& Submit} {9}{10}
+    \end{ganttchart}
+
+
+\end{document}
