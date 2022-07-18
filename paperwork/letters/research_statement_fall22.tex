@@ -12,9 +12,47 @@
 \newcolumntype{P}[1]{>{\raggedright\vrule height4ex width 0pt}p{#1}<{\vrule depth 2.5ex width 0pt}}
 
 \usepackage{pgfgantt}
+\ganttset{
+    y unit title=0.5cm,
+    y unit chart=1cm,
+    x unit =0.75cm,
+    vgrid,hgrid,
+    title height=1,
+    title/.style={fill=none},
+    title label font=\footnotesize,
+    bar/.style={fill=gray},
+    bar height=1,
+    bar top shift=0,
+    progress label text={},
+    group right shift=0,
+    group height=.6,
+    group peaks width={0.2},
+    inline,
+    bar label node/.style={text width=3.5cm,
+    align=right,
+    anchor=east,
+    font=\small}
+}
 
 \begin{document}
-    TODO: Research Statement \\
+    \title{Research Statement}
+    \author{Breandan Considine}
+    \maketitle
+    My research investigates how to make programming more accessible, safe and user-friendly. I am espeically interested in studying (1) how code is written in today's programming languages (2) how to make the programming languages of tomorrow more safe and ergonomic (3) how human intuition and type systems can work more harmoniously together in the future using type theory, SAT solving, and neural program synthesis. In particular,\\
+
+    \begin{itemize}
+        \item I study how programming languages can help programmers become productive by providing more expressive language constructs, better tooling, and improved developer experience. For example, I have created an \emph{IDE plugin} that lets programmers search for partially completed code fragments using \textit{Tidyparse}, an \textit{error correcting parser}.
+        \item I am also interested in how people write programs in their daily lives and how we can make programming more accessible to people who are not programmers by providing more contextually relevant code completion. For example, I am investigating how to automatically generate \emph{programming templates} from existing code.
+    \end{itemize}
+
+    \noindent How are programming languages used in practice? \\
+
+    \begin{itemize}
+        \item I am interested in how people actually use programming languages and tools in their everyday work. For example, I am studying how software developers use \emph{code search engines} and \emph{code completion} tools.
+        \item I am also interested in studying how large language models behave under variance. I want to evaluate their performance on real world programming tasks and evaluate their \textit{compositional generalization}.
+    \end{itemize}
+
+    \noindent How can we scale up automated programming and reasoning using GPUs?\\
 
     TODO: Ongoing research directions (ML4Code, Arrays, Parsing, DevTools) \\
 
@@ -22,30 +60,9 @@
 
     TODO: Research Agenda (ProbProg, PLDI, SPLASH, learning to code) \\
 
-    Here is my upcoming research schedule: \\
+    \noindent I plan to allocate the upcoming year towards the following research activities: \\
 
-    \begin{ganttchart}[
-        y unit title=0.5cm,
-        y unit chart=1cm,
-        x unit =0.75cm,
-        vgrid,hgrid,
-        title height=1,
-        title/.style={fill=none},
-        title label font=\footnotesize,
-        bar/.style={fill=gray},
-        bar height=1,
-        bar top shift=0,
-        progress label text={},
-        group right shift=0,
-        group height=.6,
-        group peaks width={0.2},
-        inline,
-        bar label node/.style={text width=3.5cm,
-        align=right,
-        anchor=east,
-        font=\small}
-    ]{1}{10}
-
+    \begin{ganttchart}{1}{10}
         \gantttitle{2022}{5}
         \gantttitle{2023}{5} \\
 
@@ -58,6 +75,4 @@
         \ganttbar[progress=100,inline=false] {NeurIPS 2023} {6}{8}\\
         \ganttbar[progress=100,inline=false] {Write \& Submit} {9}{10}
     \end{ganttchart}
-
-
 \end{document}
