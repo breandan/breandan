@@ -38,35 +38,33 @@
     \title{Research Statement}
     \author{Breandan Considine}
     \maketitle
-    Our research investigates how to make programming more accessible, safe and user-friendly. I am espeically interested in studying (1) how code is written in today's programming languages (2) how to make the programming languages of tomorrow more safe and ergonomic (3) how human intuition and type systems can work together more harmoniously in the future using type theory, SAT solving, and neural program synthesis. In particular:\\
+    My research studies how to make programming more accessible, safe and user-friendly. I am especially interested in (1) observing how developers write and transform code in today's programming languages (2) reducing the amount of mental labor needed to write tomorrow's software applications, and (3) how future programming languages can blend human intuition and automated reasoning more harmoniously using type theory, SAT solving, and probabilistic programming. More specifically, I am interested in:
 
-    \begin{itemize}
-        \item I am interested in helping programmers become more productive by providing more expressive language constructs, more attentive tools, and more interactive development environments. For example, I have created an \emph{IDE plugin} that allows programmers to search for partially completed code fragments consistient with a context-free grammar.
-        \item I am also interested in what we can learn by observing programmers writing code in their natural habitat, and how programming can be made more user-friendly by anticipating and intervening on commonly occurring mistakes. For example, I am investigating how to repair simple programming errors using an \textit{error correcting parser}.
-    \end{itemize}
+    \begin{enumerate}
+        \item Analyzing common design patterns, coding conventions and programming mistakes. My research is developing tools to benchmark the \textit{compositional generalization} of large language models by evaluating their performance on real-world programming scenarios, such as their ability to repair syntactical errors and solve code completion tasks.
+        \item Helping developers become more productive by providing safer and more flexible code completion, more contextually-relevant suggestions, and more interactive development environments. For example, I have created an new parser and IDE plugin which allows programmers to automatically fill holes in partially-completed source code fragments.
+        \item Improving the design of existing languages by incorporating concepts from type theory and abstract interpretation to help developers write more robust code. For example, I have devised a type system for probabilistic programming based on Galois theory that helps users design probabilistic circuits and nondeterministic finite state machines.
+    \end{enumerate}
 
-    \noindent How are programming languages used in practice? \\
+    I believe that during the process of writing code, the computer should be actively participating by searching for paths through edit space, symbolically executing code, solving constraints and continuously giving feedback to the user. Every keystroke provides slightly more context to answer the question, ``What is the author's current intention and how can I help to achieve it?''
 
-    \begin{itemize}
-        \item I am interested in how people actually use programming languages and tools in their everyday work. For example, I am studying how software developers use \emph{code search engines} and \emph{code completion} tools.
-        \item I am also interested in studying how large language models behave under variance. I want to measure their \textit{compositional generalization} by evaluating their performance on real world programming scenarios.
-    \end{itemize}
+   Modern computers have a tremendous amount of computing resources, that most of the time, sit idle. In order to surface relevant information to the user more quickly, we need more intelligent development environments, and to build them, we need more scalable algorithms to leverage the compute that is currently available. I am interested in answering the question, ``How can we scale up automated programming and reasoning using GPUs?'' and ``What would a GPU-powered interactive programming assistant look like?''
 
-    I believe that during the process of writing code, the computer should be actively thinking (like a pair programmer) and searching for paths through edit space. Each keystroke provides slightly more context about the intended goal. In order to produce delightful user experiences, it must be constantly thinking, ``How can I help to carry the author's cognitive burden?''\\
+%    Can we design a brand new programming language in which everything, including type checking, compilation and execution is just parsing?\\
 
-    \noindent How can we scale up automated programming and reasoning using GPUs?\\
+    To explore potential answers to these questions, we have developed a set of software tools that include (1) \textit{CSTK}, a test suite for benchmarking large language models, (2) \textit{Tidyparse}, a prototype for a new editor that performs sketch-based context-free program synthesis, and (3) \textit{Galoisenne}, a library based on computational group theory for algebraic parsing and rewriting.
 
-    \noindent Can we design a brand new programming language in which everything, including type checking, compilation and execution is just parsing?\\
+    In the upcoming semester, I plan to work on accelerating SAT solving on the GPU. By leveraging some geometric properties of algebraic parsing, I believe we can scale up our algorithm to much larger SAT instances using array programming and automatic parallelization. Together in collaboration with my colleague David Yu-Tung Hui, I am in the process of developing an algorithm to smoothly trade off serial processing time for additional bandwidth using a continuous SAT relaxation and backpropagating error across Boolean vector formulae on the GPU using JAX-based SIMD primitives.
 
-    TODO: Ongoing research directions (ML4Code, Arrays, Parsing, DevTools) \\
+%    TODO: Ongoing research directions (ML4Code, Arrays, Parsing, DevTools) \\
+%
+%    TODO: Future work (LLM evaluation, Term Rewriting, Graph computation) \\
+%
+%    TODO: Research Agenda (ProbProg, PLDI, SPLASH, learning to code) \\
 
-    TODO: Future work (LLM evaluation, Term Rewriting, Graph computation) \\
+    Over the next month, I am planning to prepare and submit a draft to the LIVE workshop at SPLASH 2022 describing our IDE and its features for sketch-based program synthesis. This will include (1) designing an empirical analysis of our sketching technique, (2) running experiments for sketching, (3) developing a screencast tutorial, and (4) describing the IDE and algebraic parsing method in a six-page paper. This Fall, I will focus on improving the SAT solver and scaling it up to larger experiments. More broadly, I plan to devote the upcoming year towards the following research activities:\\
 
-    TODO: Research Agenda (ProbProg, PLDI, SPLASH, learning to code) \\
-
-    \noindent I plan to devote the upcoming year towards the following research activities: \\
-
-    \noindent\hspace{-12pt}\begin{ganttchart}{1}{10}
+    \begin{ganttchart}{1}{10}
         \gantttitle{2022}{5}
         \gantttitle{2023}{7} \\
 
