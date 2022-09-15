@@ -24,7 +24,7 @@
     The following solutions can be obtained using a solver of your choice. Please show all work. Only solutions obtained using a SAT solver will receive credit.\\
 
     % https://www.cs.rochester.edu/u/kautz/Courses/244autumn2008/Papers/cook-mitchell-1997.pdf
-    \noindent \textbf{Emirpimes} (20 points): An \textit{emirp} is a prime whose digits, when reversed, produce a different prime. An \textit{emirpimes} is a semiprime whose reverse is a different semiprime, e.g., $99610757_{10}$. Confirm its prime factors are emirps in bases 2 and 10. Find another such number. What is the largest emirpimes you can find, whose prime factors are distinct emirps in at least two bases?\\
+    \noindent \textbf{Emirpimes} (20 points): An \textit{emirp} is a prime whose digits, when reversed, produce a different prime. An \textit{emirpimes} is a semiprime whose reverse is a different semiprime, e.g., $104851039_{10}$. Confirm its prime factors are emirps in bases 2 and 10. Find another such number. What is the largest emirpimes you can find, whose prime factors are distinct emirps in at least two bases?\\
 
     \noindent \textbf{Bonus} (10 points): A \textit{cryptarithm} is a cipher, $\varphi: \{A,\ldots, Z\}\rightarrow \{0, \ldots, 9\}$, alongside a meaningful string, whose ciphertext satisfies some equation, e.g.:
 
@@ -39,7 +39,7 @@ E &\rightarrow A \mid \ldots \mid Z \mid EE \mid E O E \mid ( E )\\
 O &\rightarrow + \mid \times \mid \div \mid -\footnotemark\\
 S &\rightarrow E = E
     \end{align*}
-    \footnotetext{Interpreted in the usual way, but additive and multiplicative identity are forbidden.}\noindent where $\texttt{charset}(E) \neq \texttt{charset}(E')$ and $\texttt{eval}(\varphi(E)) = \texttt{eval}(\varphi(E'))$. Every plaintext word should be defined in the English 10k dictionary.\footnote{\tiny\url{https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt}} In order to receive credit, it must not be possible to find your cryptarithm (or algebraic rewritings thereof) on the internet or in other classmates assignments.\\
+    \footnotetext{Interpreted in the usual way, but additive and multiplicative identity are forbidden.}\noindent where $\texttt{eval}\big(\varphi(E)\big) = \texttt{eval}\big(\varphi(E')\big)$ and $\texttt{charset}(E) \neq \texttt{charset}(E')$. Every plaintext word should be defined in the English 10k dictionary.\footnote{\tiny\url{https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt}} In order to receive credit, it must not be possible to find your cryptarithm (or algebraic rewritings thereof) on the internet or in other classmates' assignments.\\
 
     \pagebreak
 
@@ -56,7 +56,7 @@ S &\rightarrow E = E
     % https://courses.cs.washington.edu/courses/cse599a2/15wi/
     \section {Problem 3: Uninterpreted function equivalence}
 
-    \noindent \textbf{SMT exercise} (40 points): Please typeset a proof sketch using \LaTeX, then translate the proof into your favorite SMT solver to construct a specific example or counterexample. Show all work to receive full credit.
+    \noindent \textbf{SMT exercise} (40 points): Show all work to receive full credit. Where required, typeset a proof sketch using \LaTeX, then translate the proof into your favorite SMT solver to construct a specific example or counterexample.
 
     \begin{enumerate}
         \item A polynomial equation whose coefficients and solutions are integers is called \textit{diophantine}. Let $w, x, y, z \in \mathbb{Z}$ and report your solver's largest nontrivial solutions to each of the following diophantine equations:\\ (a) $w = x^3+y^3+z^3$ (b) $w^3 + x^3 = y^3+z^3$ (c) $w^z + x^z = y^z + z$.
