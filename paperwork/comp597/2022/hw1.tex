@@ -24,7 +24,7 @@
     The following solutions can be obtained using a solver of your choice. Please show all work. Only solutions obtained using a SAT solver will receive credit.\\
 
     % https://www.cs.rochester.edu/u/kautz/Courses/244autumn2008/Papers/cook-mitchell-1997.pdf
-    \noindent \textbf{Palindromic primes} (20 points): A \textit{palprime} is a natural number with exactly two factors which are the same written forwards or backwards. Let $1802201963_{10} = PQR$. What are its factors in base-2? What is the largest integer you can find with at least three distinct factors, all of which are binary palindromes? Please describe your solution and its SAT encoding.\\
+    \noindent \textbf{Emirpimes} (20 points): An \textit{emirp} is a prime whose digits, when reversed, produce a different prime. An \textit{emirpimes} is a semiprime whose reverse is a different semiprime, e.g., $13052869_{10}$. What are its factors in base-2? What is the largest emirpimes you can find, whose prime factors are distinct emirps in bases 2 and 10? Please describe your solution and its SAT encoding.\\
 
     \noindent \textbf{Bonus question} (10 points): A \textit{cryptarithm} is a cipher mapping letters to digits, together with a string whose ciphertext satisfies some equation, e.g.:
 
@@ -39,7 +39,7 @@ E &\rightarrow A \mid \ldots \mid Z \mid EE \mid E O E \mid ( E )\\
 O &\rightarrow + \mid \times \mid \div \mid -\footnotemark\\
 S &\rightarrow E = E
     \end{align*}
-    \footnotetext{Interpreted in the usual way, but additive and multiplicative identity are forbidden.}\noindent where $\texttt{chars}(E) \neq \texttt{chars}(E')$ and $\texttt{eval}(\texttt{encrypt}(E)) = \texttt{eval}(\texttt{encrypt}(E'))$. Every plaintext word should be defined in the English 10k dictionary.\footnote{\tiny\url{https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt}} In order to receive full credit, it must not be possible to find algebraic rewritings of your cryptarithm on the internet or in other classmates assignments.\\
+    \footnotetext{Interpreted in the usual way, but additive and multiplicative identity are forbidden.}\noindent where $\texttt{chars}(E) \neq \texttt{chars}(E')$ and $\texttt{eval}(\texttt{encrypt}(E)) = \texttt{eval}(\texttt{encrypt}(E'))$. Every plaintext word should be defined in the English 10k dictionary.\footnote{\tiny\url{https://github.com/first20hours/google-10000-english/blob/master/google-10000-english.txt}} In order to receive credit, it must not be possible to find your cryptarithm (or rewritings thereof) on the internet or in other classmates assignments.\\
 
     \pagebreak
 
