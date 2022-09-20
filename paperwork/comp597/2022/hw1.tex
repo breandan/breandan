@@ -9,6 +9,9 @@
 \usepackage{hyperref}
 \usepackage{amsfonts}
 \usepackage{listings}
+\usepackage{tikz}
+\usepackage{amssymb}
+\usetikzlibrary{matrix, positioning}
 
 % Document
 \author{Instructor: Xujie Si, TA: Breandan Considine}
@@ -19,7 +22,7 @@
     \noindent This is the first assignment of COMP 597: Automated Reasoning with ML.
 
 
-    \section{SAT Encoding}
+    \section{Cryptography with SAT}
 
     The following solutions can be obtained using a solver of your choice. Please show all work. Only solutions obtained using a SAT solver will receive credit.\\
 
@@ -44,7 +47,7 @@ S &\rightarrow E = E
     \pagebreak
 
 
-    \section{Problem 2: Build or Improve a SAT Solver}
+    \section{Build or improve a SAT solver}
 
     \noindent \textbf{Programming exercise} (40 points): Please select one of the following two options, write a short report, and submit your source code. Please provide instructions for how reproduce your findings and a few test cases.
 
@@ -54,17 +57,89 @@ S &\rightarrow E = E
     \end{enumerate}
 
     % https://courses.cs.washington.edu/courses/cse599a2/15wi/
-    \section {Problem 3: Uninterpreted function equivalence}
+    \section {Uninterpreted function equivalence}
 
-    \noindent \textbf{SMT exercise} (40 points): Show all work to receive full credit. Where required, typeset a proof sketch using \LaTeX, then translate the proof into your favorite SMT solver to construct a specific example or counterexample.
+    \noindent \textbf{SMT exercise} (20 points): Show all work to receive full credit. Where required, typeset a proof sketch using \LaTeX, then translate the proof into your favorite SMT solver to construct a specific example or counterexample.
 
     \begin{enumerate}
-        \item A polynomial equation whose coefficients and solutions are integers is called \textit{diophantine}. Let $w, x, y, z \in \mathbb{Z}$ and report your solver's largest nontrivial solutions to each of the following diophantine equations:\\ (a) $w = x^3+y^3+z^3$ (b) $w^3 + x^3 = y^3+z^3$ (c) $w^z + x^z = y^z + z$.
+        \item A polynomial equation whose coefficients and solutions are integers is called \textit{diophantine}. Let $w, x, y, z \in \mathbb{Z}$ and report your solver's largest nontrivial solutions to each of the following diophantine equations:\\ (a) $x^2+y^2+z = wxy$ (b) $w^3 + x^3 = y^3+z^3$ (c) $w^z + x^z = y^z + z$.
         \item Prove that $\mathbb{Z}^{n\times n}$ is associative over $\otimes$, and $\otimes$ is distributive over $\oplus$ for some large $n$. \textbf{Bonus} (5 points): Give an example of a nontrivial finite commutative semiring whose elements are matrices and prove it.
         \item A nonnegative matrix whose rows and columns all sum to the same number is called \textit{bistochastic}. Find distinct examples $M_1, M_2: \mathbb{Z}^{n\times n}$ for some large $n$ such that both are nontrivial bistochastic matrices. \textbf{Bonus} (5 points): Is $M_i M_j$ is bistochastic for all bistochastic $M_i, M_j$?
-        \item Consider the polynomial kernel $\Delta: (\mathbf{f}, \mathbf{g})\mapsto (\mathbf{f}\cdot\mathbf{g} + r)^q$. The \textit{kernel trick} states $\forall \mathbf{f}, \mathbf{g}: \mathbb{Z}^d$, $\exists \varphi \mid \langle\varphi(\mathbf{f}), \varphi(\mathbf{g})\rangle = \Delta(\mathbf{f}, \mathbf{g})$. Show the kernel trick holds by finding $\varphi$ for some large $r, d, q: \mathbb{N}$. What can we say about $\mathcal O(\langle\varphi, \varphi'\rangle)$ as $d, q \rightarrow \infty$? Is $\Delta$ a metric? Prove or disprove it.
+%        \item Consider the polynomial kernel $\Delta: (\mathbf{f}, \mathbf{g})\mapsto (\mathbf{f}\cdot\mathbf{g} + r)^q$. The \textit{kernel trick} states $\forall \mathbf{f}, \mathbf{g}: \mathbb{Z}^d$, $\exists \varphi \mid \langle\varphi(\mathbf{f}), \varphi(\mathbf{g})\rangle = \Delta(\mathbf{f}, \mathbf{g})$. Show the kernel trick holds by finding $\varphi$ for some large $r, d, q: \mathbb{N}$. What can we say about $\mathcal O(\langle\varphi, \varphi'\rangle)$ as $d, q \rightarrow \infty$? Is $\Delta$ a metric? Prove or disprove it.
         \item Prove that 1D discrete convolution, $*: (f, g)[x] \mapsto \sum_{s \in S}f[x-s]g[s]$, over $S=[-j, j]$ for some large value $j \in \mathbb{N}$ is translation equivariant. \textbf{Bonus} (10 points): Prove the 2D case for MNIST, i.e., $[0, 255]^{28\times 28}$.
-    \end{enumerate}
+    \end{enumerate}\pagebreak
+
+    \section {Programming in the metaverse}
+    \textbf{Creative coding} (20 points): Consider a metaverse with some strange physical laws. This metaverse evolves according to the following rules.\\
+
+        \begin{tikzpicture}[b/.style={draw, minimum size=3mm,
+        fill=black},w/.style={draw, minimum size=3mm},
+            m/.style={matrix of nodes, column sep=1pt, row sep=1pt, draw, label=below:#1}, node distance=1pt]
+
+            \matrix (A) [m=0]{
+                |[b]|&|[b]|&|[b]|\\
+                &|[w]|\\
+            };
+            \matrix (B) [m=0, right=of A]{
+                |[b]|&|[b]|&|[w]|\\
+                &|[w]|\\
+            };
+            \matrix (C) [m=0, right=of B]{
+                |[b]|&|[w]|&|[b]|\\
+                &|[w]|\\
+            };
+            \matrix (D) [m=1, right=of C]{
+                |[b]|&|[w]|&|[w]|\\
+                &|[b]|\\
+            };
+            \matrix (E) [m=1, right=of D]{
+                |[w]|&|[b]|&|[b]|\\
+                &|[b]|\\
+            };
+            \matrix (F) [m=1, right=of E]{
+                |[w]|&|[b]|&|[w]|\\
+                &|[b]|\\
+            };
+            \matrix (G) [m=1, right=of F]{
+                |[w]|&|[w]|&|[b]|\\
+                &|[b]|\\
+            };
+            \matrix (H) [m=0, right=of G]{
+                |[w]|&|[w]|&|[w]|\\
+                &|[w]|\\
+            };
+        \end{tikzpicture}\\
+
+    \noindent In this metaverse, the fabric of space folds in upon itself: travel far enough in any direction and you will always return to where you started. Imagine a single universe, $\mathcal{U}': \{\square,\blacksquare\}^{16}$, which under the above laws, would evolve as:\\
+
+    \noindent\begin{tabular}{ccc}
+        \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
+        \fill [black!40] (0,0) -- (67.5:1) arc [end angle=-22.5, start angle=67.5, radius=1] -- cycle;
+        \draw [thick] (0,0) circle (1);
+        \foreach \angle in {90,67.5,...,-67.5}
+        \draw (\angle:1) -- (\angle-180:1);
+        \node [circle,thick,fill=white,draw=black,align=center,minimum size=2.5cm] at (0,0) {$f^0(t)$};
+        \end{tikzpicture} &     \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
+        \fill [black!40] (0,0) -- (67.5:1) arc [end angle=-22.5, start angle=67.5, radius=1] -- cycle;
+        \draw [thick] (0,0) circle (1);
+        \foreach \angle in {90,67.5,...,-67.5}
+        \draw (\angle:1) -- (\angle-180:1);
+        \node [circle,thick,fill=white,draw=black,align=center,minimum size=2.5cm] at (0,0){$f^1(t)$};
+        \end{tikzpicture} & \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
+        \fill [black!40] (0,0) -- (67.5:1) arc [end angle=-22.5, start angle=67.5, radius=1] -- cycle;
+        \draw [thick] (0,0) circle (1);
+        \foreach \angle in {90,67.5,...,-67.5}
+        \draw (\angle:1) -- (\angle-180:1);
+        \node [circle,thick,fill=white,draw=black,align=center,minimum size=2.5cm] at (0,0) {$f^2(t)$};
+        \end{tikzpicture}
+    \end{tabular}\\
+
+    \noindent Now imagine you are a xenobiologist exploring $\mathcal{U}: \{\square,\blacksquare\}^{50}$, tasked with the discovery of alien life forms living in this strange universe. \\
+
+    \noindent (a) Find a \textit{looper}, a creature which reappears after $k$ steps $f^k(\sigma) = \sigma \neq f(\sigma)$.\\
+    \noindent (b) Find an \textit{orphan}, a creature which has no parent: $\sigma \in \mathcal{U}  \mid \nexists \sigma'.f(\sigma') = \sigma $.\\
+    \noindent (c) Find an \textit{endling}, the last living descendent of its kind: $t \neq f^1(t) = f^2(t)$.\\
+    \noindent (d) Find a \textit{chimera}, a creature with three parents: $r, s, t \mid f(r) = f(s) = f(t)$.\\
 
     \noindent Please submit your answers as a PDF and supplemental work as a ZIP file.
 \end{document}
