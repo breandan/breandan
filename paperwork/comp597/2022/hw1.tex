@@ -12,6 +12,7 @@
 \usepackage{tikz}
 \usepackage{amssymb}
 \usetikzlibrary{matrix, positioning}
+\newcommand*{\greysquare}{\textcolor{gray}{\blacksquare}}
 
 % Document
 \author{Instructor: Xujie Si, TA: Breandan Considine}
@@ -20,7 +21,6 @@
 \begin{document}
     \maketitle
     \noindent This is the first assignment of COMP 597: Automated Reasoning with ML.
-
 
     \section{Cryptography with SAT}
 
@@ -67,30 +67,31 @@ S &\rightarrow E = E
         \item A nonnegative matrix whose rows and columns all sum to the same number is called \textit{bistochastic}. Find distinct examples $M_1, M_2: \mathbb{Z}^{n\times n}$ for some large $n$ such that both are nontrivial bistochastic matrices. \textbf{Bonus} (5 points): Is $M_i M_j$ is bistochastic for all bistochastic $M_i, M_j$?
 %        \item Consider the polynomial kernel $\Delta: (\mathbf{f}, \mathbf{g})\mapsto (\mathbf{f}\cdot\mathbf{g} + r)^q$. The \textit{kernel trick} states $\forall \mathbf{f}, \mathbf{g}: \mathbb{Z}^d$, $\exists \varphi \mid \langle\varphi(\mathbf{f}), \varphi(\mathbf{g})\rangle = \Delta(\mathbf{f}, \mathbf{g})$. Show the kernel trick holds by finding $\varphi$ for some large $r, d, q: \mathbb{N}$. What can we say about $\mathcal O(\langle\varphi, \varphi'\rangle)$ as $d, q \rightarrow \infty$? Is $\Delta$ a metric? Prove or disprove it.
         \item Prove that 1D discrete convolution, $*: (f, g)[x] \mapsto \sum_{s \in S}f[x-s]g[s]$, over $S=[-j, j]$ for some large value $j \in \mathbb{N}$ is translation equivariant. \textbf{Bonus} (10 points): Prove the 2D case for MNIST, i.e., $[0, 255]^{28\times 28}$.
-    \end{enumerate}\pagebreak
+    \end{enumerate}
 
-    \section {Programming in the metaverse}
-    \textbf{Creative coding} (20 points): Consider a metaverse with some strange physical laws. This metaverse evolves according to the following rules.\\
+    \noindent Proofs should be \textit{constructive} where necessary, i.e., evidence in the form of (1) an example or counterexample, or (2) an interpretable proof must be provided. Encoding the problem and showing UNSAT is not constructive.\pagebreak
 
-        \begin{tikzpicture}[b/.style={draw, minimum size=3mm,
-        fill=black},w/.style={draw, minimum size=3mm},
-            m/.style={matrix of nodes, column sep=1pt, row sep=1pt, draw, label=below:#1}, node distance=1pt]
+    \section {Exploring the multiverse}
+    \textbf{Creative coding} (20 points): Consider a multiverse with some strange physical laws, whose dynamics are governed by the following eight rules.\\
+
+        \begin{tikzpicture}[b/.style={draw, minimum size=3mm, fill=gray},w/.style={draw, minimum size=3mm},
+            m/.style={matrix of nodes, column sep=1pt, row sep=1pt, draw}, node distance=1pt]
 
             \matrix (A) [m=0]{
                 |[b]|&|[b]|&|[b]|\\
                 &|[w]|\\
             };
-            \matrix (B) [m=0, right=of A]{
+            \matrix (B) [m=1, right=of A]{
                 |[b]|&|[b]|&|[w]|\\
-                &|[w]|\\
+                &|[b]|\\
             };
             \matrix (C) [m=0, right=of B]{
                 |[b]|&|[w]|&|[b]|\\
-                &|[w]|\\
-            };
-            \matrix (D) [m=1, right=of C]{
-                |[b]|&|[w]|&|[w]|\\
                 &|[b]|\\
+            };
+            \matrix (D) [m=0, right=of C]{
+                |[b]|&|[w]|&|[w]|\\
+                &|[w]|\\
             };
             \matrix (E) [m=1, right=of D]{
                 |[w]|&|[b]|&|[b]|\\
@@ -110,23 +111,70 @@ S &\rightarrow E = E
             };
         \end{tikzpicture}\\
 
-    \noindent In this metaverse, the fabric of space folds in upon itself: travel far enough in any direction and you will always return to where you started. Imagine a single universe, $\mathcal{U}': \{\square,\blacksquare\}^{16}$, which under the above laws, would evolve as:\\
+    \noindent In this multiverse, the fabric of space folds in upon itself: travel far enough in any direction and you shall always return from whence you came. Imagine a single universe, $\mathcal{U}': \{\square,\greysquare\}^{16}$, which under the above laws, would evolve as:\\
 
     \noindent\begin{tabular}{ccc}
         \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
-        \fill [black!40] (0,0) -- (67.5:1) arc [end angle=-22.5, start angle=67.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (90.0:1) arc [end angle=67.5, start angle=90.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (67.5:1) arc [end angle=45.0, start angle=67.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (45.0:1) arc [end angle=22.5, start angle=45.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (22.5:1) arc [end angle=0.0, start angle=22.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (0.0:1) arc [end angle=-22.5, start angle=0.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-22.5:1) arc [end angle=-45.0, start angle=-22.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-45.0:1) arc [end angle=-67.5, start angle=-45.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-67.5:1) arc [end angle=-90.0, start angle=-67.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-112.5:1) arc [end angle=-135.0, start angle=-112.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-135.0:1) arc [end angle=-157.5, start angle=-135.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-157.5:1) arc [end angle=-180.0, start angle=-157.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-180.0:1) arc [end angle=-202.5, start angle=-180.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-225.0:1) arc [end angle=-247.5, start angle=-225.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
         \draw [thick] (0,0) circle (1);
         \foreach \angle in {90,67.5,...,-67.5}
         \draw (\angle:1) -- (\angle-180:1);
         \node [circle,thick,fill=white,draw=black,align=center,minimum size=2.5cm] at (0,0) {$f^0(t)$};
-        \end{tikzpicture} &     \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
-        \fill [black!40] (0,0) -- (67.5:1) arc [end angle=-22.5, start angle=67.5, radius=1] -- cycle;
+        \end{tikzpicture} &
+        \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
+        \fill [gray] (0,0) -- (90.0:1) arc [end angle=67.5, start angle=90.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (67.5:1) arc [end angle=45.0, start angle=67.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (45.0:1) arc [end angle=22.5, start angle=45.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (22.5:1) arc [end angle=0.0, start angle=22.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (0.0:1) arc [end angle=-22.5, start angle=0.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-22.5:1) arc [end angle=-45.0, start angle=-22.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-45.0:1) arc [end angle=-67.5, start angle=-45.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-67.5:1) arc [end angle=-90.0, start angle=-67.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-112.5:1) arc [end angle=-135.0, start angle=-112.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-135.0:1) arc [end angle=-157.5, start angle=-135.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-157.5:1) arc [end angle=-180.0, start angle=-157.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-180.0:1) arc [end angle=-202.5, start angle=-180.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-225.0:1) arc [end angle=-247.5, start angle=-225.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
         \draw [thick] (0,0) circle (1);
         \foreach \angle in {90,67.5,...,-67.5}
         \draw (\angle:1) -- (\angle-180:1);
-        \node [circle,thick,fill=white,draw=black,align=center,minimum size=2.5cm] at (0,0){$f^1(t)$};
-        \end{tikzpicture} & \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
-        \fill [black!40] (0,0) -- (67.5:1) arc [end angle=-22.5, start angle=67.5, radius=1] -- cycle;
+        \node [circle,thick,fill=white,draw=black,align=center,minimum size=2.5cm] at (0,0) {$f^1(t)$};
+        \end{tikzpicture} &
+        \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
+        \fill [gray] (0,0) -- (90.0:1) arc [end angle=67.5, start angle=90.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (67.5:1) arc [end angle=45.0, start angle=67.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (45.0:1) arc [end angle=22.5, start angle=45.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (22.5:1) arc [end angle=0.0, start angle=22.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (0.0:1) arc [end angle=-22.5, start angle=0.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-22.5:1) arc [end angle=-45.0, start angle=-22.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-45.0:1) arc [end angle=-67.5, start angle=-45.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-67.5:1) arc [end angle=-90.0, start angle=-67.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-112.5:1) arc [end angle=-135.0, start angle=-112.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-135.0:1) arc [end angle=-157.5, start angle=-135.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-157.5:1) arc [end angle=-180.0, start angle=-157.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-180.0:1) arc [end angle=-202.5, start angle=-180.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-225.0:1) arc [end angle=-247.5, start angle=-225.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
         \draw [thick] (0,0) circle (1);
         \foreach \angle in {90,67.5,...,-67.5}
         \draw (\angle:1) -- (\angle-180:1);
@@ -134,12 +182,14 @@ S &\rightarrow E = E
         \end{tikzpicture}
     \end{tabular}\\
 
-    \noindent Now imagine you are a xenobiologist exploring $\mathcal{U}: \{\square,\blacksquare\}^{50}$, tasked with the discovery of alien life forms living in this strange universe. \\
+    \noindent Now suppose you are a xenobiologist exploring $\mathcal{U}: \{\square,\greysquare\}^{50}$, assigned with the task of discovering alien life forms inhabiting in this strange universe. \\
 
     \noindent (a) Find a \textit{looper}, a creature which reappears after $k$ steps $f^k(\sigma) = \sigma \neq f(\sigma)$.\\
     \noindent (b) Find an \textit{orphan}, a creature which has no parent: $\sigma \in \mathcal{U}  \mid \nexists \sigma'.f(\sigma') = \sigma $.\\
     \noindent (c) Find an \textit{endling}, the last living descendent of its kind: $t \neq f^1(t) = f^2(t)$.\\
     \noindent (d) Find a \textit{chimera}, a creature with three parents: $r, s, t \mid f(r) = f(s) = f(t)$.\\
+
+    \noindent \textbf{Bonus} (10 points): Find or design intelligent life in $\mathcal{U}$. This creature should emulate some learning algorithm, e.g., a neural network. You must describe the encoding and decoding scheme and demonstrate the creature can learn.\\
 
     \noindent Please submit your answers as a PDF and supplemental work as a ZIP file.
 \end{document}
