@@ -72,11 +72,10 @@ S &\rightarrow E = E
     \noindent Only evidence in the form of (1) an example or counterexample, or (2) an interpretable proof will be accepted. Proofs should be \textit{constructive} where necessary. Encoding the problem and reporting UNSAT is not constructive.\pagebreak
 
     \section {Exploring the multiverse}
-    \textbf{Creative coding} (20 points): Consider a multiverse with some strange physical laws, whose dynamics are governed by the following eight rules.\\
+    \textbf{Creative coding} (20 points): Consider a multiverse $\mathcal{M}$, with some strange physical laws, whose dynamics are governed by the following eight rules.\\
 
         \begin{tikzpicture}[b/.style={draw, minimum size=3mm, fill=gray},w/.style={draw, minimum size=3mm},
             m/.style={matrix of nodes, column sep=1pt, row sep=1pt, draw}, node distance=1pt]
-
             \matrix (A) [m=0]{
                 |[b]|&|[b]|&|[b]|\\
                 &|[w]|\\
@@ -111,7 +110,7 @@ S &\rightarrow E = E
             };
         \end{tikzpicture}\\
 
-    \noindent In this multiverse, the fabric of space folds in upon itself: travel far enough in any direction and you shall always return from whence you came. Imagine a single universe, $\mathcal{U}': \{\square,\greysquare\}^{16}$, which under the above laws, would evolve as:\\
+    \noindent These rules describe a substitution system, in which the first row denotes a pattern match, and the second row denotes the subsequent state of the innermost cell. In this multiverse, the fabric of space folds in upon itself: travel far enough in any direction and you shall always return from whence you came. For example, we can visualize three steps in the time evolution of the universe $\mathcal{U}': \{\square,\greysquare\}^{16} \in \mathcal{M}$, starting from the initial state $t$ as follows:\\
 
     \noindent\begin{tabular}{ccc}
         \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
@@ -188,6 +187,8 @@ S &\rightarrow E = E
     \noindent (b) Find an \textit{orphan}, a creature which has no parent: $\sigma \in \mathcal{U}  \mid \nexists \sigma'.f(\sigma') = \sigma $.\\
     \noindent (c) Find an \textit{endling}, the last living descendent of its kind: $t \neq f^1(t) = f^2(t)$.\\
     \noindent (d) Find a \textit{chimera}, a creature with three parents: $r, s, t \mid f(r) = f(s) = f(t)$.\\
+
+    \noindent For identification purposes, you may label your specimens for submission using a string of 0s and 1s. Rare and fantastic specimens with additional structure will receive special handling and may be elligible for public viewing.\\
 
     \noindent \textbf{Bonus} (10 points): Find or design intelligent life in $\mathcal{U}$. This creature should emulate some learning algorithm, e.g., a neural network. You must describe the encoding and decoding scheme and demonstrate the creature can learn.\\
 
