@@ -16,7 +16,7 @@
 
 % Document
 \author{Instructor: Xujie Si, TA: Breandan Considine}
-\date{Due: Oct. 4th before class}
+\date{Due: Oct. 10th before class}
 \title{COMP 597: Assignment \#1}
 \begin{document}
     \maketitle
@@ -69,7 +69,7 @@ S &\rightarrow E = E
         \item Prove that 1D discrete convolution, $*: (f, g)[x] \mapsto \sum_{s \in S}f[x-s]g[s]$, over $S=[-j, j]$ for some large value $j \in \mathbb{N}$ is translation equivariant. \textbf{Bonus} (10 points): Prove the 2D case for MNIST, i.e., $[0, 255]^{28\times 28}$.
     \end{enumerate}
 
-    \noindent Proofs should be \textit{constructive} where necessary, i.e., evidence in the form of (1) an example or counterexample, or (2) an interpretable proof must be provided. Encoding the problem and showing UNSAT is not constructive.\pagebreak
+    \noindent Only evidence in the form of (1) an example or counterexample, or (2) an interpretable proof will be accepted. Proofs should be \textit{constructive} where necessary. Encoding the problem and reporting UNSAT is not constructive.\pagebreak
 
     \section {Exploring the multiverse}
     \textbf{Creative coding} (20 points): Consider a multiverse with some strange physical laws, whose dynamics are governed by the following eight rules.\\
@@ -117,20 +117,20 @@ S &\rightarrow E = E
         \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
         \fill [white] (0,0) -- (90.0:1) arc [end angle=67.5, start angle=90.0, radius=1] -- cycle;
         \fill [gray] (0,0) -- (67.5:1) arc [end angle=45.0, start angle=67.5, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (45.0:1) arc [end angle=22.5, start angle=45.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (22.5:1) arc [end angle=0.0, start angle=22.5, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (0.0:1) arc [end angle=-22.5, start angle=0.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (45.0:1) arc [end angle=22.5, start angle=45.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (22.5:1) arc [end angle=0.0, start angle=22.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (0.0:1) arc [end angle=-22.5, start angle=0.0, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-22.5:1) arc [end angle=-45.0, start angle=-22.5, radius=1] -- cycle;
-        \fill [white] (0,0) -- (-45.0:1) arc [end angle=-67.5, start angle=-45.0, radius=1] -- cycle;
-        \fill [white] (0,0) -- (-67.5:1) arc [end angle=-90.0, start angle=-67.5, radius=1] -- cycle;
-        \fill [white] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-45.0:1) arc [end angle=-67.5, start angle=-45.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-67.5:1) arc [end angle=-90.0, start angle=-67.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-112.5:1) arc [end angle=-135.0, start angle=-112.5, radius=1] -- cycle;
-        \fill [white] (0,0) -- (-135.0:1) arc [end angle=-157.5, start angle=-135.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-135.0:1) arc [end angle=-157.5, start angle=-135.0, radius=1] -- cycle;
         \fill [white] (0,0) -- (-157.5:1) arc [end angle=-180.0, start angle=-157.5, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-180.0:1) arc [end angle=-202.5, start angle=-180.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-180.0:1) arc [end angle=-202.5, start angle=-180.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-225.0:1) arc [end angle=-247.5, start angle=-225.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
         \draw [thick] (0,0) circle (1);
         \foreach \angle in {90,67.5,...,-67.5}
         \draw (\angle:1) -- (\angle-180:1);
@@ -138,21 +138,21 @@ S &\rightarrow E = E
         \end{tikzpicture} &
         \begin{tikzpicture}[>=latex,font=\sffamily,semithick,scale=1.75]
         \fill [gray] (0,0) -- (90.0:1) arc [end angle=67.5, start angle=90.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (67.5:1) arc [end angle=45.0, start angle=67.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (67.5:1) arc [end angle=45.0, start angle=67.5, radius=1] -- cycle;
         \fill [white] (0,0) -- (45.0:1) arc [end angle=22.5, start angle=45.0, radius=1] -- cycle;
         \fill [white] (0,0) -- (22.5:1) arc [end angle=0.0, start angle=22.5, radius=1] -- cycle;
-        \fill [white] (0,0) -- (0.0:1) arc [end angle=-22.5, start angle=0.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (0.0:1) arc [end angle=-22.5, start angle=0.0, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-22.5:1) arc [end angle=-45.0, start angle=-22.5, radius=1] -- cycle;
         \fill [white] (0,0) -- (-45.0:1) arc [end angle=-67.5, start angle=-45.0, radius=1] -- cycle;
         \fill [white] (0,0) -- (-67.5:1) arc [end angle=-90.0, start angle=-67.5, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-112.5:1) arc [end angle=-135.0, start angle=-112.5, radius=1] -- cycle;
-        \fill [white] (0,0) -- (-135.0:1) arc [end angle=-157.5, start angle=-135.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-157.5:1) arc [end angle=-180.0, start angle=-157.5, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-180.0:1) arc [end angle=-202.5, start angle=-180.0, radius=1] -- cycle;
-        \fill [white] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
-        \fill [white] (0,0) -- (-225.0:1) arc [end angle=-247.5, start angle=-225.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-112.5:1) arc [end angle=-135.0, start angle=-112.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-135.0:1) arc [end angle=-157.5, start angle=-135.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-157.5:1) arc [end angle=-180.0, start angle=-157.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-180.0:1) arc [end angle=-202.5, start angle=-180.0, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-225.0:1) arc [end angle=-247.5, start angle=-225.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
         \draw [thick] (0,0) circle (1);
         \foreach \angle in {90,67.5,...,-67.5}
         \draw (\angle:1) -- (\angle-180:1);
@@ -162,19 +162,19 @@ S &\rightarrow E = E
         \fill [gray] (0,0) -- (90.0:1) arc [end angle=67.5, start angle=90.0, radius=1] -- cycle;
         \fill [gray] (0,0) -- (67.5:1) arc [end angle=45.0, start angle=67.5, radius=1] -- cycle;
         \fill [white] (0,0) -- (45.0:1) arc [end angle=22.5, start angle=45.0, radius=1] -- cycle;
-        \fill [white] (0,0) -- (22.5:1) arc [end angle=0.0, start angle=22.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (22.5:1) arc [end angle=0.0, start angle=22.5, radius=1] -- cycle;
         \fill [gray] (0,0) -- (0.0:1) arc [end angle=-22.5, start angle=0.0, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-22.5:1) arc [end angle=-45.0, start angle=-22.5, radius=1] -- cycle;
         \fill [white] (0,0) -- (-45.0:1) arc [end angle=-67.5, start angle=-45.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-67.5:1) arc [end angle=-90.0, start angle=-67.5, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-67.5:1) arc [end angle=-90.0, start angle=-67.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-90.0:1) arc [end angle=-112.5, start angle=-90.0, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-112.5:1) arc [end angle=-135.0, start angle=-112.5, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-135.0:1) arc [end angle=-157.5, start angle=-135.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-157.5:1) arc [end angle=-180.0, start angle=-157.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-157.5:1) arc [end angle=-180.0, start angle=-157.5, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-180.0:1) arc [end angle=-202.5, start angle=-180.0, radius=1] -- cycle;
-        \fill [white] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
+        \fill [gray] (0,0) -- (-202.5:1) arc [end angle=-225.0, start angle=-202.5, radius=1] -- cycle;
         \fill [gray] (0,0) -- (-225.0:1) arc [end angle=-247.5, start angle=-225.0, radius=1] -- cycle;
-        \fill [gray] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
+        \fill [white] (0,0) -- (-247.5:1) arc [end angle=-270.0, start angle=-247.5, radius=1] -- cycle;
         \draw [thick] (0,0) circle (1);
         \foreach \angle in {90,67.5,...,-67.5}
         \draw (\angle:1) -- (\angle-180:1);
@@ -184,7 +184,7 @@ S &\rightarrow E = E
 
     \noindent Now suppose you are a xenobiologist exploring $\mathcal{U}: \{\square,\greysquare\}^{50}$, assigned with the task of discovering alien life forms inhabiting in this strange universe. \\
 
-    \noindent (a) Find a \textit{looper}, a creature which reappears after $k$ steps $f^k(\sigma) = \sigma \neq f(\sigma)$.\\
+    \noindent (a) Find an \textit{uroboros}, a creature which is its own ancestor: $f^k(\sigma) = \sigma \neq f(\sigma)$.\\
     \noindent (b) Find an \textit{orphan}, a creature which has no parent: $\sigma \in \mathcal{U}  \mid \nexists \sigma'.f(\sigma') = \sigma $.\\
     \noindent (c) Find an \textit{endling}, the last living descendent of its kind: $t \neq f^1(t) = f^2(t)$.\\
     \noindent (d) Find a \textit{chimera}, a creature with three parents: $r, s, t \mid f(r) = f(s) = f(t)$.\\
