@@ -2,7 +2,7 @@ I am a student in the School of Computer Science at McGill University, under the
 
 ### Libraries :books:
 
-- [Kaliningraph](https://github.com/breandan/galoisenne) - :spider_web: Graphs, finite fields and discrete dynamical systems
+- [Galoisenne](https://github.com/breandan/galoisenne) - :spider_web: Graphs, finite fields and discrete dynamical systems
 - [Kotlin∇](https://github.com/breandan/kotlingrad) - 🧩 Shape-Safe Symbolic Differentiation with Algebraic Data Types
 - [Picograd](https://github.com/breandan/picograd) - 🦠 The tiniest possible autograd
 - [Pantograph](https://github.com/breandan/pantograph) - :triangular_ruler: Runtime accessible intermediate representation for reified computation graphs
@@ -20,7 +20,7 @@ I am a student in the School of Computer Science at McGill University, under the
 - [Hatchery](https://github.com/duckietown/hatchery) - :hatching_chick: An IDE for building ROS applications
 - [SourceJump](https://github.com/acejump/SourceJump) - :card_index: Find contextually similar OSS code without leaving your IDE!
 - [AceJump](https://github.com/acejump/AceJump) - :a: single character search, select, and jump
-- [idear](https://github.com/breandan/idear) - :studio_microphone: Handsfree Audio Development Interface
+- [Idiolect](https://github.com/breandan/idiolect) - :studio_microphone: Handsfree Audio Development Interface
 - [TraceJump](https://github.com/acejump/tracejump) - :camera_flash: Annotating screenshots with trace links
 
 ### Ideas :bulb:
