@@ -1,25 +1,93 @@
-%! Author = breandan
-%! Date = 7/12/23
+\documentclass[sigplan,screen]{acmart}
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+\pagestyle{plain} % removes running headers
 
-% Preamble
-\documentclass[11pt]{article}
-
-% Packages
 \usepackage{amsmath}
 
-% Document
 \begin{document}
 
-Motivation: Why do we care about the problem and the results? If the problem isn’t obviously interesting it might be better to put motivation first, but if your work is incremental progress on a problem that is widely recognized as important, then it is probably better to put the “Problem” section first to indicate which piece of the larger problem you are breaking off to work on. This section should include the importance of your work, the difficulty of the area, and the impact it might have if successful.
+\title{Program Repair as a Language Game}
 
-Problem: What exact problem, issue, or question does this research address? What limitations or failings of current understanding, knowledge, methods, or technologies does this research resolve? You should position your work with respect to related ideas in this section.
+\author{Breandan Considine}
+%\authornote{Both authors contributed equally to this research.}
+\email{bre@ndan.co}
+\affiliation{%
+  \institution{McGill University}
+}
 
-Approach: How did you go about solving or making progress on the problem? What new understanding, knowledge, methods, or technologies will this research generate?
+%\author{Lars Th{\o}rv{\"a}ld}
+%\affiliation{%
+%  \institution{The Th{\o}rv{\"a}ld Group}
+%  \streetaddress{1 Th{\o}rv{\"a}ld Circle}
+%  \city{Hekla}
+%  \country{Iceland}}
+%\email{larst@affiliation.org}
+%
+%\author{Valerie B\'eranger}
+%\affiliation{%
+%  \institution{Inria Paris-Rocquencourt}
+%  \city{Rocquencourt}
+%  \country{France}
+%}
 
-Evaluation Methodology: In writing the evaluation methodology section of your submission, we encourage you to emphasize two main aspects of your experiment:
 
-Hypothesis: What would be the main research result? What would be the secondary research results? Phrase these as primary and secondary hypotheses.
+\renewcommand{\shortauthors}{Considine et al.}
 
-Evaluation Setup: How are you going to set up your experiments or studies to test these hypotheses? How do you plan to control for bias? How will you maximize external validity?
+%\begin{abstract}
+%  A clear and well-documented \LaTeX\ document is presented as an
+%  article formatted for publication by ACM in a conference proceedings
+%  or journal publication. Based on the ``acmart'' document class, this
+%  article presents and explains many of the common variations, as well
+%  as many of the formatting elements an author may use in the
+%  preparation of the documentation of their work.
+%\end{abstract}
 
+\maketitle
+
+\section{Motivation}
+
+%Why do we care about the problem and the results? If the problem isn’t obviously interesting it might be better to put motivation first, but if your work is incremental progress on a problem that is widely recognized as important, then it is probably better to put the “Problem” section first to indicate which piece of the larger problem you are breaking off to work on. This section should include the importance of your work, the difficulty of the area, and the impact it might have if successful.
+
+%Through the millennia, human beings have sought ways to mechanize the process of thought. From the abacus to the modern computer, we have constructed increasingly sophisticated systems to augment our cognitive abilities. In the 21st century, we are witnessing the emergence of a new class of intelligent machines, which are capable of learning from experience and solving problems in ways that are difficult to express in code. These machines are known as \emph{artificial neural networks} (ANNs), and they are the subject of intense research in the fields of computer science and statistics.
+
+Are languages acquired or constructed? In empirical software engineering and natural language processing, many would argue that languages are statistical phenomena that arise within the context of iterated social interactions. By tracing and cataloging linguistic artifacts, we can shed light into the cognitive processes and social dynamics of communicating agents. In contrast, programming languages take the view that languages are deliberately constructed and their social dynamics, though perhaps informative, are less fundamental than their runtime dynamics. This is a curious distinction, since programming languages would appear to share many statistical similarities with natural language~\cite{hindle2016naturalness}, and the act of programming is itself a form of communication~\cite{demillo1979social}.
+
+Our research seeks to develop a unified theory of programming as kind of language game where two players, the programmer and a computer attempt to cooperatively solve a given problem by constructing a common language. Crucially, neither player are captive listeners, but instead actively participate by interacting across a shared workspace. When both participants reach a common understanding, the resulting program can be successfully executed and this process is repeated until the problem has been successfully solved or a solution is deemed unsatisfiable.
+
+We call this process \emph{dialogical alignment} and argue the game not only explains many aspects of social programming, but also provides an ergonomic interface for assistive programming, and offers a medium for investigating the systematic reasoning abilities of intelligent programming assistants and artificially intelligent agents at large.
+
+
+\section{Problem}
+
+%What exact problem, issue, or question does this research address? What limitations or failings of current understanding, knowledge, methods, or technologies does this research resolve? You should position your work with respect to related ideas in this section.
+
+The syntax of programming languages is typically defined in terms of a formal grammar. Invalid programs are often the result of a typographic mistake. In this case, the programmer must correct the mistake, which can be a tedious and error-prone process. Automatic correction is often ambiguous, and the set of probable programs are often a small fragment of grammatically valid ones.
+
+We seek to develop a method for automatically correcting syntax errors in programming languages. This is a special case of error-correcting codes in communication theory, whose input takes the form of an invalid or corrupt program and the output is a valid program.
+
+\section{Approach}
+
+%How did you go about solving or making progress on the problem? What new understanding, knowledge, methods, or technologies will this research generate?
+
+We propose a novel approach to syntax correction based on the idea of idempotent matrix imputation. Context-free languages are recognized by Boolean matrix multiplication, with potentially some missing entries when incomplete or invalid. We can solve for the missing entries by applying a matrix completion algorithm, and the resulting valid solutions can be ranked by their statistical likelihood, then presented to the user for review.
+
+\section{Evaluation Methodology}
+
+%In writing the evaluation methodology section of your submission, we encourage you to emphasize two main aspects of your experiment:
+
+We evaluate our method on a dataset of human mistakes and corrections.
+
+\subsection{Hypothesis}
+
+%What would be the main research result? What would be the secondary research results? Phrase these as primary and secondary hypotheses.
+
+\subsection{Evaluation Setup}
+
+%How are you going to set up your experiments or studies to test these hypotheses? How do you plan to control for bias? How will you maximize external validity?
+
+%bibliography:
+\bibliography{doctoral_symposium}
+\bibliographystyle{ACM-Reference-Format}
 \end{document}
+\endinput
