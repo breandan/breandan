@@ -7,7 +7,7 @@
 
 \begin{document}
 
-\title{Program Repair as a Language Game}
+\title{Syntax Repair as a Language Game}
 
 \author{Breandan Considine}
 %\authornote{Both authors contributed equally to this research.}
@@ -45,24 +45,29 @@
 
 \maketitle
 
+\section{Abstract}
+
+We introduce a novel approach to syntax correction based on the idea of idempotent matrix imputation. Context-free languages are recognized by Boolean matrix multiplication, with potentially some missing entries when incomplete or invalid. We can solve for the missing entries by applying a matrix completion algorithm, and the resulting valid solutions can be ranked by their statistical likelihood, then presented to the user for review.
+
 \section{Motivation}
 
 %Why do we care about the problem and the results? If the problem isn’t obviously interesting it might be better to put motivation first, but if your work is incremental progress on a problem that is widely recognized as important, then it is probably better to put the “Problem” section first to indicate which piece of the larger problem you are breaking off to work on. This section should include the importance of your work, the difficulty of the area, and the impact it might have if successful.
 
 %Through the millennia, human beings have sought ways to mechanize the process of thought. From the abacus to the modern computer, we have constructed increasingly sophisticated systems to augment our cognitive abilities. In the 21st century, we are witnessing the emergence of a new class of intelligent machines, which are capable of learning from experience and solving problems in ways that are difficult to express in code. These machines are known as \emph{artificial neural networks} (ANNs), and they are the subject of intense research in the fields of computer science and statistics.
 
-Are languages acquired or constructed? In empirical software engineering and natural language processing, many would argue that languages are statistical phenomena that arise within the context of iterated social interactions. By tracing and cataloging linguistic artifacts, we can shed light into the cognitive processes and social dynamics of communicating agents. In contrast, programming languages take the view that languages are deliberately constructed and their social dynamics, though perhaps informative, are less fundamental than their runtime dynamics. This is a curious distinction, since programming languages would appear to share many statistical similarities with natural language~\cite{hindle2016naturalness}, and the act of programming is itself a form of communication~\cite{demillo1979social}.
+Are languages acquired or constructed? In empirical software engineering and natural linguistics, many would argue languages are statistical phenomena that arise in the context of repeated social interactions. Tracing linguistic artifacts sheds light into language acquisition and adaption, and offers insight into the social dynamics and cognitive processes of communicating agents. In contrast, programming languages are deliberately constructed and most designers would argue a language's social dynamics, though perhaps informative, are less fundamental than, e.g., its runtime dynamics. This is a curious distinction, since programming languages appear to share many statistical similarities with natural language~\cite{hindle2016naturalness}, and the act of programming can itself be considered a form of communication~\cite{demillo1979social} between a human and a machine.
 
-Our research seeks to develop a unified theory of programming as kind of language game where two players, the programmer and a computer attempt to cooperatively solve a given problem by constructing a common language. Crucially, neither player are captive listeners, but instead actively participate by interacting across a shared workspace. When both participants reach a common understanding, the resulting program can be successfully executed and this process is repeated until the problem has been successfully solved or a solution is deemed unsatisfiable.
+Our research draws inspiration from both natural and computational linguistics to develop a cohesive theory of programming as a kind of language game. In this game, two players, the programmer and a computer, collaborate across a shared workspace to construct a domain-specific language that solves a chosen problem. Initially, both parties have only partial information needed to solve that problem, and must exchange messages conveying, e.g., their intent, abilities and knowledge to reach a common understanding of the problem domain. This game ends when the chosen problem is successfully solved, the clock eventually times out, or the problem is deemed unsolvable and one player forfeits.
 
-We call this process \emph{dialogical alignment} and argue the game not only explains many aspects of social programming, but also provides an ergonomic interface for assistive programming, and offers a medium for investigating the systematic reasoning abilities of intelligent programming assistants and artificially intelligent agents at large.
+We call this framework \emph{dialogical alignment} and argue it not only captures many aspects of social computing such as hackathons and open source programming, but also provides an ergonomic interface for assistive programming, and offers a benchmark for evaluating the systematic reasoning and compositional generalization of intelligent programming assistants and artificially intelligent agents at large, which many humans aspire to collaborate with to solve hard computational challenges in various domains. In particular, we propose tools and benchmarks to evaluate the performance of these agents on a series of increasingly challenging language games, which we call the \emph{dialogical alignment challenge}.
 
+Programming is an exercise in gradual refinement. Program repair, broadly speaking, is the task of refining a program that loosely approximates a specification, but contains some mistakes. Programming is a bit like a limit-process: the more we refine our specification, the closer we get to a program that solves the problem. In practice, programmers often fall short. In some cases, we can use an automated procedure to identify and repair the remaining mistakes.
 
 \section{Problem}
 
 %What exact problem, issue, or question does this research address? What limitations or failings of current understanding, knowledge, methods, or technologies does this research resolve? You should position your work with respect to related ideas in this section.
 
-The syntax of programming languages is typically defined in terms of a formal grammar. Invalid programs are often the result of a typographic mistake. In this case, the programmer must correct the mistake, which can be a tedious and error-prone process. Automatic correction is often ambiguous, and the set of probable programs are often a small fragment of grammatically valid ones.
+The syntax of programming languages is typically defined in terms of a formal grammar. Invalid programs are often the result of a typographic mistake. In this case, the programmer must correct the mistake, which can be a tedious and error-prone process. Automatic correction is often ambiguous, and the set of probable programs are often a small fragment of those which are grammatically valid.
 
 We seek to develop a method for automatically correcting syntax errors in programming languages. This is a special case of error-correcting codes in communication theory, whose input takes the form of an invalid or corrupt program and the output is a valid program.
 
