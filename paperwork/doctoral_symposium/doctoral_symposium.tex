@@ -32,7 +32,7 @@
 %}
 
 
-\renewcommand{\shortauthors}{Considine et al.}
+\renewcommand{\shortauthors}{Considine}
 
 %\begin{abstract}
 %  A clear and well-documented \LaTeX\ document is presented as an
@@ -67,37 +67,43 @@ No more evident is the rudimentary state of programmatic reasoning than the curr
 
 Instead, the pragmatic approach advocates for training and evaluating programmatic reasoners on a curriculum of language games with increasing average-case complexity, such as proof search or program repair. As we argue, logical or semantic validity is a more trustworthy alignment criteria than preferability, and a much more reliable indicator of systematic and compositional generalization -- the hallmarks of programmatic reasoning in humans. When used judiciously, pragmatism can complement preference alignment to improve the reliability and familiarity of artificially intelligent agents on programmatic reasoning tasks.
 
-To anchor our discussion hereinafter, we shall restrict ourselves to a specific game exemplifies the pragmatic framework and falls at the intersection of programming languages and developer tools: syntactic error correction. Towards that end, we develop a tool for correcting invalid syntax and evaluate it on a variety of toy and practical programming languages, demonstrating SoTA precision and throughput at a fixed timeout relative to transformers. Tidyparse, as we call it, is useful in its own right for program repair, and provides a benchmarking suite for evaluating programming agents.
+To anchor our discussion hereinafter, we shall restrict ourselves to a specific game exemplifying the pragmatic framework that falls at the intersection of programming languages and developer tools: syntactic error correction. Towards that end, we develop a tool for correcting invalid syntax and evaluate it on a variety of toy and practical programming languages, demonstrating SoTA precision and throughput at a fixed timeout relative to transformers. Tidyparse, as we call it, is useful in its own right for program repair, and provides a benchmarking suite for evaluating programming agents.
 
 \section{Problem}
 
 %What exact problem, issue, or question does this research address? What limitations or failings of current understanding, knowledge, methods, or technologies does this research resolve? You should position your work with respect to related ideas in this section.
 
-Programming is an exercise in gradual refinement. Program repair then, is the task of refining an existing program that loosely approximates some specification, but contains mistakes. In this regard, programming is a bit like a limit-process: the more we refine our code, the closer we get to a program that meets its specification. The pragmatic approach to program repair takes a charitable view of the programmer: not as a clumsy fool, but a good-hearted driver who tries their best, but occasionally strays off the road. We will consider a very narrow form of program repair, namely \emph{syntax correction}.
+Broadly, program repair is the task of refining an existing program that loosely approximates some specification, but contains mistakes. In this regard, repair is a bit like a limit-process: the more we refine our code, the closer it becomes to its specification. The pragmatic approach to program repair takes a charitable view of the author: not as a clumsy fool, but a good-hearted programmer who tries their best under the circumstances and occasionally makes mistakes. The pragmatic ideal imagines what the author could have intended, had they been fully alert. We will consider a very narrow form of program repair, namely \emph{syntax correction}.
 
-When writing a program, nearly all the intermediate editing states are invalid. Manual repair, though fairly routine, introduces friction to the development process by periodically diverting attention, a programmer's most precious and fickle resource. \textit{Syntax correction} is the problem of automatically repairing a syntactically invalid program so that it is no longer invalid. This problem may sound trivial but can be quite challenging, as well-formed programs have many semantic constraints, but also because the problem itself is under-determined: although repairs by definition must be valid, even assuming a tiny number of modifications, the search space of possible repairs can be vast.
+When writing a program, nearly all the intermediate editing states are invalid. Manual repair, though fairly routine, introduces friction to the development process by occasionally diverting the author's attention. \textit{Syntax correction} then, is the problem of automatically repairing a syntactically invalid program so that it is no longer invalid. Trivial though it may seem, the problem can be quite challenging, as well-formed programs have many semantic constraints, but also because the solutions are highly under-determined: although repairs must be valid, even assuming a tiny number of edits, the search space of valid repairs can be vast indeed.
 
-We seek to develop a method for automatically correcting syntax errors in programming languages. This is a special case of error-correcting codes in communication theory, whose input takes the form of an invalid or corrupt program and the output is a valid program.
+As specified, this particular game has some interesting rules: the program must eventually find every single repair within a certain number of edits from the original invalid source code, but seek out the most likely repair(s) first. Furthermore, the program must sample repairs without replacement in parallel across all available cores, and whensoever interrupted, return the best candidates hitherto discovered. Finally, it must be able to repair programs in a variety of languages without any prior statistical knowledge. These constraints introduce a number of interesting design challenges, which we will address in the following sections.
 
 \section{Approach}
 
 %How did you go about solving or making progress on the problem? What new understanding, knowledge, methods, or technologies will this research generate?
 
-We propose a novel approach to syntax correction based on the idea of idempotent matrix imputation. Context-free languages are recognized by Boolean matrix multiplication, with potentially some missing entries when incomplete or invalid. We can solve for the missing entries by applying a matrix completion algorithm, and the resulting valid solutions can be ranked by their statistical likelihood, then presented to the user for review.
+We can reframe syntax error correction as a language edit distance problem, but instead of using the typical approach that only returns the closest repair(s), we try to find every single edit within a fixed distance. This problem can be modeled as a conjunctive language membership between a context-free grammar and Levenshtein automata. We take the intersection of the two grammars, encode it as a conjunctive language with holes and enumerate every single edit within a fixed distance, then rank them by their distance.
+
+We develop a novel reduction from conjunctive language reachability onto finite field arithmetic, based on the idea of idempotent matrix imputation with a logical semiring. Context-free languages are recognized by Boolean matrix multiplication, with potentially some missing entries when incomplete or invalid. This representation is highly efficient from a complexity-theoretic standpoint, allows us to solve for the missing entries by applying a matrix completion algorithm, and the resulting valid solutions can be ranked by any number of suitable metrics such as Levenshtein or finger-travel distance on a physical keyboard, then presented to the user for review.
 
 \section{Evaluation Methodology}
 
 %In writing the evaluation methodology section of your submission, we encourage you to emphasize two main aspects of your experiment:
 
-We evaluate our method on a dataset of human mistakes and corrections.
+There are essentially two ways to evaluate syntax repair: one is to measure the rate at which valid repairs are discovered, and the other is to measure the rate at which human repairs are discovered. Since valid repairs are relatively common but can be unnatural, we use the latter.
 
 \subsection{Hypothesis}
 
 %What would be the main research result? What would be the secondary research results? Phrase these as primary and secondary hypotheses.
 
+We hypothesize that we can achieve a higher precision and throughput than transformers at a fixed timeout, and furthermore can do so without any prior statistical knowledge of the language.
+
 \subsection{Evaluation Setup}
 
 %How are you going to set up your experiments or studies to test these hypotheses? How do you plan to control for bias? How will you maximize external validity?
+
+Using a pairwise dataset of human syntax errors in natural source code and human repairs from snippets StackOverflow, we preprocess the data to include only syntax pairs containing malformed code that are truly rejected by the parser, and repairs that are accepted by the parser. This dataset is used for the evaluation.
 
 %bibliography:
 \bibliography{doctoral_symposium}
