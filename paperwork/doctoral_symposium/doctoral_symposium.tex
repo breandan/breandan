@@ -1,47 +1,72 @@
 \documentclass[sigplan,screen]{acmart}
-\settopmatter{printacmref=false} % Removes citation information below abstract
-\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+%\settopmatter{printacmref=false} % Removes citation information below abstract
+%\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
 \pagestyle{plain} % removes running headers
 
 \usepackage{amsmath}
+
+%%% The following is specific to SPLASH '23-DOC and the paper
+%%% 'A Pragmatic Approach to Syntax Repair'
+%%% by Breandan Considine.
+%%%
+\setcopyright{acmlicensed}
+\acmPrice{15.00}
+\acmDOI{10.1145/3618305.3623591}
+\acmYear{2023}
+\copyrightyear{2023}
+\acmSubmissionID{splashcomp23doc-id7-p}
+\acmISBN{979-8-4007-0384-3/23/10}
+\acmConference[SPLASH Companion '23]{Companion Proceedings of the 2023 ACM SIGPLAN International Conference on Systems, Programming, Languages, and Applications: Software for Humanity}{October 22--27, 2023}{Cascais, Portugal}
+\acmBooktitle{Companion Proceedings of the 2023 ACM SIGPLAN International Conference on Systems, Programming, Languages, and Applications: Software for Humanity (SPLASH Companion '23), October 22--27, 2023, Cascais, Portugal}
+\received{2023-07-21}
+\received[accepted]{2023-08-10}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003752.10003766.10003767.10003768</concept_id>
+<concept_desc>Theory of computation~Algebraic language theory</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10003766.10003771</concept_id>
+<concept_desc>Theory of computation~Grammars and context-free languages</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010178.10010179.10010181</concept_id>
+<concept_desc>Computing methodologies~Discourse, dialogue and pragmatics</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10011006.10011039.10011040</concept_id>
+<concept_desc>Software and its engineering~Syntax</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Algebraic language theory}
+\ccsdesc[500]{Theory of computation~Grammars and context-free languages}
+\ccsdesc[500]{Computing methodologies~Discourse, dialogue and pragmatics}
+\ccsdesc[500]{Software and its engineering~Syntax}
 
 \begin{document}
 
 \title{A Pragmatic Approach to Syntax Repair}
 
 \author{Breandan Considine}
-%\authornote{Both authors contributed equally to this research.}
-\email{bre@ndan.co}
+\orcid{0000-0002-0174-4322}
+\email{breandan.considine@mail.mcgill.ca}
 \affiliation{%
   \institution{McGill University}
+  \city{}
+  \country{Canada}
 }
-
-%\author{Lars Th{\o}rv{\"a}ld}
-%\affiliation{%
-%  \institution{The Th{\o}rv{\"a}ld Group}
-%  \streetaddress{1 Th{\o}rv{\"a}ld Circle}
-%  \city{Hekla}
-%  \country{Iceland}}
-%\email{larst@affiliation.org}
-%
-%\author{Valerie B\'eranger}
-%\affiliation{%
-%  \institution{Inria Paris-Rocquencourt}
-%  \city{Rocquencourt}
-%  \country{France}
-%}
-
 
 \renewcommand{\shortauthors}{Considine}
 
-%\begin{abstract}
-%  A clear and well-documented \LaTeX\ document is presented as an
-%  article formatted for publication by ACM in a conference proceedings
-%  or journal publication. Based on the ``acmart'' document class, this
-%  article presents and explains many of the common variations, as well
-%  as many of the formatting elements an author may use in the
-%  preparation of the documentation of their work.
-%\end{abstract}
+\keywords{Syntax repair, autocompletion, language games}
 
 \maketitle
 
@@ -53,8 +78,6 @@ Programming languages share a social and formal heritage. These families were hi
 
 %Why do we care about the problem and the results? If the problem isn’t obviously interesting it might be better to put motivation first, but if your work is incremental progress on a problem that is widely recognized as important, then it is probably better to put the “Problem” section first to indicate which piece of the larger problem you are breaking off to work on. This section should include the importance of your work, the difficulty of the area, and the impact it might have if successful.
 
-%Through the millennia, human beings have sought ways to mechanize the process of thought. From the abacus to the modern computer, we have constructed increasingly sophisticated systems to augment our cognitive abilities. In the 21st century, we are witnessing the emergence of a new class of intelligent machines, which are capable of learning from experience and solving problems in ways that are difficult to express in code. These machines are known as \emph{artificial neural networks} (ANNs), and they are the subject of intense research in the fields of computer science and statistics.
-
 Are languages acquired or constructed? In empirical software engineering and sociolinguistics, many would argue languages are statistical phenomena that arise in the context of repeated social interactions. Tracing linguistic artifacts can shed light into language acquisition and adaptation, and offers insight into the social dynamics of communicating agents. In contrast, programming languages are deliberately constructed and most designers would argue a language's social dynamics, though perhaps informative, are surely less fundamental than its runtime dynamics. This is a curious distinction, since programming languages appear to share many statistical similarities with natural language~\cite{hindle2016naturalness}, and the act of programming can itself be understood as a form of communication~\cite{demillo1979social} between minds and machines.
 
 Our research seeks to understand the common principles that shape the creation and evolution of natural and programming language artifacts, informed by cooperative game theory. In particular, we draw inspiration from both natural and computational linguistics to develop a constructive theory of code completion and program repair. Our proposed framework can be translated into practical development tools for software engineering, as well as a benchmarking suite for probing the reasoning capabilities of neural language models on prosocial programming problems (PPPs).
@@ -65,15 +88,15 @@ We call this framework \emph{pragmatic alignment} and argue it not only encompas
 
 No more evident is the rudimentary state of programmatic reasoning than the currently popular alignment mechanism, which uses imitation learning with human feedback to fine-tune a transformer-based language model, then employs a crude prompt like, ``Let's think step-by-step\ldots''. While it may convincingly imitate humans on certain reasoning tasks, this strategy is hopelessly flawed, as (1) human feedback is sparse and often incorrect, (2) transformers often learn reasoning~\cite{dziri2023faith} shortcuts~\cite{liu2022transformers} that fail to generalize across domains, and (3) transformers have known limitations~\cite{merrill2022saturated} to their expressive~\cite{chiang2023tighter} capacity preventing generalization, even in the infinite limit of data and compute. These shortcomings raise serious doubts that preference alignment alone can produce programming agents capable of solving decision problems whose expected complexity is significantly harder-on-average than presented in the training distribution.
 
-Instead, the pragmatic approach advocates for training and evaluating programmatic reasoners on a curriculum of language games with increasing average-case complexity, such as proof search or program repair. As we argue, logical or semantic validity is a more trustworthy alignment criterion than preferability, and a much more reliable indicator of systematic and compositional generalization -- the hallmarks of pragmatic reasoning in humans. Pragmatism can also complement preference alignment to improve the reliability and preferability of generated source code, and offers a more principled approach to designing and implementing IDEs.
+Instead, the pragmatic approach advocates for training and evaluating programmatic reasoners on a curriculum of language games with increasing average-case complexity, such as proof search, program synthesis, or syntax repair. As we argue, logical or semantic validity is a more trustworthy alignment criterion than preferability, and a much more reliable indicator of systematic and compositional generalization -- the hallmarks of pragmatic reasoning in humans.
 
-To anchor our discussion hereinafter, we shall restrict ourselves to a specific game exemplifying the pragmatic framework that falls at the intersection of programming languages and developer tools: syntactic error correction. Towards that end, we develop a tool for correcting invalid syntax and evaluate it on a variety of toy and practical programming languages, demonstrating SoTA precision and throughput at a fixed timeout relative to transformers. Tidyparse, as we call it, is useful in its own right for program repair, and provides a benchmarking suite for evaluating programming agents.
+To anchor our discussion hereinafter, we shall restrict ourselves to a specific game exemplifying the pragmatic framework that falls at the intersection of programming languages and developer tools: syntactic error correction. Towards that end, we develop a tool for repairing invalid syntax and evaluate it on a variety of toy and practical programming languages. Tidyparse, as we call it, is useful in its own right for program repair, and provides a benchmarking suite for evaluating programmatic reasoning agents.
 
 \section{Problem}
 
 %What exact problem, issue, or question does this research address? What limitations or failings of current understanding, knowledge, methods, or technologies does this research resolve? You should position your work with respect to related ideas in this section.
 
-Broadly put, program repair is the problem of refining an existing program that approximates some specification but falls short. In this regard, repair is a bit like a limit-process: the more we refine our code, the closer it should become to its specification. The pragmatic approach to program repair takes a charitable view of the author: not as a clumsy fool to be scolded into conformity, but an earnest programmer trying to convey their intent, who may have strayed slightly off-track. The pragmatic ideal tries to imagine what the author could have intended, as opposed to prescribing what should be written instead. We will direct our attention to one particular form of program repair, namely \emph{syntax correction}.
+Broadly, program repair is the problem of refining an existing program that approximates some specification but falls short. The pragmatic approach to program repair takes a charitable view of the author: not as a clumsy fool to be scolded into conformity, but an earnest programmer trying to convey their intent, who may have strayed slightly off-track. The pragmatic ideal tries to imagine what the author could have intended, as opposed to prescribing what should be written instead. We will direct our attention to one particular form of program repair, namely \emph{syntax correction}.
 
 When writing code, nearly all the intermediate editing states are syntactically invalid. Manual repair, though fairly routine, introduces friction to the development process by occasionally diverting the author's train of thought. \textit{Syntax correction} is the process of automatically repairing a syntactically invalid program so that it is no longer invalid. This problem may seem trivial but can be quite challenging, as well-formed programs have many semantic constraints, but also because the solutions are highly under-determined: while repairs must be valid, even assuming a tiny number of edits, the search space of valid edits can be vast indeed.
 
@@ -84,7 +107,7 @@ We can reframe syntax correction as a cooperative game between two players, Auth
   \item If Author's move is valid and unique, Author wins.
 \end{itemize}
 
-We call this the \textit{syntax repair game} and present a nearly optimal strategy for Editor by observing a few simple rules: Editor should seek out plausible repairs first, but eventually discover every syntactically valid repair within a given number of edits from the original invalid string. Furthermore, Editor must sample repairs without replacement in parallel across all available cores and whensoever interrupted, return the best candidates hitherto discovered. Finally, Editor must be able to repair programs in a variety of languages without any prior statistical knowledge or domain-specific heuristics. These constraints introduce a number of interesting design challenges that will be addressed in the following section.
+We call this the \textit{syntax repair game} and present a nearly optimal strategy for Editor by observing a few simple rules: Editor should seek out plausible repairs first, but eventually discover every syntactically valid repair within a given number of edits from the original invalid string. Furthermore, Editor must sample repairs without replacement in parallel across all available cores and whensoever interrupted, return the best candidates hitherto discovered. Finally, Editor must be able to repair programs in a variety of languages without any prior statistical knowledge or domain-specific heuristics. %These constraints introduce a number of interesting design challenges that will be addressed in the following section.
 
 \section{Approach}
 
@@ -97,12 +120,12 @@ During the conception of Tidyparse, a number of design choices were made to incr
   \item Second, we require the resulting repairs be \textbf{plausible} and \textbf{diverse}. In other words, the framework should generate repairs that are likely to be written by a human being, consistent with the surrounding context, and reasonably diverse in their edit structure.
   \item Third, the tool must be \textbf{efficient} and \textbf{responsive}. It must be able to recognize well-formed strings in subcubic time, and generate admissible repairs in at worst polynomial time. These conditions are necessary to provide real-time feedback whilst the user is typing.
   \item Fourth, the framework must also be \textbf{robust} and \textbf{scalable}. In practice, this means that the framework should be robust to multiple errors, handle grammars with a large number of productions and exhibit linear speedup inversely proportion to the number of processor cores.
-  \item Fifth, the framework must be \textbf{flexible} and \textbf{extensible}. As a general-purpose tool for generating syntax repairs in a wide variety of domain specific languages, end-users should be able to extend the framework with their own custom grammars and type constraints.
+%  \item Fifth, the framework must be \textbf{flexible} and \textbf{extensible}. As a general-purpose tool for generating syntax repairs in a wide variety of domain specific languages, end-users should be able to extend the framework with their own custom grammars and type constraints.
 \end{itemize}
 
 As we demonstrate both formally and experimentally, our framework is able to satisfy most of these criteria simultaneously, while attaining state-of-the-art performance in terms of precision, throughput and wall-clock latency when compared with a variety of neural and symbolic baselines.
 
-We can reframe syntax error correction as a language edit distance problem, but unlike typical error-recovery tools that only return the nearest repair(s), we try to find every valid repair within a fixed edit distance. This problem can be modeled as the conjunction between a context-free language (CFL) representing the syntax and an automaton that recognizes the Levenshtein ball around an invalid string. Adapting Valiant's~\cite{valiant1975general} algorithm, which reduces CFL recognition to Boolean matrix multiplication, we develop a novel reduction from conjunctive language reachability onto finite field arithmetic. At a high level, we lift Valiant's algorithm into the space of conjunctive languages, conjoin the syntax and Levenshtein automaton, compile this language into a linear system of equations, abstractly interpret it using a SAT solver, decode the fixedpoints as repairs, rerank the repairs using a suitable distance metric, then present them to the user for manual inspection. Our technique is asymptotically efficient and wall-clock competitive with neural repair models.
+We can reframe syntax error correction as a language edit distance problem, but unlike typical error-recovery tools that only return the nearest repair(s), we try to find every valid repair within a fixed edit distance. This problem can be modeled as the conjunction between a context-free language (CFL) representing the syntax and an automaton that recognizes the Levenshtein ball around an invalid string. To do so, we lift Valiant's~\cite{valiant1975general} algorithm into the space of conjunctive languages, conjoin the syntax and Levenshtein automaton, extract its members using a SAT solver, rerank the repairs, then present them to the user for manual inspection.
 
 We have implemented our approach as an IDE plugin and demonstrated its viability as a practical tool for realtime programming. A considerable amount of effort was devoted to supporting fast error correction functionality. Tidyparse is capable of generating rapid and natural repairs for invalid code in a range of practical programming languages using only the grammar and a cheap ranking metric over strings.
 
@@ -116,13 +139,13 @@ There are essentially two ways to evaluate a syntax error corrector: (1) measure
 
 The latter evaluation considers both human preferences and syntactic validity. While human repairs are generally more challenging to discover, next to genuine user telemetry, they are arguably the best surrogate for human preference. Although pragmatism generally favors (2), pairwise error-fix datasets can be unavailable in minority languages and can be misleading when considering out-of-distribution errors. We therefor consider (1) for evaluating throughput, soundness and completeness of our solver, and (2) to measure its precision and latency under realistic usage conditions.
 
-We evaluate Tidyparse on an extensive suite of syntax errors in Python code, comparing it with Seq2Parse~\cite{sakkas2022seq2parse} and Break-It-Fix-It (BIFI)~\cite{yasunaga2021break}, two transformer-based syntax correction models. We compare our Precision@\{1, 5, 10, All\} with repairs of varying difficulty, from single- to multi-token insertions, deletions and substitutions, and measure throughput and wall-clock latency across a wide variety of error categories and timeout values. We also evaluate Tidyparse on synthetic errors in synthetic languages and synthetic errors in natural programming languages to evaluate our robustness on rare grammars and error categories.
+We evaluate Tidyparse on an extensive suite of syntax errors in Python code, comparing it with Seq2Parse~\cite{sakkas2022seq2parse} and Break-It-Fix-It (BIFI)~\cite{yasunaga2021break}, two transformer-based syntax correction models. We compare our Precision@\{1, 5, 10, All\} with repairs of varying difficulty, from single- to multi-token insertions, deletions and substitutions, and measure throughput and wall-clock latency across a wide variety of natural and synthetic grammars, error categories and timeout values.
 
 \subsection{Hypothesis}
 
 %What would be the main research result? What would be the secondary research results? Phrase these as primary and secondary hypotheses.
 
-By carefully leveraging parallelism, fast parsing and a cheap ranking function, we demonstrate it is (1) possible to achieve a higher overall Precision@\{5+\} at a lower latency than the existing transformer-based repair models for repairs up to three lexical tokens, and furthermore can do so without using any neural network whatsoever. Furthermore, we hypothesize it will be (2) possible to retrain a smaller, faster transformer-based neural repair model to score and rerank the repairs discovered by Tidyparse, and this hybrid model can be used to attain state-of-the-art precision, throughput and wall-clock latency across even more challenging repair categories, thereby validating the merits of pragmatism.
+By carefully leveraging parallelism, fast parsing and a cheap ranking function, we demonstrate it is (1) possible to achieve a higher overall Precision@\{5+\} at a lower latency than the existing transformer-based repair models for repairs up to three lexical tokens without using any neural network whatsoever. Furthermore, we hypothesize it is possible to retrain a smaller, faster transformer model to score and rerank the repairs discovered by Tidyparse, and this hybrid model can be used to attain state-of-the-art precision, throughput and wall-clock latency on even more challenging repair categories, further validating the merits of pragmatism.
 
 \subsection{Evaluation Setup}
 
@@ -132,7 +155,7 @@ Using a pairwise dataset of human syntax errors and repairs from Python snippets
 
 For our synthetic evaluation, we synthetically corrupt parseable single-line statements in Java and Kotlin source code by sampling edits uniformly at random from the Levenshtein ball and rejecting any edits accepted by the true parser. Treating the original source code as the ground-truth repair, we then measure the average latency to recover the original statement, and the precision at varying latency cutoffs.
 
-External validity is maximized by evaluating on a large dataset of human syntax errors and repairs across a variety of programming languages and grammars. We qualitatively control for bias by using an identical test set for all models and balancing across edit distances and error categories to model a diversity of real-world error-correction scenarios. Although pairwise repair data is limited due to the paucity of erroneous source code committed to public GitHub repositories and reported on StackOverflow, we can ensure the test set is largely representative of real world syntax errors. In the future, we hope to conduct a proper user study.
+External validity is maximized by evaluating on a large dataset of human syntax errors and repairs across a variety of programming languages and grammars. We qualitatively control for bias by using an identical test set for all models and balancing across edit distances and error categories to model a diversity of real-world error-correction scenarios. Although pairwise repair data is limited due to the paucity of erroneous source code committed to public Git repositories and reported on StackOverflow, we can ensure the test set is largely representative of real world syntax errors. In the future, we hope to conduct a proper user study.
 
 %bibliography:
 \bibliography{doctoral_symposium}
