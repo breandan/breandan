@@ -1,5 +1,3 @@
-I am a student in the School of Computer Science at McGill University, under the supervision of [Jin Guo](https://www.cs.mcgill.ca/~jguo/) and [Xujie Si](https://www.cs.mcgill.ca/~xsi/). There, I am building tools to help developers locate and reason about software artifacts, by learning to read and write code. For further details, please refer to [my background](paperwork/cv/cv.pdf) and [research interests](paperwork/comp_exam_v2/literature_review.pdf).
-
 ### Libraries :books:
 
 - [Galoisenne](https://github.com/breandan/galoisenne) - :spider_web: Graphs, finite fields and discrete dynamical systems
